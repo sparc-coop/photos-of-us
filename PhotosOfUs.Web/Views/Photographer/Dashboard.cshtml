@@ -1,0 +1,53 @@
+﻿@model List<FolderViewModel>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="photographer-dashboard--wrapper">
+    <h2 class="header-large">Good morning, Bartho</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="flex-box filters">
+        <input class="input--light-blue searchbox" placeholder="Search Library" />
+
+        <div class="view-icons align-right">
+            <select>
+                <option>Date</option>
+                <option>Name</option>
+            </select>
+
+            <i class="material-icons">view_list</i>
+            <i class="material-icons selected">apps</i>
+        </div>
+    </div>
+
+
+    <div class="folder-card--wrapper flex-box">
+        @foreach (var item in Model)
+        {
+            <div class="folder-card flex-box">
+                <a class="full-width-anchor" href="/Photographer/Photos/@item.Id"></a>
+                <div class="header flex-box">
+                    <div class="grey-ball"></div>
+                    <i class="material-icons align-right">more_vert</i>
+                </div>
+                <div class="photos">
+                    @foreach (var photo in item.Photos.Take(8))
+                {
+                        <img class="tiny-photo" src="@photo.ThumbnailUrl" />
+                    }
+                </div>
+                <div class="folder-info">
+                    <p class="title">
+                        @item.Name
+                    </p>
+                    <p class="created-date">
+                        Created: @item.CreatedDate.ToString("MMMM d, yyyy")
+                    </p>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>

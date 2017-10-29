@@ -1,0 +1,49 @@
+﻿using PhotosOfUs.Model.Models;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace PhotosOfUs.Model.ViewModels
+{
+    public class PhotoViewModel
+    {
+        public int Id { get; set; }
+        public int PhotographerId { get; set; }
+        public int FolderId { get; set; }
+        public string Url { get; set; }
+        public string ThumbnailUrl { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public DateTime UploadDate { get; set; }
+        public decimal? Price { get; set; }
+
+        public static PhotoViewModel ToViewModel(Photo entity)
+        {
+            PhotoViewModel viewModel = new PhotoViewModel();
+
+            viewModel.Id = entity.Id;
+            viewModel.PhotographerId = entity.PhotographerId;
+            viewModel.FolderId = entity.FolderId;
+            viewModel.Url = entity.Url;
+            viewModel.ThumbnailUrl = entity.Url.Replace("/photos/", "/thumbnails/");
+            viewModel.Code = entity.Code;
+            viewModel.Name = entity.Name;
+            viewModel.UploadDate = entity.UploadDate;
+            viewModel.Price = entity.Price;
+
+            return viewModel;
+        }
+
+        public static List<PhotoViewModel> ToViewModel(List<Photo> entities)
+        {
+            List<PhotoViewModel> viewModels = new List<PhotoViewModel>();
+
+            foreach (var item in entities)
+            {
+                viewModels.Add(ToViewModel(item));
+            }
+
+            return viewModels;
+        }
+    }
+}

@@ -1,0 +1,41 @@
+﻿@model FolderViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="photos-dashboard--wrapper">
+    <div class="flex-box header">
+        <h2 class="header-large">@Model.Name</h2>
+        <span class="created-date">Created: @Model.CreatedDate.ToString("MMMM d, yyyy")</span>
+    </div>
+
+    <div class="background--yellow line--small"></div>
+
+    <div class="flex-box filters">
+        <input class="input--light-blue searchbox" placeholder="Search Library" />
+
+        
+
+        <div class="view-icons align-right">
+            <select>
+                <option>Date</option>
+                <option>Name</option>
+            </select>
+
+            <i class="material-icons">view_list</i>
+            <i class="material-icons selected">apps</i>
+        </div>
+    </div>
+    
+
+    <div class="folder-card--wrapper flex-box">
+        @foreach (var item in Model.Photos)
+        {
+            <div class="photo-card" style="background-image: url(@item.Url)">
+
+            </div>
+        }
+
+    </div>
+
+</div>
