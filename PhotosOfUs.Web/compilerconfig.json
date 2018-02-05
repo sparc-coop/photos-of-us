@@ -6,5 +6,9 @@
   {
     "outputFile": "wwwroot/css/MobileSite.css",
     "inputFile": "wwwroot/css/MobileSite.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/sweetalert2.all.es5.js",
+    "inputFile": "wwwroot/js/sweetalert2.all.js"
   }
 ]

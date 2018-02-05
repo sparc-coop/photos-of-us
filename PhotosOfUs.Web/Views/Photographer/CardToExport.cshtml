@@ -1,0 +1,18 @@
+﻿@model CardViewModel
+@{
+    Layout = null;
+}
+
+<div class="background" style="position:relative;">
+    <img src="~/images/card/card-front.jpg" width="600" />
+    <div class="code" style="left: 0;
+    position:absolute;
+    text-align:center;
+    top: 230px;
+    width:600px;">
+        <div style="color:#194952; font-size:36px; font-family:'Lucida Sans';">@Model.Code</div>
+        <div style="color:#194952; font-size:large; font-family:'Lucida Sans';margin-top:10px;">@Model.Url</div>
+    </div>
+    
+    <img src="~/images/card/card-back.jpg" width="600" style="margin:0px 10px"  />
+</div>

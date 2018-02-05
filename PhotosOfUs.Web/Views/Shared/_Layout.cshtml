@@ -33,6 +33,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Home</a></li>
                     <li><a href="/Photographer/">Dashboard</a></li>
+                    <li><a href="@Url.Action("Cards","Photographer")">Cards</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -63,6 +64,13 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
+
+   
+    <script src="~/js/sweetalert2.all.js"></script>
+    <link href="~/css/sweetalert2.css" rel="stylesheet" />
+    <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

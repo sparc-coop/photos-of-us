@@ -33,7 +33,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName)
         {
-            // TODO: Generate the code 
+            // TODO: get the code 
             photo.Code = "abcdef";
             photo.PhotographerId = photographerId;
             photo.UploadDate = DateTime.Now;

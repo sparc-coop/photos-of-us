@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
+    <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
   </ItemGroup>
 
 </Project>

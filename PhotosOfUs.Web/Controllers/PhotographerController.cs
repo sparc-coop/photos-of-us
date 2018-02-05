@@ -6,14 +6,18 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
+using PhotosOfUs.Model.Services;
 using PhotosOfUs.Model.ViewModels;
+using Rotativa.NetCore;
+using Rotativa.NetCore.Options;
+
 
 namespace PhotosOfUs.Web.Controllers
 {
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
-
+        
         public PhotographerController(PhotosOfUsContext context)
         {
             _context = context;
@@ -110,6 +114,34 @@ namespace PhotosOfUs.Web.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Cards()
+        {
+            var photographerId = 1;
+            List<Card> pCards = _context.Card.Where(x => x.PhotographerId == photographerId).ToList();
+            return View(pCards);
+        }
+
+        public ActionResult ExportNewCard()
+        {
+            var photographerId = 1;
+            var cardR = new CardRepository(_context);
+            CardViewModel newCard = CardViewModel.ToViewModel(cardR.Add(photographerId));
+            
+            var model = new CardViewModel { Code = newCard.Code, Url = newCard.Url};
+            return new ActionAsPdf("CardToExport", model) {
+                FileName = "PoU-Card-" + newCard.Code + ".pdf",
+                PageSize = Size.Letter,
+                PageOrientation = Orientation.Landscape,
+                PageMargins = { Left = 0, Right = 0 },
+                //ContentDisposition = ContentDisposition.Inline
+            };
+        }
+
+        public ActionResult CardToExport(CardViewModel model)
+        {
+            return View(model);
         }
     }
 }

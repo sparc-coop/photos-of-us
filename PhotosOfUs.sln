@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.Model", "PhotosOfUs.Model\PhotosOfUs.Model.csproj", "{5F04CB68-3AFD-4ABA-AF93-086E52142006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Model", "PhotosOfUs.Model\PhotosOfUs.Model.csproj", "{5F04CB68-3AFD-4ABA-AF93-086E52142006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.Web", "PhotosOfUs.Web\PhotosOfUs.Web.csproj", "{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web", "PhotosOfUs.Web\PhotosOfUs.Web.csproj", "{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rotativa.NetCore", "Rotativa.NetCore\Rotativa.NetCore.csproj", "{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

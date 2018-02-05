@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PhotosOfUs.Web.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -22,5 +22,6 @@ namespace PhotosOfUs.Model.Models
 
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Photo> Photo { get; set; }
+        public ICollection<Card> Card { get; set; }
     }
 }

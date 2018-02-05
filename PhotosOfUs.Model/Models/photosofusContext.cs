@@ -6,6 +6,7 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class PhotosOfUsContext : DbContext
     {
+        public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<Folder> Folder { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<User> User { get; set; }
@@ -15,6 +16,21 @@ namespace PhotosOfUs.Model.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Card>(entity => {
+                entity.Property(e => e.Code)
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
+                entity.HasOne(p => p.Photographer)
+                    .WithMany(c => c.Card)
+                    .HasForeignKey(p => p.PhotographerId)
+                    .HasConstraintName("FK_Card_Photographer");
+
+                entity.Property(e => e.CreatedDate).IsRequired().HasColumnType("datetime");
+
+            });
+
             modelBuilder.Entity<Folder>(entity =>
             {
                 entity.Property(e => e.CreatedDate).IsRequired().HasColumnType("datetime");
