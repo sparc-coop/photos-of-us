@@ -1,2 +1,12 @@
-﻿body {
+﻿.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+
+    .align-left {
+        margin-right: auto;
+    }
+
+    .align-right {
+        margin-left: auto;
+    }
 }

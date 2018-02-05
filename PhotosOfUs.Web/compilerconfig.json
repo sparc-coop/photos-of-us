@@ -38,5 +38,25 @@
   {
     "outputFile": "wwwroot/css/Components/input.css",
     "inputFile": "wwwroot/css/Components/input.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/heading.css",
+    "inputFile": "wwwroot/css/Components/heading.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/anchor.css",
+    "inputFile": "wwwroot/css/Components/anchor.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/card.css",
+    "inputFile": "wwwroot/css/Components/card.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/line.css",
+    "inputFile": "wwwroot/css/Components/line.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/navbar.css",
+    "inputFile": "wwwroot/css/Components/navbar.scss"
   }
 ]

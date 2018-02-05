@@ -8,8 +8,7 @@
       "wwwroot/css/site.css",
       "wwwroot/css/mobilesite.css",
       "wwwroot/css/pages/upload.min.css",
-
-      "wwwroot/css/components/button.min.css"
+      "wwwroot/css/components/*.min.css"
     ]
   },
   {
