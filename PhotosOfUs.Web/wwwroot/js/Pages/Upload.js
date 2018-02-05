@@ -1,9 +1,8 @@
 ﻿$(document).ready(function () {
     $("#drag-and-drop-area").dmUploader({
         url: 'UploadPhoto',
-        maxFileSize: 3000000,
         allowedTypes: 'image/*',
-        extFilter: ['jpg', 'jpeg', 'png', 'gif'],
+        extFilter: ['jpg', 'jpeg', 'jpe', 'png', 'tiff', 'tif', 'bmp'],
         auto: false,
         queue: false,
         onDragEnter: function () {
@@ -25,18 +24,20 @@
             updatePhotoControls(id, true, false);
         },
         onUploadSuccess: function (id, data) {
+            debugger;
             updatePhotoStatus(id, 'success', 'Upload Complete');
             updatePhotoProgress(id, 100, 'success', false);
         },
         onUploadError: function (id, xhr, status, message) {
-            updatePhotoStatus(id, 'danger', "Error");
+            debugger;
+            updatePhotoStatus(id, 'danger', message);
             updatePhotoProgress(id, 0, 'danger', false);
         },
         onFileSizeError: function (file) {
-            alert("File '" + file.name + "' cannot be added: size excess limit (3mb)");
+            alert("File '" + file.name + "' cannot be added: size excess limit");
         },
         onFileTypeError: function (file) {
-            alert("File '" + file.name + "' cannot be added: Accept only file type .jpg, .jpeg, .png. or .gif");
+            alert("File '" + file.name + "' cannot be added: Accept only file type .jpg, .png, .tif or .bmp");
         },
     });
 
@@ -60,7 +61,6 @@ function addFile(id, file) {
 
     $("#photo-preview-name").text(file.name);
 
-    // prepend
     var template = $('#photo-list-template').text();
     template = template.replace('%%filename%%', file.name);
     template = template.replace('%%id-for-photo-code%%', id.toUpperCase());
@@ -72,7 +72,6 @@ function addFile(id, file) {
     template.data('file-id', id);
 
     $('#photos').prepend(template);
-
 
     // create thumbnails
     if (typeof FileReader !== 'undefined') {

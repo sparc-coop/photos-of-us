@@ -118,41 +118,27 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public JsonResult UploadPhoto(IList<IFormFile> file)
+        public void UploadPhoto(IList<IFormFile> file)
         {
-            // force error (test)
-            //Response.StatusCode = 400;
 
-            return Json(new { status = "ok", path = "", message = "" });
         }
 
-        //// TODO
-        //public async Task<JsonResult> UploadPhotoAsync(IList<IFormFile> file)
-        //{
-        //    try
-        //    {
-        //        foreach (var item in file)
-        //        {
-        //            // full path to file in temp location
-        //            var filePath = Path.GetTempFileName();
+        public async void UploadPhotoAsync(IList<IFormFile> file)
+        {
+            foreach (var item in file)
+            {
+                // full path to file in temp location
+                var filePath = Path.GetTempFileName();
 
-        //            if (item.Length > 0)
-        //            {
-        //                using (var stream = new FileStream(filePath, FileMode.Create))
-        //                {
-        //                    await item.CopyToAsync(stream);
-
-        //                    await new PhotoRepository(_context).UploadFile(1, stream, item.Name);
-        //                }
-        //            }
-        //        }
-
-        //        return Json(new { status = "ok", path = "", message = "" });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Json(new { status = "error", path = "", message = e.Message });
-        //    }
-        //}
+                if (item.Length > 0)
+                {
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await item.CopyToAsync(stream);
+                        await new PhotoRepository(_context).UploadFile(1, stream, item.Name);
+                    }
+                }
+            }
+        }
     }
 }

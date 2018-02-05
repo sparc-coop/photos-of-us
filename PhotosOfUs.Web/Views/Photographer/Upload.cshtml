@@ -1,11 +1,11 @@
 @{
     ViewData["Title"] = "Upload Photos";
-} 
+}
 <link href="https://fonts.googleapis.com/css?family=Dosis:500,600|Open+Sans" rel="stylesheet">
 <link href="~/lib/uploader/dist/css/jquery.dm-uploader.min.css" rel="stylesheet" />
-<link href="~/css/Views/Photographer/Upload.css" rel="stylesheet" />
+<link href="~/css/Pages/Upload.css" rel="stylesheet" />
 
-<div class="container" id="wrapper">
+<div class="container" id="upload-wrapper">
     <div class="row clearfix">
         <!-- header -->
         <div class="col-md-12 clearfix">
@@ -50,7 +50,9 @@
 
     <!-- photo list -->
     <div class="col-md-7 clearfix" id="photo-list">
-        <ul id="photos"></ul>
+        <div class="row">
+            <ul id="photos"></ul>
+        </div>
         <div class="col-md-12">
             <button class="btn-save-and-upload pull-right" id="btn-save-and-upload">Save &amp; Upload</button>
         </div>
@@ -90,4 +92,4 @@
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/uploader/dist/js/jquery.dm-uploader.min.js"></script>
-<script src="~/js/Views/Photographer/Upload.js"></script>
+<script src="~/js/Pages/Upload.js"></script>
