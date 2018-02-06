@@ -1,11 +1,66 @@
-﻿
+﻿@model PhotoViewModel
+
+
 @{
     ViewData["Title"] = "Purchase";
 }
 
 <div class="purchase-photo--wrapper">
-    <h1 class="header-large"></h1>
+    <h1 class="header-large">Purchase Photo</h1>
+    <div class="yellow-background line--small">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    <div class="flex-box">
+        <div class="photo" style="background-image: url('@Model.Url')">
 
+        </div>
+        <div class="photo-info">
+            <h2 class="header-small">
+                Photo Information
+            </h2>
+            <div class="grid-vertical">
+                <div class="row">
+                    <span class="field-title">
+                        Photo Name
+                    </span>
+                    <span class="field-value">
+
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="field-title">
+                        Photo Code
+                    </span>
+                    <span class="field-value">
+
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="field-title">
+                        Photo Name
+                    </span>
+                    <span class="field-value">
+
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="field-title">
+                        Photo Name
+                    </span>
+                    <span class="field-value">
+
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="field-title">
+                        Photo Name
+                    </span>
+                    <span class="field-value">
+
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>
 
 

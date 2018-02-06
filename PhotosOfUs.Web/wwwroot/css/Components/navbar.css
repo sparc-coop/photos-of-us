@@ -1,1 +1,7 @@
-﻿
+﻿.navbar {
+  background: #43C6BA; }
+  .navbar .container .navbar-collapse ul > li > a {
+    font-size: 18px;
+    color: #F6FFFF;
+    letter-spacing: 0; }
+

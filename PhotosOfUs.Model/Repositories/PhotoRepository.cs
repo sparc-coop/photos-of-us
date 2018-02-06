@@ -31,6 +31,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
+        public Photo GetPhoto(int photoId)
+        {
+            return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
+        }
+
         public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName)
         {
             // TODO: Generate the code 
