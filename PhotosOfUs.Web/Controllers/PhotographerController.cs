@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -118,25 +119,16 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public void UploadPhoto(IList<IFormFile> file)
+        public async Task UploadPhotoAsync(IFormFile file, string photoCode, string photoName)
         {
+            var filePath = Path.GetTempFileName();
 
-        }
-
-        public async void UploadPhotoAsync(IList<IFormFile> file)
-        {
-            foreach (var item in file)
+            if (file.Length > 0)
             {
-                // full path to file in temp location
-                var filePath = Path.GetTempFileName();
-
-                if (item.Length > 0)
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await item.CopyToAsync(stream);
-                        await new PhotoRepository(_context).UploadFile(1, stream, item.Name);
-                    }
+                    await file.CopyToAsync(stream);
+                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName);
                 }
             }
         }
