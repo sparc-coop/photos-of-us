@@ -62,5 +62,9 @@
   {
     "outputFile": "wwwroot/css/Components/paragraph.css",
     "inputFile": "wwwroot/css/Components/paragraph.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Pages/purchasePhoto.css",
+    "inputFile": "wwwroot/css/Pages/purchasePhoto.scss"
   }
 ]

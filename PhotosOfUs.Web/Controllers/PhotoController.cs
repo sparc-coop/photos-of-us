@@ -22,7 +22,11 @@ namespace PhotosOfUs.Web.Controllers
         // GET: Photographer
         public ActionResult Purchase(int id)
         {
-            return RedirectToAction("Dashboard");
+            var photo = new PhotoRepository(_context).GetPhoto(id);
+
+            var viewModel = PhotoViewModel.ToViewModel(photo);
+
+            return View(viewModel);
         }
     }
 }

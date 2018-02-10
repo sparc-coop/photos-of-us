@@ -17,6 +17,8 @@ namespace PhotosOfUs.Model.ViewModels
         public string PhotographerName { get; set; }
         public DateTime UploadDate { get; set; }
         public decimal? Price { get; set; }
+        public string Resolution { get; set; }
+        public string FileSize { get; set; }
 
         public static PhotoViewModel ToViewModel(Photo entity)
         {
