@@ -31,12 +31,18 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
+        public void SavePhoto(Photo photo)
+        {
+            _context.Photo.Attach(photo);
+            _context.SaveChanges();
+        }
+
         public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
         {
             return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
         }
 
-        public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoCode)
+        public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
         {
             // TODO: Generate the code 
             photo.Code = "abcdef";
@@ -46,14 +52,14 @@ namespace PhotosOfUs.Model.Repositories
 
             var extension = Path.GetExtension(fileName);
             fileName = Guid.NewGuid() + extension;
-            photo.Url = await UploadFile(photographerId, stream, fileName, photoCode);
+            photo.Url = await UploadFile(photographerId, stream, fileName, photoName, photoCode);
 
             await _context.Photo.AddAsync(photo);
 
             return photo;
         }
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string fileName, string photoCode)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string fileName, string photoName, string photoCode)
         {
             var extension = Path.GetExtension(fileName);
             
@@ -74,6 +80,9 @@ namespace PhotosOfUs.Model.Repositories
             thumbnailBlob.Properties.CacheControl = "public, max-age=31556926";
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);
+
+            //var photo = new Photo() { Name = photoName, PhotographerId = photographerId, UploadDate = DateTime.Now, Url = containerBlob.Uri.AbsoluteUri, Code = photoCode };
+            //SavePhoto(photo);
 
             return containerBlob.Uri.AbsoluteUri;
         }

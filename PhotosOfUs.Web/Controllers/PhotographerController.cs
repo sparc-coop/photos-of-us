@@ -137,7 +137,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName, photoCode);
+                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName,     photoName, photoCode);
                 }
             }
         }
