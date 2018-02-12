@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -119,8 +120,16 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public async Task UploadPhotoAsync(IFormFile file, string photoCode, string photoName)
+        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode)
         {
+            Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
+            var match  = r.Match(photoCode);
+
+            if (//new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
+                string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
+                match.Success == false)
+                return;
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -128,9 +137,20 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName);
+                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName, photoCode);
                 }
             }
+        }
+
+        public JsonResult VerifyIfCodeAlreadyUsed(string code)
+        {
+            //return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
+            return Json(new { PhotoExisting = false });
+        }
+
+        public ActionResult Test()
+        {
+            return View();
         }
     }
 }

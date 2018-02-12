@@ -5,6 +5,7 @@ var rootApp = angular.module('app', ['modal', 'upload']);
 // modal
 var modal = angular.module('modal', ['ui.bootstrap']);
 modal.controller('ModalController', function ($scope, $uibModal, $timeout) {
+
     $scope.openUpload = function () {
         var modalInstance = $uibModal.open({
             windowTopClass: 'modal-upload',

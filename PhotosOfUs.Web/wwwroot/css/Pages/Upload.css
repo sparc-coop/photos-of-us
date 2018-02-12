@@ -26,6 +26,10 @@
         opacity: 0.9;
     }
 
+    #photographer-upload--wrapper .progress {
+        margin: 5px 0;
+    }
+
 /* drop zone*/
 .drop-zone {
     font-family: 'Dosis', sans-serif;
@@ -44,6 +48,7 @@
     vertical-align: middle;
     display: table-cell;
     width: 100%;
+    cursor: pointer;
 }
 
 .nv-file-over {
@@ -77,10 +82,10 @@
     font-size: 28px;
     letter-spacing: 0;
     color: #F6FFFF;
-    margin: 0 0 1px 10px;
     word-wrap: break-word;
     border: 0;
     background: #194952;
+    width: 100%;
 }
 
 #photo-preview-dimensions {
@@ -141,6 +146,7 @@
     width: 80px;
     height: 60px;
     border-radius: 8px;
+    margin-top: 5px;
 }
 
 .photo-code {
@@ -162,7 +168,13 @@
     border-radius: 6px;
     padding: 0 8px 3px;
     word-wrap: break-word;
+    width: 100%;
+    border: 0;
 }
+
+    .error {
+        background: url("../../images/exclamation.png") right center no-repeat #194952;
+    }
 
 .remove {
     font-family: 'Dosis', sans-serif;
@@ -181,6 +193,9 @@
     letter-spacing: 0;
     word-wrap: break-word;
     margin: 0 0 0 5px;
+    border: 0;
+    background: transparent;
+    width: 100%;
 }
 
 .photo-dimensions {
