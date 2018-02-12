@@ -104,7 +104,7 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
         });
 
         return errorsFound;
-    }
+    };
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
@@ -131,6 +131,9 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
         };
 
         fileItem.file.photoCode = uploader.codeGenerator();
+        debugger;
+        var extension = fileItem.file.name;
+        fileItem.file.fileExtension = extension.split('.').pop();
 
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
@@ -148,7 +151,8 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, photoCode: item.file.photoCode });
+        debugger;
+        item.formData.push({ photoName: item.file.name, photoCode: item.file.photoCode, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {

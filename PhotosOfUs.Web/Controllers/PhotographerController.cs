@@ -120,7 +120,7 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode)
+        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
             Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
             var match  = r.Match(photoCode);
@@ -137,7 +137,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, file.FileName,     photoName, photoCode);
+                    await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
                 }
             }
         }

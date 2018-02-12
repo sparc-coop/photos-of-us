@@ -52,17 +52,15 @@ namespace PhotosOfUs.Model.Repositories
 
             var extension = Path.GetExtension(fileName);
             fileName = Guid.NewGuid() + extension;
-            photo.Url = await UploadFile(photographerId, stream, fileName, photoName, photoCode);
+            photo.Url = await UploadFile(photographerId, stream, photoName, photoCode, extension);
 
             await _context.Photo.AddAsync(photo);
 
             return photo;
         }
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string fileName, string photoName, string photoCode)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension)
         {
-            var extension = Path.GetExtension(fileName);
-            
             var url = $"{photographerId}/{photoCode + extension}";
 
             stream.Position = 0;
