@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -123,9 +124,9 @@ namespace PhotosOfUs.Web.Controllers
         public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
             Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
-            var match  = r.Match(photoCode);
+            var match = r.Match(photoCode);
 
-            if (//new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
+            if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
                 string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
                 match.Success == false)
                 return;
@@ -144,13 +145,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
-            //return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
-            return Json(new { PhotoExisting = false });
-        }
-
-        public ActionResult Test()
-        {
-            return View();
+            return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
     }
 }

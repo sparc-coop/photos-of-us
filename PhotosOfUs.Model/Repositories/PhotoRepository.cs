@@ -79,8 +79,8 @@ namespace PhotosOfUs.Model.Repositories
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);
 
-            //var photo = new Photo() { Name = photoName, PhotographerId = photographerId, UploadDate = DateTime.Now, Url = containerBlob.Uri.AbsoluteUri, Code = photoCode };
-            //SavePhoto(photo);
+            var photo = new Photo() { Name = photoName, PhotographerId = photographerId, UploadDate = DateTime.Now, Url = containerBlob.Uri.AbsoluteUri, Code = photoCode };
+            SavePhoto(photo);
 
             return containerBlob.Uri.AbsoluteUri;
         }

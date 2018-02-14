@@ -53,11 +53,11 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
             $http.get('VerifyIfCodeAlreadyUsed').
                 then(function (response) {
                     if (response.data.photoExisting === true) {
-                        $(e.target).addClass('error');
-                        $(e.target).prop('title', 'Photo code already used, choose another');
+                        angular.element(e.target).addClass('error');
+                        angular.element(e.target).prop('title', 'Photo code already used, choose another');
                     } else {
-                        $(e.target).removeClass('error');
-                        $(e.target).prop('title', '');
+                        angular.element(e.target).removeClass('error');
+                        angular.element(e.target).prop('title', '');
                     }
                 });
         }
@@ -131,7 +131,6 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
         };
 
         fileItem.file.photoCode = uploader.codeGenerator();
-        debugger;
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
@@ -151,7 +150,6 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        debugger;
         item.formData.push({ photoName: item.file.name, photoCode: item.file.photoCode, extension: '.' + item.file.fileExtension });
     };
 

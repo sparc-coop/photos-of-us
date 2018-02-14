@@ -7,8 +7,7 @@
     "inputFiles": [
       "wwwroot/css/site.css",
       "wwwroot/css/mobilesite.css",
-      "wwwroot/css/pages/upload.min.css",
-
+      "wwwroot/css/pages/upload.css",
       "wwwroot/css/components/button.min.css"
     ]
   },
