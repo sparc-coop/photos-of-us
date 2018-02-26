@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -150,41 +153,31 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public JsonResult UploadPhoto(IList<IFormFile> file)
+        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
-            // force error (test)
-            //Response.StatusCode = 400;
+            Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
+            var match = r.Match(photoCode);
 
-            return Json(new { status = "ok", path = "", message = "" });
+            if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
+                string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
+                match.Success == false)
+                return;
+
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
+                }
+            }
         }
 
-        //// TODO
-        //public async Task<JsonResult> UploadPhotoAsync(IList<IFormFile> file)
-        //{
-        //    try
-        //    {
-        //        foreach (var item in file)
-        //        {
-        //            // full path to file in temp location
-        //            var filePath = Path.GetTempFileName();
-
-        //            if (item.Length > 0)
-        //            {
-        //                using (var stream = new FileStream(filePath, FileMode.Create))
-        //                {
-        //                    await item.CopyToAsync(stream);
-
-        //                    await new PhotoRepository(_context).UploadFile(1, stream, item.Name);
-        //                }
-        //            }
-        //        }
-
-        //        return Json(new { status = "ok", path = "", message = "" });
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Json(new { status = "error", path = "", message = e.Message });
-        //    }
-        //}
+        public JsonResult VerifyIfCodeAlreadyUsed(string code)
+        {
+            return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
+        }
     }
 }

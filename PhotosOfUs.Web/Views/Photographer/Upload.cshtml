@@ -1,93 +1,94 @@
 @{
-    ViewData["Title"] = "Upload Photos";
-} 
-<link href="https://fonts.googleapis.com/css?family=Dosis:500,600|Open+Sans" rel="stylesheet">
-<link href="~/lib/uploader/dist/css/jquery.dm-uploader.min.css" rel="stylesheet" />
-<link href="~/css/Views/Photographer/Upload.css" rel="stylesheet" />
+    Layout = null;
 
-<div class="container" id="wrapper">
-    <div class="row clearfix">
+    ViewData["Title"] = "Upload Photos";
+}
+
+<link href="~/css/Pages/Upload.css" rel="stylesheet" />
+
+<div id="photographer-upload--wrapper">
+    <div class="container-fluid">
         <!-- header -->
-        <div class="col-md-12 clearfix">
+        <div class="col-md-12">
             <div class="pull-left">
-                <h2 class="header-large header-font">Upload Photos</h2>
+                <h2 class="header--large">Upload Photos</h2>
                 <div class="yellow-background line--small"></div>
             </div>
             <div class="pull-right">
-                <button type="button" class="close" aria-label="Close">
-                    <span class="custom-close" aria-hidden="true">&times;</span>
+                <button type="button" class="close" aria-label="Close" ng-click="close()">
+                    <span class="close-icon" aria-hidden="true">&times;</span>
                 </button>
             </div>
         </div>
-
-        <!-- drag and drop area -->
-        <div class="col-md-12">
-            <div class="dm-uploader">
-                <div id="drag-and-drop-area" class="btn btn-block">
-                    <span>Click here to select photo or drag &amp; drop</span>
-                    <input id="input-file" type="file" title='Click to add files' />
+        <div class="clearfix"></div>
+        <div ng-app="upload" ng-controller="UploadController" nv-file-drop="" uploader="uploader" ng-init='load()'>
+            <!-- drop zone -->
+            <div class="col-md-12">
+                <div ng-show="uploader.isHTML5">
+                    <div class="drop-zone" nv-file-over="" uploader="uploader" ng-style="{ 'height': dropZone.Height + 'px' }">
+                        <label class="drop-zone--label">
+                            Click here or drag &amp; drop the photos to upload <input class="hidden" type="file" nv-file-select="" uploader="uploader" multiple>
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- photo preview -->
-    <div class="col-md-5" id="photo-preview">
-        <img id="large-photo-thumbnail" />
-        <div class="col-md-8">
-            <p class="photo-preview-title">Name</p>
-            <p id="photo-preview-name"></p>
-        </div>
-        <div class="col-md-4">
-            <p class="photo-preview-title">Dimensions</p>
-            <p id="photo-preview-dimensions">1500x2100</p>
-        </div>
-        <div class="col-md-12 clearfix" id="save-or-discart-changes">
-            <button class="btn-save-changes pull-right">Save Changes</button>
-            <button class="btn-discart-changes pull-right">Discart Changes</button>
-        </div>
-    </div>
-
-    <!-- photo list -->
-    <div class="col-md-7 clearfix" id="photo-list">
-        <ul id="photos"></ul>
-        <div class="col-md-12">
-            <button class="btn-save-and-upload pull-right" id="btn-save-and-upload">Save &amp; Upload</button>
+            <div class="clearfix"></div>
+            <div>
+                <!-- photo preview -->
+                <div class="col-md-5" ng-if="uploader.queue.length > 0">
+                    <div id="photo-preview">
+                        <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
+                        <div class="col-md-8">
+                            <p class="photo-preview-title">Name</p>
+                            <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="photo-preview-title">Dimensions</p>
+                            <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-12">
+                            <button id="btn-save-changes" class="pull-right" ng-click="upload(selectedItem)" ng-hide="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess">Save Changes</button>
+                            <button id="btn-discart-changes" class="pull-right" ng-click="removeItem(selectedItem)" ng-hide="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess">Discart Changes</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <!-- photo list -->
+                    <div id="photo-list">
+                        <div class="row">
+                            <ul id="photos">
+                                <li class="media" ng-repeat="item in uploader.queue track by $index">
+                                    <div class="col-md-2">
+                                        <img ng-click="selectItem($event, item)" class="photo-thumbnail" ng-src="{{ item.file.src }}" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <textarea msd-elastic class="photo-name" spellcheck="false" ng-keyup="photoNameValidation($event, item)" ng-model="item.file.name" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>
+                                        <p class="photo-dimensions">{{ item.file.dimensions }}</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p class="photo-code">Photo Code</p>
+                                        <textarea msd-elastic class="code" spellcheck="false" ng-keypress="photoCodeValidation($event, item)" ng-model="item.file.photoCode" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</p>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="progress" style="">
+                                            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-12" ng-repeat="item in uploader.queue" ng-if="$index == 0">
+                            <button class="btn-save-and-upload pull-right" id="btn-save-and-upload" ng-click="uploadAll(uploader.queue)" ng-disabled="!uploader.getNotUploadedItems().length">Save &amp; Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
         </div>
     </div>
 </div>
-
-<!-- photo list template -->
-<script type="text/html" id="photo-list-template">
-    <li class="media">
-        <div class="col-md-2">
-            <img class="photo-thumbnail" id="thumbnail-%%id-for-photo-thumbnail%%" />
-        </div>
-        <div class="col-md-4">
-            <p class="photo-name">%%filename%%</p>
-            <p class="photo-dimensions-%%id-for-photo-dimension%%"></p>
-        </div>
-        <div class="col-md-4">
-            <p class="photo-code">Photo Code</p>
-            <p class="code">%%id-for-photo-code%%</p>
-        </div>
-        <div class="col-md-2">
-            <p class="remove">Remove</p>
-        </div>
-        <div class="col-md-12 upload-status">
-            Status: <span class="text-muted">Waiting</span>
-
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
-                     role="progressbar"
-                     style="width: 0%"
-                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                </div>
-            </div>
-        </div>
-    </li>
-</script>
-
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/uploader/dist/js/jquery.dm-uploader.min.js"></script>
-<script src="~/js/Views/Photographer/Upload.js"></script>

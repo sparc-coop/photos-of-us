@@ -37,8 +37,20 @@ namespace PhotosOfUs.Model.Repositories
         }
 
         public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName)
+        public void SavePhoto(Photo photo)
         {
-            // TODO: get the code 
+            _context.Photo.Attach(photo);
+            _context.SaveChanges();
+        }
+
+        public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
+        {
+            return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
+        }
+
+        public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
+        {
+            // TODO: Generate the code 
             photo.Code = "abcdef";
             photo.PhotographerId = photographerId;
             photo.UploadDate = DateTime.Now;
@@ -46,23 +58,23 @@ namespace PhotosOfUs.Model.Repositories
 
             var extension = Path.GetExtension(fileName);
             fileName = Guid.NewGuid() + extension;
-            photo.Url = await UploadFile(photographerId, stream, fileName);
+            photo.Url = await UploadFile(photographerId, stream, photoName, photoCode, extension);
 
             await _context.Photo.AddAsync(photo);
 
             return photo;
         }
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string fileName)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension)
         {
-            var extension = Path.GetExtension(fileName);
-            
-            var url = $"{photographerId}/{fileName}";
+            var url = $"{photographerId}/{photoCode + extension}";
 
-            var container = StorageHelpers.Container("photos");
-            var blob = container.GetBlockBlobReference(url);
-            blob.Properties.CacheControl = "public, max-age=31556926";
-            await blob.UploadFromStreamAsync(stream);
+            stream.Position = 0;
+            var container = new MemoryStream();
+            var containerBlob = StorageHelpers.Container("photos").GetBlockBlobReference(url);
+            containerBlob.Properties.CacheControl = "public, max-age=31556926";
+            container.Position = 0;
+            await containerBlob.UploadFromStreamAsync(stream);
 
             // Generate thumbnail
             stream.Position = 0;
@@ -73,10 +85,12 @@ namespace PhotosOfUs.Model.Repositories
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);
 
-            return blob.Uri.AbsoluteUri;
+            var photo = new Photo() { Name = photoName, PhotographerId = photographerId, UploadDate = DateTime.Now, Url = containerBlob.Uri.AbsoluteUri, Code = photoCode };
+            SavePhoto(photo);
+
+            return containerBlob.Uri.AbsoluteUri;
         }
 
-        
         private static void ConvertImageToThumbnailJpg(Stream input, Stream output, string extension)
         {
             var thumbnailsize = 300;
