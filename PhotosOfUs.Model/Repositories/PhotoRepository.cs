@@ -36,7 +36,6 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
         }
 
-        public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName)
         public void SavePhoto(Photo photo)
         {
             _context.Photo.Attach(photo);
