@@ -7,7 +7,9 @@ namespace PhotosOfUs.Model.Models
     {
         public User()
         {
+            Card = new HashSet<Card>();
             Folder = new HashSet<Folder>();
+            Order = new HashSet<Order>();
             Photo = new HashSet<Photo>();
         }
 
@@ -20,7 +22,9 @@ namespace PhotosOfUs.Model.Models
         public DateTime CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
 
+        public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
+        public ICollection<Order> Order { get; set; }
         public ICollection<Photo> Photo { get; set; }
     }
 }

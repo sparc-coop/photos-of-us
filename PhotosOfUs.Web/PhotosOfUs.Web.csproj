@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
