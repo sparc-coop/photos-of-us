@@ -1,0 +1,53 @@
+﻿body {
+  padding-top: 50px;
+  padding-bottom: 20px; }
+  body > div.container.body-content {
+    padding-top: 60px; }
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+  padding-left: 15px;
+  padding-right: 15px; }
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+  /* Hide captions */
+  .carousel-caption {
+    display: none; } }
+
+.yellow-background {
+  background-color: #FFE261; }
+
+/* Carousel */
+.carousel-caption p {
+  font-size: 20px;
+  line-height: 1.4; }
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+  width: 100%; }
+
+.photos-dashboard--wrapper .header .created-date {
+  margin-top: 24px;
+  margin-left: 15px;
+  font-size: 18px;
+  color: #FF6060;
+  letter-spacing: 0;
+  line-height: 28px; }
+
+.filters {
+  margin-bottom: 20px; }
+  .filters .searchbox.input--light-blue {
+    width: 510px; }
+  .filters select {
+    color: #DFDFDF; }
+  .filters .view-icons .material-icons {
+    color: #DFDFDF; }
+  .filters .view-icons .material-icons.selected {
+    color: #43C6BA; }
+
+.photographer-dashboard--wrapper .yellow-background.line--small {
+  margin-top: 35px;
+  margin-bottom: 30px; }
+

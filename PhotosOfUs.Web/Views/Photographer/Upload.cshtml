@@ -1,0 +1,93 @@
+@{
+    ViewData["Title"] = "Upload Photos";
+} 
+<link href="https://fonts.googleapis.com/css?family=Dosis:500,600|Open+Sans" rel="stylesheet">
+<link href="~/lib/uploader/dist/css/jquery.dm-uploader.min.css" rel="stylesheet" />
+<link href="~/css/Views/Photographer/Upload.css" rel="stylesheet" />
+
+<div class="container" id="wrapper">
+    <div class="row clearfix">
+        <!-- header -->
+        <div class="col-md-12 clearfix">
+            <div class="pull-left">
+                <h2 class="header-large header-font">Upload Photos</h2>
+                <div class="yellow-background line--small"></div>
+            </div>
+            <div class="pull-right">
+                <button type="button" class="close" aria-label="Close">
+                    <span class="custom-close" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- drag and drop area -->
+        <div class="col-md-12">
+            <div class="dm-uploader">
+                <div id="drag-and-drop-area" class="btn btn-block">
+                    <span>Click here to select photo or drag &amp; drop</span>
+                    <input id="input-file" type="file" title='Click to add files' />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- photo preview -->
+    <div class="col-md-5" id="photo-preview">
+        <img id="large-photo-thumbnail" />
+        <div class="col-md-8">
+            <p class="photo-preview-title">Name</p>
+            <p id="photo-preview-name"></p>
+        </div>
+        <div class="col-md-4">
+            <p class="photo-preview-title">Dimensions</p>
+            <p id="photo-preview-dimensions">1500x2100</p>
+        </div>
+        <div class="col-md-12 clearfix" id="save-or-discart-changes">
+            <button class="btn-save-changes pull-right">Save Changes</button>
+            <button class="btn-discart-changes pull-right">Discart Changes</button>
+        </div>
+    </div>
+
+    <!-- photo list -->
+    <div class="col-md-7 clearfix" id="photo-list">
+        <ul id="photos"></ul>
+        <div class="col-md-12">
+            <button class="btn-save-and-upload pull-right" id="btn-save-and-upload">Save &amp; Upload</button>
+        </div>
+    </div>
+</div>
+
+<!-- photo list template -->
+<script type="text/html" id="photo-list-template">
+    <li class="media">
+        <div class="col-md-2">
+            <img class="photo-thumbnail" id="thumbnail-%%id-for-photo-thumbnail%%" />
+        </div>
+        <div class="col-md-4">
+            <p class="photo-name">%%filename%%</p>
+            <p class="photo-dimensions-%%id-for-photo-dimension%%"></p>
+        </div>
+        <div class="col-md-4">
+            <p class="photo-code">Photo Code</p>
+            <p class="code">%%id-for-photo-code%%</p>
+        </div>
+        <div class="col-md-2">
+            <p class="remove">Remove</p>
+        </div>
+        <div class="col-md-12 upload-status">
+            Status: <span class="text-muted">Waiting</span>
+
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary"
+                     role="progressbar"
+                     style="width: 0%"
+                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/uploader/dist/js/jquery.dm-uploader.min.js"></script>
+<script src="~/js/Views/Photographer/Upload.js"></script>

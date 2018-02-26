@@ -1,0 +1,8 @@
+﻿.flex-box {
+  display: flex;
+  flex-wrap: wrap; }
+  .flex-box .align-left {
+    margin-right: auto; }
+  .flex-box .align-right {
+    margin-left: auto; }
+

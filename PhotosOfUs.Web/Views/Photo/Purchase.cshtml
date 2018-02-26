@@ -1,0 +1,119 @@
+﻿@model PhotoViewModel
+
+
+@{
+    ViewData["Title"] = "Purchase";
+}
+
+<div class="purchase-photo--wrapper">
+    <h1 class="header-large">Purchase Photo</h1>
+    <div class="yellow-background line--small">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    <div class="flex-box">
+        <div class="photo" style="background-image: url('@Model.Url')">
+            <img src="@Model.Url" style="display:none;" />
+        </div>
+        <div class="photo-info">
+            <h3 class="header-small">
+                Photo Information
+            </h3>
+            <div class="grid-vertical">
+                <div class="row">
+                    <span class="title">
+                        Photo Name
+                    </span>
+                    <span class="value">
+                        @Model.Name
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="title">
+                        Photo Code
+                    </span>
+                    <span class="value">
+                        @Model.Code
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="title">
+                        Max Resolution
+                    </span>
+                    <span class="value">
+                        @Model.Resolution
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="title">
+                        Photo Name
+                    </span>
+                    <span class="value">
+                        @Model.FileSize
+                    </span>
+                </div>
+                <div class="row">
+                    <span class="title">
+                        Photographer
+                    </span>
+                    <span class="value">
+                        @Model.PhotographerName
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2 class="header-medium">Photo Options</h2>
+        <div class="responsive-grid responsive-grid--8cols responsive-grid--collapse photo-options-grid">
+            <div class="row-yellow">
+                @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
+                <div style="order:1;" class="cell"><input type="checkbox" /></div>
+                <div style="order:1;" class="cell red"><input type="checkbox" /></div>
+                <div style="order:2;" class="cell red">A5 Landscape</div>
+                <div style="order:3;" class="cell light-blue">Height: 4in</div>
+                <div style="order:4;" class="cell light-blue">Length: 7in</div>
+                <div style="order:5;" class="cell blue">QTY: 1</div>
+                <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
+                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+            </div>
+            <div >
+                @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
+                <div style="order:1;" class="cell"><input type="checkbox" /></div>
+                <div style="order:1;" class="cell red"><input type="checkbox" /></div>
+                <div style="order:2;" class="cell red">A5 Landscape</div>
+                <div style="order:3;" class="cell light-blue">Height: 4in</div>
+                <div style="order:4;" class="cell light-blue">Length: 7in</div>
+                <div style="order:5;" class="cell blue">QTY: 1</div>
+                <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
+                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+            </div>
+            <div class="row-yellow">
+                @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
+                <div style="order:1;" class="cell"><input type="checkbox" /></div>
+                <div style="order:1;" class="cell red"><input type="checkbox" /></div>
+                <div style="order:2;" class="cell red">A5 Landscape</div>
+                <div style="order:3;" class="cell light-blue">Height: 4in</div>
+                <div style="order:4;" class="cell light-blue">Length: 7in</div>
+                <div style="order:5;" class="cell blue">QTY: 1</div>
+                <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
+                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+            </div>
+            <div >
+                @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
+                <div style="order:1;" class="cell"><input type="checkbox" /></div>
+                <div style="order:1;" class="cell red"><input type="checkbox" /></div>
+                <div style="order:2;" class="cell red">A5 Landscape</div>
+                <div style="order:3;" class="cell light-blue">Height: 4in</div>
+                <div style="order:4;" class="cell light-blue">Length: 7in</div>
+                <div style="order:5;" class="cell blue">QTY: 1</div>
+                <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
+                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+            </div>
+        </div>
+
+        <button class="button-yellow large-font">Add Selected To Cart</button>
+
+
+
+    </div>
+    
+</div>
+
