@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Tesseract;
+
 
 
 namespace PhotosOfUs.Web.Utilities
@@ -37,16 +39,15 @@ namespace PhotosOfUs.Web.Utilities
                 using (var engine = new TesseractEngine(Path.Combine(_environment.WebRootPath, "tessdata"), "eng", EngineMode.Default))
                 {
                 //have to load Pix via a bitmap since Pix doesn't support loading a stream.
-                    using (var image = new Bitmap(new FileStream(Path.Combine(_environment.WebRootPath, imageFile.FileName), FileMode.Create)))
+                using (var image = new Bitmap(new FileStream(Path.Combine(_environment.WebRootPath, imageFile.FileName), FileMode.Create)))
                 {
-                    using (var pix = PixConverter.ToPix(image))
+
+                    using (var page = engine.Process(image))
                     {
-                        using (var page = engine.Process(pix))
-                        {
-                            model.MeanConfidence = page.GetMeanConfidence();
-                            model.Text = page.GetText();
-                        }
+                        model.MeanConfidence = page.GetMeanConfidence();
+                        model.Text = page.GetText();
                     }
+
                 }
             }
                 
