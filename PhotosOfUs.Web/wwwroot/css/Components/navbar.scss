@@ -1,66 +1,43 @@
-﻿/*.navbar-inverse {
+﻿@import '../variables';
+
+.nav {
     background: #43C6BA;
+    margin-top: 0;
+    font-size: 18px;
+    color: $white;
     position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
+    height: 46px;
+    padding: 20px 46px 0px 80px;
+    display: flex;
+    font-family: "Dosis";
+    font-weight: 600;
 
-    :before, :after {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        clear: both;
-        display: table;
-        content: " ";
+    a{
+        text-decoration: none;
+        color: $white;
     }
 
-    .container {
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
+    .logo {
+        /*position: absolute;
+        left: 80px;*/
+        margin-top: -6px;
+    }
 
-        @media (min-width: 1200px) {
-            width: 1170px;
-        }
+    &--center{
+        margin: 0 auto;
 
-        @media (min-width: 992px) {
-            width: 970px;
-        }
-
-        @media (min-width: 768px) {
-            width: 750px;
+        .menu-item{
+            margin: 0 26px;
         }
     }
 
-    .navbar-header {
-        @media (min-width: 768px) {
-            margin-right: 0;
-            margin-left: 0;
-        }
-    }
+    &--right {
+        position: absolute;
+        right: 46px;
+        margin-top: -6px;
 
-    .navbar-nav {
-        span {
-            font-family: Dosis-SemiBold;
-            font-size: 18px;
-            color: #F6FFFF;
-            letter-spacing: 0;
-        }
-    }
-}*/
-
-.navbar {
-    background: #43C6BA;
-
-    .container {
-
-        .navbar-collapse {
-            ul > li > a {
-                font-size: 18px;
-                color: #F6FFFF;
-                letter-spacing: 0;
-            }
+        img{
+            padding: 10px;
         }
     }
 }

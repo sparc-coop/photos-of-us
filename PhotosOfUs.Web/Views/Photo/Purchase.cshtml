@@ -5,64 +5,59 @@
     ViewData["Title"] = "Purchase";
 }
 
-<div class="purchase-photo--wrapper">
+<div class="purchase">
     <h1 class="header-large">Purchase Photo</h1>
-    <div class="yellow-background line--small">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    <div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    <div class="yellow-line"></div>
     <div class="flex-box">
-        <div class="photo" style="background-image: url('@Model.Url')">
-            <img src="@Model.Url" style="display:none;" />
+        <div class="photo">
+            <img src="@Model.Url" />
         </div>
-        <div class="photo-info">
+        <div class="purchase__photo-info">
             <h3 class="header-small">
                 Photo Information
             </h3>
-            <div class="grid-vertical">
+            <div class="info">
                 <div class="row">
-                    <span class="title">
-                        Photo Name
-                    </span>
-                    <span class="value">
-                        @Model.Name
-                    </span>
+                    <div class="title">Photo Name</div>
+                    <div class="value">@Model.Name</div>
                 </div>
                 <div class="row">
-                    <span class="title">
-                        Photo Code
-                    </span>
-                    <span class="value">
+                    <div class="title">Photo Code</div>
+                    <div class="value">
                         @Model.Code
-                    </span>
+                    </div>
                 </div>
                 <div class="row">
-                    <span class="title">
+                    <div class="title">
                         Max Resolution
-                    </span>
-                    <span class="value">
+                    </div>
+                    <div class="value">
                         @Model.Resolution
-                    </span>
+                    </div>
                 </div>
                 <div class="row">
-                    <span class="title">
+                    <div class="title">
                         Photo Name
-                    </span>
-                    <span class="value">
+                    </div>
+                    <div class="value">
                         @Model.FileSize
-                    </span>
+                    </div>
                 </div>
                 <div class="row">
-                    <span class="title">
+                    <div class="title">
                         Photographer
-                    </span>
-                    <span class="value">
+                    </div>
+                    <div class="value">
                         @Model.PhotographerName
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div>
         <h2 class="header-medium">Photo Options</h2>
-        <div class="responsive-grid responsive-grid--8cols responsive-grid--collapse photo-options-grid">
+        <div class="purchase-grid responsive-grid--8cols responsive-grid--collapse photo-options-grid">
             <div class="row-yellow">
                 @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
                 <div style="order:1;" class="cell"><input type="checkbox" /></div>
@@ -72,9 +67,9 @@
                 <div style="order:4;" class="cell light-blue">Length: 7in</div>
                 <div style="order:5;" class="cell blue">QTY: 1</div>
                 <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
-                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+                <div style="order:7;" class="cell cell--foot"><div class="button--yellow" ng-click="">Add To Cart</div></div>
             </div>
-            <div >
+            <div class="row">
                 @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
                 <div style="order:1;" class="cell"><input type="checkbox" /></div>
                 <div style="order:1;" class="cell red"><input type="checkbox" /></div>
@@ -83,7 +78,7 @@
                 <div style="order:4;" class="cell light-blue">Length: 7in</div>
                 <div style="order:5;" class="cell blue">QTY: 1</div>
                 <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
-                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+                <div style="order:7;" class="cell cell--foot"><div class="button--yellow" ng-click="">Add To Cart</div></div>
             </div>
             <div class="row-yellow">
                 @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
@@ -94,9 +89,9 @@
                 <div style="order:4;" class="cell light-blue">Length: 7in</div>
                 <div style="order:5;" class="cell blue">QTY: 1</div>
                 <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
-                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+                <div style="order:7;" class="cell cell--foot"><div class="button--yellow" ng-click="">Add To Cart</div></div>
             </div>
-            <div >
+            <div class="row">
                 @*<div style="order:0;" class="cell cell--head"><h3>Eddard Stark</h3></div>*@
                 <div style="order:1;" class="cell"><input type="checkbox" /></div>
                 <div style="order:1;" class="cell red"><input type="checkbox" /></div>
@@ -105,11 +100,11 @@
                 <div style="order:4;" class="cell light-blue">Length: 7in</div>
                 <div style="order:5;" class="cell blue">QTY: 1</div>
                 <div style="order:6;" class="cell blue"><strong>$6.00</strong></div>
-                <div style="order:7;" class="cell cell--foot"><button class="button-yellow">Add To Cart</button></div>
+                <div style="order:7;" class="cell cell--foot"><div class="button--yellow" ng-click="">Add To Cart</div></div>
             </div>
         </div>
 
-        <button class="button-yellow large-font">Add Selected To Cart</button>
+        <div class="button--yellow button--yellow--large" ng-click=""><img src=""/>Add Selected To Cart</div>
 
 
 

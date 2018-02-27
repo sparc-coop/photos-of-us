@@ -51,6 +51,12 @@ namespace PhotosOfUs.Web.Controllers
             return View(FolderViewModel.ToViewModel(folder));
         }
 
+        public ActionResult Photo(int id)
+        {
+            var photo = new PhotoRepository(_context).GetPhoto(id);
+            return View(PhotoViewModel.ToViewModel(photo));
+        }
+
         // GET: Photographer/Create
         public ActionResult Create()
         {

@@ -12,6 +12,7 @@ namespace PhotosOfUs.Model.Models
         }
 
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string FullName { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -20,6 +21,7 @@ namespace PhotosOfUs.Model.Models
         public string ZipCode { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
+        public string Email { get; set; }
 
         public ICollection<Order> OrderBillingAddress { get; set; }
         public ICollection<Order> OrderShippingAddress { get; set; }

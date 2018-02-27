@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
+using Stripe;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -28,5 +29,60 @@ namespace PhotosOfUs.Web.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult Cart(int id)
+        {
+            return View();
+        }
+
+        public ActionResult Checkout(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Charge(string stripeToken)
+        {
+            StripeConfiguration.SetApiKey("");
+
+            int amount = 500;
+            var userId = 1;
+            User user = new UserRepository(_context).Find(userId);
+            Address address = new UserRepository(_context).GetAddress(userId);
+
+            var customers = new StripeCustomerService();
+            var charges = new StripeChargeService();
+
+            var customer = customers.Create(new StripeCustomerCreateOptions
+            {
+                Email = address.Email,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new StripeChargeCreateOptions
+            {
+                Amount = amount,
+                Description = "Sample Charge",
+                Currency = "usd",
+                CustomerId = customer.Id,
+            });
+
+            return View();
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            return View();
+        }
+        public IActionResult SaveAddress()
+        {
+            return View();
+        }
+
     }
 }

@@ -13,7 +13,7 @@ namespace PhotosOfUs.Web.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Dashboard", "Photographer");
         }
 
         public IActionResult About()

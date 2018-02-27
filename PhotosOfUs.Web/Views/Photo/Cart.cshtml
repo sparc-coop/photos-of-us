@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="cart" ng-controller="CheckoutCtrl">
+    <h1 class="header-large">Shopping Cart</h1>
+    <div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    <div class="divider"></div>
+
+    <div ng-repeat="item in cart">
+        <img src=""/>
+        <div>
+
+        </div>
+    </div>
+
+    <div class="button--yellow button--yellow--large" ng-click="goToCheckout()">Continue To Checkout</div>
+</div>

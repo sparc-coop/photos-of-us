@@ -1,11 +1,20 @@
 ﻿@import '../variables.scss';
 
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    //padding-top: 50px;
+    padding-bottom: 60px;
+    margin: 0;
+    background-color: $white;
+    height: unset !important;
 
     > div.container.body-content {
-        padding-top: 60px;
+        margin: 0 auto;
+        max-width: 1050px;
+        padding: 60px 30px;
+
+        hr{
+            display: none;
+        }
     }
 }
 
@@ -44,12 +53,12 @@ body {
 .photos-dashboard--wrapper {
     .header {
         .created-date {
-            margin-top: 24px;
+            font-family: "Open Sans";
+            line-height: 28px;
+            color: $red;
+            margin-top: 55px;
             margin-left: 15px;
             font-size: 18px;
-            color: #FF6060;
-            letter-spacing: 0;
-            line-height: 28px;
         }
     }
 }

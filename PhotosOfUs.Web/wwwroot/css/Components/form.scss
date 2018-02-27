@@ -1,0 +1,50 @@
+﻿@import "../variables";
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 880px;
+    margin-bottom: 40px;
+
+    &-input {
+        margin: 0 30px 18px 0;
+
+        label {
+            font-family: "Open Sans";
+            font-size: 10px;
+            color: $text-gray;
+            display: block;
+            padding-bottom: 8px;
+        }
+
+        input {
+            width: 218px;
+            padding: 7px 10px;
+            border: 1px solid $primary;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        &--email {
+            input {
+                width: 488px;
+            }
+        }
+    }
+}
+
+#payment-form {
+    #card-element {
+        padding: 7px 10px;
+        border: 1px solid $primary;
+        border-radius: 3px;
+        outline: none;
+        max-width: 488px;
+    }
+}
+
+.input--light-blue {
+    border: 1px solid #43C6BA;
+    border-radius: 8px;
+    color: #43C6BA;
+    padding: 0px 20px;
+}

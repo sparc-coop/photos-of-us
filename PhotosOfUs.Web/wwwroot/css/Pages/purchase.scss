@@ -1,0 +1,40 @@
+﻿@import "../variables";
+
+.purchase {
+    &__photo-text {
+        color: $primary;
+        font-family: "Open Sans";
+        font-size: 18px;
+        line-height: 28px;
+        max-width: 690px;
+    }
+
+    &__photo-info {
+        color: $primary;
+        font-family: "Open Sans";
+        font-size: 18px;
+        line-height: 28px;
+        max-width: 350px;
+
+        .info {
+            .row {
+                padding: 10px 0;
+                width: 350px;
+                display: flex;
+            }
+
+            .title {
+                font-family: "Dosis";
+                color: $text-gray;
+                width: 175px;
+            }
+
+            .value {
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 20px;
+                color: $dark;
+            }
+        }
+    }
+}

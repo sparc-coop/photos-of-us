@@ -1,0 +1,58 @@
+﻿@import "../variables";
+
+.cart {
+    &--preview {
+        z-index: 100;
+        width: 265px;
+        height: 265px;
+        background-color: $yellow;
+        border-radius: 6px;
+        margin-top: 46px;
+        position: absolute;
+        right: 0;
+
+        &__content {
+            position: relative;
+            padding: 16px 14px;
+            height: 235px;
+        }
+    }
+
+    .divider {
+        background: $yellow;
+        width: 140px;
+        height: 2px;
+        margin: 22px 0;
+    }
+
+    .checkout {
+        .info-title {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 32px;
+            color: $primary;
+            padding-bottom: 14px;
+
+            img {
+                vertical-align: middle;
+                margin-left: 10px;
+            }
+        }
+
+        .summary {
+            background: $off-white;
+            border-radius: 4px;
+            padding: 26px 16px;
+            width: 208px;
+            height: 180px;
+
+            .title {
+                font-family: "Dosis";
+                font-weight: 600;
+                font-size: 18px;
+                color: $dark;
+                letter-spacing: 0;
+            }
+        }
+    }
+}

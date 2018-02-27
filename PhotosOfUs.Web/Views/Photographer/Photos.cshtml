@@ -3,7 +3,7 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="photos-dashboard--wrapper">
+<div class="photos-dashboard--wrapper" ng-controller="PhotoCtrl">
     <div class="flex-box header">
         <h2 class="header-large">@Model.Name</h2>
         <span class="created-date">Created: @Model.CreatedDate.ToString("MMMM d, yyyy")</span>
@@ -17,10 +17,10 @@
         
 
         <div class="view-icons align-right">
-            <select>
+            @*<select>
                 <option>Date</option>
                 <option>Name</option>
-            </select>
+            </select>*@
 
             <i class="material-icons">view_list</i>
             <i class="material-icons selected">apps</i>
@@ -31,9 +31,7 @@
     <div class="folder-card--wrapper flex-box">
         @foreach (var item in Model.Photos)
         {
-            <div class="photo-card" style="background-image: url(@item.Url)">
-
-            </div>
+            <div class="photo-card" style="background-image: url(@item.Url)" ng-click="viewPhoto(@item.Id)"></div>
         }
 
     </div>

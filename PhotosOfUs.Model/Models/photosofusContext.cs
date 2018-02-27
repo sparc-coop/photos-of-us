@@ -61,6 +61,13 @@ namespace PhotosOfUs.Model.Models
                     .IsRequired()
                     .HasMaxLength(25)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId);
             });
 
             modelBuilder.Entity<Card>(entity =>

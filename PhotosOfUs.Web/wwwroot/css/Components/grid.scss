@@ -16,17 +16,21 @@
     }
 }
 
-.responsive-grid {
-    display: flex;
-    flex-wrap: wrap;
+.purchase-grid {
     margin: 0 0 3em 0;
     padding: 0;
 
     .row {
+        height: 50px;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .row-yellow {
-        background: #FFE261;
+        background: rgba(255, 226, 97, 0.3);
+        height: 50px;
+        display: flex;
+        flex-wrap: wrap;
     }
 
     .cell {

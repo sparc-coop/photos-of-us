@@ -6,39 +6,39 @@
     <title>@ViewData["Title"] - PhotosOfUs.Web</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.min.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+        @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 
-    <link href="https://fonts.googleapis.com/css?family=Dosis:500,600|Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
-    <div ng-app="modal" ng-controller="ModalController">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/Photographer/">Dashboard</a></li>
-                        <li><a href="#" ng-click="openUpload()">Upload</a></li>
-                    </ul>
-                    @await Html.PartialAsync("_LoginPartial")
-                </div>
+    <div>
+        <nav class="nav">
+            <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
+            <div class="nav--center" ng-controller="PhotoCtrl">
+                <a ng-click="openUpload()" class="menu-item">Upload</a>
+                <a href="/" class="menu-item">Page Title</a>
+                <a href="/" class="menu-item">Page Title</a>                                
+            </div>
+            <div class="nav--right"> @*ng-if="customer"*@
+                @*@await Html.PartialAsync("_LoginPartial")*@
+                <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
+                <img src="~/images/icons/ic_more_vert_24px.png" />
+            </div>
+            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl">
+                <div class="cart--preview__content">
+                    <div class="button--checkout--preview" ng-click="goToCart()">Checkout</div>
+                </div>               
             </div>
         </nav>
     </div>
@@ -79,11 +79,20 @@
     </environment>
 
 
-   
+
     <script src="~/js/sweetalert2.all.js"></script>
     <link href="~/css/sweetalert2.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-resource.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-aria.min.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <script>
+        $(".container").click(function (e) {
+            $('#cart--preview').fadeOut(300);
+        })
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

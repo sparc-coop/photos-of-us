@@ -1,0 +1,126 @@
+﻿@import '../variables.scss';
+
+.photoPage {
+    &__photographer-info {
+        display: flex;
+        float: right;
+        margin-top: -111px;
+
+        > div {
+            margin: 30px 18px 0 0;
+            text-align: right;
+
+            .title {
+                font-family: "Open Sans";
+                font-size: 14px;
+                color: $primary;
+                line-height: 28px;
+            }
+
+            .name {
+                font-family: "Dosis";
+                font-weight: 600;
+                font-size: 26px;
+                color: $dark;
+            }
+        }
+
+        img {
+            height: 80px;
+            width: 80px;
+            border-radius: 50px;
+        }
+    }
+
+    .photo--info {
+        max-width: 690px;
+        font-family: "Open Sans";
+        font-size: 18px;
+        color: $primary;
+        line-height: 28px;
+        margin: -12px 0 24px 0;
+    }
+
+    .divider {
+        background: $yellow;
+        width: 140px;
+        height: 2px;
+        margin-bottom: 22px;
+    }
+
+    &__actions {
+        display: flex;
+        margin-bottom: 28px;
+        position: relative;
+
+        .back {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 22px;
+            color: $red;
+
+            img {
+                margin-left: -40px;
+                margin-right: 20px;
+            }
+        }
+
+        .share {
+            position: absolute;
+            right: 60px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 16px;
+            color: $primary;
+        }
+    }
+
+    .photo-main {
+        max-width: 1050px;
+        max-height: 683px;
+        border-radius: 8px;
+    }
+
+    &__footer {
+        margin-top: 32px;
+
+        .header {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $primary;
+            line-height: 28px;
+            padding-bottom: 16px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .purchase--info {
+            font-family: "Open Sans";
+            font-size: 18px;
+            color: $dark;
+            letter-spacing: 0;
+            line-height: 28px;
+            max-width: 690px;
+            height: 56px;
+            padding-bottom: 50px;
+            padding-right: 30px;
+        }
+
+        &--right {
+            margin-top: -46px;
+
+            .title {
+                font-family: "Dosis";
+                font-weight: 600;
+                font-size: 16px;
+                color: $text-gray;
+                padding: 14px 0;
+                text-align: center;
+            }
+        }
+    }
+}
