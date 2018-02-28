@@ -14,6 +14,8 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
+        public virtual DbSet<PrintType> PrintType { get; set; }
+        public virtual DbSet<PrintPrice> PrintPrice { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
@@ -200,6 +202,48 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
 
                 entity.Property(e => e.LastName).HasMaxLength(128);
+
+                entity.Property(e => e.IsPhotographer);
+            });
+
+            modelBuilder.Entity<PrintType>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("Type")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Height)
+                    .HasColumnName("Height")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.Length)
+                    .HasColumnName("Length")
+                    .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<PrintPrice>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.PrintId).HasColumnName("PrintId");
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("Price")
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.PhotographerId).HasColumnName("PhotographerId");
+
+                //entity.HasOne(d => d.Photographer)
+                //    .WithMany(p => p.PrintType)
+                //    .HasForeignKey(d => d.PhotographerId)
+                //    .HasConstraintName("FK_PrintPrice_User");
+
+                //entity.HasOne(d => d.PrintType)
+                //    .WithMany(p => p.PrintPrice)
+                //    .HasForeignKey(d => d.PrintId)
+                //    .HasConstraintName("FK_PrintPrice_PrintType");
             });
         }
     }

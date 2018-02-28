@@ -28,6 +28,7 @@
 
         .menu-item{
             margin: 0 26px;
+            cursor: pointer;
         }
     }
 
@@ -38,6 +39,8 @@
 
         img{
             padding: 10px;
+            outline: none;
+            cursor: pointer;
         }
     }
 }

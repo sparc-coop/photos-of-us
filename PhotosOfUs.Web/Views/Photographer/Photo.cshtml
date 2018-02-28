@@ -25,7 +25,7 @@
 
     <div class="photoPage__actions">
         <div class="back"><img src="~/images/icons/ic_arrow_back_24px.png" />Back To Gallery</div>
-        <div class="share">Share photo <img src="" /></div>
+        <div class="share">Share photo <img src="~/images/icons/share-arrow.png" /></div>
     </div>
 
     <img src="@Model.Url" class="photo-main"/>
@@ -39,7 +39,7 @@
             </div>
             <div class="photoPage__footer--right">
                 <div class="title">Starting At Just $5 Per Photo</div>
-                <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')">Buy It Now</div>
+                <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')"><img src="~/images/icons/cart-red.png"/>Buy It Now</div>
             </div>
         </div>       
     </div>

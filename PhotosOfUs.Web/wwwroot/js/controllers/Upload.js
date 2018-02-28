@@ -3,7 +3,7 @@
 // upload
 var upload = angular.module('upload', ['angularFileUpload', 'monospaced.elastic']);
 
-upload.controller('UploadController', ['$scope', '$http', 'FileUploader', function ($scope, $http, FileUploader) {
+upload.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window', function ($scope, $http, FileUploader, $window) {
     var uploader = $scope.uploader = new FileUploader({
         url: 'UploadPhotoAsync'
     });
@@ -82,11 +82,11 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
         }
     };
 
-    $scope.uploadAll = function (itens) {
+    $scope.uploadAll = function (items) {
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
-            angular.forEach(itens, function (item) {
+            angular.forEach(items, function (item) {
                 item.upload();
             });
         } else {
@@ -177,7 +177,7 @@ upload.controller('UploadController', ['$scope', '$http', 'FileUploader', functi
 
     };
 
-    uploader.onCompleteAll = function () {
-        alert("Upload completed!");
+    uploader.onCompleteAll = () => {
+        console.log("test");//$window.location.href = '/Photographer/Dashboard';
     };
 }]);

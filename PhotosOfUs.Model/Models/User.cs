@@ -21,11 +21,13 @@ namespace PhotosOfUs.Model.Models
         public string DisplayName { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public bool? IsPhotographer { get; set; }
 
         public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }
         public ICollection<Photo> Photo { get; set; }
+        public ICollection<PrintPrice> PrintPrice { get; set; }
         public Address Address { get; set; }
     }
 }

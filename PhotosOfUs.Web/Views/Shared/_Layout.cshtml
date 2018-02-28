@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PhotosOfUs.Web</title>
 
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <environment include="Development">
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.min.css" />
@@ -18,7 +19,6 @@
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
@@ -37,7 +37,18 @@
             </div>
             <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl">
                 <div class="cart--preview__content">
-                    <div class="button--checkout--preview" ng-click="goToCart()">Checkout</div>
+                    <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
+                    <div class="cart-items"> @*ng-repeat="item in cart">*@
+                        <div>
+                            <div class="type">A6 Landscape</div><div class="quantity">x1</div><div class="price">$18.00</div>
+                        </div>
+                        <div>
+                            <div class="type">A5 Portrait</div><div class="quantity">x2</div><div class="price">$10.00</div>
+                        </div>
+                    </div>
+                    <div class="total"><span class="label">Cart Total</span><span class="amount">$30.00</span></div>
+                    <div class="cart--preview--arrow"></div>
+                    <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                 </div>               
             </div>
         </nav>
