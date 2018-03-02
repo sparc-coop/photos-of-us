@@ -29,6 +29,11 @@
     
 
     <div class="folder-card--wrapper flex-box">
+        <div class="folder-upload" ng-click="openUpload()">
+            <img src="~/images/icons/add-photo.png" />
+            <div class="label">Upload Images</div>
+            <div class="info">Click here to upload</div>
+        </div>
         @foreach (var item in Model.Photos)
         {
             <div class="photo-card" style="background-image: url(@item.Url)" ng-click="viewPhoto(@item.Id)"></div>

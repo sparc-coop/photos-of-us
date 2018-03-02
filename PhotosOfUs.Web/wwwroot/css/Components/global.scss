@@ -50,19 +50,6 @@ body {
     width: 100%;
 }
 
-.photos-dashboard--wrapper {
-    .header {
-        .created-date {
-            font-family: "Open Sans";
-            line-height: 28px;
-            color: $red;
-            margin-top: 55px;
-            margin-left: 15px;
-            font-size: 18px;
-        }
-    }
-}
-
 .filters {
     margin-bottom: 20px;
 
@@ -82,12 +69,5 @@ body {
         .material-icons.selected {
             color: #43C6BA;
         }
-    }
-}
-
-.photographer-dashboard--wrapper {
-    .yellow-background.line--small {
-        margin-top: 35px;
-        margin-bottom: 30px;
     }
 }

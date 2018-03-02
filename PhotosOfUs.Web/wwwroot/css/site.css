@@ -17,6 +17,10 @@
   cursor: pointer;
   border: none;
   outline: none; }
+  .button--yellow img {
+    padding-right: 11px;
+    vertical-align: middle;
+    margin-top: -5px; }
   .button--yellow--large {
     font-size: 22px;
     width: 330px;
@@ -40,6 +44,44 @@
   font-size: 22px;
   bottom: 16px;
   color: #FF6060; }
+  .button--checkout--preview img {
+    padding-right: 11px;
+    vertical-align: middle;
+    margin-top: -5px; }
+
+.button--upload {
+  position: absolute;
+  bottom: 40px;
+  right: 56px; }
+
+.button--save-changes {
+  font-family: 'Dosis', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #FFE261;
+  letter-spacing: 0;
+  background-color: transparent;
+  border: 2px solid #FFE261;
+  border-radius: 8px;
+  padding: 2px 40px 3px;
+  margin: 35px 5px 2px 0;
+  position: absolute;
+  bottom: 22px;
+  right: 22px; }
+
+.button--discard-changes {
+  font-family: 'Dosis', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #FF6060;
+  letter-spacing: 0;
+  background-color: transparent;
+  border: 0;
+  padding: 5px 20px;
+  margin: 35px 0 2px 0;
+  position: absolute;
+  bottom: 22px;
+  right: 218px; }
 
 .folder-card--wrapper {
   flex-flow: row wrap;
@@ -55,7 +97,8 @@
   .folder-card--wrapper .photo-card {
     background-repeat: no-repeat;
     background-size: cover;
-    cursor: pointer; }
+    cursor: pointer;
+    outline: none; }
   .folder-card--wrapper .folder-card {
     border: 2px solid #194952; }
     .folder-card--wrapper .folder-card .header {
@@ -147,14 +190,6 @@ body {
 .carousel-inner .item img[src$=".svg"] {
   width: 100%; }
 
-.photos-dashboard--wrapper .header .created-date {
-  font-family: "Open Sans";
-  line-height: 28px;
-  color: #FF6060;
-  margin-top: 55px;
-  margin-left: 15px;
-  font-size: 18px; }
-
 .filters {
   margin-bottom: 20px; }
   .filters .searchbox.input--light-blue {
@@ -165,10 +200,6 @@ body {
     color: #DFDFDF; }
   .filters .view-icons .material-icons.selected {
     color: #43C6BA; }
-
-.photographer-dashboard--wrapper .yellow-background.line--small {
-  margin-top: 35px;
-  margin-bottom: 30px; }
 
 .grid-vertical .row .title {
   font-family: Dosis-Regular;
@@ -295,7 +326,8 @@ body {
   border: 1px solid #43C6BA;
   border-radius: 3px;
   outline: none;
-  max-width: 488px; }
+  max-width: 488px;
+  margin-top: 5px; }
 
 .input--light-blue {
   border: 1px solid #43C6BA;
@@ -328,13 +360,16 @@ body {
   .nav--center {
     margin: 0 auto; }
     .nav--center .menu-item {
-      margin: 0 26px; }
+      margin: 0 26px;
+      cursor: pointer; }
   .nav--right {
     position: absolute;
     right: 46px;
     margin-top: -6px; }
     .nav--right img {
-      padding: 10px; }
+      padding: 10px;
+      outline: none;
+      cursor: pointer; }
 
 .paragraph {
   font-family: OpenSans;
@@ -348,7 +383,8 @@ body {
   font-family: "Open Sans";
   font-size: 18px;
   line-height: 28px;
-  max-width: 690px; }
+  max-width: 690px;
+  padding-bottom: 24px; }
 
 .purchase__photo-info {
   color: #43C6BA;
@@ -370,6 +406,67 @@ body {
     font-size: 20px;
     color: #194952; }
 
+.purchase__options--container {
+  padding-bottom: 50px; }
+
+.purchase__options--row {
+  display: flex;
+  height: 50px;
+  padding: 4px 20px; }
+  .purchase__options--row .select {
+    padding-right: 50px;
+    padding-top: 15px; }
+    .purchase__options--row .select md-checkbox .md-icon {
+      border-color: #43C6BA; }
+    .purchase__options--row .select md-checkbox .md-checked .md-icon {
+      background-color: #FFE261; }
+  .purchase__options--row .icon {
+    width: 50px;
+    padding-right: 50px;
+    padding-top: 5px; }
+  .purchase__options--row .choose {
+    margin-top: 10px; }
+  .purchase__options--row .type {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    color: #FF6060;
+    width: 160px;
+    padding-right: 30px; }
+  .purchase__options--row .height {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 20px;
+    color: #43C6BA;
+    width: 120px;
+    padding-right: 20px; }
+  .purchase__options--row .length {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 20px;
+    color: #43C6BA;
+    width: 120px;
+    padding-right: 35px; }
+  .purchase__options--row .quantity {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 18px;
+    color: #194952;
+    width: 70px;
+    padding-right: 20px; }
+  .purchase__options--row .price {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 22px;
+    color: #194952;
+    width: 70px;
+    padding-right: 15px; }
+
+.purchase__options--row:nth-child(odd) {
+  background: rgba(255, 226, 97, 0.16); }
+
 .cart--preview {
   z-index: 100;
   width: 265px;
@@ -383,6 +480,47 @@ body {
     position: relative;
     padding: 16px 14px;
     height: 235px; }
+    .cart--preview__content .heading {
+      font-family: "Dosis";
+      font-weight: 600;
+      font-size: 18px;
+      color: #194952;
+      padding-bottom: 14px; }
+      .cart--preview__content .heading .price {
+        padding-left: 124px; }
+    .cart--preview__content .cart-items {
+      font-family: "Open Sans";
+      font-weight: 600;
+      font-size: 14px;
+      color: #43C6BA; }
+      .cart--preview__content .cart-items > div {
+        display: flex;
+        padding-bottom: 10px; }
+      .cart--preview__content .cart-items .type {
+        width: 100px; }
+      .cart--preview__content .cart-items .quantity {
+        padding-left: 20px;
+        width: 30px; }
+      .cart--preview__content .cart-items .price {
+        padding-left: 14px; }
+    .cart--preview__content .total {
+      position: absolute;
+      bottom: 90px;
+      font-family: "Dosis";
+      font-weight: 600;
+      font-size: 18px;
+      color: #194952; }
+      .cart--preview__content .total .amount {
+        padding-left: 96px; }
+  .cart--preview--arrow {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #FFE261;
+    position: absolute;
+    top: -8px;
+    right: 82px; }
 
 .cart .divider {
   background: #FFE261;
@@ -405,51 +543,168 @@ body {
   border-radius: 4px;
   padding: 26px 16px;
   width: 208px;
-  height: 180px; }
+  height: 180px;
+  position: relative; }
   .cart .checkout .summary .title {
     font-family: "Dosis";
     font-weight: 600;
     font-size: 18px;
     color: #194952;
-    letter-spacing: 0; }
+    letter-spacing: 0;
+    padding-bottom: 18px; }
+  .cart .checkout .summary .shipping {
+    border: 1px solid #DFDFDF;
+    border-radius: 4px;
+    font-family: "Open Sans";
+    font-size: 12px;
+    color: #757575;
+    padding: 4px;
+    position: absolute;
+    bottom: 84px;
+    width: 185px;
+    text-align: center; }
+  .cart .checkout .summary .divider {
+    position: absolute;
+    bottom: 48px;
+    left: 44px; }
+  .cart .checkout .summary .cart-items {
+    display: flex;
+    font-family: "Open Sans";
+    font-size: 12px;
+    color: #757575;
+    padding-bottom: 10px; }
+    .cart .checkout .summary .cart-items .type {
+      width: 120px;
+      padding-right: 40px; }
+  .cart .checkout .summary .total {
+    font-family: "Open Sans";
+    font-size: 14px;
+    color: #757575;
+    display: flex;
+    position: absolute;
+    bottom: 28px; }
+    .cart .checkout .summary .total .total-price {
+      font-weight: 600;
+      padding-left: 82px; }
 
-.header--large {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
-  margin-bottom: 33px; }
+.cart-photo {
+  display: flex; }
+  .cart-photo .photo {
+    width: 240px;
+    height: 156px;
+    border-radius: 8px;
+    padding: 24px 40px 0 0; }
+  .cart-photo--container {
+    padding-top: 24px;
+    padding-bottom: 50px; }
+
+.cart-item {
+  display: flex;
+  padding: 0px 11px; }
+  .cart-item .icon {
+    width: 50px;
+    padding: 7px 12px 0 0; }
+    .cart-item .icon img {
+      vertical-align: middle; }
+  .cart-item .type {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    color: #FF6060;
+    width: 160px;
+    padding-right: 40px; }
+  .cart-item .height {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 20px;
+    color: #43C6BA;
+    width: 120px;
+    padding-right: 20px; }
+  .cart-item .length {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 20px;
+    color: #43C6BA;
+    width: 120px;
+    padding-right: 40px; }
+  .cart-item .quantity {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-size: 18px;
+    color: #194952;
+    width: 70px;
+    padding-right: 20px; }
+  .cart-item .price {
+    line-height: 57px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 22px;
+    color: #194952;
+    width: 70px; }
+
+.cart-item:nth-child(even) {
+  background: rgba(255, 226, 97, 0.16); }
 
 /* main */
+md-dialog {
+  max-width: 1138px;
+  max-height: 839px;
+  width: 100%;
+  overflow: hidden; }
+
 #photographer-upload--wrapper {
-  padding: 15px 20px; }
+  padding: 15px 20px;
+  background-color: #F6FFFF;
+  position: relative;
+  max-width: 1100px;
+  max-height: 839px;
+  width: 100%;
+  /*height: 100%;*/ }
+  #photographer-upload--wrapper .close {
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 18px; }
 
 #photographer-upload--wrapper textarea {
   resize: none; }
-
-#photographer-upload--wrapper .close {
-  opacity: 1;
-  margin-top: 15px; }
-
-#photographer-upload--wrapper .close-icon {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: normal;
-  font-size: 31px;
-  color: #757575;
-  opacity: 0.9; }
 
 #photographer-upload--wrapper .progress {
   margin: 5px 0; }
 
 /* drop zone*/
 .drop-zone {
+  position: absolute;
+  left: 42%;
+  top: 36px;
   font-family: 'Dosis', sans-serif;
+  font-weight: 600;
   text-align: center;
-  font-size: 17px;
-  margin: 20px 0;
-  padding: 0;
-  border: 0.25rem dashed #A5A5C7;
-  height: 300px;
-  display: table;
-  width: 100%; }
+  font-size: 19px;
+  margin: 20px 10px;
+  padding: 12px;
+  border: 2px solid #43C6BA;
+  border-radius: 8px;
+  color: #43C6BA;
+  width: 210px;
+  height: 28px;
+  cursor: pointer; }
+  .drop-zone img {
+    padding-right: 10px;
+    cursor: pointer; }
+  .drop-zone .info {
+    padding: 30px 0;
+    cursor: pointer; }
+  .drop-zone input[type='file'] {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 58px;
+    width: 235px; }
 
 .drop-zone--label {
   font-weight: normal;
@@ -461,8 +716,12 @@ body {
 .nv-file-over {
   border: 0.25rem solid red; }
 
+.upload--container {
+  display: flex; }
+
 /* photo preview */
 #photo-preview {
+  margin-top: 24px;
   font-family: 'Dosis', sans-serif;
   font-weight: 600;
   color: #F6FFFF;
@@ -470,7 +729,17 @@ body {
   background: #194952;
   border-radius: 8px;
   padding: 0 0 15px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  width: 510px;
+  height: 513px;
+  position: relative; }
+  #photo-preview img {
+    width: 510px;
+    height: 330px;
+    border-radius: 8px; }
+  #photo-preview #photo-preview-name {
+    width: 90%;
+    padding-left: 10px; }
 
 .photo-preview-title {
   font-family: 'Open Sans';
@@ -498,51 +767,45 @@ body {
   letter-spacing: 0;
   margin: 3px 0 0 10px; }
 
-#photo-preview img {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: 7px;
-  margin-bottom: 15px; }
-
-#btn-save-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  color: #FFE261;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 2px solid #FFE261;
-  border-radius: 8px;
-  padding: 2px 40px 3px;
-  margin: 35px 5px 2px 0; }
-
-#btn-discart-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #FF6060;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 0;
-  padding: 5px 20px;
-  margin: 35px 0 2px 0; }
-
 /* photo list */
 #photo-list {
   padding: 0 20px; }
 
 #photos {
-  padding: 0; }
+  padding: 0;
+  list-style: none;
+  max-width: 510px;
+  width: 100%;
+  position: relative;
+  margin-top: 25px; }
+  #photos .media {
+    display: flex;
+    height: 72px; }
+  #photos .photo-code {
+    padding-top: 12px; }
+  #photos .code {
+    width: 133px;
+    margin-right: 65px; }
+  #photos .remove {
+    position: absolute;
+    top: -17px;
+    right: 10px; }
+
+md-progress-linear .md-container {
+  background-color: rgba(67, 198, 186, 0.3); }
+
+md-progress-linear .md-bar {
+  background-color: #43C6BA; }
 
 #photos li:hover {
-  background: #e3faf8; }
+  background: #e3faf8;
+  border-radius: 8px; }
 
 .photo-thumbnail {
   width: 80px;
   height: 60px;
   border-radius: 8px;
-  margin-top: 5px; }
+  margin: 5px; }
 
 .photo-code {
   font-family: 'Open Sans', sans-serif;
@@ -641,7 +904,8 @@ canvas {
   .photoPage__photographer-info img {
     height: 80px;
     width: 80px;
-    border-radius: 50px; }
+    border-radius: 50px;
+    margin-top: 20px; }
 
 .photoPage .photo--info {
   max-width: 690px;
@@ -651,12 +915,6 @@ canvas {
   line-height: 28px;
   margin: -12px 0 24px 0; }
 
-.photoPage .divider {
-  background: #FFE261;
-  width: 140px;
-  height: 2px;
-  margin-bottom: 22px; }
-
 .photoPage__actions {
   display: flex;
   margin-bottom: 28px;
@@ -665,7 +923,9 @@ canvas {
     font-family: "Dosis";
     font-weight: 600;
     font-size: 22px;
-    color: #FF6060; }
+    color: #FF6060;
+    cursor: pointer;
+    outline: none; }
     .photoPage__actions .back img {
       margin-left: -40px;
       margin-right: 20px; }
@@ -675,7 +935,12 @@ canvas {
     font-family: "Open Sans";
     font-weight: 600;
     font-size: 16px;
-    color: #43C6BA; }
+    color: #43C6BA;
+    cursor: pointer;
+    outline: none; }
+    .photoPage__actions .share img {
+      height: 18px;
+      width: auto; }
 
 .photoPage .photo-main {
   max-width: 1050px;
@@ -713,6 +978,70 @@ canvas {
       color: #757575;
       padding: 14px 0;
       text-align: center; }
+
+.divider {
+  background: #FFE261;
+  width: 140px;
+  height: 2px;
+  margin-bottom: 22px; }
+
+.photos-dashboard--wrapper .header .created-date {
+  font-family: "Open Sans";
+  line-height: 28px;
+  color: #FF6060;
+  margin-top: 55px;
+  margin-left: 15px;
+  font-size: 18px; }
+
+.photos-dashboard--wrapper .folder-upload {
+  border: 2px dashed #43C6BA;
+  border-radius: 8px;
+  width: 243px;
+  height: 236px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer;
+  outline: none; }
+  .photos-dashboard--wrapper .folder-upload img {
+    margin: 0 auto;
+    padding: 57px 0 20px 4px;
+    width: 36px;
+    height: auto; }
+  .photos-dashboard--wrapper .folder-upload .label {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 26px;
+    color: #194952; }
+  .photos-dashboard--wrapper .folder-upload .info {
+    padding-top: 10px;
+    font-family: "Open Sans";
+    font-size: 14px;
+    color: #194952;
+    letter-spacing: 0;
+    line-height: 20px;
+    max-width: 186px;
+    margin: 0 auto; }
+
+.photographer-dashboard--wrapper .yellow-background.line--small {
+  margin-top: 35px;
+  margin-bottom: 30px; }
+
+.photographer-dashboard--wrapper .folder-new {
+  border: 2px dashed #43C6BA;
+  border-radius: 8px;
+  width: 240px;
+  height: 240px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer; }
+  .photographer-dashboard--wrapper .folder-new img {
+    margin: 0 auto;
+    padding: 57px 0 20px 0; }
+  .photographer-dashboard--wrapper .folder-new .label {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 26px;
+    color: #194952; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;

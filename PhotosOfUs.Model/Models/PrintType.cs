@@ -10,5 +10,6 @@ namespace PhotosOfUs.Model.Models
         public string Type { get; set; }
         public string Height { get; set; }
         public string Length { get; set; }
+        public string Icon { get; set; }
     }
 }

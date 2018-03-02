@@ -45,8 +45,9 @@ namespace PhotosOfUs.Web.Controllers
         public ActionResult Photos(int id)
         {
             var photographerId = 1;
+            var folderId = 1;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, id);
+            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
 
             return View(FolderViewModel.ToViewModel(folder));
         }

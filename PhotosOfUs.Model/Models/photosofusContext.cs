@@ -221,6 +221,10 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.Length)
                     .HasColumnName("Length")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.Icon)
+                    .HasColumnName("Icon")
+                    .HasMaxLength(20);
             });
 
             modelBuilder.Entity<PrintPrice>(entity =>

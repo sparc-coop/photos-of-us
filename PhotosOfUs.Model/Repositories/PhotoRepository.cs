@@ -36,6 +36,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
         }
 
+        public List<PrintType> GetPrintTypes()
+        {
+            return _context.PrintType.ToList();
+        }
+
         public void SavePhoto(Photo photo)
         {
             _context.Photo.Attach(photo);

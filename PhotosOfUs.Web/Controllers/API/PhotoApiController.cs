@@ -27,5 +27,13 @@ namespace PhotosOfUs.Web.Controllers.API
             var photo = new PhotoRepository(_context).GetPhoto(photoId);
             return PhotoViewModel.ToViewModel(photo);
         }
+
+        [HttpGet]
+        [Route("GetPrintTypes")]
+        public List<PrintTypeViewModel> GetPrintTypes()
+        {
+            var printType = new PhotoRepository(_context).GetPrintTypes();
+            return PrintTypeViewModel.ToViewModel(printType);
+        }
     }
 }

@@ -7,6 +7,7 @@
         font-size: 18px;
         line-height: 28px;
         max-width: 690px;
+        padding-bottom: 24px;
     }
 
     &__photo-info {
@@ -35,6 +36,96 @@
                 font-size: 20px;
                 color: $dark;
             }
+        }
+    }
+
+    &__options {
+        &--container {
+            padding-bottom: 50px;
+        }
+
+        &--row {
+            display: flex;
+            height: 50px;
+            padding: 4px 20px;
+
+            .select {
+                padding-right: 50px;
+                padding-top: 15px;
+
+                md-checkbox {
+                    .md-icon {
+                        border-color: $primary;
+                    }
+
+                    .md-checked {
+                        .md-icon {
+                            background-color: $yellow;
+                        }
+                    }
+                }
+            }
+
+            .icon {
+                width: 50px;
+                padding-right: 50px;
+                padding-top: 5px;
+            }
+
+            .choose {
+                margin-top: 10px;
+            }
+
+            .type {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 20px;
+                color: $red;
+                width: 160px;
+                padding-right: 30px;
+            }
+
+            .height {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 20px;
+                color: $primary;
+                width: 120px;
+                padding-right: 20px;
+            }
+
+            .length {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 20px;
+                color: $primary;
+                width: 120px;
+                padding-right: 35px;
+            }
+
+            .quantity {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 18px;
+                color: $dark;
+                width: 70px;
+                padding-right: 20px;
+            }
+
+            .price {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 22px;
+                color: $dark;
+                width: 70px;
+                padding-right: 15px;
+            }
+        }
+
+        &--row:nth-child(odd) {
+            background: rgba(255, 226, 97, 0.16)
         }
     }
 }

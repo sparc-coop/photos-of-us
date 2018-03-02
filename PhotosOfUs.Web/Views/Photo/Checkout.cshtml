@@ -17,31 +17,31 @@
                 <form action="/Photo/SaveAddress" method="POST" class="form">
                     <div class="form-input">
                         <label>First Name</label>
-                        <input />
+                        <input ng-model="address.FirstName" />
                     </div>
                     <div class="form-input">
                         <label>Last Name</label>
-                        <input />
+                        <input ng-model="address.LastName" />
                     </div>
                     <div class="form-input">
                         <label>Phone Number</label>
-                        <input />
+                        <input ng-model="address.Phone"/>
                     </div>
                     <div class="form-input">
                         <label>City</label>
-                        <input />
+                        <input ng-model="address.City"/>
                     </div>
                     <div class="form-input">
                         <label>State</label>
-                        <input />
+                        <input ng-model="address.State" />
                     </div>
                     <div class="form-input">
                         <label>Zip</label>
-                        <input />
+                        <input ng-model="address.ZipCode"/>
                     </div>
                     <div class="form-input form-input--email">
                         <label>Email</label>
-                        <input />
+                        <input ng-model="address.Email" />
                     </div>
                 </form>
 
@@ -64,7 +64,7 @@
             <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
             <div>
                 <form action="/Photo/Charge" method="POST" id="payment-form">
-                    <button class="button--yellow button--yellow--payment">Confirm Order</button>
+                    <button class="button--yellow button--yellow--payment" ng-click="saveAddress(address)">Confirm Order</button>
                     <div class="form-row">
                         <div id="card-element"></div>
                         <div id="card-errors" role="alert"></div>

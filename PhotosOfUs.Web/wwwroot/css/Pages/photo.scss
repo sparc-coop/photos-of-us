@@ -29,6 +29,7 @@
             height: 80px;
             width: 80px;
             border-radius: 50px;
+            margin-top: 20px;
         }
     }
 
@@ -41,13 +42,6 @@
         margin: -12px 0 24px 0;
     }
 
-    .divider {
-        background: $yellow;
-        width: 140px;
-        height: 2px;
-        margin-bottom: 22px;
-    }
-
     &__actions {
         display: flex;
         margin-bottom: 28px;
@@ -58,6 +52,8 @@
             font-weight: 600;
             font-size: 22px;
             color: $red;
+            cursor: pointer;
+            outline: none;
 
             img {
                 margin-left: -40px;
@@ -72,8 +68,10 @@
             font-weight: 600;
             font-size: 16px;
             color: $primary;
+            cursor: pointer;
+            outline: none;
 
-            img{
+            img {
                 height: 18px;
                 width: auto;
             }
@@ -126,6 +124,92 @@
                 padding: 14px 0;
                 text-align: center;
             }
+        }
+    }
+}
+
+.divider {
+    background: $yellow;
+    width: 140px;
+    height: 2px;
+    margin-bottom: 22px;
+}
+
+.photos-dashboard--wrapper {
+    .header {
+        .created-date {
+            font-family: "Open Sans";
+            line-height: 28px;
+            color: $red;
+            margin-top: 55px;
+            margin-left: 15px;
+            font-size: 18px;
+        }
+    }
+
+    .folder-upload {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 243px;
+        height: 236px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+
+        img {
+            margin: 0 auto;
+            padding: 57px 0 20px 4px;
+            width: 36px;
+            height: auto;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
+        }
+
+        .info {
+            padding-top: 10px;
+            font-family: "Open Sans";
+            font-size: 14px;
+            color: $dark;
+            letter-spacing: 0;
+            line-height: 20px;
+            max-width: 186px;
+            margin: 0 auto;
+        }
+    }
+}
+
+
+.photographer-dashboard--wrapper {
+    .yellow-background.line--small {
+        margin-top: 35px;
+        margin-bottom: 30px;
+    }
+
+    .folder-new {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 240px;
+        height: 240px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+
+        img{
+            margin: 0 auto;
+            padding: 57px 0 20px 0;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
         }
     }
 }
