@@ -28,5 +28,23 @@ namespace PhotosOfUs.Web.Controllers.API
             address = new AddressRepository(_context).Create(address);
             return AddressViewModel.ToViewModel(address);
         }
+
+        //[HttpPost]
+        //[Route("CreateOrder")]
+        //public OrderViewModel CreateOrder(OrderViewModel vm)
+        //{
+        //    var order = OrderViewModel.ToEntity(vm);
+        //    address = new AddressRepository(_context).Create(address);
+        //    return AddressViewModel.ToViewModel(address);
+        //}
+
+        //[HttpGet]
+        //[Route("GetOrder")]
+        //public OrderViewModel GetOrder(OrderViewModel vm)
+        //{
+        //    var order = OrderViewModel.ToEntity(vm);
+        //    address = new AddressRepository(_context).Create(address);
+        //    return AddressViewModel.ToViewModel(address);
+        //}
     }
 }

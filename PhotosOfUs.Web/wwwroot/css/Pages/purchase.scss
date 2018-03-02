@@ -58,9 +58,11 @@
                         border-color: $primary;
                     }
 
-                    .md-checked {
-                        .md-icon {
-                            background-color: $yellow;
+                    &.md-checked .md-icon {
+                        background: $yellow;
+
+                        &:after {
+                            display: none;
                         }
                     }
                 }

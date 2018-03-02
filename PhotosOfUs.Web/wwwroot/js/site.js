@@ -37,6 +37,38 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
             console.log($scope.printTypes);
         });
     };
+
+    $scope.selectedItems = [];
+
+    $scope.select = (printTypeId) => {
+        if ($scope.selectedItems.length == 0)
+        {
+            $scope.selectedItems.push(printTypeId);
+        }
+        else if ($scope.selectedItems.indexOf(printTypeId) != -1)
+        {
+            var index = $scope.selectedItems.indexOf(printTypeId);
+            $scope.selectedItems.splice(index, 1)
+        }
+        else
+        {
+            $scope.selectedItems.push(printTypeId);
+        }
+    };
+
+    $scope.createOrder = () => {
+       // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
+            $window.location.href = '/Photo/Cart';
+        //});
+    };
+
+    $scope.getOrder = () => {
+        $http.get('/api/Checkout/GetOrder').then(x => {
+            $scope.printTypes = x.data;
+            console.log($scope.printTypes);
+        });
+    };
+
 }])
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $window, $mdDialog) => {
     $scope.close = () => $mdDialog.hide();

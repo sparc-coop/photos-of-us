@@ -25,17 +25,5 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             return "value";
         }
-
-
-        [HttpPost]
-        [Route("{photographerId:int}/Uploads")]
-        public async Task<string> Upload(int photographerId)
-        {
-            //var stream = await GetUploadStream();
-            //var model = await new PhotoRepository().Upload(photographerId, stream.Stream, stream.Filename);
-
-            //return new FileViewModel(model);
-            return null;
-        }
     }
 }
