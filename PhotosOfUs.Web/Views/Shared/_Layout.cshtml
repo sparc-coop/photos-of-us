@@ -26,17 +26,31 @@
         <nav class="nav">
             <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
             <div class="nav--center" ng-controller="PhotoCtrl">
-                <a ng-click="openUpload()" class="menu-item">Upload</a>
+                @*<a ng-click="openUpload()" class="menu-item">Upload</a>
                 <a href="/" class="menu-item">Page Title</a>
-                <a href="/" class="menu-item">Page Title</a>                                
+                <a href="/" class="menu-item">Page Title</a>*@                                
             </div>
             <div class="nav--right"> @*ng-if="customer"*@
-                @*@await Html.PartialAsync("_LoginPartial")*@
-                <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <!--Photographer Menu-->
+                    <img src="~/images/icons/alert.png" alt="notifications" />
+                    <img src="~/images/icons/add.png" alt="add" />
+                    @*<img src="~/images/{{profile.url}}" alt="profile" ng-click="viewDropdown  = !viewDropdown" />*@
+                    <div ng-click="viewDropdown  = !viewDropdown" class="profileImg"></div>
+                }
+                else
+                {
+                    @*@await Html.PartialAsync("_LoginPartial")*@
+
+                    <!--If user is customer-->
+                    <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
+                }
                 <img src="~/images/icons/ic_more_vert_24px.png" />
             </div>
             <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl">
                 <div class="cart--preview__content">
+                    <div class="cart--preview--arrow"></div>
                     <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
                     <div class="cart-items"> @*ng-repeat="item in cart">*@
                         <div>
@@ -47,9 +61,17 @@
                         </div>
                     </div>
                     <div class="total"><span class="label">Cart Total</span><span class="amount">$30.00</span></div>
-                    <div class="cart--preview--arrow"></div>
                     <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                 </div>               
+            </div>
+            <div ng-if="viewDropdown" class="adminMenu">
+                <div class="adminMenu__arrow"></div>
+                <div class="adminMenu__list">Profile</div>
+                <div class="adminMenu__list">Photo Gallery</div>
+                <div class="adminMenu__list">Personal Brand Settings</div>
+                <div class="adminMenu__list">Sales History</div>
+                <div class="adminMenu__list">Account Settings</div>
+                <div class="adminMenu__list logout">Log Out</div>
             </div>
         </nav>
     </div>
@@ -100,6 +122,7 @@
     <script>
         $(".container").click(function (e) {
             $('#cart--preview').fadeOut(300);
+            $('.adminMenu').fadeOut(300);
         })
     </script>
 

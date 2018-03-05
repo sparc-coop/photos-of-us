@@ -365,11 +365,60 @@ body {
   .nav--right {
     position: absolute;
     right: 46px;
-    margin-top: -6px; }
+    margin-top: -11px; }
     .nav--right img {
       padding: 10px;
       outline: none;
-      cursor: pointer; }
+      cursor: pointer;
+      vertical-align: middle; }
+    .nav--right .login {
+      margin-top: 10px; }
+    .nav--right .profileImg {
+      outline: none;
+      cursor: pointer;
+      vertical-align: middle;
+      height: 34px;
+      width: 34px;
+      border-radius: 100px;
+      border: 1px solid #FFE261;
+      background-color: #194952;
+      display: inline-block; }
+  .nav .adminMenu {
+    background-color: #194952;
+    z-index: 100;
+    width: 212px;
+    height: 250px;
+    border-radius: 6px;
+    margin-top: 46px;
+    position: absolute;
+    right: 0;
+    padding-top: 15px; }
+    .nav .adminMenu__list {
+      padding: 10px 15px 0 15px;
+      width: 86%;
+      color: #FFE261;
+      font-size: 16px;
+      cursor: pointer;
+      height: 30px; }
+    .nav .adminMenu__list:hover {
+      background-color: #43C6BA; }
+    .nav .adminMenu__arrow {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #194952;
+      position: absolute;
+      top: -8px;
+      right: 82px; }
+    .nav .adminMenu .logout {
+      padding-top: 10px;
+      color: #FF6060;
+      font-family: "Dosis";
+      font-size: 14px; }
+      .nav .adminMenu .logout:hover {
+        background-color: #194952;
+        border-radius: 6px; }
 
 .paragraph {
   font-family: OpenSans;
