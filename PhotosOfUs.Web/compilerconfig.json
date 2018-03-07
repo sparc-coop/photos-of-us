@@ -8,7 +8,35 @@
     "inputFile": "wwwroot/css/MobileSite.scss"
   },
   {
-    "outputFile": "wwwroot/js/sweetalert2.all.es5.js",
-    "inputFile": "wwwroot/js/sweetalert2.all.js"
+    "outputFile": "wwwroot/css/Views/Upload.css",
+    "inputFile": "wwwroot/css/Views/Upload.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/Button.css",
+    "inputFile": "wwwroot/css/Components/Button.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/container.css",
+    "inputFile": "wwwroot/css/Components/container.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/footer.css",
+    "inputFile": "wwwroot/css/Components/footer.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/global.css",
+    "inputFile": "wwwroot/css/Components/global.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/label.css",
+    "inputFile": "wwwroot/css/Components/label.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/grid.css",
+    "inputFile": "wwwroot/css/Components/grid.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Components/input.css",
+    "inputFile": "wwwroot/css/Components/input.scss"
   }
 ]
