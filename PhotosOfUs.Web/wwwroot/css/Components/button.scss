@@ -93,4 +93,35 @@
         bottom: 22px;
         right: 218px;
     }
+
+    &--back {
+        height: 19px;
+        width: 19px;
+        margin: 30px 20px 0 -40px;
+        cursor: pointer;
+    }
+
+    &--go {
+        display: inline;
+        border-radius: 0 8px 8px 0;
+        background: $black;
+        color: $white;
+        padding: 11.5px;
+        cursor: pointer;
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 20px;
+        vertical-align: middle;
+        text-decoration: none;
+    }
+
+    &--lostcode {
+        cursor: pointer;
+        color: $orange;
+        padding-top: 10px;
+        height: 28px;
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 14px;
+    }
 }

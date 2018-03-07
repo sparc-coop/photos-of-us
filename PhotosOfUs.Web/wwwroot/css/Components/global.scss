@@ -55,6 +55,23 @@ body {
 
     .searchbox.input--light-blue {
         width: 510px;
+        background-image: url('/images/icons/search.png');
+        background-repeat: no-repeat;
+        background-position: 20px 5px;
+        padding: 0 50px;
+        color: $primary;
+
+        &::-moz-placeholder {
+            color: $primary;
+        }
+
+        &:-ms-input-placeholder {
+            color: $primary;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $primary;
+        }
     }
 
     select {
@@ -68,6 +85,22 @@ body {
 
         .material-icons.selected {
             color: #43C6BA;
+        }
+    }
+
+    .filter-sort {
+        margin-right: 60px;
+        display: inline-block;
+
+        select {
+            outline: none;
+            color: $primary;
+            border: none;
+
+            option {
+                color: $primary;
+                border: none;
+            }
         }
     }
 }

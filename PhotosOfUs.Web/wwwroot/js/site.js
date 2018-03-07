@@ -21,6 +21,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
             clickOutsideToClose: true,
         });
     };
+
+    $scope.getPhotoCode = () => {
+        $scope.code = $location.absUrl().split('=')[1];
+    };
+
+    $scope.getPhotographer = (id) => {
+        $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
+            $scope.photographer = x.data;
+            console.log($scope.photographer);
+        });
+    };
 }])
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
     $scope.goToCart = () => {
@@ -41,11 +52,11 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
     $scope.selectedItems = [];
 
     $scope.select = (printTypeId) => {
-        if ($scope.selectedItems.length == 0)
+        if ($scope.selectedItems.length === 0)
         {
             $scope.selectedItems.push(printTypeId);
         }
-        else if ($scope.selectedItems.indexOf(printTypeId) != -1)
+        else if ($scope.selectedItems.indexOf(printTypeId) !== -1)
         {
             var index = $scope.selectedItems.indexOf(printTypeId);
             $scope.selectedItems.splice(index, 1)

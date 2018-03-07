@@ -58,6 +58,17 @@ namespace PhotosOfUs.Web.Controllers
             return View(PhotoViewModel.ToViewModel(photo));
         }
 
+        public ActionResult Code(int id)
+        {
+            return View();
+        }
+
+        public ActionResult PhotoCode(string code)
+        {
+            var photos = new PhotoRepository(_context).GetPhotosByCode(code);
+            return View(PhotoViewModel.ToViewModel(photos));
+        }
+
         // GET: Photographer/Create
         public ActionResult Create()
         {

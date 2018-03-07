@@ -31,6 +31,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
+        public List<Photo> GetPhotosByCode(string code)
+        {
+            return _context.Photo.Where(x => x.Code.Equals(code)).ToList();
+        }
+
         public Photo GetPhoto(int photoId)
         {
             return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);

@@ -6,6 +6,11 @@
     font-size: 42px;
     color: #194952;
     letter-spacing: 0;
+
+    span{
+        color: $primary;
+        text-transform: uppercase;
+    }
 }
 
 .header-small {

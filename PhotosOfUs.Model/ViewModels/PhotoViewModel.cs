@@ -19,6 +19,7 @@ namespace PhotosOfUs.Model.ViewModels
         public decimal? Price { get; set; }
         public string Resolution { get; set; }
         public string FileSize { get; set; }
+        public User Photographer { get; set; }
 
         public static PhotoViewModel ToViewModel(Photo entity)
         {

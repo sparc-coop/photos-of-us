@@ -83,22 +83,73 @@
   bottom: 22px;
   right: 218px; }
 
+.button--back {
+  height: 19px;
+  width: 19px;
+  margin: 30px 20px 0 -40px;
+  cursor: pointer; }
+
+.button--go {
+  display: inline;
+  border-radius: 0 8px 8px 0;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 11.5px;
+  cursor: pointer;
+  font-family: "Open Sans";
+  font-weight: 600;
+  font-size: 20px;
+  vertical-align: middle;
+  text-decoration: none; }
+
+.button--lostcode {
+  cursor: pointer;
+  color: #FF6060;
+  padding-top: 10px;
+  height: 28px;
+  font-family: "Open Sans";
+  font-weight: 600;
+  font-size: 14px; }
+
 .folder-card--wrapper {
   flex-flow: row wrap;
   margin-left: -10px;
   margin-right: -10px; }
-  .folder-card--wrapper .photo-card, .folder-card--wrapper .folder-card {
+  .folder-card--wrapper .photo-card, .folder-card--wrapper .photo-card--grid, .folder-card--wrapper .folder-card {
     position: relative;
     border-radius: 8px;
     box-sizing: border-box;
     height: 240px;
     width: 23%;
     margin: 0 1% 20px; }
-  .folder-card--wrapper .photo-card {
+  .folder-card--wrapper .photo-card--grid {
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
     outline: none; }
+  .folder-card--wrapper .photo-card {
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    z-index: 11; }
+  .folder-card--wrapper .photo-card:nth-child(3) {
+    margin: 13px 0 0 -150px;
+    z-index: 10;
+    height: 218px; }
+  .folder-card--wrapper .photo-card:nth-child(n+4) {
+    margin: 32px 0 0 -170px;
+    z-index: 9;
+    height: 180px; }
+  .folder-card--wrapper .photo-card:nth-child(5) {
+    z-index: 8; }
+  .folder-card--wrapper .photo-card:nth-child(6) {
+    z-index: 7; }
+  .folder-card--wrapper .photo-card:nth-child(7) {
+    z-index: 6; }
+  .folder-card--wrapper .photo-card:nth-child(8) {
+    z-index: 5; }
   .folder-card--wrapper .folder-card {
     border: 2px solid #194952; }
     .folder-card--wrapper .folder-card .header {
@@ -134,10 +185,51 @@
         font-size: 26px;
         color: #194952;
         letter-spacing: 0;
-        font-weight: 500; }
+        font-weight: 500;
+        margin-top: 15px; }
       .folder-card--wrapper .folder-card .folder-info .created-date {
-        font-size: 18px;
-        color: #194952; }
+        font-size: 16px;
+        color: #194952;
+        margin-top: -22px; }
+      .folder-card--wrapper .folder-card .folder-info .folder-code {
+        color: #43C6BA;
+        font-size: 16px;
+        font-weight: 600;
+        padding-top: 5px; }
+  .folder-card--wrapper.codeView {
+    margin-left: 0; }
+  .folder-card--wrapper .codeView {
+    display: block; }
+    .folder-card--wrapper .codeView__row {
+      display: flex;
+      cursor: pointer;
+      outline: none; }
+    .folder-card--wrapper .codeView__card {
+      padding: 24px;
+      height: 192px;
+      width: 198px;
+      background: #194952;
+      border-radius: 8px;
+      margin-right: 12px; }
+      .folder-card--wrapper .codeView__card--title {
+        padding-bottom: 22px; }
+      .folder-card--wrapper .codeView__card--date {
+        padding-bottom: 64px; }
+      .folder-card--wrapper .codeView__card .label {
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 14px;
+        color: #FFE261; }
+      .folder-card--wrapper .codeView__card .info {
+        font-family: "Dosis";
+        font-size: 20px;
+        font-weight: 600;
+        color: #43C6BA; }
+      .folder-card--wrapper .codeView__card--edit {
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 14px;
+        color: #FF6060; }
 
 .flex-box {
   display: flex;
@@ -153,6 +245,8 @@
     margin-right: auto; }
   .flex-box .align-right {
     margin-left: auto; }
+    .flex-box .align-right i {
+      cursor: pointer; }
 
 body {
   padding-bottom: 60px;
@@ -193,13 +287,34 @@ body {
 .filters {
   margin-bottom: 20px; }
   .filters .searchbox.input--light-blue {
-    width: 510px; }
+    width: 510px;
+    background-image: url("/images/icons/search.png");
+    background-repeat: no-repeat;
+    background-position: 20px 5px;
+    padding: 0 50px;
+    color: #43C6BA; }
+    .filters .searchbox.input--light-blue::-moz-placeholder {
+      color: #43C6BA; }
+    .filters .searchbox.input--light-blue:-ms-input-placeholder {
+      color: #43C6BA; }
+    .filters .searchbox.input--light-blue::-webkit-input-placeholder {
+      color: #43C6BA; }
   .filters select {
     color: #DFDFDF; }
   .filters .view-icons .material-icons {
     color: #DFDFDF; }
   .filters .view-icons .material-icons.selected {
     color: #43C6BA; }
+  .filters .filter-sort {
+    margin-right: 60px;
+    display: inline-block; }
+    .filters .filter-sort select {
+      outline: none;
+      color: #43C6BA;
+      border: none; }
+      .filters .filter-sort select option {
+        color: #43C6BA;
+        border: none; }
 
 .grid-vertical .row .title {
   font-family: Dosis-Regular;
@@ -284,6 +399,9 @@ body {
   font-size: 42px;
   color: #194952;
   letter-spacing: 0; }
+  .header-large span {
+    color: #43C6BA;
+    text-transform: uppercase; }
 
 .header-small {
   font-family: "Dosis";
@@ -1007,6 +1125,12 @@ canvas {
     color: #43C6BA;
     line-height: 28px;
     padding-bottom: 16px; }
+  .photoPage__footer .subHeader {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 18px;
+    color: #FFE261;
+    padding-bottom: 10px; }
   .photoPage__footer .container {
     display: flex;
     flex-wrap: wrap; }
@@ -1029,6 +1153,44 @@ canvas {
       color: #757575;
       padding: 14px 0;
       text-align: center; }
+
+.photoPage__image-container {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  padding-bottom: 34px; }
+  .photoPage__image-container--photo {
+    border-radius: 8px;
+    max-width: 495px;
+    width: 100%;
+    height: 332px;
+    background-size: 510px 332px;
+    margin: 15px 30px 15px 0;
+    position: relative; }
+    .photoPage__image-container--photo .photoName {
+      color: #FFFFFF;
+      opacity: 0.8;
+      font-family: "Dosis";
+      font-weight: 600;
+      font-size: 20px;
+      position: absolute;
+      bottom: 12px;
+      right: 15px; }
+      .photoPage__image-container--photo .photoName img {
+        height: 17px;
+        padding-left: 5px; }
+  .photoPage__image-container--photo:before {
+    background-image: linear-gradient(-180deg, transparent 44%, #000000 100%); }
+  .photoPage__image-container .newCode {
+    height: 28px;
+    font-family: "Open Sans";
+    font-size: 14px;
+    color: #FF6060;
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    bottom: 4px;
+    left: 0; }
 
 .divider {
   background: #FFE261;
@@ -1093,6 +1255,71 @@ canvas {
     font-weight: 600;
     font-size: 26px;
     color: #194952; }
+
+.codePage__background {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0; }
+
+.codePage__logo {
+  height: 41px;
+  width: 61px;
+  border-radius: 50px;
+  background: #D8D8D8;
+  position: absolute;
+  text-align: center;
+  padding-top: 20px;
+  top: 50px;
+  left: 100px; }
+
+.codePage__pouLogo {
+  position: absolute;
+  bottom: 29px;
+  left: 61px; }
+
+.codePage__container {
+  margin: 0 auto;
+  max-width: 453px;
+  width: 100%;
+  padding-top: 16%;
+  text-align: center;
+  position: relative;
+  z-index: 2; }
+  .codePage__container__title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 42px;
+    color: #000000;
+    padding-bottom: 30px; }
+  .codePage__container__divider {
+    border: 1px solid #FF6060;
+    height: 0;
+    width: 140px;
+    margin: 0 auto; }
+  .codePage__container__info {
+    padding: 20px 0 62px 0;
+    font-family: "Open Sans";
+    font-size: 18px;
+    color: #000000;
+    line-height: 28px; }
+  .codePage__container__search {
+    border: none;
+    padding: 12px 18px;
+    font-family: "Open Sans";
+    font-size: 20px;
+    color: #194952;
+    border-radius: 8px 0 0 8px;
+    background: #F6FFFF;
+    outline: none;
+    vertical-align: middle; }
+
+.codePage, .codePage body {
+  padding-bottom: 0; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;

@@ -6,16 +6,18 @@
 <div class="photographer-dashboard--wrapper">
     <h2 class="header-large">Good morning, </h2>
     <div class="yellow-background line--small"></div>
-    <a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>
+    @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
     <hr />
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Library" />
+        <input class="input--light-blue searchbox" placeholder="Search Library"/>
 
         <div class="view-icons align-right">
-            <select>
-                <option>Date</option>
-                <option>Name</option>
-            </select>
+            <div class="filter-sort">
+                <select>
+                    <option>Date Created</option>
+                    <option>Name</option>
+                </select>
+            </div>
 
             <i class="material-icons">view_list</i>
             <i class="material-icons selected">apps</i>
@@ -45,6 +47,7 @@
                     <p class="created-date">
                         Created: @item.CreatedDate.ToString("MMMM d, yyyy")
                     </p>
+                    <p class="folder-code">Folder Code: @item.Id</p>
                 </div>
             </div>
         }

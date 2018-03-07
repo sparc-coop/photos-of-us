@@ -17,7 +17,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public User Find(int userId)
         {
-            return _context.User.Find(userId);//.Where(x => x.Id == userId).First();
+            return _context.User.Find(userId);
         }
 
         public Address GetAddress(int userId)
