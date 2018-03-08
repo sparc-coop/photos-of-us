@@ -63,6 +63,21 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult Code2(int id)
+        {
+            return View();
+        }
+
+        public ActionResult Code3(int id)
+        {
+            return View();
+        }
+
+        public ActionResult Code4(int id)
+        {
+            return View();
+        }
+
         public ActionResult PhotoCode(string code)
         {
             var photos = new PhotoRepository(_context).GetPhotosByCode(code);

@@ -111,6 +111,18 @@
   font-weight: 600;
   font-size: 14px; }
 
+.button--learn {
+  border: 2px solid #43C6BA;
+  border-radius: 8px;
+  width: 209px;
+  height: 26px;
+  background-color: #194952;
+  color: #43C6BA;
+  font-size: 18px;
+  font-family: "Open Sans";
+  text-align: center;
+  padding: 10px 0; }
+
 .folder-card--wrapper {
   flex-flow: row wrap;
   margin-left: -10px;
@@ -1266,6 +1278,26 @@ canvas {
   bottom: 0;
   z-index: 0; }
 
+.codePage__background2 {
+  /*max-width: 30%;
+        overflow: hidden;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;*/
+  position: relative;
+  height: 100vh;
+  margin-left: 70%;
+  max-width: 580px;
+  overflow: hidden; }
+  .codePage__background2 img {
+    position: absolute;
+    right: 0;
+    z-index: 0;
+    height: 100%; }
+
 .codePage__logo {
   height: 41px;
   width: 61px;
@@ -1289,23 +1321,24 @@ canvas {
   padding-top: 16%;
   text-align: center;
   position: relative;
-  z-index: 2; }
+  z-index: 2;
+  color: #000000; }
   .codePage__container__title {
     font-family: "Dosis";
     font-weight: 600;
     font-size: 42px;
-    color: #000000;
     padding-bottom: 30px; }
   .codePage__container__divider {
     border: 1px solid #FF6060;
     height: 0;
     width: 140px;
     margin: 0 auto; }
+    .codePage__container__divider.divider2 {
+      margin: 0; }
   .codePage__container__info {
     padding: 20px 0 62px 0;
     font-family: "Open Sans";
     font-size: 18px;
-    color: #000000;
     line-height: 28px; }
   .codePage__container__search {
     border: none;
@@ -1317,9 +1350,71 @@ canvas {
     background: #F6FFFF;
     outline: none;
     vertical-align: middle; }
+  .codePage__container2 {
+    max-width: 70vw;
+    width: 100%;
+    position: absolute;
+    top: 293px;
+    padding: 0; }
+    .codePage__container2 .centered {
+      max-width: 453px;
+      text-align: left;
+      margin: 0 auto;
+      color: #000000; }
 
 .codePage, .codePage body {
   padding-bottom: 0; }
+
+.codePage .alt3 {
+  background-color: #194952; }
+  .codePage .alt3 .codePage__container .centered {
+    color: #FFFFFF; }
+    .codePage .alt3 .codePage__container .centered .divider2 {
+      border: 1px solid #FFE261; }
+    .codePage .alt3 .codePage__container .centered .button--go {
+      background: #FFE261;
+      color: #194952; }
+
+.codePage .alt4 {
+  background-color: #194952;
+  height: 100vh; }
+  .codePage .alt4 .logo {
+    position: absolute;
+    top: 33px;
+    left: 84px; }
+  .codePage .alt4 .divider2 {
+    border: 1px solid #FFE261; }
+  .codePage .alt4 .codePage__container2 {
+    top: 205px; }
+  .codePage .alt4 .codePage__container .centered {
+    color: #FFFFFF;
+    max-width: 620px; }
+    .codePage .alt4 .codePage__container .centered .codePage__container__info {
+      padding: 20px 0 54px 0; }
+    .codePage .alt4 .codePage__container .centered .button--go {
+      background: #FFE261;
+      color: #194952; }
+    .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom {
+      padding-top: 140px; }
+      .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .heading1 {
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 26px;
+        color: #FFE261;
+        padding-bottom: 8px; }
+      .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .heading2 {
+        font-family: "Open Sans";
+        font-size: 18px;
+        color: #F6FFFF;
+        padding-bottom: 28px; }
+      .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .codePage__container__search {
+        height: 28px;
+        width: 210px;
+        padding: 4px 20px;
+        font-size: 16px; }
+      .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .button--go {
+        font-size: 16px;
+        padding: 7px 8px; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;

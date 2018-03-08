@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Code_Enter.cshtml";
+
+}
+
+<div ng-controller="PhotoCtrl" class="alt4">
+    <img src="~/images/logo.png" class="logo"/>
+    <div class="codePage__container codePage__container2">
+        <div class="centered">
+            <div class="codePage__container__title">Welcome to Photos Of Us</div>
+            <div class="codePage__container__divider divider2"></div>
+            <div class="codePage__container__info">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
+                natoque penatibus et magnis dis parturient montes, nascetur
+                ridiculus mus. Donec
+            </div>
+            <div class="button--learn">Learn More</div>
+            <div class="codePage__container__info--bottom">
+                <div class="heading1">Looking for something?</div>
+                <div class="heading2">Enter your code below to find you photos</div>
+                <input ng-model="code" placeholder="Enter Your Code" class="codePage__container__search" />
+                <a data-ng-href="@Url.Action("PhotoCode", "Photographer")?code={{code}}" class="button--go">Go!</a>
+                <div class="button--lostcode">Lost your code?</div>
+            </div>
+        </div>
+    </div>
+</div>
