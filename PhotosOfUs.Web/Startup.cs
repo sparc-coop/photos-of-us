@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 
 using PhotosOfUs.Model.Models;
+using Stripe;
+using PhotosOfUs.Web.Extensions;
 
 namespace PhotosOfUs.Web
 {
@@ -38,6 +40,8 @@ namespace PhotosOfUs.Web
             services.AddMvc();
             //services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PhotosOfUsDatabase")));
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer("Server=photosofus.database.windows.net;Database=photosofus;User Id=kuviocreative;Password="));
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +57,8 @@ namespace PhotosOfUs.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
 
             app.UseStaticFiles();
 

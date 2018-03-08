@@ -3,8 +3,9 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="photos-dashboard--wrapper">
+<div class="photos-dashboard--wrapper" ng-controller="PhotoCtrl">
     <div class="flex-box header">
+        <a href="/Photographer/Dashboard" class="button--back"><img src="~/images/icons/ic_arrow_back_24px.png" /></a>
         <h2 class="header-large">@Model.Name</h2>
         <span class="created-date">Created: @Model.CreatedDate.ToString("MMMM d, yyyy")</span>
     </div>
@@ -17,25 +18,53 @@
         
 
         <div class="view-icons align-right">
-            <select>
-                <option>Date</option>
-                <option>Name</option>
-            </select>
+            <div class="filter-sort">
+                <select>
+                    <option>Date Created</option>
+                    <option>Name</option>
+                </select>
+            </div>
 
-            <i class="material-icons">view_list</i>
-            <i class="material-icons selected">apps</i>
+            <i class="material-icons" ng-click="listView = !listView">view_list</i>
+            <i class="material-icons selected" ng-click="listView = !listView">apps</i>
         </div>
     </div>
     
 
-    <div class="folder-card--wrapper flex-box">
+    <div class="folder-card--wrapper flex-box" ng-show="!listView">
+        <div class="folder-upload" ng-click="openUpload()">
+                <img src="~/images/icons/add-photo.png" />
+                <div class="label">Upload Images</div>
+                <div class="info">Click here to upload</div>
+            </div>
+
         @foreach (var item in Model.Photos)
         {
-            <div class="photo-card" style="background-image: url(@item.Url)">
-
-            </div>
+            <div class="photo-card--grid" style="background-image: url(@item.Url)" ng-click="viewPhoto(@item.Id)"></div>
         }
-
+    </div>
+    <div class="folder-card--wrapper codeView" ng-show="listView">
+        @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))
+        {
+            <div class="codeView__row" ng-click="">
+                <div class="codeView__card">
+                    <div class="codeView__card--title">
+                        <div class="label">Photo Code</div>
+                        <div class="info">@item.Code</div>
+                    </div>
+                    <div class="codeView__card--date">
+                        <div class="label">Date Uploaded</div>
+                        <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
+                    </div>
+                    <div class="codeView__card--edit">Bulk Edit</div>
+                </div>
+                @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
+                {
+                    <div class="photo-card" style="background-image: url(@image.Url)" ng-click="viewPhoto(@image.Id)"></div>
+                }
+                @*<div class="photo-card" style="background-image: url(@item.Url)" ng-click="viewPhoto(@item.Id)"></div>*@
+            </div>           
+        }
     </div>
 
 </div>

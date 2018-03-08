@@ -1,0 +1,48 @@
+﻿@model List<PhotoViewModel>
+
+<div class="photoPage" ng-controller="PhotoCtrl">
+    <div class="header" ng-init="getPhotoCode(); getPhotographer(@Model.Select(x => x.PhotographerId).First())">
+        <h2 class="header-large">Photos With Code <span>{{code}}</span></h2>
+        <div class="photoPage__photographer-info">
+            <div>
+                <div class="title">Photographer</div>
+                <div class="name">{{photographer.displayName}}</div>
+            </div>
+            <img src="https://www.sonypark360.net/wp-content/uploads/2017/08/profile-pictures.png"/>
+        </div>
+    </div>
+
+    <div class="photo--info">
+        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+    </div>
+
+    <div class="divider"></div>
+
+   <div class="photoPage__image-container">
+       @foreach (var photo in Model)
+       {
+        <div class="photoPage__image-container--photo" style="background-image: linear-gradient(-180deg, rgba(0,0,0,0.00) 44%, #000000 100%), url('@photo.Url')">
+            <div class="photoName">@photo.Name <img src="~/images/icons/share-white.png"/></div>
+        </div>
+       }
+       <div ng-click="switchCode()" class="newCode">Not the photos you were looking for?</div>
+   </div>
+
+    <div class="photoPage__footer">
+        <div class="subHeader">Like What You See?</div>
+        <div class="header">They Would Look Better On Your Wall!</div>
+        <div class="container">
+            <div class="purchase--info">
+                Why not purchase a print and get it shipped right to your door?
+                We offer many different sizes and stock. Or alternatively, you can purchase a digital version.
+            </div>
+            <div class="photoPage__footer--right">
+                <div class="title">Starting At Just $5 Per Photo</div>
+                <div class="button--yellow button--yellow--large" ng-click="goToPurchase(code)"><img src="~/images/icons/cart-red.png"/>Buy Them Now</div>
+            </div>
+        </div>       
+    </div>
+
+</div>

@@ -15,6 +15,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
+            
             var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },

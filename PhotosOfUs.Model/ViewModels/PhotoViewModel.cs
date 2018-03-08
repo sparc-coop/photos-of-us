@@ -14,8 +14,12 @@ namespace PhotosOfUs.Model.ViewModels
         public string ThumbnailUrl { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string PhotographerName { get; set; }
         public DateTime UploadDate { get; set; }
         public decimal? Price { get; set; }
+        public string Resolution { get; set; }
+        public string FileSize { get; set; }
+        public User Photographer { get; set; }
 
         public static PhotoViewModel ToViewModel(Photo entity)
         {
@@ -23,6 +27,11 @@ namespace PhotosOfUs.Model.ViewModels
 
             viewModel.Id = entity.Id;
             viewModel.PhotographerId = entity.PhotographerId;
+            if (entity.Photographer != null)
+            {
+                viewModel.PhotographerName = entity.Photographer.DisplayName;
+            }
+            
             viewModel.FolderId = entity.FolderId;
             viewModel.Url = entity.Url;
             viewModel.ThumbnailUrl = entity.Url.Replace("/photos/", "/thumbnails/");

@@ -8,6 +8,10 @@
     "inputFile": "wwwroot/css/MobileSite.scss"
   },
   {
+<<<<<<<<< Temporary merge branch 1
+    "outputFile": "wwwroot/js/sweetalert2.all.es5.js",
+    "inputFile": "wwwroot/js/sweetalert2.all.js"
+=========
     "outputFile": "wwwroot/css/Views/Upload.css",
     "inputFile": "wwwroot/css/Views/Upload.scss"
   },
@@ -38,5 +42,6 @@
   {
     "outputFile": "wwwroot/css/Components/input.css",
     "inputFile": "wwwroot/css/Components/input.scss"
+>>>>>>>>> Temporary merge branch 2
   }
 ]

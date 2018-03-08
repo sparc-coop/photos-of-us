@@ -31,6 +31,21 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
+        public List<Photo> GetPhotosByCode(string code)
+        {
+            return _context.Photo.Where(x => x.Code.Equals(code)).ToList();
+        }
+
+        public Photo GetPhoto(int photoId)
+        {
+            return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
+        }
+
+        public List<PrintType> GetPrintTypes()
+        {
+            return _context.PrintType.ToList();
+        }
+
         public void SavePhoto(Photo photo)
         {
             _context.Photo.Attach(photo);
@@ -44,7 +59,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
         {
-            // TODO: get the code 
+            // TODO: Generate the code 
             photo.Code = "abcdef";
             photo.PhotographerId = photographerId;
             photo.UploadDate = DateTime.Now;
@@ -79,8 +94,18 @@ namespace PhotosOfUs.Model.Repositories
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);
 
-            var photo = new Photo() { Name = photoName, PhotographerId = photographerId, UploadDate = DateTime.Now, Url = containerBlob.Uri.AbsoluteUri, Code = photoCode };
-            SavePhoto(photo);
+            var photo = new Photo()
+            {
+                Name = photoName,
+                PhotographerId = photographerId,
+                UploadDate = DateTime.Now,
+                Url = containerBlob.Uri.AbsoluteUri,
+                Code = photoCode,
+                FolderId = 1
+            };
+
+            _context.Photo.Attach(photo);
+            _context.SaveChanges();
 
             return containerBlob.Uri.AbsoluteUri;
         }

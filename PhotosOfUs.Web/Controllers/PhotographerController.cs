@@ -45,10 +45,28 @@ namespace PhotosOfUs.Web.Controllers
         public ActionResult Photos(int id)
         {
             var photographerId = 1;
+            var folderId = 1;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, id);
+            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
 
             return View(FolderViewModel.ToViewModel(folder));
+        }
+
+        public ActionResult Photo(int id)
+        {
+            var photo = new PhotoRepository(_context).GetPhoto(id);
+            return View(PhotoViewModel.ToViewModel(photo));
+        }
+
+        public ActionResult Code(int id)
+        {
+            return View();
+        }
+
+        public ActionResult PhotoCode(string code)
+        {
+            var photos = new PhotoRepository(_context).GetPhotosByCode(code);
+            return View(PhotoViewModel.ToViewModel(photos));
         }
 
         // GET: Photographer/Create
@@ -120,6 +138,34 @@ namespace PhotosOfUs.Web.Controllers
             }
         }
 
+        public ActionResult Cards()
+        {
+            var photographerId = 1;
+            List<Card> pCards = _context.Card.Where(x => x.PhotographerId == photographerId).ToList();
+            return View(pCards);
+        }
+
+        public ActionResult ExportNewCard()
+        {
+            var photographerId = 1;
+            var cardR = new CardRepository(_context);
+            CardViewModel newCard = CardViewModel.ToViewModel(cardR.Add(photographerId));
+            
+            var model = new CardViewModel { Code = newCard.Code, Url = newCard.Url};
+            return new ActionAsPdf("CardToExport", model) {
+                FileName = "PoU-Card-" + newCard.Code + ".pdf",
+                PageSize = Size.Letter,
+                PageOrientation = Orientation.Landscape,
+                PageMargins = { Left = 0, Right = 0 },
+                //ContentDisposition = ContentDisposition.Inline
+            };
+        }
+
+        public ActionResult CardToExport(CardViewModel model)
+        {
+            return View(model);
+        }
+
         public ActionResult Upload()
         {
             return View();
@@ -150,34 +196,7 @@ namespace PhotosOfUs.Web.Controllers
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
-        }
-
-        public ActionResult Cards()
-        {
-            var photographerId = 1;
-            List<Card> pCards = _context.Card.Where(x => x.PhotographerId == photographerId).ToList();
-            return View(pCards);
-        }
-
-        public ActionResult ExportNewCard()
-        {
-            var photographerId = 1;
-            var cardR = new CardRepository(_context);
-            CardViewModel newCard = CardViewModel.ToViewModel(cardR.Add(photographerId));
-            
-            var model = new CardViewModel { Code = newCard.Code, Url = newCard.Url};
-            return new ActionAsPdf("CardToExport", model) {
-                FileName = "PoU-Card-" + newCard.Code + ".pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
-            };
-        }
-
-        public ActionResult CardToExport(CardViewModel model)
-        {
-            return View(model);
+>>>>>>>>> Temporary merge branch 2
         }
     }
 }

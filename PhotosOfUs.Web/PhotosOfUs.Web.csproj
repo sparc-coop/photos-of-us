@@ -8,6 +8,13 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\JeffsDog.jpeg" />
+    <Content Remove="wwwroot\js\API.js" />
+    <Content Remove="wwwroot\js\API.js.map" />
+    <Content Remove="wwwroot\js\API.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Photographer\Upload.html" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +22,7 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.Data.OData" Version="5.8.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
+    <PackageReference Include="Stripe.net" Version="13.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +32,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="wwwroot\js\controllers\" />
   </ItemGroup>
 
   <ItemGroup>

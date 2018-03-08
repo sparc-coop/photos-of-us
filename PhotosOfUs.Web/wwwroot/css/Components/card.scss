@@ -1,0 +1,180 @@
+﻿@import '../variables.scss';
+
+.folder-card--wrapper {
+    flex-flow: row wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+
+    .photo-card, .photo-card--grid, .folder-card {
+        position: relative;
+        border-radius: 8px;
+        box-sizing: border-box;
+        height: 240px;
+        width: 23%;
+        margin: 0 1% 20px;
+    }
+
+    .photo-card--grid {
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .photo-card {
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+        z-index: 11;
+    }
+
+    .photo-card:nth-child(3) {
+        margin: 13px 0 0 -150px;
+        z-index: 10;
+        height: 218px;
+    }
+
+    .photo-card:nth-child(n+4) {
+        margin: 32px 0 0 -170px;
+        z-index: 9;
+        height: 180px;
+    }
+
+    .photo-card:nth-child(5) {
+        z-index: 8;
+    }
+
+    .photo-card:nth-child(6) {
+        z-index: 7;
+    }
+
+    .photo-card:nth-child(7) {
+        z-index: 6;
+    }
+
+    .photo-card:nth-child(8) {
+        z-index: 5;
+    }
+
+
+    .folder-card {
+        border: 2px solid #194952;
+
+        .header {
+            margin: 4px 8px;
+            width: 100%;
+            align-items: center;
+            height: 30px;
+            margin-bottom: 0px;
+
+            .grey-ball {
+                width: 15px;
+                height: 15px;
+                background: #DFDFDF;
+                border-radius: 50%;
+            }
+
+            .material-icons {
+                color: #43C6BA;
+                position: absolute;
+                right: 8px;
+                z-index: 4;
+                cursor: pointer;
+            }
+        }
+
+        .photos {
+            margin-top: -5px;
+            margin: auto;
+            padding-right: 30px;
+
+            .tiny-photo {
+                width: 48px;
+                height: 48px;
+                border-radius: 6px;
+                margin-right: -30px;
+            }
+        }
+
+        .folder-info {
+            width: 100%;
+            text-align: center;
+
+            .title {
+                font-size: 26px;
+                color: #194952;
+                letter-spacing: 0;
+                font-weight: 500;
+                margin-top: 15px;
+            }
+
+            .created-date {
+                font-size: 16px;
+                color: $dark;
+                margin-top: -22px;
+            }
+
+            .folder-code {
+                color: $primary;
+                font-size: 16px;
+                font-weight: 600;
+                padding-top: 5px;
+            }
+        }
+    }
+
+    &.codeView {
+        margin-left: 0;
+    }
+
+    .codeView {
+        display: block;
+
+
+        &__row {
+            display: flex;
+            cursor: pointer;
+            outline: none;
+        }
+
+        &__card {
+            padding: 24px;
+            height: 192px;
+            width: 198px;
+            background: $dark;
+            border-radius: 8px;
+            margin-right: 12px;
+
+            &--title {
+                padding-bottom: 22px;
+            }
+
+            &--date {
+                padding-bottom: 64px;
+            }
+
+            .label {
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 14px;
+                color: $yellow;
+            }
+
+            .info {
+                font-family: "Dosis";
+                font-size: 20px;
+                font-weight: 600;
+                color: $primary;
+            }
+
+            &--edit {
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 14px;
+                color: $red;
+            }
+        }
+    }
+}
