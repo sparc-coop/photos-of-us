@@ -12,6 +12,7 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.Services;
 using PhotosOfUs.Model.ViewModels;
+using PhotosOfUs.Web.Utilities;
 using Rotativa.NetCore;
 using Rotativa.NetCore.Options;
 
@@ -22,6 +23,8 @@ namespace PhotosOfUs.Web.Controllers
     {
         private PhotosOfUsContext _context;
         
+
+
         public PhotographerController(PhotosOfUsContext context)
         {
             _context = context;
@@ -171,26 +174,31 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        //public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
+        //{
+        //    Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
+        //    var match = r.Match(photoCode);
+
+        //    if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
+        //        string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
+        //        match.Success == false)
+        //        return;
+
+        //    var filePath = Path.GetTempFileName();
+
+        //    if (file.Length > 0)
+        //    {
+        //        using (var stream = new FileStream(filePath, FileMode.Create))
+        //        {
+        //            await file.CopyToAsync(stream);
+        //            await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
+        //        }
+        //    }
+        //}
         public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
-            Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
-            var match = r.Match(photoCode);
-
-            if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) || 
-                string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
-                match.Success == false)
-                return;
-
-            var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
-            {
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
-                }
-            }
+            var ocr = new OCR();
+            ocr.GetOCRResult(file);
         }
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
