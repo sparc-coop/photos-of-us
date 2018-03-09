@@ -123,6 +123,22 @@
   text-align: center;
   padding: 10px 0; }
 
+.button--imageUpload {
+  background: #FFE261;
+  color: #43C6BA;
+  border-radius: 8px;
+  padding: 10px 30px;
+  display: inline;
+  font-family: "Dosis";
+  font-weight: 600;
+  cursor: pointer;
+  outline: none; }
+  .button--imageUpload .img-upload {
+    vertical-align: middle;
+    margin: -3px 10px 0 0;
+    border-radius: 0;
+    cursor: pointer; }
+
 .folder-card--wrapper {
   flex-flow: row wrap;
   margin-left: -10px;
@@ -213,16 +229,17 @@
   .folder-card--wrapper .codeView {
     display: block; }
     .folder-card--wrapper .codeView__row {
-      display: flex;
-      cursor: pointer;
-      outline: none; }
+      display: flex; }
     .folder-card--wrapper .codeView__card {
       padding: 24px;
       height: 192px;
       width: 198px;
       background: #194952;
       border-radius: 8px;
-      margin-right: 12px; }
+      margin-right: 12px;
+      cursor: pointer;
+      outline: none;
+      text-decoration: none; }
       .folder-card--wrapper .codeView__card--title {
         padding-bottom: 22px; }
       .folder-card--wrapper .codeView__card--date {
@@ -1178,7 +1195,9 @@ canvas {
     height: 332px;
     background-size: 510px 332px;
     margin: 15px 30px 15px 0;
-    position: relative; }
+    position: relative;
+    cursor: pointer;
+    outline: none; }
     .photoPage__image-container--photo .photoName {
       color: #FFFFFF;
       opacity: 0.8;

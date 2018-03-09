@@ -135,8 +135,6 @@
 
         &__row {
             display: flex;
-            cursor: pointer;
-            outline: none;
         }
 
         &__card {
@@ -146,6 +144,9 @@
             background: $dark;
             border-radius: 8px;
             margin-right: 12px;
+            cursor: pointer;
+            outline: none;
+            text-decoration: none;
 
             &--title {
                 padding-bottom: 22px;

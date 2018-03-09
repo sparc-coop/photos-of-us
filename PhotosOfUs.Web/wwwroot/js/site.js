@@ -29,7 +29,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     $scope.getPhotographer = (id) => {
         $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
             $scope.photographer = x.data;
-            console.log($scope.photographer);
         });
     };
 }])

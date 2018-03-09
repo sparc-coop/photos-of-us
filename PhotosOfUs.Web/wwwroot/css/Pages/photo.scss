@@ -149,6 +149,8 @@
             background-size: 510px 332px;
             margin: 15px 30px 15px 0;
             position: relative;
+            cursor: pointer;
+            outline: none;
 
             .photoName {
                 color: $white;

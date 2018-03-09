@@ -48,7 +48,7 @@
                 }
                 <img src="~/images/icons/ic_more_vert_24px.png" />
             </div>
-            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl">
+            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
                 <div class="cart--preview__content">
                     <div class="cart--preview--arrow"></div>
                     <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
@@ -64,7 +64,7 @@
                     <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                 </div>               
             </div>
-            <div ng-if="viewDropdown" class="adminMenu">
+            <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
                 <div class="adminMenu__list">Profile</div>
                 <div class="adminMenu__list">Photo Gallery</div>
