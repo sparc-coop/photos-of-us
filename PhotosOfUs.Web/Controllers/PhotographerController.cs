@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
@@ -22,12 +23,12 @@ namespace PhotosOfUs.Web.Controllers
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
-        
+        private IHostingEnvironment _hostingEnvironment;
 
-
-        public PhotographerController(PhotosOfUsContext context)
+        public PhotographerController(PhotosOfUsContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
         // GET: Photographer
         public ActionResult Index()
@@ -197,7 +198,7 @@ namespace PhotosOfUs.Web.Controllers
         //}
         public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
-            var ocr = new OCR();
+            var ocr = new OCR(_hostingEnvironment);
             ocr.GetOCRResult(file);
         }
 
