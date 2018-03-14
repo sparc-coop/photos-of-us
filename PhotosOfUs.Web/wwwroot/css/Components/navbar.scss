@@ -79,6 +79,10 @@
             font-size: 16px;
             cursor: pointer;
             height: 30px;
+
+            a {
+                color: $yellow;
+            }
         }
 
         &__list:hover {
@@ -101,6 +105,10 @@
             color: $red;
             font-family: "Dosis";
             font-size: 14px;
+
+            a {
+                color: $red;
+            }
 
             &:hover {
                 background-color: $dark;

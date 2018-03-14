@@ -42,7 +42,7 @@
                 else
                 {
                     @*@await Html.PartialAsync("_LoginPartial")*@
-
+                    <a href="~/Session/SignIn">Log In</a>
                     <!--If user is customer-->
                     <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
                 }
@@ -66,12 +66,12 @@
             </div>
             <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
-                <div class="adminMenu__list">Profile</div>
-                <div class="adminMenu__list">Photo Gallery</div>
-                <div class="adminMenu__list">Personal Brand Settings</div>
-                <div class="adminMenu__list">Sales History</div>
-                <div class="adminMenu__list">Account Settings</div>
-                <div class="adminMenu__list logout">Log Out</div>
+                <div class="adminMenu__list"><a href="#">Profile</a></div>
+                <div class="adminMenu__list"><a href="~/Photographer/Dashboard">Photo Gallery</a></div>
+                <div class="adminMenu__list"><a href="#">Personal Brand Settings</a></div>
+                <div class="adminMenu__list"><a href="#">Sales History</a></div>
+                <div class="adminMenu__list"><a href="#">Account Settings</a></div>
+                <div class="adminMenu__list logout"><a href="~/Session/SignOut">Log Out</a></div>
             </div>
         </nav>
     </div>

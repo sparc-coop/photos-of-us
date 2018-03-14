@@ -16,6 +16,11 @@ namespace PhotosOfUs.Web.Controllers
             return RedirectToAction("Dashboard", "Photographer");
         }
 
+        public IActionResult Homepage()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
