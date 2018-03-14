@@ -509,6 +509,9 @@ body {
     .nav--center .menu-item {
       margin: 0 26px;
       cursor: pointer; }
+    .nav--center .menu-item.active {
+      padding-bottom: 5px;
+      border-bottom: 2px solid #FFE261; }
   .nav--right {
     position: absolute;
     right: 46px;
@@ -527,8 +530,9 @@ body {
       height: 34px;
       width: 34px;
       border-radius: 100px;
-      border: 1px solid #FFE261;
-      background-color: #194952;
+      border: 2px solid #FFE261;
+      padding: 0px;
+      /*background-color: $dark;*/
       display: inline-block; }
   .nav .adminMenu {
     background-color: #194952;
@@ -538,7 +542,7 @@ body {
     border-radius: 6px;
     margin-top: 46px;
     position: absolute;
-    right: 0;
+    right: 43px;
     padding-top: 15px; }
     .nav .adminMenu__list {
       padding: 10px 15px 0 15px;
@@ -546,7 +550,8 @@ body {
       color: #FFE261;
       font-size: 16px;
       cursor: pointer;
-      height: 30px; }
+      height: 30px;
+      display: block; }
     .nav .adminMenu__list:hover {
       background-color: #43C6BA; }
     .nav .adminMenu__arrow {

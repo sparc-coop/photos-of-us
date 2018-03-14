@@ -212,5 +212,10 @@ namespace PhotosOfUs.Web.Controllers
         {
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
+
+        public ActionResult Profile()
+        {
+            return View();
+        }
     }
 }

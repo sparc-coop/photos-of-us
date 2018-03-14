@@ -26,26 +26,22 @@
         <nav class="nav">
             <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
             <div class="nav--center" ng-controller="PhotoCtrl">
-                @*<a ng-click="openUpload()" class="menu-item">Upload</a>
+                <a ng-click="openUpload()" class="menu-item active">Upload</a>
                 <a href="/" class="menu-item">Page Title</a>
-                <a href="/" class="menu-item">Page Title</a>*@                                
+                <a href="/" class="menu-item">Page Title</a>                                
             </div>
-            <div class="nav--right"> @*ng-if="customer"*@
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <!--Photographer Menu-->
-                    <img src="~/images/icons/alert.png" alt="notifications" />
-                    <img src="~/images/icons/add.png" alt="add" />
-                    @*<img src="~/images/{{profile.url}}" alt="profile" ng-click="viewDropdown  = !viewDropdown" />*@
-                    <div ng-click="viewDropdown  = !viewDropdown" class="profileImg"></div>
-                }
-                else
-                {
-                    @*@await Html.PartialAsync("_LoginPartial")*@
+            <div class="nav--right">
+                @*ng-if="customer"*@
 
-                    <!--If user is customer-->
-                    <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
-                }
+                <!--Photographer Menu-->
+                <img src="~/images/icons/alert.png" alt="notifications" />
+                <img src="~/images/icons/add.png" alt="add" />
+                <img ng-click="viewDropdown  = !viewDropdown; cartPreview = false;" class="profileImg" src="~/images/avatar.png" />
+                @*@await Html.PartialAsync("_LoginPartial")*@
+
+                <!--If user is customer-->
+                <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview; viewDropdown = false;" />
+
                 <img src="~/images/icons/ic_more_vert_24px.png" />
             </div>
             <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
@@ -66,7 +62,7 @@
             </div>
             <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
-                <div class="adminMenu__list">Profile</div>
+                <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
                 <div class="adminMenu__list">Photo Gallery</div>
                 <div class="adminMenu__list">Personal Brand Settings</div>
                 <div class="adminMenu__list">Sales History</div>

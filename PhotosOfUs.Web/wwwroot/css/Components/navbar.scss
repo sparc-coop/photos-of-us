@@ -30,6 +30,11 @@
             margin: 0 26px;
             cursor: pointer;
         }
+
+        .menu-item.active {
+            padding-bottom: 5px;
+            border-bottom: 2px solid $yellow;
+        }
     }
 
     &--right {
@@ -55,8 +60,9 @@
             height: 34px;
             width: 34px;
             border-radius: 100px;
-            border: 1px solid $yellow;
-            background-color: $dark;
+            border: 2px solid $yellow;
+            padding: 0px;
+            /*background-color: $dark;*/
             display: inline-block;
         }
     }
@@ -69,8 +75,9 @@
         border-radius: 6px;
         margin-top: 46px;
         position: absolute;
-        right: 0;
+        right: 43px;
         padding-top: 15px;
+
 
         &__list {
             padding: 10px 15px 0 15px;
@@ -79,6 +86,7 @@
             font-size: 16px;
             cursor: pointer;
             height: 30px;
+            display: block;
         }
 
         &__list:hover {
