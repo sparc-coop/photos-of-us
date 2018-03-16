@@ -14,7 +14,7 @@ using PhotosOfUs.Model.Services;
 using PhotosOfUs.Model.ViewModels;
 using Rotativa.NetCore;
 using Rotativa.NetCore.Options;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -32,6 +32,7 @@ namespace PhotosOfUs.Web.Controllers
             return RedirectToAction("Dashboard");
         }
 
+        [Authorize]
         public ActionResult Dashboard()
         {
             //todo: updata photographerId

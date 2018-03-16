@@ -12,6 +12,7 @@
     <PackageReference Include="CoreCompat.System.Drawing" Version="1.0.0-beta006" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="1.1.2-preview0008" />
     <PackageReference Include="WindowsAzure.Storage" Version="8.5.0" />
   </ItemGroup>
 
