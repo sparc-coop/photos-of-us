@@ -1,32 +1,4 @@
-﻿.newfolder-dialog {
-  width: 300px; }
-  .newfolder-dialog .close {
-    outline: none;
-    cursor: pointer;
-    position: absolute;
-    top: 16px;
-    right: 18px; }
-  .newfolder-dialog .form {
-    margin-bottom: 10px; }
-  .newfolder-dialog .form-input {
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 15px; }
-    .newfolder-dialog .form-input input {
-      width: 100%; }
-  .newfolder-dialog .form-button {
-    width: 100%;
-    padding-right: 20px;
-    padding-bottom: 5px; }
-  .newfolder-dialog button {
-    float: right !important;
-    width: 100px; }
-  .newfolder-dialog button:disabled {
-    background-color: lightgray;
-    color: black;
-    cursor: not-allowed; }
-
-.full-width-anchor {
+﻿.full-width-anchor {
   position: absolute;
   width: 100%;
   height: 100%; }
@@ -467,14 +439,6 @@ body {
   color: #43C6BA;
   letter-spacing: 0; }
 
-.header-xs {
-  font-family: "Dosis";
-  font-weight: 600;
-  font-size: 24px;
-  color: #194952;
-  letter-spacing: 0;
-  padding-left: 20px; }
-
 .header-medium {
   font-family: "Dosis";
   font-weight: 600;
@@ -566,9 +530,6 @@ body {
       border: 1px solid #FFE261;
       background-color: #194952;
       display: inline-block; }
-    .nav--right .menu-item.active {
-      padding-bottom: 5px;
-      border-bottom: 2px solid #FFE261; }
   .nav .adminMenu {
     background-color: #194952;
     z-index: 100;
@@ -1317,7 +1278,7 @@ canvas {
   border: 2px dashed #43C6BA;
   border-radius: 8px;
   width: 240px;
-  height: 237px;
+  height: 240px;
   margin: 0 10px;
   text-align: center;
   cursor: pointer; }
