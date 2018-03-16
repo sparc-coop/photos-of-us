@@ -34,6 +34,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Dashboard()
         {
+            //todo: updata photographerId
             var photographerId = 1;
 
             var folders = new PhotoRepository(_context).GetFolders(photographerId);
@@ -214,6 +215,11 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         public ActionResult Profile()
+        {
+            return View();
+        }
+
+        public ActionResult NewFolderModal()
         {
             return View();
         }

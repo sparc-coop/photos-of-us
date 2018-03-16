@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\JeffsDog.jpeg" />
-    <Content Remove="wwwroot\js\API.js" />
     <Content Remove="wwwroot\js\API.js.map" />
     <Content Remove="wwwroot\js\API.ts" />
   </ItemGroup>
@@ -31,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\js\controllers\" />
   </ItemGroup>
 
   <ItemGroup>

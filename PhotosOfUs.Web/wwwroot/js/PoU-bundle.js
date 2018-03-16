@@ -1,37 +1,30 @@
-﻿'use strict';
+'use strict';
 
 var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
-app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
-    $scope.viewPhoto = (photoId) => {
-        $window.location.href = '/Photographer/Photo/' + photoId;
-    };
 
-    $scope.goToPurchase = (photoId) => {
-        $window.location.href = '/Photo/Purchase/' + photoId;
-    };
 
-    $scope.goToGallery = (folderId) => {
-        $window.location.href = '/Photographer/Photos/' + folderId;
-    };
 
-    $scope.openUpload = () => {
-        $mdDialog.show({
-            templateUrl: '/Photographer/Upload',
-            controller: 'ModalController',
-            clickOutsideToClose: true,
-        });
-    };
 
-    $scope.getPhotoCode = () => {
-        $scope.code = $location.absUrl().split('=')[1];
-    };
 
-    $scope.getPhotographer = (id) => {
-        $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
-            $scope.photographer = x.data;
-        });
-    };
-}])
+app.factory('photoApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Photo';
+        return {
+            getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
+        };
+    }
+]);
+
+
+app.factory('folderApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Folder';
+        return {
+            add: function (foldername) { return $http.post(apiRoot+'/?name='+ foldername); },
+            delete: function (folderId) { return $http.post(apiRoot + "/DeleteFolder/" + folderId); }
+        };
+    }
+]);
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
     $scope.goToCart = () => {
         $window.location.href = '/Photo/Cart';
@@ -51,24 +44,21 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
     $scope.selectedItems = [];
 
     $scope.select = (printTypeId) => {
-        if ($scope.selectedItems.length === 0)
-        {
+        if ($scope.selectedItems.length === 0) {
             $scope.selectedItems.push(printTypeId);
         }
-        else if ($scope.selectedItems.indexOf(printTypeId) !== -1)
-        {
+        else if ($scope.selectedItems.indexOf(printTypeId) !== -1) {
             var index = $scope.selectedItems.indexOf(printTypeId);
             $scope.selectedItems.splice(index, 1)
         }
-        else
-        {
+        else {
             $scope.selectedItems.push(printTypeId);
         }
     };
 
     $scope.createOrder = () => {
-       // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
-            $window.location.href = '/Photo/Cart';
+        // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
+        $window.location.href = '/Photo/Cart';
         //});
     };
 
@@ -79,6 +69,46 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
         });
     };
 
+}])
+app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) => {
+    $scope.close = () => $mdDialog.hide();
+    $scope.folders = [];
+
+    $scope.initFolderCtrl = function () {
+       
+
+        photoApi.getFolders()
+            .then(function (x) {
+                angular.forEach(x.data, function (f) { $scope.folders.push(f); });
+                //$scope.folders = x.data;
+                console.log(JSON.stringify(x.data));
+            })
+    }
+
+    $scope.newFolderModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/NewFolderModal',
+            controller: 'FolderCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
+    $scope.addFolder = function (folderName) {
+        folderApi.add(folderName)
+            .then(function (x) {
+                //adds to list view
+                $scope.close();
+                $rootScope.$broadcast('FolderAdded', x.data);
+            })
+    }
+
+    $scope.$on('FolderAdded', function (e, folder) {
+
+        console.log('added folder - ' + JSON.stringify(folder));
+
+        $scope.folders.push(folder);
+        
+    });
 }])
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $window, $mdDialog) => {
     $scope.close = () => $mdDialog.hide();
@@ -160,6 +190,39 @@ app.controller('PaymentCtrl', ['$scope', '$window', ($scope, $window) => {
 
     };
 
+}])
+app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+    $scope.viewPhoto = (photoId) => {
+        $window.location.href = '/Photographer/Photo/' + photoId;
+    };
+
+    $scope.goToPurchase = (photoId) => {
+        $window.location.href = '/Photo/Purchase/' + photoId;
+    };
+
+    $scope.goToGallery = (folderId) => {
+        $window.location.href = '/Photographer/Photos/' + folderId;
+    };
+
+    $scope.openUpload = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/Upload',
+            controller: 'ModalController',
+            clickOutsideToClose: true,
+        });
+    };
+
+   
+
+    $scope.getPhotoCode = () => {
+        $scope.code = $location.absUrl().split('=')[1];
+    };
+
+    $scope.getPhotographer = (id) => {
+        $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
+            $scope.photographer = x.data;
+        });
+    };
 }])
 app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 

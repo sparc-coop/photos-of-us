@@ -1,6 +1,4 @@
-﻿declare var angular;
-var rootApp = angular.module('app', ['modal', 'upload']);
-rootApp.factory('photoApi',
+﻿app.factory('photoApi',
     [
         '$http', '$rootScope', ($http, $rootScope) => {
             var apiRoot = '/api/AccountDashboard';
