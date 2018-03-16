@@ -15,17 +15,20 @@ using PhotosOfUs.Model.ViewModels;
 using Rotativa.NetCore;
 using Rotativa.NetCore.Options;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Web.Controllers
 {
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
-        
+
         public PhotographerController(PhotosOfUsContext context)
         {
             _context = context;
         }
+        
         // GET: Photographer
         public ActionResult Index()
         {
@@ -35,12 +38,14 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
-            //todo: updata photographerId
-            var photographerId = 1;
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var id = _context.UserIdentity.Find(azureId).UserID;
 
-            var folders = new PhotoRepository(_context).GetFolders(photographerId);
+            PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
+            model.PhotographerId = id;
+            model.Name = User.Identity.Name;
 
-            return View(FolderViewModel.ToViewModel(folders));
+            return View(model);
         }
 
         // GET: Photographer/Details/5

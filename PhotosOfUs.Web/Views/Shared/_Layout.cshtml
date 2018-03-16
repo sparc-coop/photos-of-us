@@ -66,6 +66,7 @@
             </div>
             <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Cards","Photographer")">Cards</a></div>
                 <div class="adminMenu__list"><a href="#">Profile</a></div>
                 <div class="adminMenu__list"><a href="~/Photographer/Dashboard">Photo Gallery</a></div>
                 <div class="adminMenu__list"><a href="#">Personal Brand Settings</a></div>
@@ -88,7 +89,7 @@
         <script src="~/lib/angular-elastic/elastic.js"></script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/PoU-bundle.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -106,7 +107,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/PoU-bundle.min.js" asp-append-version="true"></script>
     </environment>
 
 

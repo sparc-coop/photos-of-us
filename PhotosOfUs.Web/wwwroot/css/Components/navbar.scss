@@ -59,6 +59,11 @@
             background-color: $dark;
             display: inline-block;
         }
+
+        .menu-item.active {
+            padding-bottom: 5px;
+            border-bottom: 2px solid $yellow;
+        }
     }
 
     .adminMenu {
