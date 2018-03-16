@@ -1,11 +1,5 @@
 [
   {
-    "outputFileName": "wwwroot/css/Site.min.css",
-    "inputFiles": [
-      "wwwroot/css/"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/js/PoU.min.js",
     "inputFiles": [
       "wwwroot/js/PoU.js"
