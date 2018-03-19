@@ -195,6 +195,8 @@ namespace PhotosOfUs.Web.Controllers
 
         public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
         {
+            //if photoName != empty use OCR to check for code
+
             Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
             var match = r.Match(photoCode);
 

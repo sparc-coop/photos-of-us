@@ -3,23 +3,24 @@
     ViewData["Title"] = "Cards";
 }
 
-<div class="photographer-dashboard--wrapper">
-    <h2 class="header-large">Good morning, Antonio</h2>
+<div class="photographer-dashboard--wrapper photographer-cards">
+    <h2 class="header-large">Your Codes</h2>
     <div class="yellow-background line--small"></div>
-    <a href="@Url.Action("ExportNewCard","Photographer")" class="btn btn-pou-default">Export new cards</a>
 
-    <hr />
     <div class="flex-box filters">
         <input class="input--light-blue searchbox" placeholder="Search Code" />
 
-        <div class="view-icons align-right">
+        @*<div class="view-icons align-right">
             <select>
                 <option>Date</option>
                 <option>Code</option>
             </select>
-        </div>
+        </div>*@
+
+        <a href="@Url.Action("ExportNewCard","Photographer")" class="btn-pou-default">Export new card</a>
     </div>
 
+    
 
     <div class="flex-box">
         <table class="table table-striped">
@@ -31,15 +32,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var card in Model)
+                @foreach (var card in Model.OrderByDescending(x=>x.CreatedDate).ThenByDescending(x=>x.Id))
                 {
                     <tr>
                         <td>@card.Code</td>
                         <td>@card.CreatedDate.ToShortDateString()</td>
-                        <td><a class="btn btn-pou-default">Export</a></td>
+                        <td><a class="btn btn-pou-default" href="#">Export</a></td>
                     </tr>
                 }
-               
+
             </tbody>
         </table>
     </div>

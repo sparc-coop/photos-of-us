@@ -226,6 +226,8 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 }])
 app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
+    $scope.currentCode = '';
+
     var uploader = $scope.uploader = new FileUploader({
         url: '/Photographer/UploadPhotoAsync'
     });
@@ -244,12 +246,17 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     });
 
     // HELPERS
-    uploader.codeGenerator = function () {
-        var fnc = function () {
-            return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-        };
+    uploader.codeGenerator = function (fileItem) {
+        //check if photo has code
+        //if it has a code then saves it into currentCode
+        //else returns newCode
+        fileItem.upload();
 
-        return fnc() + fnc();
+        //var fnc = function () {
+        //    return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+        //};
+
+        //return fnc() + fnc();
     };
 
     $scope.photoNameValidation = function (e, selectedItem) {
@@ -349,11 +356,13 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
+        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
 
-        fileItem.file.photoCode = uploader.codeGenerator();
+        //fileItem.file.photoCode =
+        uploader.codeGenerator(fileItem);
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
@@ -385,7 +394,7 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-
+        console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -404,4 +413,5 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
         //alert("Complete");
         $window.location.reload(); //.location.href = '/Photographer/Dashboard';
     };
+
 }]);
