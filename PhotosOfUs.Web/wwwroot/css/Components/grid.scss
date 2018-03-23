@@ -1,4 +1,140 @@
-﻿.grid-vertical {
+﻿
+/**
+ * Flex Grid -
+ * Version: 0.3.4
+ *
+ * Simple grid built with flex box and sass.
+ *
+ * Matthew Simo - matthew.a.simo@gmail.com
+ */
+
+$fg-columns: 12 !default;
+$fg-gutter: 20px !default;
+
+$fg-class-row: 'g-row' !default;
+$fg-class-col: 'g-col' !default;
+$fg-class-off: 'g-off' !default;
+
+$fg-breakpoints: ( (xs), (sm, 768px), (md, 992px), (lg, 1200px) ) !default;
+
+
+@function get-col-percent($column-num) {
+
+    @return $column-num / $fg-columns * 100%;
+}
+
+@mixin spacing( $value, $type: margin, $orientation: vertical ) {
+    @if $orientation == vertical {
+        #{ $type }-top: $value;
+        #{ $type }-bottom: $value;
+    }
+    @else {
+        #{ $type }-left: $value;
+        #{ $type }-right: $value;
+    }
+}
+
+.#{ $fg-class-row } {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+
+%#{ $fg-class-col } {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    min-height: 1px;
+    @include spacing( ( $fg-gutter ), padding, horizontal );
+}
+
+%#{ $fg-class-col }-flex {
+    @extend %#{ $fg-class-col };
+    -webkit-box-flex: 1;
+    ;
+    -ms-flex-positive: 1;
+    ;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
+@mixin grid-base( $namespace ) {
+    .#{ $fg-class-col }-#{$namespace} {
+        @extend %#{ $fg-class-col }-flex;
+    }
+
+    @for $i from 1 through $fg-columns {
+        .#{ $fg-class-col }-#{$namespace}-#{$i} {
+            @extend %#{ $fg-class-col };
+        }
+    }
+}
+
+@mixin grid-sizes( $namespace ) {
+    @for $i from 1 through $fg-columns {
+        .#{ $fg-class-col }-#{$namespace}-#{$i} {
+            -ms-flex-preferred-size: get-col-percent($i);
+            flex-basis: get-col-percent($i);
+            max-width: get-col-percent($i);
+        }
+    }
+
+    @for $i from 1 through $fg-columns {
+        @if ( $i != $fg-columns ) {
+            .#{ $fg-class-off }-#{$namespace}-#{$i} {
+                margin-left: get-col-percent($i);
+            }
+        }
+    }
+}
+
+@each $val in $fg-breakpoints {
+
+    $namespace: nth($val, 1);
+    @include grid-base( $namespace );
+}
+
+@each $val in $fg-breakpoints {
+    @if length($val) == 1 {
+
+        $namespace: nth($val, 1);
+        @include grid-sizes( $namespace );
+    }
+    @else {
+
+        $namespace: nth($val, 1);
+        $size: nth($val, 2);
+
+        @media only screen and (min-width: #{$size}) {
+            @include grid-sizes( $namespace );
+        }
+    }
+}
+
+
+.grid-vertical {
     .row {
         .title {
             font-family: Dosis-Regular;

@@ -222,7 +222,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile()
         {
-            return View();
+            // These are only used to have some data on the frontend to create the page, replace with correct data for profile
+            var photographerId = 1;
+            var folderId = 1;
+
+            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
+
+            return View(FolderViewModel.ToViewModel(folder));
         }
 
         public ActionResult NewFolderModal()
