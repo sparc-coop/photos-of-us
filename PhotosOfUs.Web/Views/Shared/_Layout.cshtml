@@ -67,10 +67,10 @@
             <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
                 <div class="adminMenu__list"><a href="@Url.Action("Cards","Photographer")">Cards</a></div>
-                <div class="adminMenu__list"><a href="#">Profile</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Profile","Photographer")">Profile</a></div>
                 <div class="adminMenu__list"><a href="~/Photographer/Dashboard">Photo Gallery</a></div>
                 <div class="adminMenu__list"><a href="#">Personal Brand Settings</a></div>
-                <div class="adminMenu__list"><a href="#">Sales History</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("SalesHistory","Photographer")">Sales History</a></div>
                 <div class="adminMenu__list"><a href="#">Account Settings</a></div>
                 <div class="adminMenu__list logout"><a href="~/Session/SignOut">Log Out</a></div>
             </div>

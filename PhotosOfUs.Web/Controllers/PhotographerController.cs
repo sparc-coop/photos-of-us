@@ -231,6 +231,15 @@ namespace PhotosOfUs.Web.Controllers
             return View(FolderViewModel.ToViewModel(folder));
         }
 
+        public ActionResult SalesHistory()
+        {
+            var userId = 1;
+
+            var orders = new OrderRepository(_context).GetOrders(userId);
+
+            return View(SalesHistoryViewModel.ToViewModel(orders));
+        }
+
         public ActionResult NewFolderModal()
         {
             return View();
