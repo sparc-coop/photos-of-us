@@ -85,6 +85,14 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult Codetest(int id)
+        {
+            List<Order> orders = new OrderRepository(id);
+            SalesHistoryViewModel salesHistoryModel = new SalesHistoryViewModel(orders);
+
+            return View("Sales history test page", salesHistoryModel);
+        }
+
         public ActionResult PhotoCode(string code)
         {
             var photos = new PhotoRepository(_context).GetPhotosByCode(code);
