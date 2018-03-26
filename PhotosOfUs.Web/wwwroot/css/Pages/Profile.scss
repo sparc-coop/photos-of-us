@@ -54,10 +54,12 @@
         .photographer-title {
             margin-top: 0;
             color: $primary;
+            font-family: 'Dosis';
+            font-size: larger;
         }
 
         .photographer-bio {
-            font-size: smaller;
+            font-family: 'Dosis';
         }
     }
 
@@ -114,6 +116,8 @@
             background-position: center right 15px;
             width: 90%;
             padding: 0 5%;
+
+            font-family: 'Dosis';
 
             &::-moz-placeholder {
                 color: $primary;
