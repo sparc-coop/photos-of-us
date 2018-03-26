@@ -307,7 +307,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult SalesHistory()
         {
-            var userId = 1;
+            var userId = 1; //todo update photographerId
 
             var orders = new OrderRepository(_context).GetOrders(userId);
 
