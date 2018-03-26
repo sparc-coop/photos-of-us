@@ -12,7 +12,7 @@
     width: 100%;
     padding-left: 20px;
     padding-right: 15px; }
-    .newfolder-dialog .form-input input {
+    .newfolder-dialog .form-input input, .newfolder-dialog .form-input textarea {
       width: 100%; }
   .newfolder-dialog .form-button {
     width: 100%;
@@ -853,13 +853,17 @@ body {
       color: #757575;
       display: block;
       padding-bottom: 8px; }
-    .form-input input {
+    .form-input input, .form-input textarea {
       width: 218px;
       padding: 7px 10px;
       border: 1px solid #43C6BA;
       border-radius: 3px;
       outline: none; }
-    .form-input--email input {
+    .form-input textarea {
+      display: flex;
+      width: 488px;
+      height: 80px; }
+    .form-input--email input, .form-input--email .form-input textarea, .form-input .form-input--email textarea {
       width: 488px; }
 
 #payment-form #card-element {
@@ -1002,6 +1006,40 @@ td {
   font-size: 12px;
   font-weight: 700;
   color: #757575; }
+
+.material-icons.social, .material-icons.twitter, .material-icons.dribbble, .material-icons.facebook, .material-icons.flickr, .material-icons.instagram, .material-icons.behance, .material-icons.googleplus, .material-icons.linkedin, .material-icons.tumblr {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  color: transparent;
+  font-size: 2px; }
+
+.material-icons.twitter {
+  background-image: url("../../images/icons/twitter-color.svg"); }
+
+.material-icons.dribbble {
+  background-image: url("../../images/icons/Dribbble-color.svg"); }
+
+.material-icons.facebook {
+  background-image: url("../../images/icons/Facebook-color.svg"); }
+
+.material-icons.flickr {
+  background-image: url("../../images/icons/Flickr-color.svg"); }
+
+.material-icons.instagram {
+  background-image: url("../../images/icons/Instagram-color.svg"); }
+
+.material-icons.behance {
+  background-image: url("../../images/icons/Behance-color.svg"); }
+
+.material-icons.googleplus {
+  background-image: url("../../images/icons/GooglePlus-color.svg"); }
+
+.material-icons.linkedin {
+  background-image: url("../../images/icons/LinkedIn-color.svg"); }
+
+.material-icons.tumblr {
+  background-image: url("../../images/icons/Tumblr-color.svg"); }
 
 .purchase__photo-text {
   color: #43C6BA;
@@ -1324,7 +1362,7 @@ md-dialog {
   .drop-zone .info {
     padding: 30px 0;
     cursor: pointer; }
-  .drop-zone input[type='file'] {
+  .drop-zone input[type='file'], .drop-zone .form-input textarea[type='file'], .form-input .drop-zone textarea[type='file'] {
     cursor: pointer;
     opacity: 0;
     position: absolute;
@@ -1878,9 +1916,6 @@ canvas {
 .photographer-cards .btn-pou-default:hover {
   color: #3ba99f; }
 
-.photographer-cards .filters .searchbox.input--light-blue {
-  background-position: 20px 10px; }
-
 .photographer-profile--backdrop {
   width: 100%;
   height: 300px;
@@ -1989,6 +2024,75 @@ canvas {
     margin-top: 5px; }
   .photographer-sales-history .total-counter {
     margin-left: 75px; }
+
+.account-settings .container {
+  display: flex; }
+
+.account-settings .account-sidemenu {
+  background: #F6FFFF;
+  border-radius: 4px;
+  padding: 26px 16px;
+  width: 208px;
+  height: 170px;
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 30px; }
+  .account-settings .account-sidemenu .sidemenu-item {
+    margin-bottom: 10px;
+    font-family: 'Dosis';
+    font-weight: 600; }
+    .account-settings .account-sidemenu .sidemenu-item .active {
+      color: #194952; }
+      .account-settings .account-sidemenu .sidemenu-item .active i {
+        color: #ff6060; }
+    .account-settings .account-sidemenu .sidemenu-item a {
+      text-decoration: none;
+      color: #9b9999; }
+    .account-settings .account-sidemenu .sidemenu-item i {
+      position: relative;
+      /* Adjust these values accordingly */
+      top: 5px;
+      left: 5px;
+      margin-right: 20px;
+      color: #9b9999; }
+  .account-settings .account-sidemenu .deactivate {
+    color: #FF6060;
+    font-size: 10px;
+    text-decoration: none; }
+
+.account-settings .btn-group {
+  display: flex;
+  text-align: center;
+  display: block; }
+
+.account-settings .btn-apply {
+  background-color: #FFE261;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  width: 208px;
+  padding: 5px 16px;
+  margin-bottom: 20px;
+  display: block; }
+
+.account-settings .discard-link {
+  text-decoration: none;
+  font-size: 12px;
+  color: #757575; }
+
+.account-settings .form-account {
+  margin-left: 40px; }
+
+.account-settings .form-input {
+  position: relative; }
+  .account-settings .form-input input[type=text], .account-settings .form-input textarea[type=text] {
+    padding-left: 40px;
+    font-size: 12px; }
+  .account-settings .form-input i.material-icons {
+    position: absolute;
+    left: 10px;
+    top: 27px;
+    padding: 9px 8px; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;
@@ -2856,7 +2960,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
 .swal2-popup .swal2-textarea::placeholder {
   color: #cccccc; }
 
-.swal2-popup .swal2-range input {
+.swal2-popup .swal2-range input, .swal2-popup .swal2-range .form-input textarea, .form-input .swal2-popup .swal2-range textarea {
   width: 80%; }
 
 .swal2-popup .swal2-range output {
@@ -2864,7 +2968,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   font-weight: 600;
   text-align: center; }
 
-.swal2-popup .swal2-range input,
+.swal2-popup .swal2-range input, .swal2-popup .swal2-range .form-input textarea, .form-input .swal2-popup .swal2-range textarea,
 .swal2-popup .swal2-range output {
   font-size: 1.125em;
   height: 2.625em;
@@ -2907,8 +3011,10 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   font-size: 1.125em;
   margin: 0 .6em; }
 
-.swal2-popup .swal2-radio input,
-.swal2-popup .swal2-checkbox input {
+.swal2-popup .swal2-radio input, .swal2-popup .swal2-radio .form-input textarea, .form-input .swal2-popup .swal2-radio textarea,
+.swal2-popup .swal2-checkbox input,
+.swal2-popup .swal2-checkbox .form-input textarea, .form-input
+.swal2-popup .swal2-checkbox textarea {
   margin: 0 .4em; }
 
 .swal2-popup .swal2-validationerror {
@@ -2940,13 +3046,13 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   margin: 0 .625em; }
 
 @supports (-ms-accelerator: true) {
-  .swal2-range input {
+  .swal2-range input, .swal2-range .form-input textarea, .form-input .swal2-range textarea {
     width: 100% !important; }
   .swal2-range output {
     display: none; } }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-  .swal2-range input {
+  .swal2-range input, .swal2-range .form-input textarea, .form-input .swal2-range textarea {
     width: 100% !important; }
   .swal2-range output {
     display: none; } }

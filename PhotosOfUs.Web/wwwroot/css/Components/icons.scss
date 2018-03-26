@@ -1,0 +1,52 @@
+﻿.material-icons.social {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    color: transparent;
+    font-size:2px;
+}
+
+.material-icons.twitter {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/twitter-color.svg');
+}
+
+.material-icons.dribbble {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Dribbble-color.svg');
+}
+
+.material-icons.facebook {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Facebook-color.svg');
+}
+
+.material-icons.flickr {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Flickr-color.svg');
+}
+
+.material-icons.instagram {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Instagram-color.svg');
+}
+
+.material-icons.behance {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Behance-color.svg');
+}
+
+.material-icons.googleplus {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/GooglePlus-color.svg');
+}
+
+.material-icons.linkedin {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/LinkedIn-color.svg');
+}
+
+.material-icons.tumblr {
+    @extend .material-icons.social;
+    background-image: url('../../images/icons/Tumblr-color.svg');
+}

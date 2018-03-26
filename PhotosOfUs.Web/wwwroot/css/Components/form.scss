@@ -24,6 +24,13 @@
             outline: none;
         }
 
+        textarea {
+            @extend input;
+            display: flex;
+            width: 488px;
+            height:80px;
+        }
+
         &--email {
             input {
                 width: 488px;

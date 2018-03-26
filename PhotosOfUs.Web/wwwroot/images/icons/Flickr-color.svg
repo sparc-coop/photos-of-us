@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="9px" viewBox="0 0 20 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Flickr-color</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Account-Settings/social" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-837.000000, -369.000000)">
+        <g id="input-copy-6" transform="translate(825.000000, 336.000000)">
+            <g id="Flickr" transform="translate(12.000000, 33.000000)">
+                <path d="M19.9273482,4.43910359 C19.9273482,6.89092029 17.9647265,8.87939221 15.5392775,8.87939221 C13.1114851,8.87939221 11.1476916,6.89092029 11.1476916,4.43910359 C11.1476916,1.98847192 13.1114851,0 15.5392775,0 C17.9647265,0 19.9273482,1.98847192 19.9273482,4.43910359" fill="#FF007F"></path>
+                <path d="M8.77848491,4.43910359 C8.77848491,6.89092029 6.81469143,8.87939221 4.38689902,8.87939221 C1.96262176,8.87939221 0,6.89092029 0,4.43910359 C0,1.98847192 1.96262176,0 4.38689902,0 C6.81469143,0 8.77848491,1.98847192 8.77848491,4.43910359" fill="#0960D5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

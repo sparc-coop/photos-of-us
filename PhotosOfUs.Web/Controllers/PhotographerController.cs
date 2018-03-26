@@ -323,5 +323,15 @@ namespace PhotosOfUs.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult SocialAccounts()
+        {
+            return View();
+        }
+
+        public ActionResult BrandSettings()
+        {
+            return View();
+        }
     }
 }

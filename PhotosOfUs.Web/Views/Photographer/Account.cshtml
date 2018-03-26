@@ -3,5 +3,62 @@
     ViewData["Title"] = "Account";
 }
 
-<h2>Account</h2>
+<div class="account-settings">
+    <h2 class="header-large">Account Settings</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="container">
+        
+        <div>
+            <div class="account-sidemenu">
+                <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">face</i> Profile Details</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">language</i>Social Accounts</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
+                <a href="#" class="deactivate">Deactivate Account</a>
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-apply">Apply Changes</a>
+                <a href="#" class="discard-link">Discard Changes</a>
+            </div>
+            
+        </div>
+       
+
+        <div class="form-account">
+            <div class="form-input">
+                <label>Profile Photo</label>
+                <img src="~/images/avatar.png" />
+            </div>
+            <form action="/Photo/SaveAddress" method="POST" class="form">
+                <div class="form-input">
+                    <label>First Name</label>
+                    <input ng-model="address.FirstName" />
+                </div>
+                <div class="form-input">
+                    <label>Second Name</label>
+                    <input ng-model="address.LastName" />
+                </div>
+                <div class="form-input">
+                    <label>Job Position</label>
+                    <input ng-model="address.Phone" />
+                </div>
+
+                <div class="form-input form-input--email">
+                    <label>Email</label>
+                    <input ng-model="address.Email" />
+                </div>
+
+                <div class="form-input">
+                    <label>Bio</label>
+                    <textarea ng-model="address.Email"></textarea>
+                </div>
+            </form>
+
+        </div>
+    </div>
+   
+
+
+</div>
 
