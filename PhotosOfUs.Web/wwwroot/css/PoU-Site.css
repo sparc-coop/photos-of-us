@@ -345,6 +345,7 @@ body {
   margin-bottom: 20px; }
   .filters .searchbox.input--light-blue {
     width: 510px;
+    height: 28px;
     background-image: url("/images/icons/search.png");
     background-repeat: no-repeat;
     background-position: 20px 5px;
@@ -973,6 +974,34 @@ body {
   color: #43C6BA;
   letter-spacing: 0;
   line-height: 28px; }
+
+.table {
+  width: 100%; }
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: rgba(255, 226, 97, 0.16); }
+
+.table > tbody > tr > td.highlight {
+  color: #FF6060; }
+
+.table > tbody > tr > td {
+  font-size: 18px;
+  color: #194952; }
+
+tr > td:first-child {
+  padding-left: 15px; }
+
+td {
+  padding: 10px 10px 10px 10px; }
+  td .material-icons {
+    color: #FFE261;
+    font-size: 18px;
+    padding-right: 5px; }
+
+.table > thead {
+  font-size: 12px;
+  font-weight: 700;
+  color: #757575; }
 
 .purchase__photo-text {
   color: #43C6BA;
@@ -1849,21 +1878,6 @@ canvas {
 .photographer-cards .btn-pou-default:hover {
   color: #3ba99f; }
 
-.photographer-cards .table {
-  width: 100%; }
-
-.photographer-cards .table-striped > tbody > tr:nth-of-type(odd) {
-  background-color: rgba(255, 226, 97, 0.16); }
-
-.photographer-cards .table > tbody > tr > td:first-child {
-  color: #FF6060; }
-
-.photographer-cards .table > tbody > tr > td {
-  font-size: 20px; }
-
-.photographer-cards .table > thead {
-  font-size: 20px; }
-
 .photographer-cards .filters .searchbox.input--light-blue {
   background-position: 20px 10px; }
 
@@ -1956,6 +1970,25 @@ canvas {
     @media (max-width: 767px) {
       .photographer-profile--wrapper .photographer-gallery-container .gallery-image {
         height: 400px; } }
+
+.photographer-sales-history select {
+  color: #43C6BA;
+  border: 0;
+  font-size: 14px; }
+
+.photographer-sales-history .total {
+  margin-top: 25px;
+  float: right;
+  font-family: 'Dosis';
+  font-weight: 400; }
+  .photographer-sales-history .total h4 {
+    color: #43C6BA;
+    margin-bottom: 0px; }
+  .photographer-sales-history .total h3 {
+    color: #194952;
+    margin-top: 5px; }
+  .photographer-sales-history .total-counter {
+    margin-left: 75px; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;
