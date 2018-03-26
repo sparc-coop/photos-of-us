@@ -1507,6 +1507,9 @@ canvas {
 .photographer-cards .table > thead {
   font-size: 20px; }
 
+.photographer-cards .filters .searchbox.input--light-blue {
+  background-position: 20px 10px; }
+
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;

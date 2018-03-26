@@ -156,7 +156,11 @@
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, photoCode: item.file.photoCode, extension: '.' + item.file.fileExtension });
+        var photoCode = "";
+        if (item.file.photoCode)
+            photoCode = item.file.photoCode;
+
+        item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
