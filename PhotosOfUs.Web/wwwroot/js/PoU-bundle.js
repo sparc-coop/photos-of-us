@@ -25,6 +25,18 @@ app.factory('folderApi', [
         };
     }
 ]);
+
+
+app.factory('cardApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Card';
+        return {
+            getAll: function () {return $http.get(apiRoot)}
+        };
+    }
+]);
+
+
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
     $scope.goToCart = () => {
         $window.location.href = '/Photo/Cart';
@@ -226,6 +238,8 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 }])
 app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
+    $scope.currentCode = '';
+
     var uploader = $scope.uploader = new FileUploader({
         url: '/Photographer/UploadPhotoAsync'
     });
@@ -244,12 +258,17 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     });
 
     // HELPERS
-    uploader.codeGenerator = function () {
-        var fnc = function () {
-            return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
-        };
+    uploader.codeGenerator = function (fileItem) {
+        //check if photo has code
+        //if it has a code then saves it into currentCode
+        //else returns newCode
+        fileItem.upload();
 
-        return fnc() + fnc();
+        //var fnc = function () {
+        //    return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1);
+        //};
+
+        //return fnc() + fnc();
     };
 
     $scope.photoNameValidation = function (e, selectedItem) {
@@ -349,11 +368,13 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
+        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
 
-        fileItem.file.photoCode = uploader.codeGenerator();
+        //fileItem.file.photoCode =
+        uploader.codeGenerator(fileItem);
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
@@ -373,7 +394,11 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, photoCode: item.file.photoCode, extension: '.' + item.file.fileExtension });
+        var photoCode = "";
+        if (item.file.photoCode)
+            photoCode = item.file.photoCode;
+
+        item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
@@ -385,7 +410,7 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-
+        console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -404,4 +429,47 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
         //alert("Complete");
         $window.location.reload(); //.location.href = '/Photographer/Dashboard';
     };
+
 }]);
+app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
+    $scope.close = () => $mdDialog.hide();
+    $scope.cards = [];
+
+    $scope.initCardCtrl = function () {
+        
+        cardApi.getAll()
+            .then(function (x) {
+                angular.forEach(x.data, function (c) { $scope.cards.push(c); });
+                console.log(JSON.stringify(x.data));
+            })
+    }
+
+    $scope.exportMultipleCardsModal = function() {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MultipleCardsModal',
+            controller: 'CardCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
+    $scope.exportMultipleCards = function (quantity) {
+        location.href = "/Photographer/ExportMultipleCards/?quantity=" + quantity;
+    }
+
+    $scope.addFolder = function (folderName) {
+        folderApi.add(folderName)
+            .then(function (x) {
+                //adds to list view
+                $scope.close();
+                $rootScope.$broadcast('FolderAdded', x.data);
+            })
+    }
+
+    $scope.$on('FolderAdded', function (e, folder) {
+
+        console.log('added folder - ' + JSON.stringify(folder));
+
+        $scope.folders.push(folder);
+
+    });
+}])

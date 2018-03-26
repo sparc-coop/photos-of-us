@@ -1,18 +1,85 @@
-﻿@model CardViewModel
+﻿@model List<CardViewModel>
 @{
     Layout = null;
 }
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet">
 
-<div class="background" style="position:relative;">
-    <img src="~/images/card/card-front.jpg" width="600" />
-    <div class="code" style="left: 0;
-    position:absolute;
-    text-align:center;
-    top: 230px;
-    width:600px;">
-        <div style="color:#194952; font-size:36px; font-family:'Lucida Sans';">@Model.Code</div>
-        <div style="color:#194952; font-size:large; font-family:'Lucida Sans';margin-top:10px;">@Model.Url</div>
+<style>
+    .background {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .front {
+        left: 0;
+        position: absolute;
+        text-align: center;
+        top: 220px;
+        width: 600px;
+    }
+
+    .code {
+        color: #194952;
+        font-size: 40px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 500;
+    }
+
+    .url {
+        color: #194952;
+        font-size: 16px;
+        font-family: 'Open Sans', sans-serif;
+    }
+
+    .back {
+        left: 0;
+        top: 0;
+        position: absolute;
+        text-align: left;
+        left: 610px;
+        padding-left: 60px;
+        padding-top: 70px;
+        width: 600px;
+        background-color: #f6feff;
+        height: 272px;
+    }
+
+    .name {
+        color: #194952;
+        font-size: 36px;
+        font-family: 'Lucida Sans';
+    }
+
+    .sub-title {
+        color: #42c6b9;
+        font-size: 24px;
+        font-family: 'Lucida Sans';
+    }
+
+    .email {
+        color: #42c6b9;
+        font-size: 18px;
+        font-family: 'Lucida Sans';
+        margin-top: 50px;
+    }
+</style>
+
+
+@foreach (var card in Model)
+{
+    <div class="background">
+        <img src="~/images/card/card-front.jpg" width="600" />
+        <div class="front">
+            <div class="code">@card.Code</div>
+            <div class="url">@card.Url</div>
+        </div>
+
+        <div class="back">
+            <div class="name">@card.Name</div>
+            <div class="sub-title">Event Photographer</div>
+            <div class="email">@card.Email</div>
+        </div>
     </div>
-    
-    <img src="~/images/card/card-back.jpg" width="600" style="margin:0px 10px"  />
-</div>
+}
+
+

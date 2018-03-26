@@ -17,3 +17,14 @@ app.factory('folderApi', [
         };
     }
 ]);
+
+
+app.factory('cardApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Card';
+        return {
+            getAll: function () {return $http.get(apiRoot)}
+        };
+    }
+]);
+
