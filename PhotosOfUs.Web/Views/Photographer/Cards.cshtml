@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="card in cards | orderBy: 'id'">
+                <tr ng-repeat="card in cards | orderBy: '-id'">
                     <td>{{card.code}}</td>
                     <td>{{card.createdDate | date: 'MM/dd/yyyy'}}</td>
                     <td><a class="btn btn-pou-default" ng-href="@Url.Action("ExportExistingCard", "Photographer")/{{card.id}}">Export</a></td>
