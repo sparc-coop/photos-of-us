@@ -291,8 +291,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile()
         {
+            
+
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
             // These are only used to have some data on the frontend to create the page, replace with correct data for profile
-            var photographerId = 1;
+            photographerId = 1;
             var folderId = 1;
 
             var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);

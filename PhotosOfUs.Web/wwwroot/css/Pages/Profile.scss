@@ -54,10 +54,12 @@
         .photographer-title {
             margin-top: 0;
             color: $primary;
+            font-family: 'Dosis';
+            font-size: larger;
         }
 
         .photographer-bio {
-            font-size: smaller;
+            font-family: 'Dosis';
         }
     }
 
@@ -80,9 +82,24 @@
                     font-size: 0;
                     color: transparent;
                     padding: 10px;
-                    background-image: url(/images/icons/cart-red.png);
                     background-size: cover;
                     background-position: center;
+
+                    &.twitter {
+                        background-image: url(/images/icons/twitter.png);
+                    }
+
+                    &.facebook {
+                        background-image: url(/images/icons/facebook.png);
+                    }
+
+                    &.dribbl {
+                        background-image: url(/images/icons/dribbl.png);
+                    }
+
+                    &.instagram {
+                        background-image: url(/images/icons/instagram.png);
+                    }
                 }
             }
         }
@@ -99,6 +116,8 @@
             background-position: center right 15px;
             width: 90%;
             padding: 0 5%;
+
+            font-family: 'Dosis';
 
             &::-moz-placeholder {
                 color: $primary;
