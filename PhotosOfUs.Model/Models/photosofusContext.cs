@@ -162,6 +162,13 @@ namespace PhotosOfUs.Model.Models
                     .HasForeignKey(d => d.PhotoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Photo");
+
+                entity.HasOne(d => d.PrintType)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.PrintTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderDetail_PrintType");
+
             });
 
             modelBuilder.Entity<Photo>(entity =>

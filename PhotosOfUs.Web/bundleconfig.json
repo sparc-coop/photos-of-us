@@ -1,11 +1,5 @@
 [
   {
-    "outputFileName": "wwwroot/css/Site.min.css",
-    "inputFiles": [
-      "wwwroot/css/"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/js/PoU.min.js",
     "inputFiles": [
       "wwwroot/js/PoU.js"
@@ -25,8 +19,8 @@
       "wwwroot/js/controllers/ModalController.js",
       "wwwroot/js/controllers/PaymentController.js",
       "wwwroot/js/controllers/PhotoController.js",
-      "wwwroot/js/controllers/UploadController.js"
-
+      "wwwroot/js/controllers/UploadController.js",
+      "wwwroot/js/controllers/CardController.js"
     ]
   }
 ]

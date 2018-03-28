@@ -1,0 +1,84 @@
+﻿@model SalesHistoryViewModel
+@{
+    ViewData["Title"] = "Sales History";
+}
+
+<div class="photographer-dashboard--wrapper photographer-sales-history">
+    <h2 class="header-large">Good morning, @Model.UserDisplayName</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="flex-box filters">
+        <input class="input--light-blue searchbox" placeholder="Search Sales History" />
+
+        <div class="view-icons align-right">
+            <select>
+                <option>Sales This Month</option>
+                <option>--</option>
+            </select>
+        </div>
+
+    </div>
+
+
+    <div class="flex-box">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Photo Sold</td>
+                    <td>Print Size</td>
+                    <td>Amount</td>
+                    <td>Total Paid</td>
+                    <td>Your Earnings</td>
+                    <td>Order Status</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Orders)
+                {
+                    <tr>
+                        <td>@item.PhotoName</td>
+                        <td class="highlight">@item.PrintSize</td>
+                        <td>@item.Amount</td>
+                        <td>@string.Format("{0:C}", item.TotalPaid)</td>
+                        <td>@string.Format("{0:C}", item.Earning)</td>
+                        <td>
+                            @if (item.OrderStatus.Equals("Payment Pending"))
+                            {
+                                <i class="material-icons">access_time</i>
+
+                            }
+                            else if (item.OrderStatus.Equals("Order Complete"))
+                            {
+                                <i class="material-icons">check</i>
+                            }
+                            else
+                            {
+
+                                <i class="material-icons">print</i>
+                            }
+
+                            @item.OrderStatus
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="flex-box total">
+        <div class="total-counter">
+            <h4>Total Sales</h4>
+            <h3>@Model.TotalSales</h3>
+        </div>
+        <div class="total-counter">
+            <h4>Total Made</h4>
+            <h3>@string.Format("{0:C}", Model.TotalMade)</h3>
+        </div>
+        <div class="total-counter">
+            <h4>Total Earned</h4>
+            <h3>@string.Format("{0:C}", Model.TotalEarned)</h3>
+        </div>
+    </div>
+
+</div>

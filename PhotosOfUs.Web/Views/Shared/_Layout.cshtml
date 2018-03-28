@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <environment include="Development">
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
-        <link rel="stylesheet" href="~/css/Site.min.css" />
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
     </environment>
     <environment exclude="Development">
         @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
-        <link rel="stylesheet" href="~/css/Site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" asp-append-version="true" />
     </environment>
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
@@ -66,16 +66,18 @@
             </div>
             <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a></div>
                 <div class="adminMenu__list"><a href="@Url.Action("Cards","Photographer")">Cards</a></div>
-                <div class="adminMenu__list"><a href="#">Profile</a></div>
-                <div class="adminMenu__list"><a href="~/Photographer/Dashboard">Photo Gallery</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Profile","Photographer")">Profile</a></div>
                 <div class="adminMenu__list"><a href="#">Personal Brand Settings</a></div>
-                <div class="adminMenu__list"><a href="#">Sales History</a></div>
-                <div class="adminMenu__list"><a href="#">Account Settings</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("SalesHistory","Photographer")">Sales History</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action(" Account","Photographer")">Account Settings</a></div>
                 <div class="adminMenu__list logout"><a href="~/Session/SignOut">Log Out</a></div>
             </div>
         </nav>
     </div>
+    
+    @RenderSection("ProfileImageBackdrop", false);
 
     <div class="container body-content">
         @RenderBody()

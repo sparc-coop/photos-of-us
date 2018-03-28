@@ -1,7 +1,44 @@
-﻿
+﻿@using Microsoft.EntityFrameworkCore
+@model FolderViewModel
 @{
     ViewData["Title"] = "Profile";
 }
 
-<h2>Profile</h2>
-
+@section ProfileImageBackdrop {
+    <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png"/></figure></div>
+}
+<div class="photographer-profile--wrapper" ng-controller="PhotoCtrl">
+    <div class="g-row">
+        <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
+            <div class="photographer-info">
+                <div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>
+                <h2>Jayden Bishop</h2>
+                <p class="photographer-title">Architectural Photographer</p>
+                <p class="photographer-bio">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            </div>
+            <div class="photographer-social">
+                <ul>
+                    <li><a class="twitter" href="http://www.twitter.com">Twitter</a></li>
+                    <li><a class="facebook" href="http://www.facebook.com">Facebook</a></li>
+                    <li><a class="instagram" href="http://www.instagram.com">Instagram</a></li>
+                    <li><a class="dribbl" href="http://www.dribbl.com">Dribbl</a></li>
+                </ul>
+            </div>
+            <div class="gallery-search-container">
+                <input class="input--light-blue searchbox" placeholder="Search Gallery..."/>
+            </div>
+        </div>
+        <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
+            <div class="photographer-gallery-container">
+                <div class="g-row">
+                    @foreach (var Photo in @Model.Photos)
+                    {
+                    <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                        <div class="gallery-image" style="background-image: url(@Photo.Url)" ng-click="viewPhoto(@Photo.Id)"></div>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
