@@ -92,8 +92,8 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Codetest(int id)
         {
-            List<Order> orders = new OrderRepository().GetOrders(id);
-            SalesHistoryViewModel salesHistoryModel = new SalesHistoryViewModel.ToViewModel(orders);
+            List<Order> orders = new OrderRepository(_context).GetOrders(id);
+            SalesHistoryViewModel salesHistoryModel = SalesHistoryViewModel.ToViewModel(orders);
 
             return View("Sales history test page", salesHistoryModel);
         }
