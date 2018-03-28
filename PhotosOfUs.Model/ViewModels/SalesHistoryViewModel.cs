@@ -19,7 +19,11 @@ namespace PhotosOfUs.Model.ViewModels
         {
             var viewModel = new SalesHistoryViewModel();
 
-            viewModel.UserDisplayName = orders.First().User.DisplayName;
+            if (orders.Count > 0)
+            {
+                viewModel.UserDisplayName = orders.First().User.DisplayName;
+            }
+
             viewModel.Orders = new List<OrderViewModel>();
 
             foreach (var order in orders)

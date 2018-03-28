@@ -90,14 +90,6 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public ActionResult Codetest(int id)
-        {
-            List<Order> orders = new OrderRepository(_context).GetOrders(id);
-            SalesHistoryViewModel salesHistoryModel = SalesHistoryViewModel.ToViewModel(orders);
-
-            return View("Sales history test page", salesHistoryModel);
-        }
-
         public ActionResult PhotoCode(string code)
         {
             var photos = new PhotoRepository(_context).GetPhotosByCode(code);
@@ -313,13 +305,29 @@ namespace PhotosOfUs.Web.Controllers
             return View(FolderViewModel.ToViewModel(folder));
         }
 
-        public ActionResult SalesHistory()
+        public ActionResult SalesHistory(string query = null)
         {
-            var userId = 1; //todo update photographerId
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
 
-            var orders = new OrderRepository(_context).GetOrders(userId);
+            // if the user can't be found make a safe but empty return
+            if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
-            return View(SalesHistoryViewModel.ToViewModel(orders));
+            var photographerId = userIdentity.UserID;
+            //var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+
+            string queryString = HttpContext.Request.QueryString.ToString();
+            SalesQueryModel sqm = new SalesQueryModel(queryString);
+
+            var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
+            SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+            if(salesHistory.UserDisplayName == null)
+            {
+                //salesHistory.UserDisplayName = User.Identity.Name;
+                salesHistory.UserDisplayName = queryString;
+            }
+
+            return View(salesHistory);
         }
 
         public ActionResult NewFolderModal()
