@@ -26,7 +26,7 @@ namespace PhotosOfUs.Model.Repositories
                .Include(order => order.OrderDetail)
                    .ThenInclude(orderDetail => orderDetail.Photo)
                .Include(x => x.User)
-               .Where(x => x.OrderDetail.Select(y => y.Photo).First().PhotographerId == userId);
+               .Where(x => x.UserId == userId);
 
             if (query.Total != null) {
                 final = final.Where(x => x.Total >= int.Parse(query.Total));

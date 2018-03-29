@@ -305,9 +305,14 @@ namespace PhotosOfUs.Web.Controllers
             return View(FolderViewModel.ToViewModel(folder));
         }
 
+        [Authorize]
         public ActionResult SalesHistory(string query = null)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // if the user id can't be found make a safe but empty return
+            if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
             UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
 
             // if the user can't be found make a safe but empty return
