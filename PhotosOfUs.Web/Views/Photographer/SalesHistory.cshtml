@@ -11,24 +11,18 @@
         <input class="input--light-blue searchbox" placeholder="Search Sales History" />
         <h4>Search Orders</h4>
         <form action="" method="get">
-            <input />
-            <input />
-            <input />
-            <input />
-            <input />
-            <input />
-            <input />
-            <input />
-            <input />
-            public decimal Total { get;
-            public string OrderStatus {
-            public DateTime OrderDate {
-            public string Email { get;
-            public string FirstName { g
-            public string LastName { ge
-            public string DisplayName {
-            public bool? IsPhotographer
-            public int Quantity { get;
+            <input type="number" name="Total" />
+            <input type="text" name="OrderStatus" />
+            <input type="date" name="OrderDate" />
+            <input type="text" name="Email" />
+            <input type="text" name="FirstName" />
+            <input type="text" name="LastName" />
+            <input type="text" name="DisplayName" />
+            <select name="IsPhotographer">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+            <input type="number" name="Quantity" />
         </form>
 
         <div class="view-icons align-right">

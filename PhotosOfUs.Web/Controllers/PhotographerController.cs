@@ -321,11 +321,7 @@ namespace PhotosOfUs.Web.Controllers
 
             var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
             SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
-            if(salesHistory.UserDisplayName == null)
-            {
-                //salesHistory.UserDisplayName = User.Identity.Name;
-                salesHistory.UserDisplayName = queryString;
-            }
+            salesHistory.UserDisplayName = User.Identity.Name;
 
             return View(salesHistory);
         }
