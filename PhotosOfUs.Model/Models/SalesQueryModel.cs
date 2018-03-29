@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace PhotosOfUs.Model.Models
@@ -27,11 +28,28 @@ namespace PhotosOfUs.Model.Models
             foreach(string queryPair in queryArray)
             {
                 string[] pairArray = queryPair.Split("=");
-                var property = this.GetType().GetProperty(pairArray[0], System.Reflection.BindingFlags.IgnoreCase);
+                if (pairArray.Length != 2) return;
 
-                if (property != null)
+                var property = this.GetType().GetProperty(pairArray[0]);
+
+                if (property != null && !String.IsNullOrEmpty(pairArray[1]))
                 {
-                    property.SetValue(this, pairArray.GetValue(1));
+                    Debug.WriteLine("NOT NULL PAIR: {0}:{1}", pairArray[0], pairArray[1]);
+                    if(property.PropertyType == typeof(DateTime))
+                    {
+                        property.SetValue(this, DateTime.Parse(pairArray[1]));
+                    } else
+                    if (property.PropertyType == typeof(Nullable<bool>))
+                    {
+                        property.SetValue(this, pairArray[1] == "true");
+                    }
+                    else
+                    {
+                        property.SetValue(this, pairArray[1]);
+                    }
+                } else
+                {
+                    Debug.WriteLine("NULL PAIR: {0}:{1}", pairArray[0], pairArray[1]);
                 }
             }
         }

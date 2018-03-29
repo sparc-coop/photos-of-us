@@ -28,9 +28,9 @@ namespace PhotosOfUs.Model.Repositories
                .Include(x => x.User)
                .Where(x => x.UserId == userId);
 
-            if (query.Total != null) {
-                final = final.Where(x => x.Total >= int.Parse(query.Total));
-            }
+            //if (query.Total != null) {
+            //    final = final.Where(x => x.Total >= int.Parse(query.Total));
+            //}
             if (query.OrderStatus != null) {
                 final = final.Where(x => x.OrderStatus == query.OrderStatus);
             }
@@ -54,11 +54,19 @@ namespace PhotosOfUs.Model.Repositories
                 final = final.Where(x => regex.IsMatch(x.User.DisplayName));
             }
             if (query.IsPhotographer != null) {
-                final = final.Where(x => x.User.IsPhotographer == query.IsPhotographer);
+                final = final.All(x => x.User.IsPhotographer != null)
+                                ? final.Where(x => x.User.IsPhotographer == query.IsPhotographer)
+                                : final.Where(x => query.IsPhotographer == false);
             }
             if (query.Quantity != null) {
-                final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.Total));
+                final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.Quantity));
             }
+
+            if(final == null)
+            {
+                return new List<Order>();
+            }
+
             return final.ToList();
         }
     }
