@@ -10,20 +10,62 @@
         margin-top: 25px;
         float: right;
         font-family: 'Dosis';
-        font-weight:400;
+        font-weight: 400;
 
         h4 {
             color: #43C6BA;
-            margin-bottom:0px;
+            margin-bottom: 0px;
         }
 
         h3 {
             color: #194952;
-            margin-top:5px;
+            margin-top: 5px;
         }
 
-        &-counter{
-            margin-left:75px;
+        &-counter {
+            margin-left: 75px;
+        }
+    }
+
+    .search-form {
+        width: 100%;
+
+        .search-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 48%;
+
+            .data {
+                &:not(:last-child) {
+                    margin-bottom: 8px;
+                }
+            }
+        }
+
+        .medium-input {
+            max-width: 100px;
+            padding: 4px;
+        }
+
+        .small-input {
+            max-width: 40px;
+            padding: 4px;
+        }
+
+
+
+        button {
+            background-color: white;
+
+            &:hover, &:focus {
+                background-color: #43c6ba;
+                color: white;
+            }
         }
     }
 }

@@ -8,31 +8,74 @@
     <div class="yellow-background line--small"></div>
 
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Sales History" />
-        <h4>Search Orders</h4>
-        <form action="" method="get">
-            @*<input type="number" name="Total" />*@
-            <input type="text" name="OrderStatus" />
-            <input type="date" name="OrderDate" />
-            <input type="text" name="Email" />
-            <input type="text" name="FirstName" />
-            <input type="text" name="LastName" />
-            <input type="text" name="DisplayName" />
-            <select name="IsPhotographer">
-                <option value="false">No</option>
-                <option value="true">Yes</option>
-            </select>
-            <input type="number" name="Quantity" />
-            <button>Submit</button>
+        <form action="" method="get" class="search-form">
+            <div class="search-title">
+                <h4>Search Orders</h4>
+            </div>
+            @*
+        <input type="number" name="Total" />
+            *@
+            <div class="search-inputs">
+                <div class="column">
+                    <div class="data">
+                        <label>First Name</label>
+                        <input type="text" name="FirstName" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Last Name</label>
+                        <input type="text" name="LastName" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Email</label>
+                        <input type="text" name="Email" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Is Photographer?</label>
+                        <select name="IsPhotographer">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="column">
+                    @{
+                        var dateNow = DateTime.Now.ToString("yyyy-MM-dd");
+                        var dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+                    }
+                    <div class="data">
+                        <label>Order Status</label>
+                        <input type="text" name="OrderStatus" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Order Date</label>
+                        <input type="date" name="OrderDateEarliest" value="@dateThirtyDaysAgo" class="input--light-blue" />
+                        -
+                        <input type="date" name="OrderDateLatest" value="@dateNow" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Display Name</label>
+                        <input type="text" name="DisplayName" class="input--light-blue" />
+                    </div>
+                    <div class="data">
+                        <label>Quantity</label>
+                        <input type="number" name="QuantityMin" class="input--light-blue small-input" />
+                        -
+                        <input type="number" name="QuantityMax" class="input--light-blue small-input" />
+                    </div>
+                </div>
+                <div class="column">
+                    <br />
+                </div>
+                <div class="column">
+                    <br />
+                </div>
+                <div class="column">
+                </div>
+                <div class="column">
+                    <button class="input--light-blue">Submit</button>
+                </div>
+            </div>
         </form>
-
-        <div class="view-icons align-right">
-            <select>
-                <option>Sales This Month</option>
-                <option>--</option>
-            </select>
-        </div>
-
     </div>
 
 

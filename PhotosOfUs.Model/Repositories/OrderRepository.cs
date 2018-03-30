@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PhotosOfUs.Model.ViewModels;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -26,7 +27,8 @@ namespace PhotosOfUs.Model.Repositories
                .Include(order => order.OrderDetail)
                    .ThenInclude(orderDetail => orderDetail.Photo)
                .Include(x => x.User)
-               .Where(x => x.OrderDetail.Select(y => y.Photo).First().PhotographerId == userId);
+               //.Where(x => x.OrderDetail.Select(y => y.Photo).First().PhotographerId == userId);
+               .Where(x => x.UserId == userId);
 
             //if (query.Total != null) {
             //    final = final.Where(x => x.Total >= int.Parse(query.Total));
@@ -34,8 +36,8 @@ namespace PhotosOfUs.Model.Repositories
             if (query.OrderStatus != null) {
                 final = final.Where(x => x.OrderStatus == query.OrderStatus);
             }
-            if (query.OrderDate != null) {
-                final = final.Where(x => x.OrderDate.CompareTo(query.OrderDate) >= 0);
+            if (query.OrderDateEarliest != null && query.OrderDateLatest != null) {
+                final = final.Where(x => x.OrderDate.CompareTo(query.OrderDateEarliest) >= 0 && x.OrderDate.CompareTo(query.OrderDateLatest) <= 0);
             }
             if (query.Email != null) {
                 Regex regex = new Regex(query.Email, RegexOptions.IgnoreCase);
@@ -58,15 +60,17 @@ namespace PhotosOfUs.Model.Repositories
                                 ? final.Where(x => x.User.IsPhotographer == query.IsPhotographer)
                                 : final.Where(x => query.IsPhotographer == false);
             }
-            if (query.Quantity != null) {
-                final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.Quantity));
+            if (query.QuantityMin != null && query.QuantityMax != null) {
+                //final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.QuantityMin) && x.OrderDetail.Select(y => y.Quantity).First() <= int.Parse(query.QuantityMax));
             }
 
             if(final == null)
             {
+                Debug.WriteLine("NO FINAL---------------------------------");
                 return new List<Order>();
             }
 
+            Debug.WriteLine("IS FINAL: {0}---------------------------------", final.Count());
             return final.ToList();
         }
     }

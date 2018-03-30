@@ -11,13 +11,15 @@ namespace PhotosOfUs.Model.Models
     {
         public string Total { get; set; } // number
         public string OrderStatus { get; set; }
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDateEarliest { get; set; }
+        public DateTime OrderDateLatest { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
         public bool? IsPhotographer { get; set; }
-        public string Quantity { get; set; } // number
+        public string QuantityMin { get; set; } // number
+        public string QuantityMax { get; set; } // number
 
         public SalesQueryModel(string queryString)
         {

@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -327,7 +328,7 @@ namespace PhotosOfUs.Web.Controllers
             var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
             SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
             salesHistory.UserDisplayName = User.Identity.Name;
-
+            Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
             return View(salesHistory);
         }
 

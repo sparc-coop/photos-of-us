@@ -1918,9 +1918,11 @@ canvas {
     color: #194952; }
   .photographer-profile--wrapper .photographer-info .photographer-title {
     margin-top: 0;
-    color: #43C6BA; }
+    color: #43C6BA;
+    font-family: 'Dosis';
+    font-size: larger; }
   .photographer-profile--wrapper .photographer-info .photographer-bio {
-    font-size: smaller; }
+    font-family: 'Dosis'; }
   .photographer-profile--wrapper .photographer-social ul {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1937,9 +1939,16 @@ canvas {
         font-size: 0;
         color: transparent;
         padding: 10px;
-        background-image: url(/images/icons/cart-red.png);
         background-size: cover;
         background-position: center; }
+        .photographer-profile--wrapper .photographer-social ul li a.twitter {
+          background-image: url(/images/icons/twitter.png); }
+        .photographer-profile--wrapper .photographer-social ul li a.facebook {
+          background-image: url(/images/icons/facebook.png); }
+        .photographer-profile--wrapper .photographer-social ul li a.dribbl {
+          background-image: url(/images/icons/dribbl.png); }
+        .photographer-profile--wrapper .photographer-social ul li a.instagram {
+          background-image: url(/images/icons/instagram.png); }
   .photographer-profile--wrapper .gallery-search-container {
     margin-top: 50px; }
     .photographer-profile--wrapper .gallery-search-container .searchbox {
@@ -1949,7 +1958,8 @@ canvas {
       background-repeat: no-repeat;
       background-position: center right 15px;
       width: 90%;
-      padding: 0 5%; }
+      padding: 0 5%;
+      font-family: 'Dosis'; }
       .photographer-profile--wrapper .gallery-search-container .searchbox::-moz-placeholder {
         color: #43C6BA; }
       .photographer-profile--wrapper .gallery-search-container .searchbox:-ms-input-placeholder {
@@ -1989,6 +1999,29 @@ canvas {
     margin-top: 5px; }
   .photographer-sales-history .total-counter {
     margin-left: 75px; }
+
+.photographer-sales-history .search-form {
+  width: 100%; }
+  .photographer-sales-history .search-form .search-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between; }
+  .photographer-sales-history .search-form .column {
+    width: 48%; }
+    .photographer-sales-history .search-form .column .data:not(:last-child) {
+      margin-bottom: 8px; }
+  .photographer-sales-history .search-form .medium-input {
+    max-width: 100px;
+    padding: 4px; }
+  .photographer-sales-history .search-form .small-input {
+    max-width: 40px;
+    padding: 4px; }
+  .photographer-sales-history .search-form button {
+    background-color: white; }
+    .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
+      background-color: #43c6ba;
+      color: white; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;
