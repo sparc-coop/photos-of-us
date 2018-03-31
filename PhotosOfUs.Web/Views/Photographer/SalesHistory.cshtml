@@ -16,44 +16,72 @@
         <input type="number" name="Total" />
             *@
             <div class="search-inputs">
+                @{
+                    var q = ViewContext.HttpContext.Request.Query;
+                    // column 1
+                    var firstName = q.Where(x => x.Key == "FirstName").FirstOrDefault().Value.ToString();
+
+                    var lastName = q.Where(x => x.Key == "LastName").FirstOrDefault().Value.ToString();
+
+                    var email= q.Where(x => x.Key == "Email").FirstOrDefault().Value.ToString();
+
+                    var isPhotographer = q.Where(x => x.Key == "IsPhotographer").FirstOrDefault().Value.ToString();
+
+                    //column 2
+                    var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
+
+                    var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").First().Value.ToString();
+                    if (dateThirtyDaysAgo.Length == 0)
+                    {
+                        dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+                    }
+
+                    var dateNow = q.Where(x => x.Key == "OrderDateLatest").FirstOrDefault().Value.ToString();
+                    if (dateNow.Length == 0)
+                    {
+                        dateNow = DateTime.Now.ToString("yyyy-MM-dd");
+                    }
+
+                    var displayName = q.Where(x => x.Key == "DisplayName").FirstOrDefault().Value.ToString();
+
+                    var quantityMin = q.Where(x => x.Key == "QuantityMin").FirstOrDefault().Value.ToString();
+                    var quantityMax = q.Where(x => x.Key == "QuantityMax").FirstOrDefault().Value.ToString();
+                }
                 <div class="column">
                     <div class="data">
                         <label>First Name</label>
-                        <input type="text" name="FirstName" class="input--light-blue" />
+                        <input type="text" name="FirstName" value="@(firstName)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Last Name</label>
-                        <input type="text" name="LastName" class="input--light-blue" />
+                        <input type="text" name="LastName" value="@(lastName)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Email</label>
-                        <input type="text" name="Email" class="input--light-blue" />
+                        <input type="text" name="Email" value="@(email)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Is Photographer?</label>
-                        <select name="IsPhotographer">
+                        @{ 
+                            var list = new SelectList(new List<object>
+                                {
+                                    new { Value = "false", Text = "No" },
+                                    new { Value = "true", Text = "Yes" }
+                                }, "Value", "Text", isPhotographer);
+                        }
+                        @Html.DropDownList("IsPhotographer", list)
+                        @*
+                            <select name="IsPhotographer" value="@(isPhotographer)">
                             <option value="false">No</option>
                             <option value="true">Yes</option>
                         </select>
+                        *@
                     </div>
                 </div>
                 <div class="column">
-                    @{
-                        var dateThirtyDaysAgo = ViewContext.HttpContext.Request.Query.Where(x => x.Key == "OrderDateEarliest").First().Value.ToString();
-                        if (dateThirtyDaysAgo.Length == 0)
-                        {
-                            dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
-                        }
-
-                        var dateNow = ViewContext.HttpContext.Request.Query.Where(x => x.Key == "OrderDateLatest" && x.Value.ToString().Length > 0).FirstOrDefault().Value.ToString();
-                        if(dateNow.Length == 0)
-                        {
-                            dateNow = DateTime.Now.ToString("yyyy-MM-dd");
-                        }
-                    }
                     <div class="data">
                         <label>Order Status</label>
-                        <input type="text" name="OrderStatus" class="input--light-blue" />
+                        <input type="text" name="OrderStatus" value="@(orderStatus)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Order Date</label>
@@ -63,7 +91,7 @@
                     </div>
                     <div class="data">
                         <label>Display Name</label>
-                        <input type="text" name="DisplayName" class="input--light-blue" />
+                        <input type="text" name="DisplayName" value="@(displayName)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Quantity</label>
