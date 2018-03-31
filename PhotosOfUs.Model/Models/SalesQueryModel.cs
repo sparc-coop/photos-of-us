@@ -24,6 +24,7 @@ namespace PhotosOfUs.Model.Models
         public SalesQueryModel(string queryString)
         {
             Regex regex = new Regex("^\\?", RegexOptions.IgnoreCase);
+            Regex regex2 = new Regex("\\+", RegexOptions.IgnoreCase);
             string cleaned = regex.Replace(queryString, "");
             var queryArray = cleaned.Split("&");
 
@@ -47,7 +48,7 @@ namespace PhotosOfUs.Model.Models
                     }
                     else
                     {
-                        property.SetValue(this, pairArray[1]);
+                        property.SetValue(this, regex2.Replace(pairArray[1], " "));
                     }
                 } else
                 {

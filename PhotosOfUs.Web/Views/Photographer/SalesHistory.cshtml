@@ -63,25 +63,26 @@
                     <div class="data">
                         <label>Is Photographer?</label>
                         @{ 
-                            var list = new SelectList(new List<object>
+                            var isPhotographerList = new SelectList(new List<object>
                                 {
                                     new { Value = "false", Text = "No" },
                                     new { Value = "true", Text = "Yes" }
                                 }, "Value", "Text", isPhotographer);
                         }
-                        @Html.DropDownList("IsPhotographer", list)
-                        @*
-                            <select name="IsPhotographer" value="@(isPhotographer)">
-                            <option value="false">No</option>
-                            <option value="true">Yes</option>
-                        </select>
-                        *@
+                        @Html.DropDownList("IsPhotographer", isPhotographerList)
                     </div>
                 </div>
                 <div class="column">
                     <div class="data">
                         <label>Order Status</label>
-                        <input type="text" name="OrderStatus" value="@(orderStatus)" class="input--light-blue" />
+                        @{ 
+                            var orderStatusList = new SelectList(new List<object>
+                                {
+                                    new { Value = "Payment Pending", Text = "Payment Pending" },
+                                    new { Value = "Order Complete", Text = "Order Complete" }
+                                }, "Value", "Text", orderStatus);
+                        }
+                        @Html.DropDownList("OrderStatus", orderStatusList)
                     </div>
                     <div class="data">
                         <label>Order Date</label>
