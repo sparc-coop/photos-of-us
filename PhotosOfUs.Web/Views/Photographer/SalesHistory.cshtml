@@ -39,8 +39,17 @@
                 </div>
                 <div class="column">
                     @{
-                        var dateNow = DateTime.Now.ToString("yyyy-MM-dd");
-                        var dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+                        var dateThirtyDaysAgo = ViewContext.HttpContext.Request.Query.Where(x => x.Key == "OrderDateEarliest").First().Value.ToString();
+                        if (dateThirtyDaysAgo.Length == 0)
+                        {
+                            dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+                        }
+
+                        var dateNow = ViewContext.HttpContext.Request.Query.Where(x => x.Key == "OrderDateLatest" && x.Value.ToString().Length > 0).FirstOrDefault().Value.ToString();
+                        if(dateNow.Length == 0)
+                        {
+                            dateNow = DateTime.Now.ToString("yyyy-MM-dd");
+                        }
                     }
                     <div class="data">
                         <label>Order Status</label>
@@ -50,7 +59,7 @@
                         <label>Order Date</label>
                         <input type="date" name="OrderDateEarliest" value="@dateThirtyDaysAgo" class="input--light-blue" />
                         -
-                        <input type="date" name="OrderDateLatest" value="@dateNow" class="input--light-blue" />
+                        <input type="date" name="OrderDateLatest" value="@(dateNow)" class="input--light-blue" />
                     </div>
                     <div class="data">
                         <label>Display Name</label>
@@ -58,9 +67,9 @@
                     </div>
                     <div class="data">
                         <label>Quantity</label>
-                        <input type="number" name="QuantityMin" class="input--light-blue small-input" />
+                        <input type="number" name="QuantityMin" min="0" class="input--light-blue small-input" />
                         -
-                        <input type="number" name="QuantityMax" class="input--light-blue small-input" />
+                        <input type="number" name="QuantityMax" min="0" class="input--light-blue small-input" />
                     </div>
                 </div>
                 <div class="column">

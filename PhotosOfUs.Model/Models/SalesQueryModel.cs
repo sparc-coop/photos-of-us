@@ -11,8 +11,8 @@ namespace PhotosOfUs.Model.Models
     {
         public string Total { get; set; } // number
         public string OrderStatus { get; set; }
-        public DateTime OrderDateEarliest { get; set; }
-        public DateTime OrderDateLatest { get; set; }
+        public DateTime? OrderDateEarliest { get; set; }
+        public DateTime? OrderDateLatest { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -37,7 +37,7 @@ namespace PhotosOfUs.Model.Models
                 if (property != null && !String.IsNullOrEmpty(pairArray[1]))
                 {
                     Debug.WriteLine("NOT NULL PAIR: {0}:{1}", pairArray[0], pairArray[1]);
-                    if(property.PropertyType == typeof(DateTime))
+                    if(property.PropertyType == typeof(Nullable<DateTime>))
                     {
                         property.SetValue(this, DateTime.Parse(pairArray[1]));
                     } else

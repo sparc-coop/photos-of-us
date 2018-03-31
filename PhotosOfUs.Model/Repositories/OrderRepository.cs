@@ -27,8 +27,8 @@ namespace PhotosOfUs.Model.Repositories
                .Include(order => order.OrderDetail)
                    .ThenInclude(orderDetail => orderDetail.Photo)
                .Include(x => x.User)
-               .Where(x => x.OrderDetail.Select(y => y.Photo).First().PhotographerId == userId);
-               //.Where(x => x.UserId == userId);
+               //.Where(x => x.OrderDetail.Select(y => y.Photo).First().PhotographerId == userId);
+               .Where(x => x.UserId == userId);
 
             //if (query.Total != null) {
             //    final = final.Where(x => x.Total >= int.Parse(query.Total));
@@ -61,7 +61,7 @@ namespace PhotosOfUs.Model.Repositories
                                 : final.Where(x => query.IsPhotographer == false);
             }
             if (query.QuantityMin != null && query.QuantityMax != null) {
-                //final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.QuantityMin) && x.OrderDetail.Select(y => y.Quantity).First() <= int.Parse(query.QuantityMax));
+                final = final.Where(x => x.OrderDetail.Select(y => y.Quantity).First() >= int.Parse(query.QuantityMin) && x.OrderDetail.Select(y => y.Quantity).First() <= int.Parse(query.QuantityMax));
             }
 
             if(final == null)
