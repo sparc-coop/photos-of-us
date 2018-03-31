@@ -10,6 +10,7 @@ namespace PhotosOfUs.Model.Models
     public class SalesQueryModel
     {
         public string Total { get; set; } // number
+        public string PhotoName { get; set; }
         public string OrderStatus { get; set; }
         public DateTime? OrderDateEarliest { get; set; }
         public DateTime? OrderDateLatest { get; set; }

@@ -33,6 +33,11 @@ namespace PhotosOfUs.Model.Repositories
             //if (query.Total != null) {
             //    final = final.Where(x => x.Total >= int.Parse(query.Total));
             //}
+            if (query.PhotoName != null)
+            {
+                Regex regex = new Regex(query.PhotoName, RegexOptions.IgnoreCase);
+                final = final.Where(x => regex.IsMatch(x.OrderDetail.Select(y => y.Photo).First().Name));
+            }
             if (query.OrderStatus != null) {
                 final = final.Where(x => x.OrderStatus == query.OrderStatus);
             }

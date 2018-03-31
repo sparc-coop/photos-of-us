@@ -2001,7 +2001,14 @@ canvas {
     margin-left: 75px; }
 
 .photographer-sales-history .search-form {
-  width: 100%; }
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px solid #43c6ba; }
+  .photographer-sales-history .search-form .search-title {
+    margin-bottom: 16px; }
+    .photographer-sales-history .search-form .search-title h4 {
+      margin: 0; }
   .photographer-sales-history .search-form .search-inputs {
     display: flex;
     flex-wrap: wrap;
@@ -2010,7 +2017,7 @@ canvas {
   .photographer-sales-history .search-form .column {
     width: 48%; }
     .photographer-sales-history .search-form .column .data:not(:last-child) {
-      margin-bottom: 8px; }
+      margin-bottom: 16px; }
   .photographer-sales-history .search-form .medium-input {
     max-width: 100px;
     padding: 4px; }

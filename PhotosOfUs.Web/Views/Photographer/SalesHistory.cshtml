@@ -28,6 +28,8 @@
                     var isPhotographer = q.Where(x => x.Key == "IsPhotographer").FirstOrDefault().Value.ToString();
 
                     //column 2
+                    var photoName = q.Where(x => x.Key == "PhotoName").FirstOrDefault().Value.ToString();
+
                     var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
 
                     var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").First().Value.ToString();
@@ -65,6 +67,7 @@
                         @{ 
                             var isPhotographerList = new SelectList(new List<object>
                                 {
+                                    new { Value = "", Text = "---" },
                                     new { Value = "false", Text = "No" },
                                     new { Value = "true", Text = "Yes" }
                                 }, "Value", "Text", isPhotographer);
@@ -74,10 +77,15 @@
                 </div>
                 <div class="column">
                     <div class="data">
+                        <label>Photo Name</label>
+                        <input type="text" name="PhotoName" value="@photoName" class="input--light-blue" />
+                    </div>
+                    <div class="data">
                         <label>Order Status</label>
                         @{ 
                             var orderStatusList = new SelectList(new List<object>
                                 {
+                                    new { Value = "", Text = "---" },
                                     new { Value = "Payment Pending", Text = "Payment Pending" },
                                     new { Value = "Order Complete", Text = "Order Complete" }
                                 }, "Value", "Text", orderStatus);
@@ -85,9 +93,9 @@
                         @Html.DropDownList("OrderStatus", orderStatusList)
                     </div>
                     <div class="data">
-                        <label>Order Date</label>
-                        <input type="date" name="OrderDateEarliest" value="@dateThirtyDaysAgo" class="input--light-blue" />
-                        -
+                        <label>Order Date</label><br />
+                        <input type="date" name="OrderDateEarliest" value="@dateThirtyDaysAgo" class="input--light-blue" /><br />
+                        -to-<br />
                         <input type="date" name="OrderDateLatest" value="@(dateNow)" class="input--light-blue" />
                     </div>
                     <div class="data">
@@ -96,9 +104,9 @@
                     </div>
                     <div class="data">
                         <label>Quantity</label>
-                        <input type="number" name="QuantityMin" min="0" class="input--light-blue small-input" />
-                        -
-                        <input type="number" name="QuantityMax" min="0" class="input--light-blue small-input" />
+                        <input type="number" name="QuantityMin" min="0" value="@quantityMin" class="input--light-blue small-input" />
+                        -to-
+                        <input type="number" name="QuantityMax" min="0" value="@quantityMax" class="input--light-blue small-input" />
                     </div>
                 </div>
                 <div class="column">
