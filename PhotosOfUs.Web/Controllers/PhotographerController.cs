@@ -319,8 +319,8 @@ namespace PhotosOfUs.Web.Controllers
             // if the user can't be found make a safe but empty return
             if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
-            //var photographerId = userIdentity.UserID;
-            var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+            var photographerId = userIdentity.UserID;
+            //var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
 
             string queryString = HttpContext.Request.QueryString.ToString();
             SalesQueryModel sqm = new SalesQueryModel(queryString);
