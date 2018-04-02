@@ -20,12 +20,8 @@
                 <ul>
                     @foreach(var social in Model.User.SocialMedia)
                     {
-                        <li><a class="@(social.Type.ToLower())" href="@(social.)">@(social.Type)</a></li>
+                        <li><a class="@(social.Type.ToLower())" href="@(social.Link)">@(social.Type)</a></li>
                     }
-                    
-                    <li><a class="facebook" href="http://www.facebook.com">Facebook</a></li>
-                    <li><a class="instagram" href="http://www.instagram.com">Instagram</a></li>
-                    <li><a class="dribbl" href="http://www.dribbl.com">Dribbl</a></li>
                 </ul>
             </div>
             <div class="gallery-search-container">

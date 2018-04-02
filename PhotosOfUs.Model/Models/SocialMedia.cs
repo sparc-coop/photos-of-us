@@ -5,37 +5,38 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class SocialMedia
     {
+        public string AzureId { get; set; }
         public string Type { get; private set; }
-        public string BaseLink { get; private set; }
+        public string Link { get; private set; }
         public string Username { get; set; }
 
         public SocialMedia(string username)
         {
-            Username = username
+            Username = username;
         }
 
         public void asTwitter()
         {
             Type = "Twitter";
-            BaseLink = "http://www.twitter.com";
+            Link = $"http://www.twitter.com/{Username}";
         }
 
         public void asFacebook()
         {
             Type = "Facebook";
-            BaseLink = "http://www.facebook.com";
+            Link = $"http://www.facebook.com/{Username}";
         }
 
         public void asInstagram()
         {
             Type = "Instagram";
-            BaseLink = "http://www.instagram.com";
+            Link = $"http://www.instagram.com/{Username}";
         }
 
-        public void asDribbl()
+        public void asDribbble()
         {
-            Type = "Dribbl";
-            BaseLink = "http://www.dribbl.com";
+            Type = "Dribbble";
+            Link = $"http://www.dribbble.com/{Username}";
         }
 
         public void setType(string type, string username)
@@ -55,7 +56,7 @@ namespace PhotosOfUs.Model.Models
                     asInstagram();
                     break;
                 case "dribbl":
-                    asDribbl();
+                    asDribbble();
                     break;
             }
         }
