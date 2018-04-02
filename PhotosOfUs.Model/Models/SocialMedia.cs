@@ -5,6 +5,7 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class SocialMedia
     {
+        public string Id { get; set; }
         public string AzureId { get; set; }
         public string Type { get; private set; }
         public string Link { get; private set; }

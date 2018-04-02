@@ -28,7 +28,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public Folder GetPhotos(int photographerId, int folderId)
         {
-            return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
+            return _context.Folder.Include(x => x.Photo).SingleOrDefault(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
         public List<Photo> GetPhotosByCode(string code)

@@ -292,23 +292,30 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile()
         {
-            
-
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userIdentity = _context.UserIdentity.Find(azureId);
-            var photographerId = userIdentity.UserID;
-            var folderId = userIdentity.User.Folder.First().Id; // TODO: create a better way of getting all folders
-
             // These are only used to have some data on the frontend to create the page, replace with correct data for profile
-            photographerId = 1;
-            folderId = 1;
+            int photographerId = 1;
+            int folderId = 1;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
-            FolderViewModel folderViewModel = FolderViewModel.ToViewModel(folder);
+            string azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
+            //photographerId = userIdentity.UserID; // TODO: uncomment this line when done testing
+            User user = new UserRepository(_context).Find(photographerId);
+            Folder folder = user.Folder.FirstOrDefault(); // TODO: create a better way of getting all folders
+            //if(folder != null) folderId = folder.Id; // TODO: uncomment this line when done testing
+
+            var folderWithPhotos = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
+            FolderViewModel folderViewModel;
+            if (folderWithPhotos != null)
+            {
+                folderViewModel = FolderViewModel.ToViewModel(folderWithPhotos);
+            } else
+            {
+                folderViewModel = new FolderViewModel();
+            }
 
             ProfileBundle bundle = new ProfileBundle();
             bundle.Folder = folderViewModel;
-            bundle.User = userIdentity.User;
+            bundle.User = user;
 
             return View(bundle);
         }
@@ -326,8 +333,8 @@ namespace PhotosOfUs.Web.Controllers
             // if the user can't be found make a safe but empty return
             if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
-            var photographerId = userIdentity.UserID;
-            //var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+            //var photographerId = userIdentity.UserID;
+            var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
 
             string queryString = HttpContext.Request.QueryString.ToString();
             SalesQueryModel sqm = new SalesQueryModel(queryString);
