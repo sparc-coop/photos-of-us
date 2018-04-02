@@ -295,15 +295,22 @@ namespace PhotosOfUs.Web.Controllers
             
 
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var userIdentity = _context.UserIdentity.Find(azureId);
+            var photographerId = userIdentity.UserID;
+            var folderId = userIdentity.User.Folder.First().Id; // TODO: create a better way of getting all folders
 
             // These are only used to have some data on the frontend to create the page, replace with correct data for profile
             photographerId = 1;
-            var folderId = 1;
+            folderId = 1;
 
             var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
+            FolderViewModel folderViewModel = FolderViewModel.ToViewModel(folder);
 
-            return View(FolderViewModel.ToViewModel(folder));
+            ProfileBundle bundle = new ProfileBundle();
+            bundle.Folder = folderViewModel;
+            bundle.User = userIdentity.User;
+
+            return View(bundle);
         }
 
         [Authorize]

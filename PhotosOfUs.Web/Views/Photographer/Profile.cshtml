@@ -1,5 +1,5 @@
 ﻿@using Microsoft.EntityFrameworkCore
-@model FolderViewModel
+@model ProfileBundle
 @{
     ViewData["Title"] = "Profile";
 }
@@ -18,7 +18,11 @@
             </div>
             <div class="photographer-social">
                 <ul>
-                    <li><a class="twitter" href="http://www.twitter.com">Twitter</a></li>
+                    @foreach(var social in Model.User.SocialMedia)
+                    {
+                        <li><a class="@(social.Type.ToLower())" href="@(social.)">@(social.Type)</a></li>
+                    }
+                    
                     <li><a class="facebook" href="http://www.facebook.com">Facebook</a></li>
                     <li><a class="instagram" href="http://www.instagram.com">Instagram</a></li>
                     <li><a class="dribbl" href="http://www.dribbl.com">Dribbl</a></li>
@@ -31,7 +35,7 @@
         <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
             <div class="photographer-gallery-container">
                 <div class="g-row">
-                    @foreach (var Photo in @Model.Photos)
+                    @foreach (var Photo in @Model.Folder.Photos)
                     {
                     <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
                         <div class="gallery-image" style="background-image: url(@Photo.Url)" ng-click="viewPhoto(@Photo.Id)"></div>

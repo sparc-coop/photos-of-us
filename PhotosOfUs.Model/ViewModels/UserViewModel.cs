@@ -16,6 +16,7 @@ namespace PhotosOfUs.Model.ViewModels
         public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
 
+        public ICollection<SocialMedia> socialMedia { get; set; }
         public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }
