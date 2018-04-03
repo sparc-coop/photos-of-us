@@ -217,6 +217,14 @@ namespace PhotosOfUs.Model.Models
 
                 entity.Property(e => e.DisplayName).HasMaxLength(128);
 
+                entity.Property(e => e.JobPosition).HasMaxLength(128);
+
+                entity.Property(e => e.Bio).HasMaxLength(1000);
+
+                entity.Property(e => e.ProfilePhotoUrl)
+                    .HasMaxLength(1000)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(128);
