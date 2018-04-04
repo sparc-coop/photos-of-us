@@ -59,13 +59,18 @@
             background-color: $dark;
             display: inline-block;
         }
+
+        .menu-item.active {
+            padding-bottom: 5px;
+            border-bottom: 2px solid $yellow;
+        }
     }
 
     .adminMenu {
         background-color: $dark;
         z-index: 100;
         width: 212px;
-        height: 250px;
+        height: 280px;
         border-radius: 6px;
         margin-top: 46px;
         position: absolute;
@@ -79,6 +84,10 @@
             font-size: 16px;
             cursor: pointer;
             height: 30px;
+
+            a {
+                color: $yellow;
+            }
         }
 
         &__list:hover {
@@ -101,6 +110,10 @@
             color: $red;
             font-family: "Dosis";
             font-size: 14px;
+
+            a {
+                color: $red;
+            }
 
             &:hover {
                 background-color: $dark;

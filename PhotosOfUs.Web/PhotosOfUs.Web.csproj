@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\JeffsDog.jpeg" />
-    <Content Remove="wwwroot\js\API.js" />
     <Content Remove="wwwroot\js\API.js.map" />
     <Content Remove="wwwroot\js\API.ts" />
   </ItemGroup>
@@ -18,9 +17,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
     <PackageReference Include="Microsoft.Data.OData" Version="5.8.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="3.19.2" />
+    <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.2.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Stripe.net" Version="13.1.0" />
   </ItemGroup>
 
@@ -31,12 +41,12 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\js\controllers\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
     <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
+    <ProjectReference Include="..\Tesseract\Tesseract.NetCore.csproj" />
   </ItemGroup>
 
 </Project>

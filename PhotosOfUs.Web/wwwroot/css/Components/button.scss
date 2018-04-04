@@ -124,4 +124,36 @@
         font-weight: 600;
         font-size: 14px;
     }
+
+    &--learn {
+        border: 2px solid $primary;
+        border-radius: 8px;
+        width: 209px;
+        height: 26px;
+        background-color: $dark;
+        color: $primary;
+        font-size: 18px;
+        font-family: "Open Sans";
+        text-align: center;
+        padding: 10px 0;
+    }
+
+    &--imageUpload {
+        background: $yellow;
+        color: $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        display: inline;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+
+        .img-upload {
+            vertical-align: middle;
+            margin: -3px 10px 0 0;
+            border-radius: 0;
+            cursor: pointer;
+        }
+    }
 }

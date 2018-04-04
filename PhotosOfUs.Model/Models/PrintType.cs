@@ -11,5 +11,7 @@ namespace PhotosOfUs.Model.Models
         public string Height { get; set; }
         public string Length { get; set; }
         public string Icon { get; set; }
+
+        public ICollection<OrderDetail> OrderDetail { get; set; }
     }
 }

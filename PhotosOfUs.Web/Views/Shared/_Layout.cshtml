@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PhotosOfUs.Web</title>
+    <title>@ViewData["Title"] - Photos of Us</title>
 
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <environment include="Development">
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
-        <link rel="stylesheet" href="~/css/site.min.css" />
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
     </environment>
     <environment exclude="Development">
         @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" asp-append-version="true" />
     </environment>
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
@@ -42,13 +42,13 @@
                 else
                 {
                     @*@await Html.PartialAsync("_LoginPartial")*@
-
+                    <a href="~/Session/SignIn">Log In</a>
                     <!--If user is customer-->
                     <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
                 }
                 <img src="~/images/icons/ic_more_vert_24px.png" />
             </div>
-            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl">
+            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
                 <div class="cart--preview__content">
                     <div class="cart--preview--arrow"></div>
                     <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
@@ -64,17 +64,20 @@
                     <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                 </div>               
             </div>
-            <div ng-if="viewDropdown" class="adminMenu">
+            <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                 <div class="adminMenu__arrow"></div>
-                <div class="adminMenu__list">Profile</div>
-                <div class="adminMenu__list">Photo Gallery</div>
-                <div class="adminMenu__list">Personal Brand Settings</div>
-                <div class="adminMenu__list">Sales History</div>
-                <div class="adminMenu__list">Account Settings</div>
-                <div class="adminMenu__list logout">Log Out</div>
+                <div class="adminMenu__list"><a href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Cards","Photographer")">Cards</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("Profile","Photographer")">Profile</a></div>
+                <div class="adminMenu__list"><a href="#">Personal Brand Settings</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action("SalesHistory","Photographer")">Sales History</a></div>
+                <div class="adminMenu__list"><a href="@Url.Action(" Account","Photographer")">Account Settings</a></div>
+                <div class="adminMenu__list logout"><a href="~/Session/SignOut">Log Out</a></div>
             </div>
         </nav>
     </div>
+    
+    @RenderSection("ProfileImageBackdrop", false);
 
     <div class="container body-content">
         @RenderBody()
@@ -88,7 +91,7 @@
         <script src="~/lib/angular-elastic/elastic.js"></script>
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/PoU-bundle.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -106,7 +109,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="~/js/PoU-bundle.min.js" asp-append-version="true"></script>
     </environment>
 
 

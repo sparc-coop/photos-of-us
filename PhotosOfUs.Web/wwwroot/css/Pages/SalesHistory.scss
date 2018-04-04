@@ -1,0 +1,29 @@
+﻿.photographer-sales-history {
+
+    select {
+        color: #43C6BA;
+        border: 0;
+        font-size: 14px;
+    }
+
+    .total {
+        margin-top: 25px;
+        float: right;
+        font-family: 'Dosis';
+        font-weight:400;
+
+        h4 {
+            color: #43C6BA;
+            margin-bottom:0px;
+        }
+
+        h3 {
+            color: #194952;
+            margin-top:5px;
+        }
+
+        &-counter{
+            margin-left:75px;
+        }
+    }
+}

@@ -15,6 +15,7 @@ namespace PhotosOfUs.Model.Models
         public int ShippingAddressId { get; set; }
         public int BillingAddressId { get; set; }
         public decimal Total { get; set; }
+        public string OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
 
         public Address BillingAddress { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -13,12 +14,28 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<OrderDetail> OrderDetail { get; set; }
         public virtual DbSet<Photo> Photo { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserIdentity> UserIdentity { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
         public virtual DbSet<PrintType> PrintType { get; set; }
         public virtual DbSet<PrintPrice> PrintPrice { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
+
+
+        public PhotosOfUsContext()
+        { }
+
+        public IConfigurationRoot Configuration { get; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Trusted_Connection=False;Encrypt=True;");
+                base.OnConfiguring(optionsBuilder);
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -145,6 +162,13 @@ namespace PhotosOfUs.Model.Models
                     .HasForeignKey(d => d.PhotoId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Photo");
+
+                entity.HasOne(d => d.PrintType)
+                    .WithMany(p => p.OrderDetail)
+                    .HasForeignKey(d => d.PrintTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderDetail_PrintType");
+
             });
 
             modelBuilder.Entity<Photo>(entity =>
@@ -204,6 +228,24 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.LastName).HasMaxLength(128);
 
                 entity.Property(e => e.IsPhotographer);
+            });
+
+            modelBuilder.Entity<UserIdentity>(entity =>
+            {
+                entity.HasKey(e => e.AzureID);
+
+                entity.Property(e => e.AzureID)
+                    .HasColumnName("AzureID")
+                    .HasMaxLength(64)
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+
+                entity.Property(e => e.IdentityProvider);
+
+                entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserID).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<PrintType>(entity =>

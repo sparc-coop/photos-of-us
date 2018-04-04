@@ -43,5 +43,17 @@ namespace PhotosOfUs.Web.Controllers.API
             var photographer = new UserRepository(_context).Find(id);
             return UserViewModel.ToViewModel(photographer);
         }
+
+        [HttpGet]
+        [Route("GetFolders")]
+        public List<FolderViewModel> GetFolders()
+        {
+            //todo: updata photographerId
+
+            var photographerId = 1;
+            var folders = new PhotoRepository(_context).GetFolders(photographerId);
+
+            return FolderViewModel.ToViewModel(folders);
+        }
     }
 }
