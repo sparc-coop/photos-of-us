@@ -1,5 +1,56 @@
-﻿app.controller('PaymentCtrl', ['$scope', '$window', ($scope, $window) => {
+﻿app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $http) => {
+    $scope.cartItems = [];
+    var cartLocalStorage = {};
+    if (testLocalStorage()) {
+        var item = localStorage.getItem("cart");
+        if (item) {
+            cartLocalStorage = JSON.parse(item);
+        } else {
+            cartLocalStorage = {};
+        }
 
+        console.log(cartLocalStorage);
+
+        Object.values(cartLocalStorage).map(x => $scope.cartItems.push(new Photo(x, $http)));
+        console.log($scope.cartItems);
+    } else {
+        console.log("local storage unavailable");
+    }
+    function testLocalStorage () {
+        var available = true;
+        try {
+            localStorage.setItem("__availability_test", "test");
+            localStorage.removeItem("__availability_test");
+        }
+        catch (e) {
+            available = false;
+        }
+        finally {
+            return available;
+        }
+    }
+    $scope.printTypes = {};
+    $scope.getPrintTypes = () => {
+        $http.get('/api/Photo/GetPrintTypes').then(x => {
+            $scope.printTypes = x.data;
+            console.log($scope.printTypes);
+        });
+    };
+    $scope.getPrintTypes();
+
+    $scope.getAssociatedPrintType = (x) => {
+        var type = $scope.printTypes[x];
+        if (!type) return x;
+        return new PrintType($scope.printTypes[x]);
+    }
+
+    $scope.sumCart = () => {
+        var value = $scope.cartItems.reduce((a, b) => (a.price || 0) + (b.price || 0), 0);
+        console.log("sum", value);
+        return value;
+    }
+
+    $scope.address = {};
     $scope.saveAddress = (address) => {
         var addressInfo = {
             FullName: address.FirstName + ' ' + address.LastName
@@ -48,6 +99,11 @@
             hiddenInput.setAttribute('value', token.id);
             form.appendChild(hiddenInput);
 
+            var formData = {
+                stripeToken: token.id,
+                amount: $scope.sumCart()
+            }
+
             // Submit the form
             form.submit();
 
@@ -75,3 +131,41 @@
     };
 
 }])
+
+function PrintType (data) {
+    this.id;
+    this.type;
+    this.height;
+    this.length;
+    this.icon;
+
+    function constructor(data) {
+        this.id = data.id;
+        this.type = data.type;
+        this.height = data.height;
+        this.length = data.length;
+        this.icon = data.icon;
+    }
+    constructor.call(this, data);
+}
+
+function Photo(data, $http) {
+    var self = this;
+
+    function constructor(data) {
+        this.printTypeId = data.printTypeId;
+        this.getPhotoInfo = getPhotoInfo.bind(this);
+
+        getPhotoInfo(data.photoId);
+    }
+    constructor.call(this, data);
+
+    function getPhotoInfo(photoId) {
+        $http.get('/api/Photo/' + photoId).then(x => {
+                console.log(x.data);
+                Object.keys(x.data).map(y => {
+                self[y] = x.data[y];
+            });
+        });
+    }
+}
