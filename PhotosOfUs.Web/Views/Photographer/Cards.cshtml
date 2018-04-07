@@ -8,21 +8,21 @@
     <div class="yellow-background line--small"></div>
 
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Code" />
+        <input class="input--light-blue searchbox" placeholder="Search Code" ng-model="searchText" />
 
         @*<div class="view-icons align-right">
-            <select>
-                <option>Date</option>
-                <option>Code</option>
-            </select>
-        </div>*@
+                <select>
+                    <option>Date</option>
+                    <option>Code</option>
+                </select>
+            </div>*@
 
         <a href="@Url.Action("ExportNewCard","Photographer")" class="btn-pou-default">Export new card</a>
         <a href="#" ng-click="exportMultipleCardsModal()" class="btn-pou-default">Export multiple cards</a>
-       
+
     </div>
 
-    
+
 
     <div class="flex-box">
         <table class="table table-striped">
@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="card in cards | orderBy: '-id'">
+                <tr ng-repeat="card in cards | orderBy: '-id' | startFrom:(currentPage - 1) * pageSize | limitTo: 5 | filter:searchText">
                     <td class="highlight">{{card.code}}</td>
                     <td>{{card.createdDate | date: 'MM/dd/yyyy'}}</td>
                     <td><a class="btn btn-pou-default" ng-href="@Url.Action("ExportExistingCard", "Photographer")/{{card.id}}">Export</a></td>
@@ -42,5 +42,5 @@
             </tbody>
         </table>
     </div>
-
+    <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
 </div>
