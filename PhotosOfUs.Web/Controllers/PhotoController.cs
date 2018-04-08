@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -41,12 +42,12 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Charge(string stripeToken)
+        public IActionResult Charge([FromBody] PaymentModel payment)
         {
             StripeConfiguration.SetApiKey("");
-
-            int amount = 500;
-            var userId = 1;
+            Debug.WriteLine(payment);
+            int amount = payment.Amount;
+            var userId = 1; // TODO: get actual user id
             User user = new UserRepository(_context).Find(userId);
             Address address = new UserRepository(_context).GetAddress(userId);
 
@@ -56,7 +57,7 @@ namespace PhotosOfUs.Web.Controllers
             var customer = customers.Create(new StripeCustomerCreateOptions
             {
                 Email = address.Email,
-                SourceToken = stripeToken
+                SourceToken = payment.StripeToken
             });
 
             var charge = charges.Create(new StripeChargeCreateOptions

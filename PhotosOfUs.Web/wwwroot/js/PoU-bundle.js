@@ -216,12 +216,15 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
     $scope.address = {};
     $scope.saveAddress = (address) => {
         var addressInfo = {
-            FullName: address.FirstName + ' ' + address.LastName
+            FullName: address.FirstName + ' ' + address.LastName,
+            City: address.City,
+            State: address.State,
+            ZipCode: address.ZipCode,
+            Email: address.Email
         };
 
-        $http.post('/api/Photo/GetPrintTypes', addressInfo).then(x => {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+        $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
+            console.log("Address saved");
         });
     };
 
@@ -263,15 +266,16 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
             form.appendChild(hiddenInput);
 
             var formData = {
-                stripeToken: token.id,
-                amount: $scope.sumCart()
+                StripeToken: token.id,
+                Amount: $scope.sumCart()
             }
 
             // Submit the form
-            form.submit();
+            //form.submit();
 
             //var apiRoot = "/api/Payment/Charge/";
-            //$http.post(apiRoot, token.id);
+            var apiRoot = "/Photo/Charge/";
+            $http.post(apiRoot, formData);
         };
 
         // Create a token or display an error the form is submitted.
