@@ -20,12 +20,16 @@ namespace PhotosOfUs.Web.Controllers.API
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet, HttpPost]
         [Route("SaveAddress")]
         public AddressViewModel GetPhoto(AddressViewModel vm)
         {
             var address = AddressViewModel.ToEntity(vm);
             address = new AddressRepository(_context).Create(address);
+            if(address == null)
+            {
+                return new AddressViewModel();
+            }
             return AddressViewModel.ToViewModel(address);
         }
 

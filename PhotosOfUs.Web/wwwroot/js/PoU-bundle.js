@@ -273,8 +273,8 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
             // Submit the form
             //form.submit();
 
-            //var apiRoot = "/api/Payment/Charge/";
-            var apiRoot = "/Photo/Charge/";
+            var apiRoot = "/api/Payment/Charge";
+            //var apiRoot = "/Photo/Charge";
             $http.post(apiRoot, formData);
         };
 

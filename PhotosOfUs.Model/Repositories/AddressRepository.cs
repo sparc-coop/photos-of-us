@@ -2,6 +2,7 @@
 using PhotosOfUs.Model.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace PhotosOfUs.Model.Repositories
@@ -22,6 +23,7 @@ namespace PhotosOfUs.Model.Repositories
                 UserId = 1,
                 FullName = address.FullName,
                 Address1 = address.Address1,
+                Address2 = address.Address2,
                 City = address.City,
                 State = address.State,
                 ZipCode = address.ZipCode,
@@ -29,9 +31,19 @@ namespace PhotosOfUs.Model.Repositories
                 Email = address.Email
             };
 
-            _context.Address.Attach(newAddress);
-            _context.SaveChanges();
-            return address;
+            try
+            {
+                _context.Address.Attach(newAddress);
+                _context.SaveChanges();
+                return address;
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e);
+                return null;
+            }
+            
+            
         }
     }
 }
