@@ -321,11 +321,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult SalesHistory()
         {
-            var userId = 1; //todo update photographerId
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var user = _context.User.Find(userId);
 
-            var orders = new OrderRepository(_context).GetOrders(userId);
+            var orders = new OrderRepository(_context).GetOrders(user.Id);
 
-            return View(SalesHistoryViewModel.ToViewModel(orders));
+            return View(SalesHistoryViewModel.ToViewModel(user, orders));
         }
 
         public ActionResult NewFolderModal()

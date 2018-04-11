@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PhotosOfUs.Model.ViewModels;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -18,6 +19,31 @@ namespace PhotosOfUs.Model.Repositories
         public User Find(int userId)
         {
             return _context.User.Find(userId);
+        }
+
+        public bool UpdateAccountProfileSettings(ProfileSettingsViewModel model)
+        {
+            var user = Find(model.UserId);
+
+            if(null != model.Email)
+                user.Email = model.Email;
+
+            user.LastName = model.LastName;
+            user.ProfilePhotoUrl = model.ProfilePhotoUrl;
+            user.FirstName = model.FirstName;
+            user.JobPosition = model.JobPosition;
+            user.Bio = model.Bio;
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public Address GetAddress(int userId)

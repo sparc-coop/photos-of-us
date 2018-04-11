@@ -26,5 +26,27 @@ namespace PhotosOfUs.Model.Repositories
                 .Include(x => x.User)
                 .Where(x => x.UserId == userId).ToList();
         }
+
+        public List<Order> SearchOrders(int userId, string query)
+        {
+            var loweredQuery = query.ToLower();
+
+            var result = _context.Order.AsQueryable();
+
+            result = result.Where(x => x.UserId == userId);
+
+            result = result.Where(order => order.OrderStatus.ToLower().Contains(loweredQuery)
+                                           || order.OrderDetail.First().Photo.Name.ToLower().Contains(loweredQuery)
+                                           || order.OrderDetail.First().PrintType.Type.ToLower().Contains(loweredQuery));
+
+            result = result
+                .Include(order => order.OrderDetail)
+                    .ThenInclude(orderDetail => orderDetail.PrintType)
+                .Include(order => order.OrderDetail)
+                    .ThenInclude(orderDetail => orderDetail.Photo)
+                .Include(x => x.User);
+
+            return result.ToList();
+        }
     }
 }

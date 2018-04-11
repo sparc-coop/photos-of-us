@@ -15,6 +15,7 @@ using Stripe;
 using PhotosOfUs.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using PhotosOfUs.Web.Auth;
+using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Web
 {
@@ -63,6 +64,8 @@ namespace PhotosOfUs.Web
 
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PhotosOfUsDatabase")));
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
+            services.AddScoped<IViewRenderService, ViewRenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
