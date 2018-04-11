@@ -216,16 +216,16 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
-    $scope.openUpload = () => {
+    $scope.openUpload = (folderId) => {
         $mdDialog.show({
+            
             templateUrl: '/Photographer/Upload',
-            controller: 'ModalController',
-            clickOutsideToClose: true,
+            controller: 'UploadController',
+            locals: { folder: folderId },
+            clickOutsideToClose: true
         });
     };
-
-   
-
+    
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
     };
@@ -235,10 +235,13 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
             $scope.photographer = x.data;
         });
     };
-}])
-app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
-    $scope.currentCode = '';
+    
+}])
+angular.module('app').controller('UploadController', function ($scope, $http, FileUploader, $window, $mdDialog, $filter, folder) {
+
+    $scope.folderId = folder;
+    $scope.close = () => $mdDialog.hide();
 
     var uploader = $scope.uploader = new FileUploader({
         url: '/Photographer/UploadPhotoAsync'
@@ -334,6 +337,8 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
         } else {
             alert("Fix the photos with exclamation first before uploading");
         }
+
+        $window.location.reload();
     };
 
     $scope.VerifyErrorsInPhotoCode = function () {
@@ -373,10 +378,10 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
             Height: 100
         };
 
-        //fileItem.file.photoCode =
-        uploader.codeGenerator(fileItem);
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
+
+        uploader.codeGenerator(fileItem);
 
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
@@ -395,10 +400,16 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
 
     uploader.onBeforeUploadItem = function (item) {
         var photoCode = "";
-        if (item.file.photoCode)
-            photoCode = item.file.photoCode;
+        console.log(item.code);
+        if (item.code)
+            photoCode = item.code;
 
-        item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension });
+        if (item.formData.length > 0) {
+            item.formData[0].photoCode = photoCode;
+        } else {
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+        }
+        
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
@@ -410,7 +421,29 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
+        console.log('uploader.onSuccessItem ' + response);
+        console.log(fileItem);
+        console.log(uploader.queue);
+        
+        if (response != "") {
+            fileItem.formData[0].photoCode = response;
+            fileItem.code = response;
+            fileItem.isCode = true;
+
+            var foundItem = $filter('filter')(uploader.queue, { code: response }, true)[0];
+            //get the index
+            var index = uploader.queue.indexOf(foundItem);
+            console.log(index);
+
+            for (var i = (index - 1); i >= 0; i--) {
+                if (!uploader.queue[i].isCode) {
+                    uploader.queue[i].code = response;
+                } else {
+                    break;
+                }
+            }
+        }
+        
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -427,10 +460,10 @@ app.controller('UploadController', ['$scope', '$http', 'FileUploader', '$window'
 
     uploader.onCompleteAll = () => {
         //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        //$window.location.reload(); //.location.href = '/Photographer/Dashboard';
     };
 
-}]);
+});
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
@@ -472,4 +505,162 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
         $scope.folders.push(folder);
 
     });
+}])
+app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+    $scope.viewPhoto = (photoId) => {
+        $window.location.href = '/Photographer/Photo/' + photoId;
+    };
+    
+    $scope.openUpload = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/UploadProfilePhoto',
+            controller: 'ModalController',
+            clickOutsideToClose: true,
+        });
+    };
+
+    
+}])
+app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
+
+    var uploader = $scope.uploader = new FileUploader({
+        url: '/Photographer/UploadProfilePhotoAsync'
+    });
+
+    $scope.$watch(function () {
+        return uploader.queue.length;
+    }, function (newValue, oldValue) {
+        if (newValue < oldValue) {
+            // increase height to drop zone if no photo uploaded
+            if (uploader.queue.length === 0) {
+                $scope.dropZone = {
+                    Height: 300
+                };
+            }
+        }
+    });
+
+
+    $scope.photoNameValidation = function (e, selectedItem) {
+        var prohibited = ['drop table', 'alter table', 'create database', 'create table', 'create view', 'delete from', 'drop database', 'drop index',
+            'insert into', 'truncate table', 'script>'];
+
+        for (var i = 0; i < prohibited.length; i++) {
+            if (e.target.value.indexOf(prohibited[i]) > -1 ||
+                e.target.value.indexOf('select') > -1 && e.target.value.indexOf('from') > -1 ||
+                e.target.value.indexOf('update') > -1 && e.target.value.indexOf('set') > -1) {
+                e.target.value = "Code detected";
+                document.getElementById("photo-preview-name").focus();
+                document.getElementById("photo-preview-name").blur();
+            }
+        }
+    };
+
+
+    // FILTERS
+    uploader.filters.push({
+        name: 'imageFilter',
+        fn: function (item /*{File|FileLikeObject}*/, options) {
+            var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+            return '|jpg|png|jpeg|bmp|gif|tif'.indexOf(type) !== -1;
+        }
+    });
+
+    $scope.upload = function (item) {
+        item.upload();
+
+    };
+
+    $scope.uploadAll = function (items) {
+        console.log("clicked upload");
+        angular.forEach(items, function (item) {
+            item.upload();
+        });
+    };
+
+   
+
+    $scope.selectItem = function (e, i) {
+        $scope.selectedItem = i;
+    };
+
+    $scope.removeItem = function (removedItem) {
+        this.uploader.removeFromQueue(removedItem);
+
+        // if removed and in photo preview, show other
+        if (this.uploader.queue.length > 0) {
+            $scope.selectedItem = this.uploader.queue[0];
+        }
+    };
+
+    // CALLBACKS
+    uploader.onWhenAddingFileFailed = function (item /*{File|FileLikeObject}*/, filter, options) {
+
+    };
+
+    uploader.onAfterAddingFile = function (fileItem) {
+        // decrease height to drop zone if photo uploaded
+        console.log('on after adding file');
+        $scope.dropZone = {
+            Height: 100
+        };
+        
+        var extension = fileItem.file.name;
+        fileItem.file.fileExtension = extension.split('.').pop();
+
+        var image = new Image();
+        image.src = window.URL.createObjectURL(fileItem._file);
+        image.onload = function (e) {
+            fileItem.file.dimensions = image.naturalWidth + "x" + image.naturalHeight;
+            fileItem.file.src = image.src;
+            $scope.$apply();
+        };
+
+        $scope.selectedItem = fileItem;
+    };
+
+    uploader.onAfterAddingAll = function (addedFileItems) {
+
+    };
+
+    uploader.onBeforeUploadItem = function (item) {
+        item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
+    };
+
+    uploader.onProgressItem = function (fileItem, progress) {
+
+    };
+
+    uploader.onProgressAll = function (progress) {
+
+    };
+
+    //uploader.onSuccessItem = function (fileItem, response, status, headers) {
+    //    console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
+    //};
+
+    uploader.onErrorItem = function (fileItem, response, status, headers) {
+
+    };
+
+    uploader.onCancelItem = function (fileItem, response, status, headers) {
+
+    };
+
+    uploader.onCompleteItem = function (fileItem, response, status, headers) {
+
+    };
+
+    uploader.onCompleteAll = () => {
+        //alert("Complete");
+        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+    };
+
+}]);
+app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+
+    $scope.initAccountSettings = function () {
+
+    }
+
 }])

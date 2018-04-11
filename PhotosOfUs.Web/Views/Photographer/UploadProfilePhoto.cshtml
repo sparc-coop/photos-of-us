@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div nv-file-drop="" uploader="uploader" ng-init='load()'>
+        <div ng-controller="UploadPhotographerProfileCtrl" nv-file-drop="" uploader="uploader" ng-init='load()'>
             <div class="col-md-12">
                 <div ng-show="uploader.isHTML5">
                     <div class="drop-zone" nv-file-over="" uploader="uploader">
@@ -53,16 +53,11 @@
                                 <div class="col-md-2">
                                     <img ng-click="selectItem($event, item)" class="photo-thumbnail" ng-src="{{ item.file.src }}" />
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-8">
                                     <textarea msd-elastic class="photo-name" spellcheck="false" ng-keyup="photoNameValidation($event, item)" ng-model="item.file.name" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>
                                     <p class="photo-dimensions">{{ item.file.dimensions }}</p>
                                 </div>
-                                <div class="col-md-4">
-                                    <p class="photo-code">Photo Code</p>
-                                    @*<textarea msd-elastic class="code" spellcheck="false" ng-keypress="photoCodeValidation($event, item)" ng-model="item.file.photoCode" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>*@
-                                    <div ng-if="item.code != ''" class="code">{{item.code}}</div>
-                                    <div ng-if="item.code == ''" class="code">XXXXXXX</div>
-                                </div>
+                               
                                 <div>
                                     <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>
                                 </div>

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -48,9 +49,8 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetFolders")]
         public List<FolderViewModel> GetFolders()
         {
-            //todo: updata photographerId
-
-            var photographerId = 1;
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
             var folders = new PhotoRepository(_context).GetFolders(photographerId);
 
             return FolderViewModel.ToViewModel(folders);

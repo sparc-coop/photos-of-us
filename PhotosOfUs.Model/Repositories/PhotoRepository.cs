@@ -74,9 +74,10 @@ namespace PhotosOfUs.Model.Repositories
             return photo;
         }
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, bool publicProfile = false)
         {
-            var url = $"{photographerId}/{photoCode + extension}";
+            var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var url = $"{photographerId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
 
             stream.Position = 0;
             var container = new MemoryStream();
@@ -101,7 +102,8 @@ namespace PhotosOfUs.Model.Repositories
                 UploadDate = DateTime.Now,
                 Url = containerBlob.Uri.AbsoluteUri,
                 Code = photoCode,
-                FolderId = 1
+                FolderId = 1,
+                PublicProfile = publicProfile
             };
 
             _context.Photo.Attach(photo);
@@ -170,6 +172,12 @@ namespace PhotosOfUs.Model.Repositories
                 return ImageFormat.Png;
             }
         }
+
+        public List<Photo> GetProfilePhotos(int photographerId)
+        {
+            return _context.Photo.Where(x => x.PublicProfile).ToList();
+        }
+
     }
 
   

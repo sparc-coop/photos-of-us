@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 
 namespace PhotosOfUs.Web.Controllers
 {
+    [Authorize]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -56,10 +57,10 @@ namespace PhotosOfUs.Web.Controllers
         // GET: Photographer/Details/5
         public ActionResult Photos(int id)
         {
-            var photographerId = 1;
-            var folderId = 1;
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
+            var folder = new PhotoRepository(_context).GetPhotos(photographerId, id);
 
             return View(FolderViewModel.ToViewModel(folder));
         }
@@ -244,7 +245,12 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
+        public ActionResult UploadProfilePhoto()
+        {
+            return View();
+        }
+
+        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -252,16 +258,17 @@ namespace PhotosOfUs.Web.Controllers
             if (string.IsNullOrEmpty(photoCode))
             {
                 var ocr = new OCR(_context,_hostingEnvironment);
-                var ocrResult = ocr.GetOCRResult(file,photographerId); 
+                var ocrResult = ocr.GetOCRResult(file,photographerId);
+                return ocrResult.Code;
             }
+            
+            //Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
+            //var match = r.Match(photoCode);
 
-            Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
-            var match = r.Match(photoCode);
-
-            if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) ||
-                string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
-                match.Success == false)
-                return;
+            //if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) ||
+            //    string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
+            //    match.Success == false)
+            //    return "";
 
             var filePath = Path.GetTempFileName();
 
@@ -270,19 +277,32 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension);
+                }
+            }
+
+            return "";
+        }
+
+
+
+
+        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName,string.Empty, extension, true);
                 }
             }
         }
-        //public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
-        //{
-        //    if (string.IsNullOrEmpty(photoCode))
-        //    {
-        //        var ocr = new OCR(_hostingEnvironment);
-        //        ocr.GetOCRResult(file);
-        //    }
-
-        //}
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
@@ -291,13 +311,12 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile()
         {
-            // These are only used to have some data on the frontend to create the page, replace with correct data for profile
-            var photographerId = 1;
-            var folderId = 1;
-
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
-
-            return View(FolderViewModel.ToViewModel(folder));
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            
+            return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
         public ActionResult SalesHistory()

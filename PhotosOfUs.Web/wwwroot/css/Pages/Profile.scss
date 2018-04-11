@@ -1,4 +1,6 @@
-﻿.photographer-profile--backdrop  {
+﻿@import '../variables.scss';
+
+.photographer-profile--backdrop  {
     width: 100%;
     height: 300px;
     background-image: url(/images/photo/background.jpeg);
@@ -80,7 +82,29 @@
                     font-size: 0;
                     color: transparent;
                     padding: 10px;
-                    background-image: url(/images/icons/cart-red.png);
+                }
+
+
+                .instagram {
+                    background-image: url(/images/icons/Instagram-color.svg);
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .facebook {
+                    background-image: url(/images/icons/Facebook-color.svg);
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .dribbl {
+                    background-image: url(/images/icons/Dribbble-color.svg);
+                    background-size: cover;
+                    background-position: center;
+                }
+
+                .twitter {
+                    background-image: url(/images/icons/Twitter-color.svg);
                     background-size: cover;
                     background-position: center;
                 }
@@ -114,6 +138,33 @@
         }
     }
 
+    .gallery-upload-container {
+        margin-top: 50px;
+
+        .btn-upload {
+            display: block;
+            text-align: center;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 15px;
+            border: 1px solid $primary;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: $primary;
+            transition: transform .2s;
+
+            img {
+                margin-right: 5px;
+                vertical-align: middle;
+            }
+        }
+
+        .btn-upload:hover {
+            transform: scale(1.1);
+            -ms-transform: scale(1.1); /* IE 9 */
+            -webkit-transform: scale(1.1); /* Safari 3-8 */
+        }
+    }
+
     .photographer-gallery-container {
         .gallery-image {
             background-repeat: no-repeat;
@@ -123,6 +174,9 @@
             outline: none;
             border-radius: 8px;
             height: 170px;
+            -webkit-box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
+            -moz-box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
+            box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
 
             @media (max-width: 991px) {
                 height: 200px;

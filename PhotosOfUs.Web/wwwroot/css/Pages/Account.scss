@@ -75,22 +75,75 @@
 
     .form-account {
         margin-left: 40px;
-    }
 
-    .form-input {
-        position: relative;
-
-        input[type=text] {
-            padding-left: 40px;
-            font-size:12px;
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 100px;
+            border-radius: 50%;
         }
 
+        .profile-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
 
-        i.material-icons {
+        .overlay {
             position: absolute;
-            left: 10px;
-            top: 27px;
-            padding: 9px 8px;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: darkgray;
+            border-radius: 50%;
+            cursor: pointer;
+
+            .icon {
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                text-align: center;
+
+                .material-icons {
+                    font-size: 36px;
+                }
+            }
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+
+            .material-icons {
+                color: white;
+            }
+        }
+    }
+
+    .social-accounts {
+        .form-input {
+            position: relative;
+
+            input[type=text] {
+                padding-left: 40px;
+                font-size: 12px;
+            }
+
+
+            i.material-icons {
+                position: absolute;
+                left: 10px;
+                top: 27px;
+                padding: 9px 8px;
+            }
         }
     }
 }

@@ -3,12 +3,12 @@
     ViewData["Title"] = "Account";
 }
 
-<div class="account-settings">
+<div class="account-settings" ng-controller="PhotographerAccountCtrl">
     <h2 class="header-large">Account Settings</h2>
     <div class="yellow-background line--small"></div>
 
     <div class="container">
-        
+       
         <div>
             <div class="account-sidemenu">
                 <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">face</i> Profile Details</a></div>
@@ -21,14 +21,21 @@
                 <a href="#" class="btn-apply">Apply Changes</a>
                 <a href="#" class="discard-link">Discard Changes</a>
             </div>
-            
+
         </div>
-       
+
 
         <div class="form-account">
             <div class="form-input">
                 <label>Profile Photo</label>
-                <img src="~/images/avatar.png" />
+                <div class="img-container">
+                    <img class="profile-image" src="~/images/avatar.png" />
+                    <div class="overlay">
+                        <a href="#" class="icon" title="Upload Photo">
+                            <i class="material-icons">file_upload</i>
+                        </a>
+                    </div>
+                </div>
             </div>
             <form action="/Photo/SaveAddress" method="POST" class="form">
                 <div class="form-input">

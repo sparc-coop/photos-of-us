@@ -23,6 +23,14 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:11696/"
+    },
+    "PoU Production": {
+      "commandName": "PoU production",
+      "launchBrowser": true,
+      "launchUrl": "https://localhost:44315/",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
     }
   }
 }
