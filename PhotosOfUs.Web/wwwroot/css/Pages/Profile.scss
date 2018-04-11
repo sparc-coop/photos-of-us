@@ -56,10 +56,12 @@
         .photographer-title {
             margin-top: 0;
             color: $primary;
+            font-family: 'Dosis';
+            font-size: larger;
         }
 
         .photographer-bio {
-            font-size: smaller;
+            font-family: 'Dosis';
         }
     }
 
@@ -82,31 +84,24 @@
                     font-size: 0;
                     color: transparent;
                     padding: 10px;
-                }
-
-
-                .instagram {
-                    background-image: url(/images/icons/Instagram-color.svg);
                     background-size: cover;
                     background-position: center;
-                }
 
-                .facebook {
-                    background-image: url(/images/icons/Facebook-color.svg);
-                    background-size: cover;
-                    background-position: center;
-                }
+                    &.twitter {
+                        background-image: url(/images/icons/twitter.png);
+                    }
 
-                .dribbl {
-                    background-image: url(/images/icons/Dribbble-color.svg);
-                    background-size: cover;
-                    background-position: center;
-                }
+                    &.facebook {
+                        background-image: url(/images/icons/facebook.png);
+                    }
 
-                .twitter {
-                    background-image: url(/images/icons/Twitter-color.svg);
-                    background-size: cover;
-                    background-position: center;
+                    &.dribbl {
+                        background-image: url(/images/icons/dribbl.png);
+                    }
+
+                    &.instagram {
+                        background-image: url(/images/icons/instagram.png);
+                    }
                 }
             }
         }
@@ -123,6 +118,8 @@
             background-position: center right 15px;
             width: 90%;
             padding: 0 5%;
+
+            font-family: 'Dosis';
 
             &::-moz-placeholder {
                 color: $primary;

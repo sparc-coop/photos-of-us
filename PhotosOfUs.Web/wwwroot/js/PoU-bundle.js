@@ -1,10 +1,14 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', 'ui.bootstrap']);
 
 
 
-
+app.filter('startFrom', function () {
+    return function (data, start) {
+        return data.slice(start)
+    }
+})
 
 app.factory('photoApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
@@ -467,7 +471,8 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
     $scope.initCardCtrl = function () {
         
         cardApi.getAll()
