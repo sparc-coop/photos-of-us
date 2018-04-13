@@ -37,6 +37,18 @@ app.factory('cardApi', [
 ]);
 
 
+app.factory('photographerApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Photographer';
+        return {
+            getAccountSettings: function () { return $http.get(apiRoot + '/GetAccountSettings') },
+            saveAccountSettings: function (accountSettings) { console.log(JSON.stringify(accountSettings)); return $http.post(apiRoot + '/PostAccountSettings', accountSettings)}
+        };
+    }
+]);
+
+
+
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
     $scope.goToCart = () => {
         $window.location.href = '/Photo/Cart';
@@ -657,10 +669,103 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
 }]);
-app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
-
+app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
+    $scope.originalSettings = {};
     $scope.initAccountSettings = function () {
-
+        photographerApi.getAccountSettings().then(function (x) {
+            console.log(JSON.stringify(x));
+            $scope.accountSettings = x.data;
+            angular.copy(x.data, $scope.originalSettings);
+            console.log(JSON.stringify($scope.originalSettings));
+        })
     }
 
+    $scope.discardChanges = function () {
+        console.log(JSON.stringify($scope.originalSettings));
+        $scope.accountSettings = angular.copy($scope.originalSettings);
+    }
+
+    $scope.saveAccountSettings = function (accountSettings) {
+        console.log(JSON.stringify(accountSettings));
+        $scope.showLoader = true;
+        photographerApi.saveAccountSettings(accountSettings).then(function (x) {
+            console.log(JSON.stringify(x));
+            $scope.showLoader = false;
+            swal({
+                position: 'top-end',
+                type: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }, function (x) {
+            console.log(JSON.stringify(x));
+            $scope.showLoader = false;
+            swal({
+                position: 'top-end',
+                type: 'error',
+                title: 'Oops... Something went wrong!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+    }
+
+
+}])
+app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
+    $scope.close = () => $mdDialog.hide();
+    $scope.cards = [];
+
+    $scope.initCardCtrl = function () {
+        
+        cardApi.getAll()
+            .then(function (x) {
+                angular.forEach(x.data, function (c) { $scope.cards.push(c); });
+                console.log(JSON.stringify(x.data));
+            })
+    }
+
+    $scope.exportMultipleCardsModal = function() {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MultipleCardsModal',
+            controller: 'CardCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
+    $scope.exportMultipleCards = function (quantity) {
+        location.href = "/Photographer/ExportMultipleCards/?quantity=" + quantity;
+    }
+
+    $scope.addFolder = function (folderName) {
+        folderApi.add(folderName)
+            .then(function (x) {
+                //adds to list view
+                $scope.close();
+                $rootScope.$broadcast('FolderAdded', x.data);
+            })
+    }
+
+    $scope.$on('FolderAdded', function (e, folder) {
+
+        console.log('added folder - ' + JSON.stringify(folder));
+
+        $scope.folders.push(folder);
+
+    });
+}])
+app.controller('SalesHistoryCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
+
+    $scope.query = "";
+
+    $scope.querySalesHistory = (query) => {
+        $('.sales-container .overlay').addClass('loading');
+        $http.get('/api/Photographer/SalesHistory?query=' + query).then(x => {
+            if (x.status === 200) {
+                $('.sales-content').html(x.data);
+                $('.sales-container .overlay').removeClass('loading');
+            }
+        });
+    }
 }])

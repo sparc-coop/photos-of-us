@@ -4,7 +4,7 @@
 
     $scope.querySalesHistory = (query) => {
         $('.sales-container .overlay').addClass('loading');
-        $http.get('/api/PhotographerApi/SalesHistory?query=' + query).then(x => {
+        $http.get('/api/Photographer/SalesHistory?query=' + query).then(x => {
             if (x.status === 200) {
                 $('.sales-content').html(x.data);
                 $('.sales-container .overlay').removeClass('loading');

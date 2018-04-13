@@ -46,6 +46,21 @@ namespace PhotosOfUs.Model.Repositories
             return true;
         }
 
+        public bool UpdateAccountSettings(PhotographerAccountViewModel model)
+        {
+            var user = Find(model.Id);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.DisplayName = model.DisplayName;
+            user.JobPosition = model.JobPosition;
+            user.Bio = model.Bio;
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
         public Address GetAddress(int userId)
         {
             return _context.Address.Where(x => x.UserId == userId).First();

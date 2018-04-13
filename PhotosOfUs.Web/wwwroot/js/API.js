@@ -28,3 +28,15 @@ app.factory('cardApi', [
     }
 ]);
 
+
+app.factory('photographerApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Photographer';
+        return {
+            getAccountSettings: function () { return $http.get(apiRoot + '/GetAccountSettings') },
+            saveAccountSettings: function (accountSettings) { console.log(JSON.stringify(accountSettings)); return $http.post(apiRoot + '/PostAccountSettings', accountSettings)}
+        };
+    }
+]);
+
+
