@@ -182,17 +182,8 @@ namespace PhotosOfUs.Web.Controllers
             _context.Entry(nCard).Reference(c => c.Photographer).Load();
 
             CardViewModel newCard = CardViewModel.ToViewModel(nCard);
-            List<CardViewModel> lCards = new List<CardViewModel>();
-            lCards.Add(newCard);
-            var json = JsonConvert.SerializeObject(lCards);
-
-            return new ActionAsPdf("CardToExport", new { json }) {
-                FileName = "PoU-Card-" + newCard.Code + ".pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
-            };
+            List<CardViewModel> lCards = new List<CardViewModel> { newCard };
+            return Cards(lCards, "PoU-Card-" + newCard.Code);
         }
 
         public ActionResult ExportExistingCard(int id)
@@ -201,18 +192,7 @@ namespace PhotosOfUs.Web.Controllers
             _context.Entry(eCard).Reference(c => c.Photographer).Load();
             CardViewModel model = CardViewModel.ToViewModel(eCard);
 
-            List<CardViewModel> lCards = new List<CardViewModel>();
-            lCards.Add(model);
-            var json = JsonConvert.SerializeObject(lCards);
-
-            return new ActionAsPdf("CardToExport", new { json })
-            {
-                FileName = "PoU-Card-" + model.Code + ".pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
-            };
+            return Cards(new List<CardViewModel> { model }, "PoU-Card-" + model.Code);
         }
 
         public ActionResult ExportMultipleCards(int quantity)
@@ -222,15 +202,19 @@ namespace PhotosOfUs.Web.Controllers
             var nCard = new CardRepository(_context).AddMultiple(photographer.UserID,quantity);
             
             List<CardViewModel> newCards = nCard.Select(x=>CardViewModel.ToViewModel(x)).ToList();
-            var json = JsonConvert.SerializeObject(newCards);
+            return Cards(newCards, "PoU-Cards-" + DateTime.Now.ToString("HHmmss"));
+        }
 
+        private ActionResult Cards(List<CardViewModel> cards, string filename)
+        {
+            var json = JsonConvert.SerializeObject(cards);
             return new ActionAsPdf("CardToExport", new { json })
             {
-                FileName = "PoU-Cards-" + DateTime.Now.ToString("HHmmss") + ".pdf",
+                FileName = filename + ".pdf",
                 PageSize = Size.Letter,
                 PageOrientation = Orientation.Landscape,
                 PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
+                Cookies = Request.Cookies.ToDictionary(x => x.Key, x => x.Value)
             };
         }
 
