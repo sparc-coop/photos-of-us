@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
-using PhotosOfUs.Model.Services;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 using Rotativa.NetCore;
 using Rotativa.NetCore.Options;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace PhotosOfUs.Web.Controllers
@@ -174,43 +169,19 @@ namespace PhotosOfUs.Web.Controllers
             return View(pCards);
         }
 
-        public ActionResult ExportNewCard()
+        [HttpPost]
+        public ActionResult Export(List<int> ids)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = new CardRepository(_context).Add(photographer.UserID);
-            _context.Entry(nCard).Reference(c => c.Photographer).Load();
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var cards = _context.Card
+                .Include(x => x.Photographer)
+                .Where(x => x.PhotographerId == photographerId && ids.Contains(x.Id)).ToList();
 
-            CardViewModel newCard = CardViewModel.ToViewModel(nCard);
-            List<CardViewModel> lCards = new List<CardViewModel> { newCard };
-            return Cards(lCards, "PoU-Card-" + newCard.Code);
-        }
-
-        public ActionResult ExportExistingCard(int id)
-        {
-            Card eCard = _context.Card.Find(id);
-            _context.Entry(eCard).Reference(c => c.Photographer).Load();
-            CardViewModel model = CardViewModel.ToViewModel(eCard);
-
-            return Cards(new List<CardViewModel> { model }, "PoU-Card-" + model.Code);
-        }
-
-        public ActionResult ExportMultipleCards(int quantity)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = new CardRepository(_context).AddMultiple(photographer.UserID,quantity);
-            
-            List<CardViewModel> newCards = nCard.Select(x=>CardViewModel.ToViewModel(x)).ToList();
-            return Cards(newCards, "PoU-Cards-" + DateTime.Now.ToString("HHmmss"));
-        }
-
-        private ActionResult Cards(List<CardViewModel> cards, string filename)
-        {
-            var json = JsonConvert.SerializeObject(cards);
-            return new ActionAsPdf("CardToExport", new { json })
+            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
+            return new ActionAsPdf("ExportPdf", new { json })
             {
-                FileName = filename + ".pdf",
+                FileName = "Cards.pdf",
                 PageSize = Size.Letter,
                 PageOrientation = Orientation.Landscape,
                 PageMargins = { Left = 0, Right = 0 },
@@ -218,10 +189,10 @@ namespace PhotosOfUs.Web.Controllers
             };
         }
 
-        public ActionResult CardToExport(string json)
+        public ActionResult ExportPdf(string json)
         {
-            List<CardViewModel> model = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
-            return View(model);
+            var cards = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
+            return View(cards);
         }
 
         public ActionResult Upload()

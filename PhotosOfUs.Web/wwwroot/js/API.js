@@ -23,7 +23,8 @@ app.factory('cardApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Card';
         return {
-            getAll: function () {return $http.get(apiRoot)}
+            getAll: function () { return $http.get(apiRoot) },
+            create: function (quantity) { return $http.post(apiRoot + '/Create/' + quantity) }
         };
     }
 ]);
