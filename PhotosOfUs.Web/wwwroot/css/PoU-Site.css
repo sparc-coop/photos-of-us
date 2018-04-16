@@ -920,6 +920,7 @@ body {
       margin-top: 10px; }
     .nav--right .profileImg {
       outline: none;
+      padding: 0;
       cursor: pointer;
       vertical-align: middle;
       height: 34px;
@@ -1397,9 +1398,13 @@ md-dialog {
   width: 510px;
   height: 513px;
   position: relative; }
+  #photo-preview .img-container {
+    text-align: center;
+    padding: 10px; }
   #photo-preview img {
-    width: 510px;
-    height: 330px;
+    width: auto;
+    max-width: 490px;
+    max-height: 330px;
     border-radius: 8px; }
   #photo-preview #photo-preview-name {
     width: 90%;

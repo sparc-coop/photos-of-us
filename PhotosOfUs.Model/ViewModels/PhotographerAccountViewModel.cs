@@ -14,7 +14,8 @@ namespace PhotosOfUs.Model.ViewModels
         public string DisplayName { get; set; }
         public string JobPosition { get; set; }
         public string Bio { get; set; }
-       
+        public string ProfilePhotoUrl { get; set; }
+
         public static PhotographerAccountViewModel ToViewModel(User u)
         {
             PhotographerAccountViewModel model = new PhotographerAccountViewModel();
@@ -25,6 +26,7 @@ namespace PhotosOfUs.Model.ViewModels
             model.DisplayName = u.DisplayName;
             model.JobPosition = u.JobPosition;
             model.Bio = u.Bio;
+            model.ProfilePhotoUrl = u.ProfilePhotoUrl;
             
             return model;
         }

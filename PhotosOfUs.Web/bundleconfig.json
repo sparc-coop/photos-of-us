@@ -25,7 +25,8 @@
       "wwwroot/js/controllers/UploadPhotographerProfileController.js",
       "wwwroot/js/controllers/PhotographerAccountController.js",
       "wwwroot/js/controllers/CardController.js",
-      "wwwroot/js/controllers/SalesHistoryController.js"
+      "wwwroot/js/controllers/SalesHistoryController.js",
+      "wwwroot/js/controllers/UploadProfileImageController.js"
     ]
   }
 ]

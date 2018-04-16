@@ -23,7 +23,7 @@ using Newtonsoft.Json;
 
 namespace PhotosOfUs.Web.Controllers
 {
-    [Authorize]
+   
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -262,14 +262,6 @@ namespace PhotosOfUs.Web.Controllers
                 return ocrResult.Code;
             }
             
-            //Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
-            //var match = r.Match(photoCode);
-
-            //if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) ||
-            //    string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
-            //    match.Success == false)
-            //    return "";
-
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -277,7 +269,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId);
                 }
             }
 
@@ -299,7 +291,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName,string.Empty, extension, true);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension, true);
                 }
             }
         }
@@ -354,5 +346,28 @@ namespace PhotosOfUs.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult UploadProfileImage()
+        {
+            return View();
+        }
+
+        public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await new UserRepository(_context).UpdateProfileImageAsync(photographerId, stream, photoName, string.Empty, extension);
+                }
+            }
+        }
+
     }
 }

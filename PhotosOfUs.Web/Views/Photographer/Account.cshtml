@@ -21,7 +21,6 @@
                 <a href="#" class="btn-apply" ng-click="saveAccountSettings(accountSettings)">
                     <span>
                         Apply Changes
-                        
                     </span>
                     <img ng-if="showLoader" src="~/images/savegif.gif" height="20" class="loader" />
                 </a>
@@ -32,11 +31,12 @@
         </div>
 
 
-        <div class="form-account">
+        <div class="form-account" ng-cloak>
             <div class="form-input">
                 <label>Profile Photo</label>
-                <div class="img-container">
-                    <img class="profile-image" src="~/images/avatar.png" />
+                <div class="img-container" ng-click="uploadProfileImage()">
+                    <img ng-if="!accountSettings.ProfilePhotoUrl" class="profile-image" src="~/images/avatar_512.png" />
+                    <img ng-if="accountSettings.ProfilePhotoUrl != ''" class="profile-image" ng-src="{{accountSettings.ProfilePhotoUrl}}" />
                     <div class="overlay">
                         <a href="#" class="icon" title="Upload Photo">
                             <i class="material-icons">file_upload</i>

@@ -19,60 +19,64 @@
 
 </head>
 <body>
-    <div>
+    <div ng-cloak>
         <nav class="nav">
             <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
-            <div class="nav--center" ng-controller="PhotoCtrl">
+            <div class="nav--center">
                 @*<a ng-click="openUpload()" class="menu-item">Upload</a>
                     <a href="/" class="menu-item">Page Title</a>
                     <a href="/" class="menu-item">Page Title</a>*@
             </div>
-            <div class="nav--right">
-                @*ng-if="customer"*@
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <!--Photographer Menu-->
+            @if (User.Identity.IsAuthenticated)
+            {
+                //todo and is photographer
+                <div class="nav--right" ng-controller="PhotographerCtrl" ng-init="getProfile()">
                     <img src="~/images/icons/alert.png" alt="notifications" />
                     <img src="~/images/icons/add.png" alt="add" />
-                    @*<img src="~/images/{{profile.url}}" alt="profile" ng-click="viewDropdown  = !viewDropdown" />*@
-                    <div ng-click="viewDropdown  = !viewDropdown" class="profileImg"></div>
-                }
-                else
-                {
+                    <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                    <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                </div>
+                <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+                    <div class="adminMenu__arrow"></div>
+                    <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
+                    <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
+                    <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
+                    <a class="adminMenu__list" href="#">Personal Brand Settings</a>
+                    <a class="adminMenu__list" href="@Url.Action("SalesHistory","Photographer")">Sales History</a>
+                    <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
+                    <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+                </div>
+            }
+            else
+            {
+                <div class="nav--right">
                     @*@await Html.PartialAsync("_LoginPartial")*@
                     <a href="~/Session/SignIn">Log In</a>
                     <!--If user is customer-->
                     <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
-                }
-                <img src="~/images/icons/ic_more_vert_24px.png" />
-            </div>
-            <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
-                <div class="cart--preview__content">
-                    <div class="cart--preview--arrow"></div>
-                    <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
-                    <div class="cart-items">
-                        @*ng-repeat="item in cart">*@
-                        <div>
-                            <div class="type">A6 Landscape</div><div class="quantity">x1</div><div class="price">$18.00</div>
-                        </div>
-                        <div>
-                            <div class="type">A5 Portrait</div><div class="quantity">x2</div><div class="price">$10.00</div>
-                        </div>
-                    </div>
-                    <div class="total"><span class="label">Cart Total</span><span class="amount">$30.00</span></div>
-                    <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                 </div>
-            </div>
-            <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
-                <div class="adminMenu__arrow"></div>
-                <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
-                <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
-                <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
-                <a class="adminMenu__list" href="#">Personal Brand Settings</a>
-                <a class="adminMenu__list" href="@Url.Action("SalesHistory","Photographer")">Sales History</a>
-                <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
-                <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
-            </div>
+
+                <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
+                    <div class="cart--preview__content">
+                        <div class="cart--preview--arrow"></div>
+                        <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
+                        <div class="cart-items">
+                            @*ng-repeat="item in cart">*@
+                            <div>
+                                <div class="type">A6 Landscape</div><div class="quantity">x1</div><div class="price">$18.00</div>
+                            </div>
+                            <div>
+                                <div class="type">A5 Portrait</div><div class="quantity">x2</div><div class="price">$10.00</div>
+                            </div>
+                        </div>
+                        <div class="total"><span class="label">Cart Total</span><span class="amount">$30.00</span></div>
+                        <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
+                    </div>
+                </div>
+
+            }
+
+
         </nav>
     </div>
 

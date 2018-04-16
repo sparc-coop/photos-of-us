@@ -11,7 +11,7 @@
     </div>
 
     <div class="background--yellow line--small"></div>
-
+   
     <div class="flex-box filters">
         <input class="input--light-blue searchbox" placeholder="Search Library" />
 
@@ -25,15 +25,15 @@
                 </select>
             </div>
 
-            <i class="material-icons" ng-click="listView = !listView">view_list</i>
-            <i class="material-icons selected" ng-click="listView = !listView">apps</i>
-
+            @*<i class="material-icons" ng-click="listView = !listView">view_list</i>
+        <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
+            <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak><img src="~/images/icons/add-photo.png" class="img-upload" />Upload Images</div>
         </div>
     </div>
-    <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak><img src="~/images/icons/add-photo.png" class="img-upload" />Upload Images</div>
 
 
-    <div class="folder-card--wrapper codeView" ng-show="listView">
+
+    <div class="folder-card--wrapper codeView">
         @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))
         {
             <div class="codeView__row">

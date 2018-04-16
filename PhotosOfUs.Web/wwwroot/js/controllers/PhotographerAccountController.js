@@ -40,5 +40,13 @@
         });
     }
 
+    $scope.uploadProfileImage = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/UploadProfileImage',
+            controller: 'UploadProfileImageCtrl',
+            clickOutsideToClose: true,
+        });
+    };
+
 
 }])
