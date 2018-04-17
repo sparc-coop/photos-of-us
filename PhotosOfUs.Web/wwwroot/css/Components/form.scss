@@ -6,7 +6,7 @@
     margin-bottom: 40px;
 
     &-input {
-        margin: 0 30px 18px 0;
+        margin: 0 30px 18px 0px;
 
         label {
             font-family: "Open Sans";
@@ -17,7 +17,7 @@
         }
 
         input {
-            width: 218px;
+            width: 240px;
             padding: 7px 10px;
             border: 1px solid $primary;
             border-radius: 3px;
@@ -27,13 +27,13 @@
         textarea {
             @extend input;
             display: flex;
-            width: 488px;
-            height:80px;
+            width: 779px;
+            height: 86px;
         }
 
         &--email {
             input {
-                width: 488px;
+                width: 510px;
             }
         }
     }
