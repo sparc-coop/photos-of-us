@@ -16,6 +16,7 @@ using PhotosOfUs.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using PhotosOfUs.Web.Auth;
 using PhotosOfUs.Web.Utilities;
+using Newtonsoft.Json.Serialization;
 
 namespace PhotosOfUs.Web
 {
@@ -46,7 +47,7 @@ namespace PhotosOfUs.Web
             .AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
             .AddCookie();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddSession(options =>
             {

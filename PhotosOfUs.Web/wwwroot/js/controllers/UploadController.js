@@ -91,14 +91,18 @@
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
+            var promises = [];
             angular.forEach(items, function (item) {
-                item.upload();
+                //todo only pushes if not photo code
+                promises.push(item.upload());
             });
+            $q.all(promises).then(x => { $window.location.reload(); })
+            
         } else {
             alert("Fix the photos with exclamation first before uploading");
         }
 
-        $window.location.reload();
+        
     };
 
     $scope.VerifyErrorsInPhotoCode = function () {

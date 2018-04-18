@@ -50,6 +50,7 @@
 
         .profileImg {
             outline: none;
+            padding:0;
             cursor: pointer;
             vertical-align: middle;
             height: 34px;
@@ -99,7 +100,7 @@
             border-bottom: 10px solid $dark;
             position: absolute;
             top: -8px;
-            right: 82px;
+            right: 55px;
         }
 
         .logout {

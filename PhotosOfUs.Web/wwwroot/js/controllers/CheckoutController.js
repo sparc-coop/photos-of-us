@@ -29,6 +29,12 @@
         }
     };
 
+    $scope.addToCart = function (printId) {
+        $scope.select(printId);
+        $scope.createOrder();
+        //todo broadcast added to cart to update menu
+    }
+
     $scope.createOrder = () => {
         // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
         $window.location.href = '/Photo/Cart';
