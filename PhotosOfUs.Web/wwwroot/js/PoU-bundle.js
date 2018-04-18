@@ -47,6 +47,14 @@ app.factory('photographerApi', [
     }
 ]);
 
+app.factory('checkoutApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Checkout';
+        return {
+            
+        };
+    }
+]);
 
 
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {

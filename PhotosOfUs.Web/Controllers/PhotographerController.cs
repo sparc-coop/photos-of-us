@@ -23,7 +23,7 @@ using Newtonsoft.Json;
 
 namespace PhotosOfUs.Web.Controllers
 {
-   
+   [Authorize]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;

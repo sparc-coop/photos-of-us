@@ -20,17 +20,20 @@
 </head>
 <body>
     <div ng-cloak>
-        <nav class="nav">
-            <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
-            <div class="nav--center">
-                @*<a ng-click="openUpload()" class="menu-item">Upload</a>
-                    <a href="/" class="menu-item">Page Title</a>
-                    <a href="/" class="menu-item">Page Title</a>*@
-            </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                //todo and is photographer
-                <div class="nav--right" ng-controller="PhotographerCtrl" ng-init="getProfile()">
+
+
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <nav class="nav" ng-controller="PhotographerCtrl" ng-init="getProfile()">
+                <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
+                @*<div class="nav--center">
+                        <a ng-click="openUpload()" class="menu-item">Upload</a>
+                            <a href="/" class="menu-item">Page Title</a>
+                            <a href="/" class="menu-item">Page Title</a>
+                    </div>*@
+                @*todo and is photographer*@
+                <div class="nav--right">
                     <img src="~/images/icons/alert.png" alt="notifications" />
                     <img src="~/images/icons/add.png" alt="add" />
                     <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
@@ -46,9 +49,12 @@
                     <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
                     <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                 </div>
-            }
-            else
-            {
+            </nav>
+        }
+        else
+        {
+            <nav class="nav" ng-controller="CheckoutCtrl" ng-cloak>
+                <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
                 <div class="nav--right">
                     @*@await Html.PartialAsync("_LoginPartial")*@
                     <a href="~/Session/SignIn">Log In</a>
@@ -56,7 +62,7 @@
                     <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
                 </div>
 
-                <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-cloak>
+                <div ng-if="cartPreview" class="cart--preview" id="cart--preview">
                     <div class="cart--preview__content">
                         <div class="cart--preview--arrow"></div>
                         <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
@@ -73,11 +79,11 @@
                         <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
                     </div>
                 </div>
+            </nav>
+        }
 
-            }
 
 
-        </nav>
     </div>
 
     @RenderSection("ProfileImageBackdrop", false);

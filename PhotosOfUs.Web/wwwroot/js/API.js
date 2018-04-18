@@ -39,4 +39,12 @@ app.factory('photographerApi', [
     }
 ]);
 
+app.factory('checkoutApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Checkout';
+        return {
+            
+        };
+    }
+]);
 
