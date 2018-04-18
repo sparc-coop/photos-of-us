@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
-using PhotosOfUs.Model.Services;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 using Rotativa.NetCore;
 using Rotativa.NetCore.Options;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
 namespace PhotosOfUs.Web.Controllers
 {
+   [Authorize]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -57,10 +53,10 @@ namespace PhotosOfUs.Web.Controllers
         // GET: Photographer/Details/5
         public ActionResult Photos(int id)
         {
-            var photographerId = 1;
-            var folderId = 1;
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
+            var folder = new PhotoRepository(_context).GetPhotos(photographerId, id);
 
             return View(FolderViewModel.ToViewModel(folder));
         }
@@ -174,70 +170,30 @@ namespace PhotosOfUs.Web.Controllers
             return View(pCards);
         }
 
-        public ActionResult ExportNewCard()
+        [HttpPost]
+        public ActionResult Export(List<int> ids)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = new CardRepository(_context).Add(photographer.UserID);
-            _context.Entry(nCard).Reference(c => c.Photographer).Load();
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var cards = _context.Card
+                .Include(x => x.Photographer)
+                .Where(x => x.PhotographerId == photographerId && ids.Contains(x.Id)).ToList();
 
-            CardViewModel newCard = CardViewModel.ToViewModel(nCard);
-            List<CardViewModel> lCards = new List<CardViewModel>();
-            lCards.Add(newCard);
-            var json = JsonConvert.SerializeObject(lCards);
-
-            return new ActionAsPdf("CardToExport", new { json }) {
-                FileName = "PoU-Card-" + newCard.Code + ".pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
-            };
-        }
-
-        public ActionResult ExportExistingCard(int id)
-        {
-            Card eCard = _context.Card.Find(id);
-            _context.Entry(eCard).Reference(c => c.Photographer).Load();
-            CardViewModel model = CardViewModel.ToViewModel(eCard);
-
-            List<CardViewModel> lCards = new List<CardViewModel>();
-            lCards.Add(model);
-            var json = JsonConvert.SerializeObject(lCards);
-
-            return new ActionAsPdf("CardToExport", new { json })
+            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
+            return new ActionAsPdf("ExportPdf", new { json })
             {
-                FileName = "PoU-Card-" + model.Code + ".pdf",
+                FileName = "Cards.pdf",
                 PageSize = Size.Letter,
                 PageOrientation = Orientation.Landscape,
                 PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
+                Cookies = Request.Cookies.ToDictionary(x => x.Key, x => x.Value)
             };
         }
 
-        public ActionResult ExportMultipleCards(int quantity)
+        public ActionResult ExportPdf(string json)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = new CardRepository(_context).AddMultiple(photographer.UserID,quantity);
-            
-            List<CardViewModel> newCards = nCard.Select(x=>CardViewModel.ToViewModel(x)).ToList();
-            var json = JsonConvert.SerializeObject(newCards);
-
-            return new ActionAsPdf("CardToExport", new { json })
-            {
-                FileName = "PoU-Cards-" + DateTime.Now.ToString("HHmmss") + ".pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                //ContentDisposition = ContentDisposition.Inline
-            };
-        }
-
-        public ActionResult CardToExport(string json)
-        {
-            List<CardViewModel> model = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
-            return View(model);
+            var cards = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
+            return View(cards);
         }
 
         public ActionResult Upload()
@@ -245,7 +201,12 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
+        public ActionResult UploadProfilePhoto()
+        {
+            return View();
+        }
+
+        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -253,17 +214,10 @@ namespace PhotosOfUs.Web.Controllers
             if (string.IsNullOrEmpty(photoCode))
             {
                 var ocr = new OCR(_context,_hostingEnvironment);
-                var ocrResult = ocr.GetOCRResult(file,photographerId); 
+                var ocrResult = ocr.GetOCRResult(file,photographerId);
+                return ocrResult.Code;
             }
-
-            Regex r = new Regex(@"^[A-Za-z0-9_-]+$", RegexOptions.IgnoreCase);
-            var match = r.Match(photoCode);
-
-            if (new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, photoCode) ||
-                string.IsNullOrEmpty(photoName) || string.IsNullOrEmpty(photoCode) ||
-                match.Success == false)
-                return;
-
+            
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -271,19 +225,32 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(1, stream, photoName, photoCode, extension);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId);
+                }
+            }
+
+            return "";
+        }
+
+
+
+
+        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension, true);
                 }
             }
         }
-        //public async Task UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension)
-        //{
-        //    if (string.IsNullOrEmpty(photoCode))
-        //    {
-        //        var ocr = new OCR(_hostingEnvironment);
-        //        ocr.GetOCRResult(file);
-        //    }
-
-        //}
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
@@ -292,40 +259,18 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile()
         {
-            // These are only used to have some data on the frontend to create the page, replace with correct data for profile
-            int photographerId = 1;
-            int folderId = 1;
-
-            string azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
-            //photographerId = userIdentity.UserID; // TODO: uncomment this line when done testing
-            User user = new UserRepository(_context).Find(photographerId);
-            Folder folder = user.Folder.FirstOrDefault(); // TODO: create a better way of getting all folders
-            //if(folder != null) folderId = folder.Id; // TODO: uncomment this line when done testing
-
-            var folderWithPhotos = new PhotoRepository(_context).GetPhotos(photographerId, folderId);
-            FolderViewModel folderViewModel;
-            if (folderWithPhotos != null)
-            {
-                folderViewModel = FolderViewModel.ToViewModel(folderWithPhotos);
-            } else
-            {
-                folderViewModel = new FolderViewModel();
-            }
-
-            ProfileBundle bundle = new ProfileBundle();
-            bundle.Folder = folderViewModel;
-            bundle.User = user;
-
-            return View(bundle);
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            
+            return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
         [Authorize]
         public ActionResult SalesHistory(string query = null)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // if the user id can't be found make a safe but empty return
             if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
             UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
@@ -333,8 +278,10 @@ namespace PhotosOfUs.Web.Controllers
             // if the user can't be found make a safe but empty return
             if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
+
             //var photographerId = userIdentity.UserID;
             var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+
 
             string queryString = HttpContext.Request.QueryString.ToString();
             SalesQueryModel sqm = new SalesQueryModel(queryString);
@@ -360,5 +307,38 @@ namespace PhotosOfUs.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult SocialAccounts()
+        {
+            return View();
+        }
+
+        public ActionResult BrandSettings()
+        {
+            return View();
+        }
+
+        public ActionResult UploadProfileImage()
+        {
+            return View();
+        }
+
+        public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await new UserRepository(_context).UpdateProfileImageAsync(photographerId, stream, photoName, string.Empty, extension);
+                }
+            }
+        }
+
     }
 }

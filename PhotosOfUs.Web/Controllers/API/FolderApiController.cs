@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,10 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPost]
         public FolderViewModel Post(string name)
         {
-            //todo: photographerId
-            var folder = new FolderRepository(_context).Add(name, 1);
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
+            var folder = new FolderRepository(_context).Add(name,photographerId);
 
             return FolderViewModel.ToViewModel(folder);
         }

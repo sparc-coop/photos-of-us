@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PhotosOfUs.Model.Models;
+using PhotosOfUs.Model.Repositories;
 
 namespace PhotosOfUs.Model.ViewModels
 {
@@ -15,7 +16,7 @@ namespace PhotosOfUs.Model.ViewModels
     
         public List<OrderViewModel> Orders { get; set; }
 
-        public static SalesHistoryViewModel ToViewModel(List<Order> orders)
+        public static SalesHistoryViewModel ToViewModel(User user, List<Order> orders)
         {
             var viewModel = new SalesHistoryViewModel();
 

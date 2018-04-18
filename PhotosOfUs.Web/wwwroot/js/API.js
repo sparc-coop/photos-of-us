@@ -23,7 +23,28 @@ app.factory('cardApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Card';
         return {
-            getAll: function () {return $http.get(apiRoot)}
+            getAll: function () { return $http.get(apiRoot) },
+            create: function (quantity) { return $http.post(apiRoot + '/Create/' + quantity) }
+        };
+    }
+]);
+
+
+app.factory('photographerApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Photographer';
+        return {
+            getAccountSettings: function () { return $http.get(apiRoot + '/GetAccountSettings') },
+            saveAccountSettings: function (accountSettings) { console.log(JSON.stringify(accountSettings)); return $http.post(apiRoot + '/PostAccountSettings', accountSettings)}
+        };
+    }
+]);
+
+app.factory('checkoutApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/Checkout';
+        return {
+            
         };
     }
 ]);

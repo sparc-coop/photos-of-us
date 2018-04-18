@@ -78,5 +78,27 @@ namespace PhotosOfUs.Model.Repositories
             Debug.WriteLine("IS FINAL: {0}---------------------------------", final.Count());
             return final.ToList();
         }
+
+        public List<Order> SearchOrders(int userId, string query)
+        {
+            var loweredQuery = query.ToLower();
+
+            var result = _context.Order.AsQueryable();
+
+            result = result.Where(x => x.UserId == userId);
+
+            result = result.Where(order => order.OrderStatus.ToLower().Contains(loweredQuery)
+                                           || order.OrderDetail.First().Photo.Name.ToLower().Contains(loweredQuery)
+                                           || order.OrderDetail.First().PrintType.Type.ToLower().Contains(loweredQuery));
+
+            result = result
+                .Include(order => order.OrderDetail)
+                    .ThenInclude(orderDetail => orderDetail.PrintType)
+                .Include(order => order.OrderDetail)
+                    .ThenInclude(orderDetail => orderDetail.Photo)
+                .Include(x => x.User);
+
+            return result.ToList();
+        }
     }
 }

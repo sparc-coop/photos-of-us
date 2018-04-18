@@ -11,16 +11,16 @@
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
-    $scope.openUpload = () => {
+    $scope.openUpload = (folderId) => {
         $mdDialog.show({
+            
             templateUrl: '/Photographer/Upload',
-            controller: 'ModalController',
-            clickOutsideToClose: true,
+            controller: 'UploadController',
+            locals: { folder: folderId },
+            clickOutsideToClose: true
         });
     };
-
-   
-
+    
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
     };
@@ -30,4 +30,6 @@
             $scope.photographer = x.data;
         });
     };
+
+    
 }])

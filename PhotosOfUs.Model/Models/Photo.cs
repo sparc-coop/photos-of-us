@@ -18,6 +18,7 @@ namespace PhotosOfUs.Model.Models
         public decimal? Price { get; set; }
         public string Name { get; set; }
         public DateTime UploadDate { get; set; }
+        public bool PublicProfile { get; set; }
 
         public Folder Folder { get; set; }
         public User Photographer { get; set; }

@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Account";
+}
+
+<div class="account-settings">
+    <h2 class="header-large">Account Settings</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="container">
+
+        <div>
+            <div class="account-sidemenu">
+                <div class="sidemenu-item"><a href="@Url.Action("Account","Photographer")"><i class="material-icons">face</i> Profile Details</a></div>
+                <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">opacity</i>Brand Settings</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">language</i>Social Accounts</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
+                <a href="#" class="deactivate">Deactivate Account</a>
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-apply">Apply Changes</a>
+                <a href="#" class="discard-link">Discard Changes</a>
+            </div>
+
+        </div>
+
+
+        <div class="brand-settings">
+            <div class="homepage-template">
+                <h2>Homepage Template</h2>
+                <img src="~/images/image_right.png" />
+                <img src="~/images/image_left.jpg" />
+                <img src="~/images/full_image.png" />
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
