@@ -31,7 +31,8 @@ app.factory('cardApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Card';
         return {
-            getAll: function () {return $http.get(apiRoot)}
+            getAll: function () { return $http.get(apiRoot) },
+            create: function (quantity) { return $http.post(apiRoot + '/Create/' + quantity) }
         };
     }
 ]);
@@ -494,30 +495,43 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
 });
-app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
+app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
+    $scope.cardsToExport = [];
 
     $scope.initCardCtrl = function () {
-        
+        $scope.cards = [];
         cardApi.getAll()
             .then(function (x) {
-                angular.forEach(x.data, function (c) { $scope.cards.push(c); });
-                console.log(JSON.stringify(x.data));
-            })
-    }
+                $scope.cards = x.data;
+            });
+    };
 
-    $scope.exportMultipleCardsModal = function() {
+    $scope.exportMultipleCardsModal = function () {
         $mdDialog.show({
             templateUrl: '/Photographer/MultipleCardsModal',
-            controller: 'CardCtrl',
-            clickOutsideToClose: true,
+            scope: $scope,
+            clickOutsideToClose: true
         })
-    }
+    };
 
     $scope.exportMultipleCards = function (quantity) {
-        location.href = "/Photographer/ExportMultipleCards/?quantity=" + quantity;
-    }
+        cardApi.create(quantity).then(function(x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.downloadCards = function (cards) {
+        $scope.cardsToExport = cards;
+        // Use timeout to wait for Angular to finish rendering the hidden inputs for the POST form
+        $timeout(function () { $('#card-downloader').submit() });
+    };
 
     $scope.addFolder = function (folderName) {
         folderApi.add(folderName)
@@ -746,30 +760,43 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
 
 
 }])
-app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
+app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
+    $scope.cardsToExport = [];
 
     $scope.initCardCtrl = function () {
-        
+        $scope.cards = [];
         cardApi.getAll()
             .then(function (x) {
-                angular.forEach(x.data, function (c) { $scope.cards.push(c); });
-                console.log(JSON.stringify(x.data));
-            })
-    }
+                $scope.cards = x.data;
+            });
+    };
 
-    $scope.exportMultipleCardsModal = function() {
+    $scope.exportMultipleCardsModal = function () {
         $mdDialog.show({
             templateUrl: '/Photographer/MultipleCardsModal',
-            controller: 'CardCtrl',
-            clickOutsideToClose: true,
+            scope: $scope,
+            clickOutsideToClose: true
         })
-    }
+    };
 
     $scope.exportMultipleCards = function (quantity) {
-        location.href = "/Photographer/ExportMultipleCards/?quantity=" + quantity;
-    }
+        cardApi.create(quantity).then(function(x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.downloadCards = function (cards) {
+        $scope.cardsToExport = cards;
+        // Use timeout to wait for Angular to finish rendering the hidden inputs for the POST form
+        $timeout(function () { $('#card-downloader').submit() });
+    };
 
     $scope.addFolder = function (folderName) {
         folderApi.add(folderName)
