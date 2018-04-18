@@ -50,7 +50,7 @@ namespace PhotosOfUs.Web.Controllers.API
             else
                 queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
 
-            var viewModel = SalesHistoryViewModel.ToViewModel(user, queriedOrders);
+            var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
 
             var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
 

@@ -16,7 +16,7 @@ namespace PhotosOfUs.Model.ViewModels
     
         public List<OrderViewModel> Orders { get; set; }
 
-        public static SalesHistoryViewModel ToViewModel(User user, List<Order> orders)
+        public static SalesHistoryViewModel ToViewModel(List<Order> orders)
         {
             var viewModel = new SalesHistoryViewModel();
 
