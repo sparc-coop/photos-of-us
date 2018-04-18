@@ -12,6 +12,9 @@ namespace PhotosOfUs.Model.ViewModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+        public string JobPosition { get; set; }
+        public string Bio { get; set; }
+        public string ProfilePhotoUrl { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
@@ -34,6 +37,9 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.DisplayName = entity.DisplayName;
             viewModel.CreateDate = entity.CreateDate;
             viewModel.IsPhotographer = entity.IsPhotographer;
+            viewModel.JobPosition = entity.JobPosition;
+            viewModel.Bio = entity.Bio;
+            viewModel.ProfilePhotoUrl = entity.ProfilePhotoUrl;
 
             return viewModel;
         }

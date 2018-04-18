@@ -15,6 +15,8 @@ using Stripe;
 using PhotosOfUs.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using PhotosOfUs.Web.Auth;
+using PhotosOfUs.Web.Utilities;
+using Newtonsoft.Json.Serialization;
 
 namespace PhotosOfUs.Web
 {
@@ -45,7 +47,7 @@ namespace PhotosOfUs.Web
             .AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
             .AddCookie();
 
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddSession(options =>
             {
@@ -63,6 +65,8 @@ namespace PhotosOfUs.Web
 
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PhotosOfUsDatabase")));
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
+            services.AddScoped<IViewRenderService, ViewRenderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

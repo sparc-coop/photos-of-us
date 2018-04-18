@@ -21,17 +21,11 @@
 
     <Compile Remove="Tesseract.Tests.Console\**" />
     <Compile Remove="Tesseract.Tests\**" />
-    <Compile Remove="x64\**" />
-    <Compile Remove="x86\**" />
 
     <EmbeddedResource Remove="Tesseract.Tests.Console\**" />
     <EmbeddedResource Remove="Tesseract.Tests\**" />
-    <EmbeddedResource Remove="x64\**" />
-    <EmbeddedResource Remove="x86\**" />
     <None Remove="Tesseract.Tests.Console\**" />
     <None Remove="Tesseract.Tests\**" />
-    <None Remove="x64\**" />
-    <None Remove="x86\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="lib\x64\liblept1742.dll" />
@@ -52,6 +46,17 @@
     <Content Include="lib\x86\tesseract.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="obj_netfx\Debug\netstandard2.0\Tesseract.NetCore.csproj.FileListAbsolute.txt" />
+    <Content Include="obj_netfx\project.assets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj_netfx\Debug\netstandard2.0\Tesseract.NetCore.csproj.CoreCompileInputs.cache" />
+    <None Include="obj_netfx\Debug\netstandard2.0\Tesseract.NetCore.csprojResolveAssemblyReference.cache" />
+    <None Include="obj_netfx\Debug\netstandard2.0\Tesseract.NetCore.dll" />
+    <None Include="obj_netfx\Debug\netstandard2.0\Tesseract.NetCore.pdb" />
+    <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.cache" />
+    <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.g.props" />
+    <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.g.targets" />
   </ItemGroup>
 
   <ItemGroup>

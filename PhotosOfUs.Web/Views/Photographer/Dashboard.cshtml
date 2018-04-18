@@ -28,22 +28,22 @@
     <div class="folder-card--wrapper flex-box" ng-controller="FolderCtrl" ng-init="initFolderCtrl()" ng-cloak>
        
             <div class="folder-card flex-box" ng-repeat="folder in folders">
-                <a class="full-width-anchor" href="/Photographer/Photos/{{folder.id}}"></a>
+                <a class="full-width-anchor" href="/Photographer/Photos/{{folder.Id}}"></a>
                 <div class="header flex-box">
                     <div class="grey-ball"></div>
                     <i class="material-icons align-right">more_vert</i>
                 </div>
                 <div class="photos">
-                    <img ng-repeat="photo in folder.photos.slice(0,8)" class="tiny-photo" ng-src="{{photo.thumbnailUrl}}" />
+                    <img ng-repeat="photo in folder.Photos.slice(0,8)" class="tiny-photo" ng-src="{{photo.ThumbnailUrl}}" />
                 </div>
                 <div class="folder-info">
                     <p class="title">
-                        {{folder.name}}
+                        {{folder.Name}}
                     </p>
                     <p class="created-date">
-                        Created: {{folder.createdDate | date: 'MMM d, yyyy'}}
+                        Created: {{folder.CreatedDate | date: 'MMM d, yyyy'}}
                     </p>
-                    <p class="folder-code">Folder Code: {{folder.id}}</p>
+                    <p class="folder-code">Folder Code: {{folder.Id}}</p>
                 </div>
             </div>
         

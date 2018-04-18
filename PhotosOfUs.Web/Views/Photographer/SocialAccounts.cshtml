@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "Account";
+}
+
+<div class="account-settings">
+    <h2 class="header-large">Account Settings</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="container">
+
+        <div>
+            <div class="account-sidemenu">
+                <div class="sidemenu-item"><a href="@Url.Action("Account","Photographer")"><i class="material-icons">face</i> Profile Details</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
+                <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">language</i>Social Accounts</a></div>
+                <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
+                <a href="#" class="deactivate">Deactivate Account</a>
+            </div>
+            <div class="btn-group">
+                <a href="#" class="btn-apply">Apply Changes</a>
+                <a href="#" class="discard-link">Discard Changes</a>
+            </div>
+
+        </div>
+
+
+        <div class="form-account social-accounts">
+           
+            <form action="/Photo/SaveAddress" method="POST" class="form">
+                <div class="form-input">
+                    <label>Twitter Url</label>
+                    <input type="text" placeholder="www.twitter.com/user" />
+                    <i class="material-icons twitter">account_box</i>
+                </div>
+                <div class="form-input">
+                    <label>Dribbble Url</label>
+                    <input type="text" placeholder="www.dribbble.com/user" />
+                    <i class="material-icons dribbble">account_box</i>
+                </div>
+
+                <div class="form-input">
+                    <label>Facebook Url</label>
+                    <input type="text" placeholder="www.facebook.com/user" />
+                    <i class="material-icons facebook">account_box</i>
+                </div>
+                <div class="form-input">
+                    <label>Flickr Url</label>
+                    <input type="text" placeholder="www.flickr.com/user" />
+                    <i class="material-icons flickr">account_box</i>
+                </div>
+
+                <div class="form-input">
+                    <label>Instagram Url</label>
+                    <input type="text" placeholder="www.instagram.com/user" />
+                    <i class="material-icons instagram">account_box</i>
+                </div>
+                <div class="form-input">
+                    <label>Behance Url</label>
+                    <input type="text" placeholder="www.behance.com/user" />
+                    <i class="material-icons behance">account_box</i>
+                </div>
+
+                <div class="form-input">
+                    <label>Google Plus Url</label>
+                    <input type="text" placeholder="www.googleplus.com/user" />
+                    <i class="material-icons googleplus">account_box</i>
+                </div>
+                <div class="form-input">
+                    <label>LinkedIn Url</label>
+                    <input type="text" placeholder="www.linkedin.com/user" />
+                    <i class="material-icons linkedin">account_box</i>
+                </div>
+
+                <div class="form-input">
+                    <label>Tumblr Url</label>
+                    <input type="text" placeholder="www.tumblr.com/user" />
+                    <i class="material-icons tumblr">account_box</i>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+
+
+</div>
+

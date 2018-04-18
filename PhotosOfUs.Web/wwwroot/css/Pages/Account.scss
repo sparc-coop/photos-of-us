@@ -1,0 +1,157 @@
+﻿@import "../variables";
+
+.account-settings {
+    .container {
+        display: flex;
+    }
+
+    .account-sidemenu {
+        background: $off-white;
+        border-radius: 4px;
+        padding: 26px 16px;
+        width: 208px;
+        height: 170px;
+        position: relative;
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        .sidemenu-item {
+            margin-bottom: 10px;
+            font-family: 'Dosis';
+            font-weight: 600;
+
+            .active {
+                color: #194952;
+
+                i {
+                    color: #ff6060;
+                }
+            }
+
+            a {
+                text-decoration: none;
+                color: #9b9999;
+            }
+
+            i {
+                position: relative;
+                /* Adjust these values accordingly */
+                top: 5px;
+                left: 5px;
+                margin-right: 20px;
+                color: #9b9999;
+            }
+        }
+
+        .deactivate {
+            color: #FF6060;
+            font-size: 10px;
+            text-decoration: none;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        text-align: center;
+        display: block;
+    }
+
+    .btn-apply {
+        background-color: #FFE261;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        width: 208px;
+        padding: 5px 16px;
+        margin-bottom: 20px;
+        display: block;
+        font-family: 'Dosis';
+        font-weight: bold;
+        font-size: 18px;
+
+        .loader {
+            vertical-align: middle;
+            float: right;
+        }
+    }
+
+    .discard-link {
+        text-decoration: none;
+        font-size: 12px;
+        color: #757575;
+    }
+
+    .form-account {
+        margin-left: 40px;
+
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 107px;
+            border-radius: 50%;
+        }
+
+        .profile-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: darkgray;
+            border-radius: 50%;
+            cursor: pointer;
+
+            .icon {
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                text-align: center;
+
+                .material-icons {
+                    font-size: 36px;
+                }
+            }
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+
+            .material-icons {
+                color: white;
+            }
+        }
+    }
+
+    .social-accounts {
+        .form-input {
+            position: relative;
+
+            input[type=text] {
+                padding-left: 40px;
+                font-size: 12px;
+            }
+
+
+            i.material-icons {
+                position: absolute;
+                left: 10px;
+                top: 27px;
+                padding: 9px 8px;
+            }
+        }
+    }
+}

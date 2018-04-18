@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="clearfix"></div>
-        <div ng-controller="UploadController" nv-file-drop="" uploader="uploader" ng-init='load()'>
+        <div nv-file-drop="" uploader="uploader" ng-init='load()'>
             <div class="col-md-12">
                 <div ng-show="uploader.isHTML5">
                     <div class="drop-zone" nv-file-over="" uploader="uploader">
@@ -30,7 +30,9 @@
             </div>
             <div class="upload--container">
                 <div id="photo-preview" ng-if="uploader.queue.length > 0">
-                    <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
+                    <div class="img-container">
+                        <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
+                    </div>
                     <div class="col-md-8">
                         <p class="photo-preview-title">Name</p>
                         <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
@@ -60,7 +62,8 @@
                                 <div class="col-md-4">
                                     <p class="photo-code">Photo Code</p>
                                     @*<textarea msd-elastic class="code" spellcheck="false" ng-keypress="photoCodeValidation($event, item)" ng-model="item.file.photoCode" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>*@
-                                    <div class="code">ABC123</div>
+                                    <div ng-if="item.code != ''" class="code">{{item.code}}</div>
+                                    <div ng-if="item.code == ''" class="code">XXXXXXX</div>
                                 </div>
                                 <div>
                                     <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>

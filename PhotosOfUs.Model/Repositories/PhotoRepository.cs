@@ -57,26 +57,27 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
         }
 
-        public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
+        //public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
+        //{
+        //    // TODO: Generate the code 
+        //    photo.Code = "abcdef";
+        //    photo.PhotographerId = photographerId;
+        //    photo.UploadDate = DateTime.Now;
+        //    photo.Name = fileName;
+
+        //    var extension = Path.GetExtension(fileName);
+        //    fileName = Guid.NewGuid() + extension;
+        //    photo.Url = await UploadFile(photographerId, stream, photoName, photoCode, extension);
+
+        //    await _context.Photo.AddAsync(photo);
+
+        //    return photo;
+        //}
+
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, bool publicProfile = false)
         {
-            // TODO: Generate the code 
-            photo.Code = "abcdef";
-            photo.PhotographerId = photographerId;
-            photo.UploadDate = DateTime.Now;
-            photo.Name = fileName;
-
-            var extension = Path.GetExtension(fileName);
-            fileName = Guid.NewGuid() + extension;
-            photo.Url = await UploadFile(photographerId, stream, photoName, photoCode, extension);
-
-            await _context.Photo.AddAsync(photo);
-
-            return photo;
-        }
-
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension)
-        {
-            var url = $"{photographerId}/{photoCode + extension}";
+            var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+            var url = $"{photographerId}/{folderId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
 
             stream.Position = 0;
             var container = new MemoryStream();
@@ -88,7 +89,7 @@ namespace PhotosOfUs.Model.Repositories
             // Generate thumbnail
             stream.Position = 0;
             var thumbnail = new MemoryStream();
-            ConvertImageToThumbnailJpg(stream, thumbnail, extension);
+            ImageHelper.ConvertImageToThumbnailJpg(stream, thumbnail, extension);
             var thumbnailBlob = StorageHelpers.Container("thumbnails").GetBlockBlobReference(url);
             thumbnailBlob.Properties.CacheControl = "public, max-age=31556926";
             thumbnail.Position = 0;
@@ -101,7 +102,8 @@ namespace PhotosOfUs.Model.Repositories
                 UploadDate = DateTime.Now,
                 Url = containerBlob.Uri.AbsoluteUri,
                 Code = photoCode,
-                FolderId = 1
+                FolderId = folderId,
+                PublicProfile = publicProfile
             };
 
             _context.Photo.Attach(photo);
@@ -110,64 +112,24 @@ namespace PhotosOfUs.Model.Repositories
             return containerBlob.Uri.AbsoluteUri;
         }
 
-        private static void ConvertImageToThumbnailJpg(Stream input, Stream output, string extension)
+        
+        public List<Photo> GetProfilePhotos(int photographerId)
         {
-            var thumbnailsize = 300;
-            int width;
-            int height;
-            var originalImage = new Bitmap(input);
-
-            if (originalImage.Width > originalImage.Height)
-            {
-                width = thumbnailsize;
-                height = thumbnailsize * originalImage.Height / originalImage.Width;
-            }
-            else
-            {
-                height = thumbnailsize;
-                width = thumbnailsize * originalImage.Width / originalImage.Height;
-            }
-
-            Image thumbnailImage = null;
-            try
-            {
-                if (height > originalImage.Height || width > originalImage.Width)
-                {
-                    originalImage.Save(output, GetImageFormatFromExtension(extension));
-                }
-                else
-                {
-                    thumbnailImage = originalImage.GetThumbnailImage(width, height, () => true, IntPtr.Zero);
-                    thumbnailImage.Save(output, GetImageFormatFromExtension(extension));
-                }
-            }
-            finally
-            {
-                thumbnailImage?.Dispose();
-            }
+            return _context.Photo.Where(x => x.PublicProfile).ToList();
         }
 
-        private static ImageFormat GetImageFormatFromExtension(string extension)
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension, bool v)
         {
-            if (extension.ToLower() == "png")
+            var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
+
+            if(public_folder.Count() == 0)
             {
-                return ImageFormat.Png;
-            }
-            else if (extension.ToLower() == "tiff" || extension.ToLower() == "tif")
-            {
-                return ImageFormat.Tiff;
-            }
-            else if (extension.ToLower() == "bmp")
-            {
-                return ImageFormat.Bmp;
-            }
-            else if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg" || extension.ToLower() == "jpe")
-            {
-                return ImageFormat.Png;
+                Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id);
             }
             else
             {
-                return ImageFormat.Png;
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id);
             }
         }
     }
