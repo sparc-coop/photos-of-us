@@ -15,7 +15,7 @@ using PhotosOfUs.Web.Utilities;
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Produces("application/json")]
-    [Route("api/PhotographerApi")]
+    [Route("api/Photographer")]
     public class PhotographerApiController : Controller
     {
         private readonly PhotosOfUsContext _context;
@@ -27,12 +27,7 @@ namespace PhotosOfUs.Web.Controllers.API
             _viewRenderService = viewRenderService;
         }
 
-        // GET: api/PhotographerApi
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        
 
         // GET: api/PhotographerApi/5
         [HttpGet("{id}", Name = "Get")]
@@ -59,7 +54,38 @@ namespace PhotosOfUs.Web.Controllers.API
 
             var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
 
-            return Content(result);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetAccountSettings")]
+        public IActionResult GetAccountSettings()
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var user = _context.User.Find(userId);
+
+            PhotographerAccountViewModel model = PhotographerAccountViewModel.ToViewModel(user);
+
+            return Ok(model);
+        }
+
+        [HttpPost]
+        [Route("PostAccountSettings")]
+        public IActionResult PostAccountSettings([FromBody]PhotographerAccountViewModel model)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+
+            if (userId != model.Id)
+                return BadRequest();
+
+            var success = new UserRepository(_context).UpdateAccountSettings(model);
+
+            if (success)
+                return Ok();
+
+            return BadRequest();
         }
     }
 }

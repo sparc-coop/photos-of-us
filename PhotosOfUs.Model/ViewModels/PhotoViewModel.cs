@@ -29,6 +29,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.PhotographerId = entity.PhotographerId;
             if (entity.Photographer != null)
             {
+                viewModel.Photographer = entity.Photographer;
                 viewModel.PhotographerName = entity.Photographer.DisplayName;
             }
             

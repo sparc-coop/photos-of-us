@@ -920,6 +920,7 @@ body {
       margin-top: 10px; }
     .nav--right .profileImg {
       outline: none;
+      padding: 0;
       cursor: pointer;
       vertical-align: middle;
       height: 34px;
@@ -959,7 +960,7 @@ body {
       border-bottom: 10px solid #194952;
       position: absolute;
       top: -8px;
-      right: 82px; }
+      right: 55px; }
     .nav .adminMenu .logout {
       padding-top: 10px;
       color: #FF6060;
@@ -1397,9 +1398,13 @@ md-dialog {
   width: 510px;
   height: 513px;
   position: relative; }
+  #photo-preview .img-container {
+    text-align: center;
+    padding: 10px; }
   #photo-preview img {
-    width: 510px;
-    height: 330px;
+    width: auto;
+    max-width: 490px;
+    max-height: 330px;
     border-radius: 8px; }
   #photo-preview #photo-preview-name {
     width: 90%;
@@ -2244,12 +2249,18 @@ canvas {
 .account-settings .btn-apply {
   background-color: #FFE261;
   color: white;
-  border-radius: 4px;
+  border-radius: 8px;
   text-decoration: none;
   width: 208px;
   padding: 5px 16px;
   margin-bottom: 20px;
-  display: block; }
+  display: block;
+  font-family: 'Dosis';
+  font-weight: bold;
+  font-size: 18px; }
+  .account-settings .btn-apply .loader {
+    vertical-align: middle;
+    float: right; }
 
 .account-settings .discard-link {
   text-decoration: none;

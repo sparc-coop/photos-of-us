@@ -9,6 +9,7 @@ namespace PhotosOfUs.Model.ViewModels
     {
         public int PhotographerId { get; set; }
         public string Name { get; set; }
+        public string ProfilePhotoUrl { get; set; }
         public string PhotographerTitle { get; set; }
         public string ProfileText { get; set; }
         public string FacebookLink { get; set; }
@@ -24,11 +25,12 @@ namespace PhotosOfUs.Model.ViewModels
 
             viewModel.PhotographerId = photographer.Id;
             viewModel.Name = photographer.DisplayName;
-            viewModel.PhotographerTitle = "Architectural Photographer"; //TODO create column to this field
-            viewModel.ProfileText = "This is the text"; //TODO create column to this field
+            viewModel.PhotographerTitle = photographer.JobPosition; //TODO create column to this field
+            viewModel.ProfileText = photographer.Bio; //TODO create column to this field
             viewModel.FacebookLink = photographer.Facebook;
             viewModel.TwitterLink = "twitter";//TODO create column to this field
             viewModel.InstagramLink = "instagram";//TODO create column to this field
+            viewModel.ProfilePhotoUrl = photographer.ProfilePhotoUrl;
 
             viewModel.Photos = new List<PhotoViewModel>();
 

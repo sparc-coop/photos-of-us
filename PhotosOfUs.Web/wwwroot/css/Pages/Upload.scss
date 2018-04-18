@@ -107,9 +107,15 @@ md-dialog {
     height: 513px;
     position: relative;
 
+    .img-container{
+        text-align:center;
+        padding:10px;
+    }
+
     img {
-        width: 510px;
-        height: 330px;
+        width: auto;
+        max-width:490px;
+        max-height: 330px;
         border-radius: 8px;
     }
 

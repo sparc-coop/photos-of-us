@@ -26,6 +26,7 @@ namespace PhotosOfUs.Model.Models
         public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
         public string Facebook { get; set; }
+        public int TemplateSelected { get; set; }
 
         public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
