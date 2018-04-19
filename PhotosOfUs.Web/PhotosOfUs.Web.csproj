@@ -10,10 +10,15 @@
     <Content Remove="wwwroot\JeffsDog.jpeg" />
     <Content Remove="wwwroot\js\API.js.map" />
     <Content Remove="wwwroot\js\API.ts" />
+    <Content Remove="wwwroot\js\PoU-bundle.es5.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Views\Photographer\Upload.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\PoU-bundle.es5.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +47,10 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\PoU-bundle.es5.js" />
   </ItemGroup>
 
   <ItemGroup>
