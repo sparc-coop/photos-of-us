@@ -57,7 +57,6 @@
     <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.cache" />
     <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.g.props" />
     <None Include="obj_netfx\Tesseract.NetCore.csproj.nuget.g.targets" />
-    <None Include="Tesseract.csproj" />
   </ItemGroup>
 
   <ItemGroup>
