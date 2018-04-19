@@ -487,16 +487,18 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
+        console.log("upload all clicked");
+       
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
-            //var promises = [];
-            //angular.forEach(items, function (item) {
-            //    //todo only pushes if not photo code
-            //    promises.push(item.upload());
-            //});
-            //$q.all(promises).then(x => { $window.location.reload(); });
+          
+            angular.forEach(items, function (item) {
+                //todo only pushes if not photo code
+                item.upload();
+            });
+
+            $scope.saveAllUpload = true;
             
         } else {
             alert("Fix the photos with exclamation first before uploading");
@@ -623,8 +625,11 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
-        //$window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        
+        if ($scope.saveAllUpload) {
+             $window.location.reload();
+        }
+        
     };
 
 });
