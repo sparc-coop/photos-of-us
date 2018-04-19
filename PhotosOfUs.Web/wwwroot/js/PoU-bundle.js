@@ -589,7 +589,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         console.log(fileItem);
         console.log(uploader.queue);
         
-        if (response != "") {
+        if (response !== "") {
             fileItem.formData[0].photoCode = response;
             fileItem.code = response;
             fileItem.isCode = true;
@@ -1096,7 +1096,7 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
 
     uploader.onCompleteAll = () => {
         //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        $window.location.reload(); //.location.href = '/Photographer/Dashboard'
     };
 
 }]);
