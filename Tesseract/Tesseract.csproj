@@ -46,7 +46,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release20|AnyCPU' ">
   </PropertyGroup>
   <!-- Load the common target, this does the real work for supporting multiple builds -->
-  <Import Project="..\Common.targets" />
+  <!--<Import Project="..\Common.targets" />-->
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
