@@ -491,12 +491,12 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
-            var promises = [];
-            angular.forEach(items, function (item) {
-                //todo only pushes if not photo code
-                promises.push(item.upload());
-            });
-            $q.all(promises).then(x => { $window.location.reload(); })
+            //var promises = [];
+            //angular.forEach(items, function (item) {
+            //    //todo only pushes if not photo code
+            //    promises.push(item.upload());
+            //});
+            //$q.all(promises).then(x => { $window.location.reload(); });
             
         } else {
             alert("Fix the photos with exclamation first before uploading");
@@ -960,8 +960,8 @@ app.controller('SalesHistoryCtrl', ['$scope', '$window', '$location', '$http', (
                 $('.sales-container .overlay').removeClass('loading');
             }
         });
-    }
-}])
+    };
+}]);
 app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
     $scope.close = () => $mdDialog.hide();
