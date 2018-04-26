@@ -219,9 +219,13 @@
         height: 15px;
         background: #DFDFDF;
         border-radius: 50%; }
+      .folder-card--wrapper .folder-card .header .teste {
+        border-radius: 18px; }
+      .folder-card--wrapper .folder-card .header .md-icon-button {
+        padding-right: 0px;
+        margin-right: 0px; }
       .folder-card--wrapper .folder-card .header .material-icons {
         color: #43C6BA;
-        position: absolute;
         right: 8px;
         z-index: 4;
         cursor: pointer; }

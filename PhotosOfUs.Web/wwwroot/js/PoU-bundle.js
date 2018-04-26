@@ -150,7 +150,7 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
     $scope.initFolderCtrl = function () {
        
-
+        $scope.orderByOption = "Name";
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
@@ -184,6 +184,7 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         
     });
 }])
+
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $window, $mdDialog) => {
     $scope.close = () => $mdDialog.hide();
 

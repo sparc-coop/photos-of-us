@@ -4,7 +4,7 @@
 
     $scope.initFolderCtrl = function () {
        
-
+        $scope.orderByOption = "Name";
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });

@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/css/sweetalert2.css" rel="stylesheet" />
-
+  
     <environment include="Development">
         <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
     </environment>
@@ -42,11 +42,12 @@
                 <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                     <div class="adminMenu__arrow"></div>
                     <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
-                    <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
-                    <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
                     <a class="adminMenu__list" href="#">Personal Brand Settings</a>
                     <a class="adminMenu__list" href="@Url.Action("SalesHistory","Photographer")">Sales History</a>
+                    <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
                     <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
+                    <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
+
                     <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                 </div>
             </nav>
