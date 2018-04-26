@@ -1,0 +1,250 @@
+﻿@import "../variables";
+
+.cart {
+    &--preview {
+        z-index: 100;
+        width: 265px;
+        height: 265px;
+        background-color: $yellow;
+        border-radius: 6px;
+        margin-top: 46px;
+        position: absolute;
+        right: 0;
+
+        &__content {
+            position: relative;
+            padding: 16px 14px;
+            height: 235px;
+
+            .heading {
+                font-family: "Dosis-SemiBold";
+                font-weight: 600;
+                font-size: 18px;
+                color: $dark;
+                padding-bottom: 14px;
+
+                .price {
+                    padding-left: 124px;
+                }
+            }
+
+            .cart-items {
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 14px;
+                color: $primary;
+
+                > div {
+                    display: flex;
+                    padding-bottom: 10px;
+                }
+
+                .type {
+                    width: 100px;
+                }
+
+                .quantity {
+                    padding-left: 20px;
+                    width: 30px;
+                }
+
+                .price {
+                    padding-left: 14px;
+                }
+            }
+
+            .total {
+                position: absolute;
+                bottom: 90px;
+                font-family: "Dosis";
+                font-weight: 600;
+                font-size: 18px;
+                color: $dark;
+
+                .amount {
+                    padding-left: 96px;
+                }
+            }
+        }
+
+        &--arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid $yellow;
+            position: absolute;
+            top: -8px;
+            right: 82px;
+        }
+    }
+
+    .divider {
+        background: $yellow;
+        width: 140px;
+        height: 2px;
+        margin: 22px 0;
+    }
+
+    .checkout {
+        .info-title {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 32px;
+            color: $primary;
+            padding-bottom: 14px;
+
+            img {
+                vertical-align: middle;
+                margin-left: 10px;
+            }
+        }
+
+        .summary {
+            background: $off-white;
+            border-radius: 4px;
+            padding: 26px 16px;
+            width: 208px;
+            height: 180px;
+            position: relative;
+
+            .title {
+                font-family: "Dosis";
+                font-weight: 600;
+                font-size: 18px;
+                color: $dark;
+                letter-spacing: 0;
+                padding-bottom: 18px;
+            }
+
+            .shipping {
+                border: 1px solid #DFDFDF;
+                border-radius: 4px;
+                font-family: "Open Sans";
+                font-size: 12px;
+                color: $text-gray;
+                padding: 4px;
+                position: absolute;
+                bottom: 84px;
+                width: 185px;
+                text-align: center;
+            }
+
+            .divider {
+                position: absolute;
+                bottom: 48px;
+                left: 44px;
+            }
+
+            .cart-items {
+                display: flex;
+                font-family: "Open Sans";
+                font-size: 12px;
+                color: $text-gray;
+                padding-bottom: 10px;
+
+                .type {
+                    width: 120px;
+                    padding-right: 40px;
+                }
+
+                .price {
+                }
+            }
+
+            .total {
+                font-family: "Open Sans";
+                font-size: 14px;
+                color: $text-gray;
+                display: flex;
+                position: absolute;
+                bottom: 28px;
+
+                .total-price {
+                    font-weight: 600;
+                    padding-left: 82px;
+                }
+            }
+        }
+    }
+
+    &-photo {
+        display: flex;
+
+        .photo {
+            width: 240px;
+            height: 156px;
+            border-radius: 8px;
+            padding: 24px 40px 0 0;
+        }
+
+        &--container {
+            padding-top: 24px;
+            padding-bottom: 50px;
+        }
+    }
+
+    &-item {
+        display: flex;
+        padding: 0px 11px;
+
+        .icon {
+            width: 50px;
+            padding: 7px 12px 0 0;
+
+            img {
+                vertical-align: middle;
+            }
+        }
+
+        .type {
+            line-height: 57px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 20px;
+            color: $red;
+            width: 160px;
+            padding-right: 40px;
+        }
+
+        .height {
+            line-height: 57px;
+            font-family: "Open Sans";
+            font-size: 20px;
+            color: $primary;
+            width: 120px;
+            padding-right: 20px;
+        }
+
+        .length {
+            line-height: 57px;
+            font-family: "Open Sans";
+            font-size: 20px;
+            color: $primary;
+            width: 120px;
+            padding-right: 40px;
+        }
+
+        .quantity {
+            line-height: 57px;
+            font-family: "Open Sans";
+            font-size: 18px;
+            color: $dark;
+            width: 70px;
+            padding-right: 20px;
+        }
+
+        .price {
+            line-height: 57px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 22px;
+            color: $dark;
+            width: 70px;
+        }
+    }
+
+    &-item:nth-child(even) {
+        background: rgba(255, 226, 97, 0.16)
+    }
+}

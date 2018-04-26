@@ -1,0 +1,40 @@
+﻿@import '../variables.scss';
+
+.header-large {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 42px;
+    color: #194952;
+    letter-spacing: 0;
+
+    span{
+        color: $primary;
+        text-transform: uppercase;
+    }
+}
+
+.header-small {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 26px;
+    color: #43C6BA;
+    letter-spacing: 0;
+}
+
+.header-xs {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 24px;
+    color: #194952;
+    letter-spacing: 0;
+    padding-left:20px;
+    
+}
+
+.header-medium {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 32px;
+    color: #194952;
+    letter-spacing: 0;
+}

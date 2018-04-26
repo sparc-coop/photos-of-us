@@ -1,0 +1,122 @@
+﻿@import '../variables';
+
+.nav {
+    background: #43C6BA;
+    margin-top: 0;
+    font-size: 18px;
+    color: $white;
+    position: relative;
+    height: 46px;
+    padding: 20px 46px 0px 80px;
+    display: flex;
+    font-family: "Dosis";
+    font-weight: 600;
+
+    a {
+        text-decoration: none;
+        color: $white;
+    }
+
+    .logo {
+        /*position: absolute;
+        left: 80px;*/
+        margin-top: -6px;
+    }
+
+    &--center {
+        margin: 0 auto;
+
+        .menu-item {
+            margin: 0 26px;
+            cursor: pointer;
+        }
+    }
+
+    &--right {
+        position: absolute;
+        right: 46px;
+        margin-top: -11px;
+
+        img {
+            padding: 10px;
+            outline: none;
+            cursor: pointer;
+            vertical-align: middle;
+        }
+
+        .login {
+            margin-top: 10px;
+        }
+
+        .profileImg {
+            outline: none;
+            padding:0;
+            cursor: pointer;
+            vertical-align: middle;
+            height: 34px;
+            width: 34px;
+            border-radius: 100px;
+            border: 1px solid $yellow;
+            background-color: $dark;
+            display: inline-block;
+        }
+
+        .menu-item.active {
+            padding-bottom: 5px;
+            border-bottom: 2px solid $yellow;
+        }
+    }
+
+    .adminMenu {
+        background-color: $dark;
+        z-index: 100;
+        width: 212px;
+        height: 280px;
+        border-radius: 6px;
+        margin-top: 46px;
+        position: absolute;
+        right: 0;
+        padding-top: 15px;
+
+        &__list {
+            padding: 10px 15px 0 15px;
+            width: 86%;
+            color: $yellow;
+            font-size: 16px;
+            cursor: pointer;
+            height: 30px;
+            display:block;
+        }
+
+        &__list:hover {
+            background-color: #43C6BA;
+        }
+
+        &__arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid $dark;
+            position: absolute;
+            top: -8px;
+            right: 55px;
+        }
+
+        .logout {
+            padding-top: 10px;
+            color: $red;
+            font-family: "Dosis";
+            font-size: 14px;
+
+            a {
+                color: $red;
+            }
+
+            &:hover {
+                background-color: $dark;
+                border-radius: 6px;
+            }
+        }
+    }
+}

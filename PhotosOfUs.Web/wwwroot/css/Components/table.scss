@@ -1,0 +1,41 @@
+﻿.table {
+    width: 100%;
+}
+
+
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(255, 226, 97, 0.16);
+}
+
+.table > tbody > tr > td.highlight {
+    color: #FF6060;
+}
+
+.table > tbody > tr > td {
+    font-size: 18px;
+    color: #194952;
+}
+
+
+
+tr > td:first-child{
+    padding-left:15px;
+}
+
+td {
+    padding: 10px 10px 10px 10px;
+    
+    .material-icons {
+        color: #FFE261;
+        font-size: 18px;
+        padding-right: 5px;
+    }
+}
+
+
+.table > thead {
+    font-size: 12px;
+    font-weight: 700;
+    color: #757575;
+}

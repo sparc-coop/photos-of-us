@@ -1,0 +1,67 @@
+﻿@using Microsoft.EntityFrameworkCore
+@model ProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@section ProfileImageBackdrop {
+    <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
+}
+<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl">
+    <div class="g-row">
+        <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
+            <div class="photographer-info">
+                @if (string.IsNullOrEmpty(Model.ProfilePhotoUrl))
+                {
+
+                    <div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>
+                }
+                else
+                {
+                    <div class="photographer-image" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
+
+                }
+
+                <h2>@Model.Name</h2>
+                <p class="photographer-title">@Model.PhotographerTitle</p>
+                <p class="photographer-bio">@Model.ProfileText</p>
+            </div>
+            <div class="photographer-social">
+                <ul>
+                    <li><a class="twitter" href="http://www.twitter.com" target="_blank">Twitter</a></li>
+                    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+                    {
+                        <li><a class="facebook" href="@Model.FacebookLink" target="_blank">Facebook</a></li>
+
+                    }
+
+
+                    <li><a class="instagram" href="http://www.instagram.com" target="_blank">Instagram</a></li>
+                    <li><a class="dribbl" href="http://www.dribbl.com" target="_blank">Dribbl</a></li>
+                </ul>
+            </div>
+            <div class="gallery-search-container">
+                <input class="input--light-blue searchbox" placeholder="Search Gallery..." />
+            </div>
+            <div class="gallery-upload-container">
+                <a href="#" ng-click="openUpload()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Click here to upload</span></a>
+            </div>
+        </div>
+
+        <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
+
+            <div class="photographer-gallery-container">
+                <div class="g-row">
+                    @foreach (var Photo in @Model.Photos)
+                    {
+                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                            <img class="gallery-image" src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

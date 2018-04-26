@@ -1,0 +1,26 @@
+﻿.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+    .photo{
+        padding-right: 30px;
+    }
+
+    img{
+        border-radius: 8px;
+        margin: 24px 24px 0 0;
+        max-width: 600px;
+        height: auto;
+    }
+
+    .align-left {
+        margin-right: auto;
+    }
+
+    .align-right {
+        margin-left: auto;
+
+        i{
+            cursor: pointer;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿.photographer-cards {
+    .btn-pou-default {
+        color: #43C6BA;
+        background-color: #FFE261;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 10px;
+        float: right;
+        text-decoration: none;
+        margin-left: auto;
+    }
+
+    .btn-pou-default:hover {
+        color: #3ba99f;
+    }
+
+    #card-downloader {
+        display: none;
+    }
+}

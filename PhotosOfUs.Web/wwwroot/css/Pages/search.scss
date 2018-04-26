@@ -1,0 +1,206 @@
+﻿@import '../variables.scss';
+
+.codePage {
+
+    &__background {
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+    }
+
+    &__background2 {
+        /*max-width: 30%;
+        overflow: hidden;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;*/
+        position: relative;
+        height: 100vh;
+        margin-left: 70%;
+        max-width: 580px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            right: 0;
+            z-index: 0;
+            height: 100%;
+        }
+    }
+
+    &__logo {
+        height: 41px;
+        width: 61px;
+        border-radius: 50px;
+        background: #D8D8D8;
+        position: absolute;
+        text-align: center;
+        padding-top: 20px;
+        top: 50px;
+        left: 100px;
+    }
+
+    &__pouLogo {
+        position: absolute;
+        bottom: 29px;
+        left: 61px;
+    }
+
+    &__container {
+        margin: 0 auto;
+        max-width: 453px;
+        width: 100%;
+        padding-top: 16%;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        color: $black;
+
+        &__title {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 42px;
+            //color: $black;
+            padding-bottom: 30px;
+        }
+
+        &__divider {
+            border: 1px solid $orange;
+            height: 0;
+            width: 140px;
+            margin: 0 auto;
+
+            &.divider2 {
+                margin: 0;
+            }
+        }
+
+        &__info {
+            padding: 20px 0 62px 0;
+            font-family: "Open Sans";
+            font-size: 18px;
+            //color: $black;
+            line-height: 28px;
+        }
+
+        &__search {
+            border: none;
+            padding: 12px 18px;
+            font-family: "Open Sans";
+            font-size: 20px;
+            color: $dark;
+            border-radius: 8px 0 0 8px;
+            background: $off-white;
+            outline: none;
+            vertical-align: middle;
+        }
+
+        &2 {
+            max-width: 70vw;
+            width: 100%;
+            position: absolute;
+            top: 293px;
+            padding: 0;
+
+            .centered {
+                max-width: 453px;
+                text-align: left;
+                margin: 0 auto;
+                color: $black;
+            }
+        }
+    }
+
+    &, body {
+        padding-bottom: 0;
+    }
+
+    .alt3 {
+        background-color: $dark;
+
+        .codePage__container .centered {
+            color: $white;
+
+            .divider2 {
+                border: 1px solid $yellow;
+            }
+
+            .button--go {
+                background: $yellow;
+                color: $dark;
+            }
+        }
+    }
+
+    .alt4 {
+        background-color: $dark;
+        height: 100vh;
+
+        .logo {
+            position: absolute;
+            top: 33px;
+            left: 84px;
+        }
+
+        .divider2 {
+            border: 1px solid $yellow;
+        }
+
+        .codePage__container2 {
+            top: 205px;
+        }
+
+        .codePage__container .centered {
+            color: $white;
+            max-width: 620px;
+
+            .codePage__container__info {
+                padding: 20px 0 54px 0;
+            }
+
+            .button--go {
+                background: $yellow;
+                color: $dark;
+            }
+
+            .codePage__container__info--bottom {
+                padding-top: 140px;
+
+                .heading1 {
+                    font-family: "Dosis";
+                    font-weight: 600;
+                    font-size: 26px;
+                    color: $yellow;
+                    padding-bottom: 8px;
+                }
+
+                .heading2 {
+                    font-family: "Open Sans";
+                    font-size: 18px;
+                    color: $off-white;
+                    padding-bottom: 28px;
+                }
+
+                .codePage__container__search {
+                    height: 28px;
+                    width: 210px;
+                    padding: 4px 20px;
+                    font-size: 16px;
+                }
+
+                .button--go {
+                    font-size: 16px;
+                    padding: 7px 8px;
+                }
+            }
+        }
+    }
+}

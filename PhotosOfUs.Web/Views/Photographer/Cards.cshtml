@@ -3,22 +3,25 @@
     ViewData["Title"] = "Cards";
 }
 
-<div class="photographer-dashboard--wrapper">
-    <h2 class="header-large">Good morning, Antonio</h2>
+<div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="initCardCtrl()">
+    <h2 class="header-large">Your Codes</h2>
     <div class="yellow-background line--small"></div>
-    <a href="@Url.Action("ExportNewCard","Photographer")" class="btn btn-pou-default">Export new cards</a>
 
-    <hr />
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Code" />
+        <input class="input--light-blue searchbox" placeholder="Search Code" ng-model="searchText" />
 
-        <div class="view-icons align-right">
-            <select>
-                <option>Date</option>
-                <option>Code</option>
-            </select>
-        </div>
+        @*<div class="view-icons align-right">
+                <select>
+                    <option>Date</option>
+                    <option>Code</option>
+                </select>
+            </div>*@
+
+        <a href="" ng-click="exportMultipleCards(1)" class="btn-pou-default">Export new card</a>
+        <a href="" ng-click="exportMultipleCardsModal()" class="btn-pou-default">Export multiple cards</a>
+
     </div>
+
 
 
     <div class="flex-box">
@@ -31,53 +34,19 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var card in Model)
-                {
-                    <tr>
-                        <td>@card.Code</td>
-                        <td>@card.CreatedDate.ToShortDateString()</td>
-                        <td><a class="btn btn-pou-default">Export</a></td>
-                    </tr>
-                }
-               
+                <tr ng-repeat="card in cards | orderBy: '-id' | filter:searchText | limitTo: 5:(currentPage - 1) * pageSize">
+                    <td class="highlight">{{card.code}}</td>
+                    <td>{{card.createdDate | date: 'MM/dd/yyyy'}}</td>
+                    <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
+                </tr>
             </tbody>
         </table>
     </div>
-
+    <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
+    <form id="card-downloader" action="@Url.Action("Export")" method="post">
+        <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.id" />
+    </form>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script>
-    $(document).ready(function () {
-        //todo: finish the export many cards logic
-        @*exportNewCards = () => {
-            swal({
-                title: 'How many cards do you want to export?',
-                input: 'number',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Export',
-                animation: false,
-                showLoaderOnConfirm: true,
-            }).then((result) => {
-                if (result.value) {
-                    $.ajax({
-                        url: "@Url.Action("ExportCard","Photographer")",
-                        data: JSON.stringify({ quantity: result.value }),
-                        success: function () {
-                            swal({
-                                type: 'success',
-                                title: 'Ajax request finished!',
-                                html: 'Submitted email: ' + result.value
-                            })
-                        }
-                    });
 
 
-                }
-            })
-
-        }*@
-    })
-</script>

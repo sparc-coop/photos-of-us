@@ -1,14 +1,6 @@
 ﻿[
   {
-    "outputFile": "wwwroot/css/Site.css",
-    "inputFile": "wwwroot/css/Site.scss"
-  },
-  {
-    "outputFile": "wwwroot/css/MobileSite.css",
-    "inputFile": "wwwroot/css/MobileSite.scss"
-  },
-  {
-    "outputFile": "wwwroot/js/sweetalert2.all.es5.js",
-    "inputFile": "wwwroot/js/sweetalert2.all.js"
+    "outputFile": "wwwroot/css/PoU-Site.css",
+    "inputFile": "wwwroot/css/PoU-Site.scss"
   }
 ]
