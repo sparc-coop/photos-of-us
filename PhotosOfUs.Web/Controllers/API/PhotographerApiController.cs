@@ -41,6 +41,34 @@ namespace PhotosOfUs.Web.Controllers.API
             return "value";
         }
 
+        ////DELETE
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var userId = _context.UserIdentity.Find(azureId).UserID;
+        //    var user = _context.User.Find(userId);
+
+        //    if (user == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(user);
+        //}
+
+        //// POST: /Photographer/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
         [HttpGet("{query}")]
         [Route("SalesHistory")]
         public async Task<IActionResult> SalesHistory(string query)

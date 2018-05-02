@@ -147,3 +147,32 @@
         }
     }
 }
+
+.account-settings--wrapper {
+    .yellow-background.line--small {
+        margin-top: 35px;
+        margin-bottom: 30px;
+    }
+
+    .deactivate-modal {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 240px;
+        height: 237px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+
+        img {
+            margin: 0 auto;
+            padding: 57px 0 20px 0;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
+        }
+    }
+}

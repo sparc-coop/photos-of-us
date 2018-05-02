@@ -1,7 +1,14 @@
-﻿app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+﻿app.controller('PhotographerAccountCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) => {
+    $scope.close = () => $mdDialog.hide();
+   
 
-    $scope.initAccountSettings = function () {
-
+    $scope.deactivateModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/DeactivateModal',
+            controller: 'PhotographerAccountCtrl',
+            clickOutsideToClose: true,
+        })
     }
 
+    
 }])

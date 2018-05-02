@@ -3,19 +3,25 @@
     ViewData["Title"] = "Account";
 }
 
-<div class="account-settings" ng-controller="PhotographerAccountCtrl">
+
+<div class="account-settings" ng-controller="PhotographerAccountCtrl" ng-cloak>
     <h2 class="header-large">Account Settings</h2>
     <div class="yellow-background line--small"></div>
 
     <div class="container">
-       
+
         <div>
             <div class="account-sidemenu">
                 <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">face</i> Profile Details</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
-                <div class="sidemenu-item"><a href="#"><i class="material-icons">language</i>Social Accounts</a></div>
+                <div class="sidemenu-item"><a href="@Url.Action("SocialAccounts","Photographer")"><i class="material-icons">language</i>Social Accounts</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
-                <a href="#" class="deactivate">Deactivate Account</a>
+                <div><a href="#" class="deactivate">Deactivate Account</a></div>
+                <div class="deactivate-modal" ng-click="deactivateModal()">
+                    <img src="~/images/icons/folder.png" />
+                    <div class="label">New Folder</div>
+                </div>
+
             </div>
             <div class="btn-group">
                 <a href="#" class="btn-apply">Apply Changes</a>
@@ -63,8 +69,14 @@
             </form>
 
         </div>
+
+
     </div>
-   
+
+    
+
+
+
 
 
 </div>
