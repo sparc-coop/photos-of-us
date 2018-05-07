@@ -9,7 +9,7 @@
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
     <hr />
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Library" />
+        <input class="input--light-blue searchbox" placeholder="Search Library" ng-model="searchFolder" />
 
         <div class="view-icons align-right">
             <div class="filter-sort">
@@ -19,8 +19,8 @@
                 </select>
             </div>
 
-            <i class="material-icons">view_list</i>
-            <i class="material-icons selected">apps</i>
+            @*<i class="material-icons">view_list</i>
+            <i class="material-icons selected">apps</i>*@
         </div>
     </div>
 
@@ -30,19 +30,18 @@
             <img src="~/images/icons/folder.png" />
             <div class="label">New Folder</div>
         </div>
-        <div class="folder-card flex-box" ng-repeat="folder in folders | orderBy: -orderByOption">
+        <div class="folder-card flex-box" ng-repeat="folder in folders | orderBy: orderByOption | filter: searchFolder">
             <a class="full-width-anchor" href="/Photographer/Photos/{{folder.Id}}"></a>
             <div class="header flex-box">
                 <div class="grey-ball"></div>
                 @*<i class="material-icons align-right">more_vert</i>*@
                 <md-menu class="align-right">
-                    <!-- Trigger element is a md-button with an icon -->
                     <md-button ng-click="$mdMenu.open($event)" class="md-icon-button" aria-label="Open sample menu">
                         <md-icon md-font-icon="material-icons">more_vert</md-icon>
                     </md-button>
                     <md-menu-content class="teste">
-                        <md-menu-item><md-button ng-click="doSomething()">Rename</md-button></md-menu-item>
-                        <md-menu-item><md-button ng-click="doSomething()">Delete</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="renameFolderModal(folder)">Rename</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id)">Delete</md-button></md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </div>

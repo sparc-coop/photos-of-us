@@ -86,6 +86,17 @@ namespace PhotosOfUs.Model.Repositories
             container.Position = 0;
             await containerBlob.UploadFromStreamAsync(stream);
 
+            //generate watermark
+            stream.Position = 0;
+            var watermarkImg = new MemoryStream();
+            ImageHelper.AddWatermark(stream, watermarkImg, extension);
+            var watermarkBlob = StorageHelpers.Container("watermark").GetBlockBlobReference(url);
+            watermarkBlob.Properties.CacheControl = "public, max-age=31556926";
+            watermarkImg.Position = 0;
+            await watermarkBlob.UploadFromStreamAsync(watermarkImg);
+            
+         
+
             // Generate thumbnail
             stream.Position = 0;
             var thumbnail = new MemoryStream();

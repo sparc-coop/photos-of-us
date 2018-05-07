@@ -16,6 +16,7 @@
       "wwwroot/js/API.js",
       "wwwroot/js/controllers/CheckoutController.js",
       "wwwroot/js/controllers/FolderController.js",
+      "wwwroot/js/controllers/FolderRenameModalController.js",
       "wwwroot/js/controllers/ModalController.js",
       "wwwroot/js/controllers/PaymentController.js",
       "wwwroot/js/controllers/PhotoController.js",

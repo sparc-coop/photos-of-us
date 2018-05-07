@@ -50,6 +50,20 @@
         }
     };
 
+    $scope.selectAll = function (printTypes) {
+        for (var i = 0; i < printTypes.length; i++) {
+            $scope.select(printTypes[i].Id);
+        }
+        
+    }
+
+    $scope.isSelected = function (printId) {
+        if ($scope.selectedItems.indexOf(printId) !== - 1) {
+            return true;
+        }
+        return false;
+    }
+
     $scope.addToCart = function (printId) {
         $scope.select(printId);
         $scope.createOrder();

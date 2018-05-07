@@ -1610,7 +1610,7 @@ canvas {
     cursor: pointer;
     outline: none; }
     .photoPage__actions .share img {
-      height: 18px;
+      height: 24px;
       width: auto; }
 
 .photoPage .photo-main {
@@ -1746,7 +1746,7 @@ canvas {
 .photographer-dashboard--wrapper .folder-new {
   border: 2px dashed #43C6BA;
   border-radius: 8px;
-  width: 240px;
+  width: 243px;
   height: 237px;
   margin: 0 10px;
   text-align: center;

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare']);
 
 
 
@@ -20,7 +20,8 @@ app.factory('folderApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Folder';
         return {
-            add: function (foldername) { return $http.post(apiRoot+'/?name='+ foldername); },
+            add: function (foldername) { return $http.post(apiRoot + '/?name=' + foldername); },
+            rename: function (folderId, folderName) { return $http.post(apiRoot + "/RenameFolder", JSON.stringify({ Id: folderId, NewName: folderName}))},
             delete: function (folderId) { return $http.post(apiRoot + "/DeleteFolder/" + folderId); }
         };
     }
@@ -110,6 +111,20 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
         }
     };
 
+    $scope.selectAll = function (printTypes) {
+        for (var i = 0; i < printTypes.length; i++) {
+            $scope.select(printTypes[i].Id);
+        }
+        
+    }
+
+    $scope.isSelected = function (printId) {
+        if ($scope.selectedItems.indexOf(printId) !== - 1) {
+            return true;
+        }
+        return false;
+    }
+
     $scope.addToCart = function (printId) {
         $scope.select(printId);
         $scope.createOrder();
@@ -145,24 +160,38 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
 
 }])
 app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) => {
+
     $scope.close = () => $mdDialog.hide();
     $scope.folders = [];
 
+
     $scope.initFolderCtrl = function () {
-       
         $scope.orderByOption = "Name";
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-                //$scope.folders = x.data;
                 console.log(JSON.stringify(x.data));
             })
+    }
+
+    $scope.initRenameFolderModal = function () {
+        $scope.folderId = folderId;
+        $scope.folderName = folderName;
     }
 
     $scope.newFolderModal = () => {
         $mdDialog.show({
             templateUrl: '/Photographer/NewFolderModal',
             controller: 'FolderCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
+    $scope.renameFolderModal = (folder) => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/NewFolderModal',
+            controller: 'FolderRenameModalCtrl',
+            locals: { folderId: folder.Id, folderName: folder.Name },
             clickOutsideToClose: true,
         })
     }
@@ -176,6 +205,31 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
             })
     }
 
+    $scope.deleteFolder = function (folderId) {
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                folderApi.delete(folderId)
+                    .then(data => {
+                        $rootScope.$broadcast('FolderRemoved', folderId);
+                        swal(
+                            'Deleted!',
+                            'Your folder has been deleted.',
+                            'success'
+                        )
+                    })
+                
+            }
+        })
+    }
+
     $scope.$on('FolderAdded', function (e, folder) {
 
         console.log('added folder - ' + JSON.stringify(folder));
@@ -183,7 +237,43 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         $scope.folders.push(folder);
         
     });
+
+    $scope.$on('FolderRenamed', function (e, folder) {
+
+        console.log('renamed folder - ' + JSON.stringify(folder));
+        var index = $scope.folders.findIndex(f => f.Id == folder.Id);
+        console.log('findIndex ' + index);
+        $scope.folders[index] = folder;
+
+    });
+
+    $scope.$on('FolderRemoved', function (e, folderId) {
+
+        console.log('removed folder - ' + JSON.stringify(folderId));
+        var index = $scope.folders.findIndex(f => f.Id == folderId);
+        console.log('findIndex ' + index);
+        $scope.folders.splice(index,1);
+
+    });
 }])
+
+app.controller('FolderRenameModalCtrl', function ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi, folderId, folderName) {
+
+    $scope.close = () => $mdDialog.hide();
+    $scope.folderId = folderId;
+    $scope.folderName = folderName;
+    
+   
+    $scope.renameFolder = function (folderId,folderName) {
+        folderApi.rename(folderId, folderName)
+            .then(function (x) {
+                $scope.close();
+                $rootScope.$broadcast('FolderRenamed', x.data);
+            })
+    }
+    
+  
+})
 
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $window, $mdDialog) => {
     $scope.close = () => $mdDialog.hide();
@@ -364,7 +454,7 @@ function Photo(data, $http) {
         });
     }
 }
-app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, Socialshare) => {
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
@@ -397,6 +487,68 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         });
     };
 
+    $scope.shareFacebook = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'facebook',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareHashtags': 'PoU, kuvio, PhotosOfUs'
+            }
+        });
+    }
+
+
+    $scope.shareTwitter = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'twitter',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText' : "Look at this awesome photo at PoU",
+                'socialshareHashtags': 'PoU, kuvio, PhotosOfUs'
+            }
+        });
+    }
+
+    $scope.shareGooglePlus = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'google',
+            'attrs': {
+                'socialshareUrl': url
+            }
+        });
+    }
+
+    $scope.sharePinterest = function (photoId, photoUrl) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'pinterest',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText': 'Look at this awesome photo at PoU',
+                'socialshareMedia': photoUrl
+            }
+        });
+    }
+
+    $scope.shareTumblr = function (photoId, photoUrl) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'tumblr',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText': 'Look at this awesome photo at PoU',
+                'socialshareMedia': photoUrl
+            }
+        });
+    }
     
 }])
 angular.module('app').controller('UploadController', function ($scope, $http, FileUploader, $window, $mdDialog, $filter, folder) {
