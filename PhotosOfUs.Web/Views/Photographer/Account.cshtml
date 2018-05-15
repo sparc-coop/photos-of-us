@@ -16,16 +16,12 @@
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
                 <div class="sidemenu-item"><a href="@Url.Action("SocialAccounts","Photographer")"><i class="material-icons">language</i>Social Accounts</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
-                <div><a href="#" class="deactivate">Deactivate Account</a></div>
-                <div class="deactivate-modal" ng-click="deactivateModal()">
-                    <img src="~/images/icons/folder.png" />
-                    <div class="label">New Folder</div>
-                </div>
-
+                <div class="deactivate-modal" ng-click="deactivateModal()"><a href="#" class="deactivate">Deactivate Account</a></div>
+                
             </div>
             <div class="btn-group">
                 <a href="#" class="btn-apply">Apply Changes</a>
-                <a href="#" class="discard-link">Discard Changes</a>
+                <a href="#" class="discard-link" ng-click="discard()">Discard Changes</a>
             </div>
 
         </div>

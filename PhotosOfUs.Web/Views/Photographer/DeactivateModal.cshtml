@@ -1,21 +1,31 @@
 ﻿
 @{
     Layout = null;
-    ViewData["Title"] = "DeactivateModal";
+    ViewData["Title"] = "NewFolderModal";
 }
 
-<md-dialog class="deactivate-dialog">
+<md-dialog class="deactivate-dialog" ng-controller="PhotographerAccountCtrl" ng-cloak>
     <md-dialog-content>
         <div class="col-md-12">
             <div class="pull-left">
-                <h2 class="header-xs">Deactivate Account?</h2>
+                <h2 class="header-xs">Deactivate?</h2>
             </div>
             <div class="pull-right">
                 <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
             </div>
         </div>
-        <div class="col-md-12">
-            Are you sure that you wish to deactivate your account on Photos of Us? Your photos will no longer be available.
+        
+            <div class="deactivate-form">
+                <div class="deactivate-message">
+                    Are you sure that you wish to deactivate your Photos of Us account? Your photos will no longer be available to view or purchase.
+                </div>
+
+                <form method="POST">
+                    <div class="form-button">
+                        <button class="button--red" ng-click="deactivateStatus()">Deactivate Account</button>
+                    </div>
+                </form>
+            
         </div>
     </md-dialog-content>
 </md-dialog>
