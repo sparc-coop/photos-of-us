@@ -36,7 +36,7 @@
    
     </div>
 
-    <img src="@Model.Url" class="photo-main" />
+    <img src="@(string.IsNullOrEmpty(Model.WaterMarkUrl)? Model.Url : Model.WaterMarkUrl)" class="photo-main" />
 
     <div class="photoPage__footer">
         <div class="header">Like This Photo?</div>

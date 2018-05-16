@@ -11,7 +11,7 @@
     <div class="divider"></div>
     <div class="flex-box">
         <div class="photo">
-            <img src="@Model.Url" />
+            <img src="@(string.IsNullOrEmpty(Model.WaterMarkUrl)? Model.Url : Model.WaterMarkUrl)" />
         </div>
         <div class="purchase__photo-info">
             <h3 class="header-small">
