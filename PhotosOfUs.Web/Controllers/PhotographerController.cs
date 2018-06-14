@@ -292,6 +292,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult PhotoDetails()
+        {
+            return View();
+        }
+
         public ActionResult SocialAccounts()
         {
             return View();
