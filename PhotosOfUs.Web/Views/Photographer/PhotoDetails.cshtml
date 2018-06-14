@@ -1,0 +1,38 @@
+﻿@*@model PhotoViewModel*@
+@{
+    ViewData["Title"] = "Photo Details";
+}
+
+
+ <div class="photo-details" ng-controller="PhotoCtrl as ctrl" ng-cloak>
+     <div class="header">Model.Name</div>
+     <div class="photo-section">
+         <img class="img" src="http://via.placeholder.com/550x350" />
+         <div>
+         <div class="desc">Photo description?</div>
+         <div class="ph-price">
+             <md-input-container>
+                 <label>Price</label>
+                 <input ng-model="Model.Price" placeholder="$">
+             </md-input-container>
+         </div>
+             </div>
+     </div>
+
+<div ng-controller="PhotoTagCtrl as ctrl" layout="column" ng-cloak="">
+    <md-content class="md-padding" layout="column">
+        <md-chips ng-model="ctrl.tags" readonly="ctrl.readonly" md-transform-chip="ctrl.newTag($chip)">
+            <md-chip-template>
+                <span>
+                    <strong>{{$chip.tag_title}}</strong>
+                </span>
+            </md-chip-template>
+        </md-chips>
+    </md-content>
+</div>
+        </div>
+
+
+
+
+    </div>
