@@ -7,54 +7,12 @@
 
 <div class="landing">
 
-    <script>
 
-
-        //    //let image = getRandomPhoto(83);
-        //    console.log(image);
-
-
-        //function getRandomInt(min, max) {
-        //    return Math.floor(Math.random() * (max - min + 1) + min);
-        //}
-
-        ////let area = document.getElementsByClassName("main-landing")[0];
-        //let getRandomPosition = (element) => {
-        //    var x = document.body.offsetHeight - element.clientHeight;
-        //    var y = document.body.offsetWidth - element.clientWidth;
-        //    //var randomX = Math.floor(Math.random() * x);
-        //    //var randomY = Math.floor(Math.random() * y);
-        //    let coords = [getRandomInt(0, 900), getRandomInt(400, y)];
-        //    console.log(coords);
-        //    return coords;
-        //}
-        //let loadImages = () => {
-        //    var img = document.createElement('img');
-        //    img.setAttribute("style", "position:absolute; border-radius: 20px;");
-        //    img.setAttribute("src", "http://via.placeholder.com/240x322");
-        //    document.body.appendChild(img);
-        //    var xy = getRandomPosition(img);
-        //    img.style.top = xy[0] + 'px';
-        //    img.style.left = xy[1] + 'px';
-        //}
-
-        //var counter = 0;
-        //var interval = setInterval(function () {
-        //    counter += 1;
-        //    if (counter === 10) {
-        //        clearInterval(interval);
-        //    }
-        //    loadImages();
-        //}, 2000);
-
-    </script>
-
-
-    <div class="main-landing" ng-controller="PhotoCtrl">
+    <div class="main-landing">
         <div class="welcome-section">
             <div class="welcome-text">less faff, more snaps</div>
             <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
-            <div><button class="button-styling start-button" ng-click="testMsg('hello')">Get Started</button></div>
+            <div><button ng-controller="RandomPhotoCtrl" class="button-styling start-button" ng-click="testMsg()">Get Started</button></div>
         </div>
     </div>
     <div class="steps">

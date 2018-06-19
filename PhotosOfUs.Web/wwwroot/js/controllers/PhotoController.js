@@ -13,14 +13,14 @@
 
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
-            
+
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
             clickOutsideToClose: true
         });
     };
-    
+
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
     };
@@ -31,5 +31,5 @@
         });
     };
 
-    
-}])
+
+    }]);
