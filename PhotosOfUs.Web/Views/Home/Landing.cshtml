@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Public.cshtml";
+}
+
+<div class="landing">
+
+
+    <div class="main-landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
+        <div class="welcome-section">
+            <div class="welcome-text">less faff, more snaps</div>
+            <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
+            <div><button class="button-styling start-button">Get Started</button></div>
+
+
+        </div>
+    </div>
+    <div class="steps">
+        <div class="landing-subtitle">
+            Photo Taken, Now What?
+        </div>
+        <div class="landing-subtext">The burning question people have after having their photo taken, "Where do I get that photo?!" Well, we have the answer, for you, <i>and</i> them.</div>
+        <div class="3-img">
+            @*<img src="http://via.placeholder.com/330x260" /> <img src="http://via.placeholder.com/330x260" /> <img src="http://via.placeholder.com/330x260" />*@
+        </div>
+        <div class="subt-1">Easy as that, <font class="yellow-text">get started</font> now.</div>
+    </div>
+
+    <div class="browse">
+        <div class="subt-2">Not a photographer?</div>
+        <div class="landing-subtitle">Browse The Public Library</div>
+        <div class="subt-3">Our photographers often have a collection of photos available to the public, take a look around, maybe you will find something you like!</div>
+        <div><button class="button-styling browse-button">Browse The Library</button></div>
+        <div class="subt-4">Already have a photo code?</div>
+    </div>
+
+    <div class="footer">
+        <div class="links-nav">
+            <div class="navigation">
+                <a href="/">Library</a>
+                <a href="/">About</a>
+                <a href="/">Pricing</a>
+                <a href="/">FAQ</a>
+                <a href="/">Contact</a>
+            </div>
+            <div class="navigation">
+                <a href="/">Sign Up / Sign In</a>
+                <a href="/">Shipping</a>
+                <a href="/">Pricing</a>
+                <a href="/">Help</a>
+            </div>
+            <div class="navigation nav-sm">
+                <a href="/">Twitter</a>
+                <a href="/">Facebook</a>
+                <a href="/">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-right">
+            <div class="code-enter">
+                Have a photo code? Enter it here!
+                <div class="code-enter-sub"><input class="code-input" placeholder="123" /> <button class="code-button">Go!</button></div>
+            </div>
+            <div class="bottom-logo"></div>
+        </div>
+    </div>
+</div>

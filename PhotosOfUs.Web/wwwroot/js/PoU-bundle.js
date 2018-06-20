@@ -732,7 +732,7 @@ app.controller('RandomPhotoCtrl', ['$scope', '$window', '$location', '$http', ($
         var y = document.body.offsetWidth - element.clientWidth;
         //var randomX = Math.floor(Math.random() * x);
         //var randomY = Math.floor(Math.random() * y);
-        let coords = [getRandomInt(0, x), getRandomInt(600, y)];
+        let coords = [getRandomInt(0, x), getRandomInt(600, 1000)];
         console.log(coords);
         return coords;
     }
