@@ -1,1 +1,130 @@
-﻿<div>Welcome to Photos Of Us</div>
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Photos of Us</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,800|Open+Sans:400,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="~/css/sweetalert2.css" rel="stylesheet" />
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/PoU-Site.min.css" asp-append-version="true" />
+    </environment>
+
+</head>
+<body>
+    <div class="landing">
+        <div class="section1">
+            <div class="header">
+                <div class="header__logo">
+                    <img src="~/images/logo.png" />
+                    <div class="header__logo__text">Photos of Us</div>
+                </div>
+                <div class="header__social">
+                    <a><img src="~/images/icons/twitter.png" /></a>
+                    <a><img src="~/images/icons/facebook.png" /></a>
+                    <a><img src="~/images/icons/instagram.png" /></a>
+                    <a><img src="~/images/icons/dribbl.png" /></a>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="slogan">POU CONVINCING SLOGAN</div>
+                <div class="content__subinfo">
+                    PoU’s description of offer and key benefits.
+                    What is it and how would it solve my problem?
+                </div>
+                <div class="invite">
+                    <input placeholder="Your email address" />
+                    <div class="button--invite">Send me an invite</div>
+                </div>
+            </div>
+        </div>
+        <div class="section2">
+            <img src="~/images/Screens-Web-Showcase.png" class="img--showcase" />
+            <div class="content">
+                <div class="slogan">THIS IS THE HEADER RIGHT HERE</div>
+                <div class="content__subinfo">
+                    Insert supporting statement here.
+                </div>
+                <div class="content__text">
+                    <div class="content__container">
+                        <img src="~/images/Connect.png" />
+                        <div class="title">Connect</div>
+                        <div class="copy">
+                            Snapping a photo of the unique code connects to your
+                            customer’s specific face which automatically gets
+                            tagged and can be searched in seconds!
+                        </div>
+                    </div>
+                    <div class="content__container">
+                        <img src="~/images/Store.png" />
+                        <div class="title">Store</div>
+                        <div class="copy">
+                            We know that photographers take A LOT of photos.
+                            Store and share them all in one, secure place!
+                        </div>
+                    </div>
+                    <div class="content__container">
+                        <img src="~/images/Sell.png" />
+                        <div class="title">Sell</div>
+                        <div class="copy">
+                            Photos of us is a one stop shop for sharing and
+                            selling your work. Simply upload your photos,
+                            and let Photos of Us work its magic!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section3">
+            <img src="~/images/Group 5.png" class="img--showcase" />
+            <div class="content">
+                <div class="slogan">SEE YOU SOONEST!</div>
+                <div class="content__subinfo">
+                    Keep your eyes peeled! We’re launching soon.
+                </div>
+                <div class="invite">
+                    <input placeholder="Your email address" />
+                    <div class="button--invite">Send me an invite</div>
+                </div>
+                <div class="social">
+                    <a><img src="~/images/icons/twitter-dark.png" /></a>
+                    <a><img src="~/images/icons/facebook-dark.png" /></a>
+                    <a><img src="~/images/icons/instagram-dark.png" /></a>
+                    <a><img src="~/images/icons/dribbl-dark.png" /></a>
+                </div>
+            </div>
+            <img src="~/images/Footer bg.png" class="img--footer" />
+        </div>
+
+    </div>
+
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="~/js/sweetalert2.all.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-animate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+<script src="~/js/angular-socialshare.js"></script>
+<script src="~/lib/angular-file-upload/dist/angular-file-upload.js"></script>
+<script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="~/lib/angular-elastic/elastic.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/js/PoU-bundle.js" asp-append-version="true"></script>
+</body>
+</html>
