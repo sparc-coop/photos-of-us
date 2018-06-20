@@ -1,6 +1,8 @@
 ﻿@import "../variables.scss";
 
 .landing {
+    overflow-x: hidden;
+
     .yellow-text {
         color: $yellow;
     }
@@ -44,6 +46,7 @@
         width: calc(100% + calc(100vw - 100%));
         height: 1024px;
         max-width: 100%;
+        overflow: hidden;
         //margin: 195px 0px 0px 188px;
         margin: 0;
 
@@ -249,28 +252,5 @@
         }
     }
 
-    *, *:before, *:after {
-        box-sizing: border-box !important;
-    }
-
-
-    article {
-        -moz-column-width: 13em;
-        -webkit-column-width: 13em;
-        -moz-column-gap: 1em;
-        -webkit-column-gap: 1em;
-    }
-
-    section {
-        display: inline-block;
-        margin: 0.25rem;
-        padding: 1rem;
-        width: 100%;
-        background: #efefef;
-    }
-
-
-    p {
-        margin: 1rem 0;
-    }
+    
 }

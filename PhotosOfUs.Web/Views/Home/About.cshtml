@@ -1,4 +1,6 @@
-﻿@{
+﻿
+
+@{
     ViewData["Title"] = "About";
 }
 @{
@@ -8,11 +10,13 @@
 <div class="landing">
 
 
-    <div class="main-landing">
+    <div class="main-landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
         <div class="welcome-section">
             <div class="welcome-text">less faff, more snaps</div>
             <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
-            <div><button ng-controller="RandomPhotoCtrl" class="button-styling start-button" ng-click="testMsg()">Get Started</button></div>
+            <div><button class="button-styling start-button">Get Started</button></div>
+            
+
         </div>
     </div>
     <div class="steps">
@@ -25,19 +29,7 @@
         </div>
         <div class="subt-1">Easy as that, <font class="yellow-text">get started</font> now.</div>
     </div>
-    <div class="bottom-photos">
-        @*<img id="ph9" src="http://via.placeholder.com/176x260" class="img-spread img-round" />
-            <img id="ph10" src="http://via.placeholder.com/272x305" class="img-spread img-round" />
-            <img id="ph11" src="http://via.placeholder.com/525x135" class="img-spread img-round" />
-            <img id="ph12" src="http://via.placeholder.com/323x189" class="img-spread img-round" />
-            <img id="ph13" src="http://via.placeholder.com/218x189" class="img-spread img-round" />
-            <img id="ph14" src="http://via.placeholder.com/300x179" class="img-spread img-round" />
-            <img id="ph15" src="http://via.placeholder.com/115x276" class="img-spread img-round" />
-            <img id="ph16" src="http://via.placeholder.com/259x280" class="img-spread img-round" />
-            <img id="ph17" src="http://via.placeholder.com/205x178" class="img-spread img-round" />
-            <img id="ph18" src="http://via.placeholder.com/225x179" class="img-spread img-round" />
-            <img id="ph19" src="http://via.placeholder.com/362x189" class="img-spread img-round" />*@
-    </div>
+   
     <div class="browse">
         <div class="subt-2">Not a photographer?</div>
         <div class="landing-subtitle">Browse The Public Library</div>
@@ -45,8 +37,7 @@
         <div><button class="button-styling browse-button">Browse The Library</button></div>
         <div class="subt-4">Already have a photo code?</div>
     </div>
-    <!-- <h2>@ViewData["Title"]</h2>
-    <h3>@ViewData["Message"]</h3> -->
+
     <div class="footer">
         <div class="links-nav">
             <div class="navigation">
