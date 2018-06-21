@@ -1339,8 +1339,6 @@ td {
       top: 32px;
       right: 96px; }
       .landing .header__social img {
-        height: 14px;
-        width: 14px;
         padding: 0 8px; }
       .landing .header__social a {
         cursor: pointer;
