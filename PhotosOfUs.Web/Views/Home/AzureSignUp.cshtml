@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Sign Up";
     Layout = null;
 }
 <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
@@ -17,7 +17,7 @@
             <div style="width: 60%; margin: auto;">
                 <div style="text-align:center">
                     <h3 class="login__header">Join Photo Of Us</h3>
-                    <text>Already have an account? Sign in</text>
+                    <text>Already have an account? <a href="https://photosofus-dev.azurewebsites.net/Photographer/Dashboard">Sign In</a></text>
                     <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
                 </div>
                 <div id="api" data-name="Unified">
@@ -57,11 +57,19 @@
         letter-spacing: 0;
     }
 
-    #api {
-    }
-
     #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #next {
         background: #C0DB19;
+    }
+
+    #FacebookExchange {
+        color: white;
+        background-color: blue;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: white;
+        width: 96%;
+        margin-top: 10px;
+        margin-right: 100px;
     }
 
     #GoogleExchange {
@@ -85,8 +93,16 @@
         position: relative;
     }
 
+    .verificarionInfoText #email_intro {
+        display: none;
+    }
+
     .attrEntry .helpText {
         display: none;
+    }
+
+    .attr li {
+        list-style: none;
     }
 
     .attrEntry label {
@@ -174,9 +190,6 @@
             text-transform: lowercase;
         }
 
-
-
-
     .create {
         text-align: center;
     }
@@ -192,9 +205,8 @@
         margin-left: 6px;
     }
 
-
-
     .divider:nth-of-type(4) {
         display: none;
     }
 </style>
+
