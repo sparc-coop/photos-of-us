@@ -15,9 +15,11 @@
         </div>
         <div style="margin: auto;position: absolute;margin-right: auto;margin-left: auto;width: calc(100% - 60px);top: 50%;transform: translateY(-50%);">
             <div style="width: 60%; margin: auto;">
-                <h3 class="login__header" style="text-align:center">Join Photo Of Us</h3>
-                <text style="text-align:center">Already have an account? Sign in</text>
-                <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
+                <div style="text-align:center">
+                    <h3 class="login__header">Join Photo Of Us</h3>
+                    <text>Already have an account? Sign in</text>
+                    <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
+                </div>
                 <div id="api" data-name="Unified">
                 </div>
             </div>
@@ -104,6 +106,14 @@
         margin-bottom: 10px;
     }
 
+    .helpLink .tiny {
+        display: none;
+    }
+
+    .tiny {
+        display: none;
+    }
+
     #logonIdentifier, #password {
         width: 95.5%;
         padding: 7px 10px;
@@ -120,6 +130,21 @@
         letter-spacing: 0;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    .buttons #continue {
+        color: black;
+        background-color: yellow;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: white;
+        width: 96%;
+        margin-top: 10px;
+        margin-right: 100px;
+    }
+
+    .buttons #cancel {
+        display: none;
     }
 
     #api .entry button {
