@@ -44,6 +44,13 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [AllowAnonymous]
+        [EnableCors("LoginPolicy")]
+        public ActionResult AzureSignUp()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View();
