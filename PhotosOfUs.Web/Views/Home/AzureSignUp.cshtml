@@ -2,7 +2,6 @@
     ViewBag.Title = "Login";
     Layout = null;
 }
-
 <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
@@ -16,7 +15,8 @@
         </div>
         <div style="margin: auto;position: absolute;margin-right: auto;margin-left: auto;width: calc(100% - 60px);top: 50%;transform: translateY(-50%);">
             <div style="width: 60%; margin: auto;">
-                <h3 class="login__header" style="text-align:center">Welcome Back!</h3>
+                <h3 class="login__header" style="text-align:center">Join Photo Of Us</h3>
+                <text style="text-align:center">Already have an account? Sign in</text>
                 <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
                 <div id="api" data-name="Unified">
                 </div>
@@ -83,12 +83,25 @@
         position: relative;
     }
 
-    .localAccount label[for=logonIdentifier], .localAccount label[for=password] {
+    .attrEntry .helpText {
+        display: none;
+    }
+
+    .attrEntry label {
         font-family: "Open Sans";
         font-size: 10px;
         color: #757575;
         display: inline;
         padding-bottom: 8px;
+    }
+
+    .attrEntry input {
+        width: 95.5%;
+        padding: 7px 10px;
+        border: 1px solid #43C6BA;
+        border-radius: 3px;
+        outline: none;
+        margin-bottom: 10px;
     }
 
     #logonIdentifier, #password {
