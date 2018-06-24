@@ -134,11 +134,11 @@
         display: none;
     }
 
-    .error .itemLevel {
+    .error.itemLevel {
         display: none;
     }
-
-    .error .itemLevel p {
+    
+    .error.itemLevel p {
         display: none;
     }
 
@@ -166,9 +166,12 @@
         border-radius: 6px;
         border-style: solid;
         border-color: white;
-        width: 96%;
         margin-top: 10px;
         margin-right: 100px;
+    }
+    button#continue:disabled {
+        color: white;
+        background: grey;
     }
 
     .buttons #cancel {
