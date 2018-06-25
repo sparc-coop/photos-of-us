@@ -34,12 +34,8 @@
                 font-size: 14px;
                 color: $primary;
 
-                > div {
-                    display: flex;
-                    padding-bottom: 10px;
-                }
-
                 .type {
+                    line-height: initial;
                     width: 100px;
                 }
 
@@ -198,7 +194,7 @@
         }
 
         .type {
-            line-height: 57px;
+            //line-height: 57px;
             font-family: "Open Sans";
             font-weight: 600;
             font-size: 20px;

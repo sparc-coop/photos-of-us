@@ -8,6 +8,7 @@ namespace PhotosOfUs.Model.Models
     public partial class PhotosOfUsContext : DbContext
     {
         public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<SocialMedia> SocialMedia { get; set; }
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<Folder> Folder { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -87,6 +88,21 @@ namespace PhotosOfUs.Model.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.UserId);
+            });
+
+            modelBuilder.Entity<SocialMedia>(entity =>
+            {
+                entity.Property(e => e.Type)
+                    .HasColumnName("AzureID")
+                    .HasMaxLength(128);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("Type");
+
+                entity.Property(e => e.Link);
+
+                entity.Property(e => e.Username)
+                    .HasColumnName("Username");
             });
 
             modelBuilder.Entity<Card>(entity =>

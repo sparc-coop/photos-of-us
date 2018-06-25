@@ -28,7 +28,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public Folder GetPhotos(int photographerId, int folderId)
         {
-            return _context.Folder.Include(x => x.Photo).Single(x => x.PhotographerId == photographerId && x.Id == folderId);
+            return _context.Folder.Include(x => x.Photo).SingleOrDefault(x => x.PhotographerId == photographerId && x.Id == folderId);
         }
 
         public List<Photo> GetPhotosByCode(string code)
@@ -86,6 +86,17 @@ namespace PhotosOfUs.Model.Repositories
             container.Position = 0;
             await containerBlob.UploadFromStreamAsync(stream);
 
+            //generate watermark
+            stream.Position = 0;
+            var watermarkImg = new MemoryStream();
+            ImageHelper.AddWatermark(stream, watermarkImg, extension);
+            var watermarkBlob = StorageHelpers.Container("watermark").GetBlockBlobReference(url);
+            watermarkBlob.Properties.CacheControl = "public, max-age=31556926";
+            watermarkImg.Position = 0;
+            await watermarkBlob.UploadFromStreamAsync(watermarkImg);
+            
+         
+
             // Generate thumbnail
             stream.Position = 0;
             var thumbnail = new MemoryStream();
@@ -118,18 +129,18 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Where(x => x.PublicProfile).ToList();
         }
 
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension, bool v)
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
 
             if(public_folder.Count() == 0)
             {
                 Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id,true);
             }
             else
             {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id,true);
             }
         }
     }

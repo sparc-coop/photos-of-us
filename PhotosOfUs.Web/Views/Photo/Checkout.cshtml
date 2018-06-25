@@ -49,14 +49,16 @@
             <div class="summary">
                 <div class="title">Order Summary</div>
                 <div class="cart-items">
-                    <div class="type">A5 Prints x 4</div>
-                    <div class="price">$60</div>
+                    <div ng-repeat="item in cartItems" class="cart-item">
+                        <div class="type">{{getAssociatedPrintType(item.printTypeId).type}}</div>
+                        <div class="price">{{item.name}}</div>
+                    </div>
                 </div>
                 <div class="shipping"><div></div>Standard Shipping</div>
                 <div class="divider"></div>
                 <div class="total">
                     <div class="heading">Order Total</div>
-                    <div class="total-price">$84</div>
+                    <div class="total-price">{{sumCart()}}</div>
                 </div>
             </div>
         </div>     
