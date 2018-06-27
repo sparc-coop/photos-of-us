@@ -2,7 +2,9 @@
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()

@@ -1,8 +1,12 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'ui.bootstrap']);
 
-
+app.filter('startFrom', function () {
+    return function (data, start) {
+        return data.slice(start)
+    }
+})
 
 
 
@@ -827,7 +831,9 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()
@@ -1092,7 +1098,9 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()
