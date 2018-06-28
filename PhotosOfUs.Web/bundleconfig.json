@@ -12,21 +12,22 @@
   {
     "outputFileName": "wwwroot/js/PoU-bundle.js",
     "inputFiles": [
-      "wwwroot/js/PoU.js",
-      "wwwroot/js/API.js",
-      "wwwroot/js/controllers/CheckoutController.js",
-      "wwwroot/js/controllers/FolderController.js",
-      "wwwroot/js/controllers/ModalController.js",
-      "wwwroot/js/controllers/PaymentController.js",
-      "wwwroot/js/controllers/PhotoController.js",
-      "wwwroot/js/controllers/UploadController.js",
-      "wwwroot/js/controllers/CardController.js",
-      "wwwroot/js/controllers/PhotographerController.js",
-      "wwwroot/js/controllers/UploadPhotographerProfileController.js",
-      "wwwroot/js/controllers/PhotographerAccountController.js",
-      "wwwroot/js/controllers/CardController.js",
-      "wwwroot/js/controllers/SalesHistoryController.js",
-      "wwwroot/js/controllers/UploadProfileImageController.js"
+        "wwwroot/js/PoU.js",
+        "wwwroot/js/API.js",
+        "wwwroot/js/controllers/CheckoutController.js",
+        "wwwroot/js/controllers/FolderController.js",
+        "wwwroot/js/controllers/ModalController.js",
+        "wwwroot/js/controllers/PaymentController.js",
+        "wwwroot/js/controllers/PhotoController.js",
+        "wwwroot/js/controllers/UploadController.js",
+        "wwwroot/js/controllers/CardController.js",
+        "wwwroot/js/controllers/PhotographerController.js",
+        "wwwroot/js/controllers/UploadPhotographerProfileController.js",
+        "wwwroot/js/controllers/PhotographerAccountController.js",
+        "wwwroot/js/controllers/CardController.js",
+        "wwwroot/js/controllers/SalesHistoryController.js",
+        "wwwroot/js/controllers/UploadProfileImageController.js",
+        "wwwroot/js/controllers/BulkEditController.js"
     ]
   }
 ]

@@ -26,6 +26,85 @@
     color: black;
     cursor: not-allowed; }
 
+.newfolder-dialog {
+  width: 300px; }
+  .newfolder-dialog .close {
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 18px; }
+  .newfolder-dialog .form {
+    margin-bottom: 10px; }
+  .newfolder-dialog .form-input {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 15px; }
+    .newfolder-dialog .form-input input, .newfolder-dialog .form-input textarea {
+      width: 100%; }
+  .newfolder-dialog .form-button {
+    width: 100%;
+    padding-right: 20px;
+    padding-bottom: 5px; }
+  .newfolder-dialog button {
+    float: right !important;
+    width: 100px; }
+  .newfolder-dialog button:disabled {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed; }
+  .newfolder-dialog .md-chips {
+    font-size: 13px; }
+  .newfolder-dialog .md-chips md-chip {
+    border-radius: 3px; }
+  .newfolder-dialog .md-chips md-chip ._md-chip-remove md-icon {
+    height: 14px;
+    width: 14px; }
+  .newfolder-dialog md-icon {
+    height: 14px;
+    width: 14px;
+    min-height: 14px;
+    min-width: 14px; }
+  .newfolder-dialog .md-contact-chips .md-chips md-chip .md-contact-avatar img {
+    border-radius: 3px; }
+  .newfolder-dialog .chipsdemoBasicUsage .errors {
+    font-size: 12px;
+    color: #dd2c00;
+    margin-top: 10px; }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip {
+    position: relative; }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    margin-right: 0;
+    height: 24px; }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip {
+    position: relative;
+    height: 24px;
+    width: 24px;
+    line-height: 30px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    transition: background 0.15s linear;
+    display: block; }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip md-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0) scale(0.7);
+    color: white;
+    fill: white; }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip:hover, .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip:focus {
+    background: rgba(255, 0, 0, 0.8); }
+  .newfolder-dialog .chipsdemoBasicUsage .custom-chips md-chip:not(.md-readonly) md-chip-template {
+    padding-right: 5px; }
+
 .full-width-anchor {
   position: absolute;
   width: 100%;
@@ -1963,10 +2042,13 @@ canvas {
   .photographer-profile--wrapper .photographer-info .photographer-title {
     margin-top: 0;
     color: #43C6BA;
-    font-family: 'Dosis';
-    font-size: larger; }
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 14px; }
   .photographer-profile--wrapper .photographer-info .photographer-bio {
-    font-family: 'Dosis'; }
+    font-family: 'Open Sans';
+    font-weight: lighter;
+    font-size: 12px; }
   .photographer-profile--wrapper .photographer-social ul {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1982,9 +2064,10 @@ canvas {
         line-height: 0;
         font-size: 0px;
         color: transparent;
-        padding: 10px;
-        background-size: cover;
-        background-position: center; }
+        padding: 12px;
+        background-size: 12px;
+        background-position: center;
+        background-repeat: no-repeat; }
         .photographer-profile--wrapper .photographer-social ul li a.twitter {
           background-image: url(/images/icons/twitter.png); }
         .photographer-profile--wrapper .photographer-social ul li a.facebook {
@@ -2003,7 +2086,8 @@ canvas {
       background-position: center right 15px;
       width: 90%;
       padding: 0 5%;
-      font-family: 'Dosis'; }
+      font-family: 'Dosis';
+      font-size: 16px; }
       .photographer-profile--wrapper .gallery-search-container .searchbox::-moz-placeholder {
         color: #43C6BA; }
       .photographer-profile--wrapper .gallery-search-container .searchbox:-ms-input-placeholder {
@@ -2055,7 +2139,8 @@ canvas {
   font-size: 14px; }
 
 .photographer-sales-history .sales-container {
-  position: relative; }
+  position: relative;
+  font-family: 'Open Sans'; }
   .photographer-sales-history .sales-container .overlay {
     position: absolute;
     padding: 10px;

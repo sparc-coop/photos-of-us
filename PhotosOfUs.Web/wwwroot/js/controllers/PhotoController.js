@@ -25,6 +25,15 @@
         $scope.code = $location.absUrl().split('=')[1];
     };
 
+    $scope.openEdit = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/BulkEditModal',
+            controller: 'BulkEditController',
+            //locals: { folder: folderId },
+            clickOutsideToClose: true
+        });
+    };
+
     $scope.getPhotographer = (id) => {
         $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
             $scope.photographer = x.data;

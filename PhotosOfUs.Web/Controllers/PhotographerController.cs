@@ -287,6 +287,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult BulkEditModal()
+        {
+            return View();
+        }
+
         public ActionResult Account()
         {
             return View();
