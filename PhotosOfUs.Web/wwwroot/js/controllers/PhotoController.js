@@ -25,11 +25,11 @@
         $scope.code = $location.absUrl().split('=')[1];
     };
 
-    $scope.openEdit = () => {
+    $scope.openEdit = (code) => {
         $mdDialog.show({
             templateUrl: '/Photographer/BulkEditModal',
             controller: 'BulkEditController',
-            //locals: { folder: folderId },
+            locals: { code },
             clickOutsideToClose: true
         });
     };

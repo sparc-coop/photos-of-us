@@ -48,7 +48,7 @@
                         <div class="label">Date Uploaded</div>
                         <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
                     </div>
-                    <div class="codeView__card--edit" ng-click="openEdit()">Bulk Edit</div>
+                    <div class="codeView__card--edit" ng-click="openEdit(@item.Code)">Bulk Edit</div>
                 </div>
                 @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
                 {

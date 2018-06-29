@@ -4,7 +4,7 @@
     ViewData["Title"] = "BulkEditModal";
 }
 
-<md-dialog class="newfolder-dialog">
+<md-dialog class="edit-dialog">
     <md-dialog-content>
         <div class="col-md-12">
             <div class="pull-left">
@@ -14,20 +14,14 @@
                 <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
             </div>
         </div>
-        <div class="col-md-12">
-            <form method="POST" class="form">
-                <div class="form-input">
-                    <md-chips readonly="ctrl.readonly">
-                        <md-chip-template ng-repeat="tag in tags">
-                            <strong>{{tag}}</strong>
-                        </md-chip-template>
-                    </md-chips>
-                </div>
-                <div class="form-button">
-                    <button class="button--yellow" ng-click="test()">Apply</button>
-                </div>
-
-            </form>
+        @*<div class="modal--convert__row" style="padding-top: 0"  ng-repeat="tag in tags track by $index">
+            <div align="center" class="photos-tags">
+                <div>{{tag}}</div>
+            </div>
+        </div>*@
+        <tags-input ng-model="tags"></tags-input>
+        <div style="padding: 20px">
+            <button ng-click="test()">test</button>
         </div>
     </md-dialog-content>
 </md-dialog>

@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', 'ngTagsInput']);
 
 
 
@@ -257,11 +257,11 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $scope.code = $location.absUrl().split('=')[1];
     };
 
-    $scope.openEdit = () => {
+    $scope.openEdit = (code) => {
         $mdDialog.show({
             templateUrl: '/Photographer/BulkEditModal',
             controller: 'BulkEditController',
-            //locals: { folder: folderId },
+            locals: { code },
             clickOutsideToClose: true
         });
     };
@@ -976,12 +976,13 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
     };
 
 }]);
-angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter) {
+angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter, code) {
 
-    $scope.tags = {
-        tag: 'pretty',
-        tag: 'travel',
-        tag: 'dog'
+    $scope.code = code;
+    $scope.tags = ['pretty', 'travel', 'dog'];
+
+    $scope.test = () => {
+        console.log("hello?", $scope.tags)
     }
 
 });

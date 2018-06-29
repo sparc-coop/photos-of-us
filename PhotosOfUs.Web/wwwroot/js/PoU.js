@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', 'ngTagsInput']);
 
 
 

@@ -1,5 +1,9 @@
-﻿.newfolder-dialog {
+﻿.edit-dialog {
     width: 300px;
+
+    tags-input .tags .tag-item {
+        background: rgba(67, 198, 186, 0.15) !important;
+    }
 
     .close {
         outline: none;
