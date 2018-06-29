@@ -132,6 +132,14 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         })
     }
 
+    $scope.renameFolderModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/EditFolderModal',
+            controller: 'FolderCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
     $scope.addFolder = function (folderName) {
         folderApi.add(folderName)
             .then(function (x) {
@@ -139,6 +147,10 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
                 $scope.close();
                 $rootScope.$broadcast('FolderAdded', x.data);
             })
+    }
+
+    $scope.renameFolder = function () {
+
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
