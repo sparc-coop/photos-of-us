@@ -27,85 +27,66 @@
     cursor: not-allowed; }
 
 .edit-dialog {
-  width: 300px; }
+  width: 542px;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  /*.form {
+        margin-bottom: 10px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 15px;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .form-button {
+        width: 100%;
+        padding-right: 20px;
+        padding-bottom: 5px;
+    }
+
+    button {
+        float: right !important;
+        width: 100px;
+    }
+
+    button:disabled {
+        background-color: lightgray;
+        color: black;
+        cursor: not-allowed;
+    }*/ }
   .edit-dialog tags-input .tags .tag-item {
     background: rgba(67, 198, 186, 0.15) !important; }
+  .edit-dialog .img-amount {
+    font-size: 14px;
+    color: #757575; }
+  .edit-dialog .btn-apply {
+    background: #FFE261;
+    border-radius: 8px;
+    color: #ffffff;
+    width: 100px;
+    height: 34px;
+    font-family: Dosis;
+    font-size: 18px;
+    text-align: center;
+    align-content: center;
+    box-shadow: 0px; }
+  .edit-dialog .bottom {
+    display: flex;
+    justify-content: space-between; }
   .edit-dialog .close {
     outline: none;
     cursor: pointer;
     position: absolute;
     top: 16px;
     right: 18px; }
-  .edit-dialog .form {
-    margin-bottom: 10px; }
-  .edit-dialog .form-input {
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 15px; }
-    .edit-dialog .form-input input, .edit-dialog .form-input textarea {
-      width: 100%; }
-  .edit-dialog .form-button {
-    width: 100%;
-    padding-right: 20px;
-    padding-bottom: 5px; }
-  .edit-dialog button {
-    float: right !important;
-    width: 100px; }
-  .edit-dialog button:disabled {
-    background-color: lightgray;
-    color: black;
-    cursor: not-allowed; }
-  .edit-dialog .md-chips {
-    font-size: 13px; }
-  .edit-dialog .md-chips md-chip {
-    border-radius: 3px; }
-  .edit-dialog .md-chips md-chip ._md-chip-remove md-icon {
-    height: 14px;
-    width: 14px; }
-  .edit-dialog md-icon {
-    height: 14px;
-    width: 14px;
-    min-height: 14px;
-    min-width: 14px; }
-  .edit-dialog .md-contact-chips .md-chips md-chip .md-contact-avatar img {
-    border-radius: 3px; }
-  .edit-dialog .chipsdemoBasicUsage .errors {
-    font-size: 12px;
-    color: #dd2c00;
-    margin-top: 10px; }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip {
-    position: relative; }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container {
-    position: absolute;
-    right: 4px;
-    top: 4px;
-    margin-right: 0;
-    height: 24px; }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip {
-    position: relative;
-    height: 24px;
-    width: 24px;
-    line-height: 30px;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 50%;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-    transition: background 0.15s linear;
-    display: block; }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip md-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0) scale(0.7);
-    color: white;
-    fill: white; }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip:hover, .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip ._md-chip-remove-container button.vegetablechip:focus {
-    background: rgba(255, 0, 0, 0.8); }
-  .edit-dialog .chipsdemoBasicUsage .custom-chips md-chip:not(.md-readonly) md-chip-template {
-    padding-right: 5px; }
+  .edit-dialog .input {
+    padding: 20px; }
 
 .full-width-anchor {
   position: absolute;

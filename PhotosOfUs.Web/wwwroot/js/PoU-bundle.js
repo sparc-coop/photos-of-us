@@ -257,11 +257,20 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $scope.code = $location.absUrl().split('=')[1];
     };
 
-    $scope.openEdit = (code) => {
+    $scope.openBulkEdit = (folder) => {
         $mdDialog.show({
             templateUrl: '/Photographer/BulkEditModal',
             controller: 'BulkEditController',
-            locals: { code },
+            locals: { folder },
+            clickOutsideToClose: true
+        });
+    };
+
+    $scope.openPhotoEdit = (folder) => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/PhotoEditModal',
+            controller: 'BulkEditController',
+            locals: { folder },
             clickOutsideToClose: true
         });
     };
@@ -976,13 +985,34 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
     };
 
 }]);
-angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter, code) {
+angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter, folder) {
 
-    $scope.code = code;
-    $scope.tags = ['pretty', 'travel', 'dog'];
+    $scope.close = () => $mdDialog.hide();
+    $scope.folder = folder;
 
     $scope.test = () => {
-        console.log("hello?", $scope.tags)
+        console.log("-->", $scope.folder);
+        $http.get('/api/Photo/GetFolders').then(x => {
+            $scope.photos = x.data;
+            $scope.num = $scope.photos.length;
+
+            //photo filter by folder or code?
+            console.log($scope.photos);
+            
+        });
     }
+
+   
+    $scope.tags = ['pretty', 'travel', 'dog'];
+
+    $scope.updateTags = () => {
+        //angular.forEach(values, function (value, key) {
+        //    $scope.photos.Tags.push(tags);
+        //});
+
+        //$http.put('/api/Photo/' + folder, photos).then(res => console.log(res));
+    }
+
+    
 
 });

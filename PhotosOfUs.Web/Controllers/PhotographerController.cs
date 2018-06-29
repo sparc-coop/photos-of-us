@@ -292,6 +292,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult PhotoEditModal()
+        {
+            return View();
+        }
+
         public ActionResult Account()
         {
             return View();

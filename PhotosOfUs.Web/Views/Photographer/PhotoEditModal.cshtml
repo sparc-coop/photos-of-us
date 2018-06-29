@@ -1,24 +1,28 @@
-﻿
-@{
+﻿@{
     Layout = null;
-    ViewData["Title"] = "BulkEditModal";
+    ViewData["Title"] = "PhotoEditModal";
 }
 
 <md-dialog class="edit-dialog" ng-init="test()">
     <md-dialog-content>
         <div class="col-md-12">
             <div class="pull-left">
-                <h2 class="header-xs">Bulk Edit <font class="img-amount">({{num}} images selected)</font></h2>
+                <h2 class="header-xs">Edit Photo</h2>
             </div>
             <div class="pull-right">
                 <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
             </div>
         </div>
         <div class="input">
+            <label>File Name:</label>
+            <input />
+            <label>Description:</label>
+            <input />
             <label>Tags:</label>
             <tags-input ng-model="tags"></tags-input>
+            Make image private
             <div class="bottom">
-                <div>Delete images?</div><button class="btn-apply" ng-click="updateTags()">Apply</button>
+                <div>Delete image?</div><button class="btn-apply" ng-click="updateTags()">Save</button>
             </div>
         </div>
     </md-dialog-content>
