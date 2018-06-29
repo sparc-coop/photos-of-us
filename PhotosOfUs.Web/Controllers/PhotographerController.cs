@@ -300,6 +300,16 @@ namespace PhotosOfUs.Web.Controllers
             return View(salesHistory);
         }
 
+        public ActionResult Search()
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+
+            return View(ProfileViewModel.ToViewModel(photos, photographer)); ;
+        }
+
         public ActionResult NewFolderModal()
         {
             return View();
