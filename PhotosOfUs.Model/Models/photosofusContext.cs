@@ -19,6 +19,7 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
         public virtual DbSet<PrintType> PrintType { get; set; }
         public virtual DbSet<PrintPrice> PrintPrice { get; set; }
+        public virtual DbSet<Tag> Tag { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
@@ -314,6 +315,13 @@ namespace PhotosOfUs.Model.Models
                 //    .WithMany(p => p.PrintPrice)
                 //    .HasForeignKey(d => d.PrintId)
                 //    .HasConstraintName("FK_PrintPrice_PrintType");
+            });
+
+            modelBuilder.Entity<Tag>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("Id");
+
+                entity.Property(e => e.TagName).HasColumnName("TagName");
             });
         }
     }
