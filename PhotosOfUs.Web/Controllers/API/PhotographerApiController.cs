@@ -36,26 +36,26 @@ namespace PhotosOfUs.Web.Controllers.API
             return "value";
         }
 
-        [HttpGet("{query}")]
-        [Route("SalesHistory")]
-        public async Task<IActionResult> SalesHistory(string query)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(userId);
+        //[HttpGet("{query}")]
+        //[Route("SalesHistory")]
+        //public async Task<IActionResult> SalesHistory(string query)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var userId = _context.UserIdentity.Find(azureId).UserID;
+        //    var user = _context.User.Find(userId);
 
-            List<Order> queriedOrders;
-            if(null == query || query.Equals(""))
-                queriedOrders = new OrderRepository(_context).GetOrders(user.Id);
-            else
-                queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
+        //    List<Order> queriedOrders;
+        //    if(null == query || query.Equals(""))
+        //        queriedOrders = new OrderRepository(_context).GetOrders(user.Id);
+        //    else
+        //        queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
 
-            var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
+        //    var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
 
-            var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
+        //    var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpGet]
         [Route("GetAccountSettings")]

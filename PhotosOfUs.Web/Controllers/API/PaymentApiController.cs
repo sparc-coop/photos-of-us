@@ -9,6 +9,7 @@ using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
 using Stripe;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -26,11 +27,14 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("Charge")]
         public StripeCharge Charge([FromBody] PaymentModel payment)
         {
-            StripeConfiguration.SetApiKey("");
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+
+            StripeConfiguration.SetApiKey("");//("");
             Debug.WriteLine(payment);
             //int amount = payment.Amount;
             int amount = 500; // TODO: swap this out for the line above to have actual amounts sent
-            var userId = 1; // TODO: get actual user id
+
             User user = new UserRepository(_context).Find(userId);
             Address address = new UserRepository(_context).GetAddress(userId);
 

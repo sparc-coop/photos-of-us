@@ -33,22 +33,37 @@ namespace PhotosOfUs.Web.Controllers.API
             return AddressViewModel.ToViewModel(address);
         }
 
-        //[HttpPost]
-        //[Route("CreateOrder")]
-        //public OrderViewModel CreateOrder(OrderViewModel vm)
-        //{
-        //    var order = OrderViewModel.ToEntity(vm);
-        //    address = new AddressRepository(_context).Create(address);
-        //    return AddressViewModel.ToViewModel(address);
-        //}
+        [HttpGet]
+        [Route("GetOrderTotal/{orderId:int}")]
+        public decimal GetOrderTotal(int orderId)
+        {
+            return new OrderRepository(_context).GetOrderTotal(orderId);
+        }
 
-        //[HttpGet]
-        //[Route("GetOrder")]
-        //public OrderViewModel GetOrder(OrderViewModel vm)
-        //{
-        //    var order = OrderViewModel.ToEntity(vm);
-        //    address = new AddressRepository(_context).Create(address);
-        //    return AddressViewModel.ToViewModel(address);
-        //}
+        [HttpPost]
+        [Route("CreateOrder/{userId:int}/{photoId:int}")]
+        public string CreateOrder(int userId, int photoId, [FromBody]int[] orderitems)
+        {
+            var existingOrder = new OrderRepository(_context).GetOpenOrder(userId);
+            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+
+            if(existingOrder == null)
+            {
+                var newOrder = new OrderRepository(_context).CreateOrder(userId);
+
+                foreach (var item in orderitems)
+                {
+                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(newOrder.Id, photoId, photo.PhotographerId, item);
+                }
+            }
+            else
+            {
+                foreach (var item in orderitems)
+                {
+                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(existingOrder.Id, photoId, photo.PhotographerId, item);
+                }
+            }
+            return "success";
+        }
     }
 }

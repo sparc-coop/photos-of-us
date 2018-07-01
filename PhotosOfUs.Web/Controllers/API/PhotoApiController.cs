@@ -8,6 +8,8 @@ using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
 using System.Security.Claims;
+using System.Net;
+using System.IO;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -33,7 +35,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            var printType = new PhotoRepository(_context).GetPrintTypes();
+            var printType = new PrintRepository(_context).GetPrintTypes();
             return PrintTypeViewModel.ToViewModel(printType);
         }
 
@@ -55,5 +57,47 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return FolderViewModel.ToViewModel(folders);
         }
+
+        [HttpGet]
+        [Route("GetOrderPhotos/{id:int}")]
+        public List<CustomerOrderViewModel> GetOrderPhotos(int id)
+        {
+            List<Order> orders = new OrderRepository(_context).GetUserOrders(id);
+            return CustomerOrderViewModel.ToViewModel(orders).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetOrderItems/{id:int}")]
+        public List<OrderDetailViewModel> GetOrderItems(int id)
+        {
+            return new OrderRepository(_context)
+                .GetOrderDetails(id)
+                .Select(x => OrderDetailViewModel.ToViewModel(x))
+                .ToList();
+        }
+
+        [HttpPost]
+        [Route("GetForDownload/{id:int}")]
+        public IActionResult GetForDownload(int id)
+        {
+            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            List<OrderDetail> items = new OrderRepository(_context).GetOrderDetails(order.Id);
+
+            //DownloadPhotos(items);
+
+            return Ok();
+        }
+
+        //public void DownloadPhotos(List<OrderDetail> items)
+        //{
+        //    string pathUser = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        //    string pathDownload = Path.Combine(pathUser, "Downloads\\");
+
+        //    foreach (var item in items)
+        //    {
+                   
+        //    }
+
+        //}
     }
 }

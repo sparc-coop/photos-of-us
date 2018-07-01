@@ -38,12 +38,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public Photo GetPhoto(int photoId)
         {
-            return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
-        }
-
-        public List<PrintType> GetPrintTypes()
-        {
-            return _context.PrintType.ToList();
+            return _context.Photo.Include("Photographer").Single(x => x.Id == photoId);
         }
 
         public void SavePhoto(Photo photo)
@@ -126,7 +121,7 @@ namespace PhotosOfUs.Model.Repositories
         
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _context.Photo.Where(x => x.PublicProfile).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && x.PhotographerId == photographerId).ToList();
         }
 
         public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension)

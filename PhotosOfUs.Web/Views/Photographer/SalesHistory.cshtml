@@ -32,7 +32,7 @@
 
                     var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
 
-                    var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").First().Value.ToString();
+                    var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").FirstOrDefault().Value.ToString();
                     if (dateThirtyDaysAgo.Length == 0)
                     {
                         dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");

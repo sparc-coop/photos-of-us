@@ -55,8 +55,8 @@
     padding: 11px 0;
     float: right; }
   .button--yellow--payment {
-    float: right;
-    margin-top: -100px;
+    position: absolute;
+    bottom: 65px;
     width: 240px; }
 
 .button--checkout--preview {
@@ -166,6 +166,17 @@
     margin: -3px 10px 0 0;
     border-radius: 0;
     cursor: pointer; }
+
+.button--download {
+  border: 2px solid #43C6BA;
+  border-radius: 8px;
+  padding: 10px 30px;
+  position: absolute;
+  right: 200px;
+  font-family: "Dosis";
+  font-weight: 600;
+  cursor: pointer;
+  outline: none; }
 
 .folder-card--wrapper {
   flex-flow: row wrap;
@@ -917,10 +928,21 @@ body {
     right: 46px;
     margin-top: -11px; }
     .nav--right img {
-      padding: 10px;
+      padding: 5px 10px 10px 10px;
       outline: none;
       cursor: pointer;
-      vertical-align: middle; }
+      vertical-align: middle;
+      height: 30px; }
+    .nav--right .img-cart {
+      background-color: #194952;
+      border-radius: 20px;
+      display: inline-block;
+      margin: 7px 10px 0 0;
+      padding: 4px; }
+      .nav--right .img-cart img {
+        height: 14px;
+        padding: 5px;
+        margin-top: -5px; }
     .nav--right .login {
       margin-top: 10px; }
     .nav--right .profileImg {
@@ -931,9 +953,10 @@ body {
       height: 34px;
       width: 34px;
       border-radius: 100px;
-      border: 1px solid #FFE261;
+      border: 2px solid #FFE261;
       background-color: #194952;
-      display: inline-block; }
+      display: inline-block;
+      margin-top: -4px; }
     .nav--right .menu-item.active {
       padding-bottom: 5px;
       border-bottom: 2px solid #FFE261; }
@@ -941,12 +964,12 @@ body {
     background-color: #194952;
     z-index: 100;
     width: 212px;
-    height: 280px;
+    height: auto;
     border-radius: 6px;
     margin-top: 46px;
     position: absolute;
     right: 0;
-    padding-top: 15px; }
+    padding: 15px 0 10px 0; }
     .nav .adminMenu__list {
       padding: 10px 15px 0 15px;
       width: 86%;
@@ -1151,7 +1174,7 @@ td {
     padding: 16px 14px;
     height: 235px; }
     .cart--preview__content .heading {
-      font-family: "Dosis-SemiBold";
+      font-family: "Dosis";
       font-weight: 600;
       font-size: 18px;
       color: #194952;
@@ -1211,8 +1234,10 @@ td {
   border-radius: 4px;
   padding: 26px 16px;
   width: 208px;
-  height: 180px;
-  position: relative; }
+  height: auto;
+  position: absolute;
+  right: 100px;
+  top: 268px; }
   .cart .checkout .summary .title {
     font-family: "Dosis";
     font-weight: 600;
@@ -1227,30 +1252,34 @@ td {
     font-size: 12px;
     color: #757575;
     padding: 4px;
-    position: absolute;
-    bottom: 84px;
     width: 185px;
     text-align: center; }
   .cart .checkout .summary .divider {
     position: absolute;
     bottom: 48px;
-    left: 44px; }
+    left: 44px;
+    margin-top: 10px; }
   .cart .checkout .summary .cart-items {
     display: flex;
+    flex-wrap: wrap;
     font-family: "Open Sans";
     font-size: 12px;
     color: #757575;
-    padding-bottom: 10px; }
+    padding-bottom: 20px; }
+    .cart .checkout .summary .cart-items .cart-item {
+      margin: 2px 0;
+      padding: 5px; }
     .cart .checkout .summary .cart-items .type {
       width: 120px;
       padding-right: 40px; }
+    .cart .checkout .summary .cart-items .amount {
+      padding-left: 15px; }
   .cart .checkout .summary .total {
     font-family: "Open Sans";
     font-size: 14px;
     color: #757575;
     display: flex;
-    position: absolute;
-    bottom: 28px; }
+    padding-top: 15px; }
     .cart .checkout .summary .total .total-price {
       font-weight: 600;
       padding-left: 82px; }
@@ -1261,7 +1290,7 @@ td {
     width: 240px;
     height: 156px;
     border-radius: 8px;
-    padding: 24px 40px 0 0; }
+    margin: 24px 40px 0 0; }
   .cart-photo--container {
     padding-top: 24px;
     padding-bottom: 50px; }
@@ -1352,7 +1381,8 @@ td {
       font-size: 80px;
       color: #FFFFFF;
       letter-spacing: 0.37px;
-      text-align: center; }
+      text-align: center;
+      text-transform: uppercase; }
     .landing .section1 .content {
       margin-top: 154px; }
       .landing .section1 .content__subinfo {
@@ -1362,7 +1392,7 @@ td {
         color: #FFFFFF;
         letter-spacing: 0.25px;
         text-align: center;
-        width: 570px;
+        max-width: 650px;
         margin: 0 auto; }
       .landing .section1 .content .invite {
         width: 507px;
@@ -1384,14 +1414,15 @@ td {
     text-align: center; }
     .landing .section2 .img--showcase {
       margin: 0 auto;
-      margin-top: -27%;
+      margin-top: -340px;
       width: 90%; }
     .landing .section2 .slogan {
       font-weight: 800;
       font-size: 50px;
       letter-spacing: 0.37px;
       text-align: center;
-      color: #194952; }
+      color: #194952;
+      text-transform: uppercase; }
     .landing .section2 .content {
       margin-top: 0px; }
       .landing .section2 .content__subinfo {
@@ -1468,7 +1499,8 @@ td {
         letter-spacing: 0.37px;
         text-align: center;
         color: #194952;
-        padding-top: 50px; }
+        padding-top: 50px;
+        text-transform: uppercase; }
       .landing .section3 .content .social {
         text-align: center;
         padding-top: 105px; }
@@ -1759,6 +1791,10 @@ canvas {
     width: 80px;
     border-radius: 50px;
     margin-top: 20px; }
+  .photoPage__photographer-info .placeholder-img {
+    height: 80px;
+    width: 80px;
+    margin-top: 20px; }
 
 .photoPage .photo--info {
   max-width: 690px;
@@ -1877,6 +1913,13 @@ canvas {
     position: absolute;
     bottom: 4px;
     left: 0; }
+
+.thumbnail {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  vertical-align: middle;
+  margin: 15px 15px 15px 0; }
 
 .divider {
   background: #FFE261;
@@ -2191,7 +2234,8 @@ canvas {
       width: 90%;
       padding: 0 5%;
       font-family: 'Dosis';
-      font-size: 16px; }
+      font-size: 16px;
+      outline: none; }
       .photographer-profile--wrapper .gallery-search-container .searchbox::-moz-placeholder {
         color: #43C6BA; }
       .photographer-profile--wrapper .gallery-search-container .searchbox:-ms-input-placeholder {

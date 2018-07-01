@@ -54,6 +54,7 @@
             color: $white;
             letter-spacing: 0.37px;
             text-align: center;
+            text-transform: uppercase;
         }
 
         .content {
@@ -66,7 +67,7 @@
                 color: $white;
                 letter-spacing: 0.25px;
                 text-align: center;
-                width: 570px;
+                max-width: 650px;
                 margin: 0 auto;
             }
 
@@ -97,7 +98,7 @@
 
         .img--showcase {
             margin: 0 auto;
-            margin-top: -27%;
+            margin-top: -340px;
             width: 90%;
         }
 
@@ -107,12 +108,12 @@
             letter-spacing: 0.37px;
             text-align: center;
             color: $dark;
+            text-transform: uppercase;
         }
 
         .content {
             margin-top: 0px;
             //margin-bottom: 100px;
-
             &__subinfo {
                 padding: 10px 0 70px 0;
                 font-family: 'Open Sans';
@@ -212,6 +213,7 @@
                 text-align: center;
                 color: $dark;
                 padding-top: 50px;
+                text-transform: uppercase;
             }
 
             .social {

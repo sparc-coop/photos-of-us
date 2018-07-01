@@ -8,6 +8,7 @@ namespace PhotosOfUs.Model.ViewModels
 {
     public class OrderViewModel
     {
+        public int UserId { get; set; }
         public string PhotoName { get; set; }
         public string PrintSize { get; set; }
         public string OrderStatus { get; set; }
@@ -19,14 +20,27 @@ namespace PhotosOfUs.Model.ViewModels
         {
             var viewModel = new OrderViewModel();
 
-            viewModel.PhotoName = order.OrderDetail.First().Photo.Name;
-            viewModel.PrintSize = order.OrderDetail.First().PrintType.Type;
+            viewModel.UserId = order.UserId;
+            //viewModel.PhotoName = order.OrderDetail.First().Photo.Name;
+            //viewModel.PrintSize = order.OrderDetail.First().PrintType.Type;
             viewModel.OrderStatus = order.OrderStatus;
             viewModel.Amount = order.OrderDetail.First().Quantity;
             viewModel.TotalPaid = order.OrderDetail.First().UnitPrice * viewModel.Amount;
             viewModel.Earning = viewModel.TotalPaid * (decimal) 0.955;
 
             return viewModel;
+        }
+
+        public static List<OrderViewModel> ToViewModel(List<Order> entities)
+        {
+            List<OrderViewModel> viewModels = new List<OrderViewModel>();
+
+            foreach (var item in entities)
+            {
+                viewModels.Add(ToViewModel(item));
+            }
+
+            return viewModels;
         }
     }
 }

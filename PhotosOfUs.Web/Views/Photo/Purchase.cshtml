@@ -5,9 +5,9 @@
     ViewData["Title"] = "Purchase";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser()">
     <h1 class="header-large">Purchase Photo</h1>
-    <div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
     <div class="flex-box">
         <div class="photo">
@@ -62,16 +62,10 @@
                 <div class="height">{{print.Height}}in</div>
                 <div class="length">{{print.Length}}in</div>
                 <div class="quantity">1</div>
-                <div class="price"><strong>$6.00</strong></div>
-
+                <div class="price"><strong>${{print.PrintPrice.Price}}</strong></div>
             </div>
         </div>
-
-        <div class="button--yellow button--yellow--large" ng-click="createOrder()"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>
-
-
-
-    </div>
-    
+        <div class="button--yellow button--yellow--large" ng-click="createOrder(user.Id)"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>
+    </div>   
 </div>
 

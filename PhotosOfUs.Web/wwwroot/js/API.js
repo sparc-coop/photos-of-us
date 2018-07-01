@@ -45,7 +45,16 @@ app.factory('checkoutApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Checkout';
         return {
-            
+            createOrder: function (userId, orderItems) { return $http.get(apiRoot + '/CreateOrder/' + userId, orderItems) },
+        };
+    }
+]);
+
+app.factory('userApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/User';
+        return {
+            getUser: function () { return $http.get(apiRoot + '/GetUser')}
         };
     }
 ]);

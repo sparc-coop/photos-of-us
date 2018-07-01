@@ -7,14 +7,15 @@
 @section ProfileImageBackdrop {
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
-<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl">
+<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-init="getUser()">
     <div class="g-row">
         <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
             <div class="photographer-info">
                 @if (string.IsNullOrEmpty(Model.ProfilePhotoUrl))
                 {
 
-                    <div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>
+                    @*<div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>*@
+                    <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
                 }
                 else
                 {
@@ -41,20 +42,23 @@
                 </ul>
             </div>
             <div class="gallery-search-container">
-                <input class="input--light-blue searchbox" placeholder="Search Gallery..." />
+                <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
             </div>
-            <div class="gallery-upload-container">
+            @if(User.Identity.IsAuthenticated)
+            {
+            <div class="gallery-upload-container" ng-if="'@Model.PhotographerId' == user.Id" ng-cloak>
                 <a href="#" ng-click="openUpload()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Click here to upload</span></a>
             </div>
+            }
         </div>
 
         <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
 
             <div class="photographer-gallery-container">
                 <div class="g-row">
-                    @foreach (var Photo in @Model.Photos)
+                    @foreach (var Photo in Model.Photos)
                     {
-                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="'@Photo.Code'.includes(search) || (search == null || search == '')" ng-cloak> 
                             <img class="gallery-image" src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
                         </div>
                     }

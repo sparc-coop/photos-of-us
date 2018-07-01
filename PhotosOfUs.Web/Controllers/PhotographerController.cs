@@ -42,14 +42,23 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
+            
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
 
-            PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-            model.PhotographerId = photographerId;
-            model.Name = User.Identity.Name;
+            if(photographer.IsPhotographer == true)
+            {
+                PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
+                model.PhotographerId = photographerId;
+                model.Name = User.Identity.Name;
 
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Customer");
+            }
         }
 
         // GET: Photographer/Details/5
@@ -216,6 +225,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            //photoCode = "34234";
 
             if (string.IsNullOrEmpty(photoCode))
             {
@@ -263,42 +273,41 @@ namespace PhotosOfUs.Web.Controllers
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
 
-        [Authorize]
-        public ActionResult Profile()
+        public ActionResult Profile(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            //var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
-        [Authorize]
-        public ActionResult SalesHistory(string query = null)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+        //[Authorize]
+        //public ActionResult SalesHistory(string query = null)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
-            UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
+        //    UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
 
-            // if the user can't be found make a safe but empty return
-            if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
-
-
-            //var photographerId = userIdentity.UserID;
-            var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+        //    // if the user can't be found make a safe but empty return
+        //    if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
 
-            string queryString = HttpContext.Request.QueryString.ToString();
-            SalesQueryModel sqm = new SalesQueryModel(queryString);
+        //    //var photographerId = userIdentity.UserID;
+        //    var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
 
-            var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
-            SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
-            salesHistory.UserDisplayName = User.Identity.Name;
-            Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
-            return View(salesHistory);
-        }
+
+        //    string queryString = HttpContext.Request.QueryString.ToString();
+        //    SalesQueryModel sqm = new SalesQueryModel(queryString);
+
+        //    var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
+        //    SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+        //    salesHistory.UserDisplayName = User.Identity.Name;
+        //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
+        //    return View(salesHistory);
+        //}
 
         public ActionResult NewFolderModal()
         {

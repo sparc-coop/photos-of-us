@@ -13,6 +13,8 @@ namespace PhotosOfUs.Model.ViewModels
         public string Length { get; set; }
         public string Icon { get; set; }
 
+        public PrintPrice PrintPrice { get; set; }
+
         public static PrintTypeViewModel ToViewModel(PrintType entity)
         {
             PrintTypeViewModel viewModel = new PrintTypeViewModel();
@@ -22,7 +24,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.Height = entity.Height;
             viewModel.Length = entity.Length;
             viewModel.Icon = entity.Icon;
-
+            viewModel.PrintPrice = entity.PrintPrice;
 
             return viewModel;
         }

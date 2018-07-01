@@ -1,16 +1,15 @@
-﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
+﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
     $scope.goToCart = () => {
         $window.location.href = '/Photo/Cart';
     };
 
-    $scope.goToCheckout = () => {
-        $window.location.href = '/Photo/Checkout';
+    $scope.goToCheckout = (userId) => {
+        $window.location.href = '/Photo/Checkout/' + userId;
     };
 
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
-            console.log($scope.printTypes);
         });
     };
 
@@ -32,11 +31,9 @@
                 cartLocalStorage = {};
             }
         }
-        console.log(photoId);
         cartLocalStorage[photoId] = object;
 
         localStorage.setItem("cart", JSON.stringify(cartLocalStorage));
-        console.log(localStorage.getItem("cart"));
 
         if ($scope.selectedItems.length === 0) {
             $scope.selectedItems.push(printTypeId);
@@ -64,16 +61,18 @@
         return false;
     }
 
-    $scope.addToCart = function (printId) {
-        $scope.select(printId);
-        $scope.createOrder();
-        //todo broadcast added to cart to update menu
-    }
+    //$scope.addToCart = function (printId) {
+    //    $scope.select(printId);
+    //    $scope.createOrder();
+    //    //todo broadcast added to cart to update menu
+    //}
 
-    $scope.createOrder = () => {
-        // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
-        $window.location.href = '/Photo/Cart';
-        //});
+    $scope.createOrder = (userId) => {
+        console.log($scope.selectedItems);
+        var photoId = $location.absUrl().split('Purchase/')[1];
+        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
+            $window.location.href = '/Photo/Cart/' + userId;
+        });
     };
 
     function testLocalStorage () {
@@ -90,11 +89,17 @@
         }
     }
 
-    $scope.getOrder = () => {
-        $http.get('/api/Checkout/GetOrder').then(x => {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+    $scope.getOrderDetails = (orderId) => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+            $scope.orderDetails = x.data;
+            console.log($scope.orderDetails);
         });
+    };
+
+    $scope.getUser = () => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        })
     };
 
 }])

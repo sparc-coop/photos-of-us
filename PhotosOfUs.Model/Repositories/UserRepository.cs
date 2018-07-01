@@ -23,6 +23,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.User.Find(userId);
         }
 
+        public UserIdentity GetUser(string azureId)
+        {
+            return _context.UserIdentity.FirstOrDefault(x => x.AzureID == azureId);
+        }
+
         public bool UpdateAccountProfileSettings(ProfileSettingsViewModel model)
         {
             var user = Find(model.UserId);

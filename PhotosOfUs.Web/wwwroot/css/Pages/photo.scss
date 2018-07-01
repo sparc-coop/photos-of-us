@@ -31,6 +31,12 @@
             border-radius: 50px;
             margin-top: 20px;
         }
+
+        .placeholder-img {
+            height: 80px;
+            width: 80px;
+            margin-top: 20px;
+        }
     }
 
     .photo--info {
@@ -185,6 +191,14 @@
             left: 0;
         }
     }
+}
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    vertical-align: middle;
+    margin: 15px 15px 15px 0;
 }
 
 .divider {

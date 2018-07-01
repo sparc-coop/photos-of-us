@@ -11,15 +11,22 @@
                 <div class="title">Photographer</div>
                 <div class="name">@Model.PhotographerName</div>
             </div>
-            <img src="@Model.Photographer.ProfilePhotoUrl" />
+            @if(Model.Photographer.ProfilePhotoUrl != null)
+            {
+                <img src="@Model.Photographer.ProfilePhotoUrl" />
+            }
+            else
+            {
+                <img src="/images/icons/profile-icon.png" class="placeholder-img"/>
+            }
         </div>
     </div>
 
-    <div class="photo--info">
+    @*<div class="photo--info">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
         Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
         Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-    </div>
+    </div>*@
 
     <div class="divider"></div>
 
@@ -47,7 +54,20 @@
             </div>
             <div class="photoPage__footer--right">
                 <div class="title">Starting At Just $5 Per Photo</div>
-                <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')"><img src="~/images/icons/cart-red.png" />Buy It Now</div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                 <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')">
+                    <img src="~/images/icons/cart-red.png" />
+                    Buy It Now
+                 </div>
+                }
+                else
+                {
+                <a class="button--yellow button--yellow--large" href="~/Session/SignIn">
+                    <img src="~/images/icons/cart-red.png" />
+                    Login and Buy It Now
+                </a>
+                }
             </div>
         </div>
     </div>

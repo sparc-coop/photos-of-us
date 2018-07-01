@@ -13,7 +13,6 @@
 
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
-
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
