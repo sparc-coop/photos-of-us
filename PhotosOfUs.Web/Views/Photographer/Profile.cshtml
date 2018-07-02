@@ -54,7 +54,7 @@
                 <div class="g-row">
                     @foreach (var Photo in @Model.Photos)
                     {
-                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 contain gallery-image-pad">
                             <img class="gallery-image" src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
                         </div>
                     }

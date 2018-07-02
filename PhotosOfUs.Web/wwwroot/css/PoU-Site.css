@@ -1963,10 +1963,13 @@ canvas {
   .photographer-profile--wrapper .photographer-info .photographer-title {
     margin-top: 0;
     color: #43C6BA;
-    font-family: 'Dosis';
-    font-size: larger; }
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 14px; }
   .photographer-profile--wrapper .photographer-info .photographer-bio {
-    font-family: 'Dosis'; }
+    font-family: 'Open Sans';
+    font-weight: lighter;
+    font-size: 12px; }
   .photographer-profile--wrapper .photographer-social ul {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1982,9 +1985,10 @@ canvas {
         line-height: 0;
         font-size: 0px;
         color: transparent;
-        padding: 10px;
-        background-size: cover;
-        background-position: center; }
+        padding: 12px;
+        background-size: 12px;
+        background-position: center;
+        background-repeat: no-repeat; }
         .photographer-profile--wrapper .photographer-social ul li a.twitter {
           background-image: url(/images/icons/twitter.png); }
         .photographer-profile--wrapper .photographer-social ul li a.facebook {
@@ -2003,7 +2007,8 @@ canvas {
       background-position: center right 15px;
       width: 90%;
       padding: 0 5%;
-      font-family: 'Dosis'; }
+      font-family: 'Dosis';
+      font-size: 16px; }
       .photographer-profile--wrapper .gallery-search-container .searchbox::-moz-placeholder {
         color: #43C6BA; }
       .photographer-profile--wrapper .gallery-search-container .searchbox:-ms-input-placeholder {
@@ -2031,10 +2036,15 @@ canvas {
       /* IE 9 */
       -webkit-transform: scale(1.1);
       /* Safari 3-8 */ }
+  .photographer-profile--wrapper .photographer-gallery-container .contain {
+    height: 170px;
+    overflow: hidden;
+    border-radius: 8px; }
   .photographer-profile--wrapper .photographer-gallery-container .gallery-image {
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+    height: 170px;
+    object-fit: cover;
+    object-position: center center;
     cursor: pointer;
     outline: none;
     border-radius: 8px;
@@ -2055,7 +2065,8 @@ canvas {
   font-size: 14px; }
 
 .photographer-sales-history .sales-container {
-  position: relative; }
+  position: relative;
+  font-family: 'Open Sans'; }
   .photographer-sales-history .sales-container .overlay {
     position: absolute;
     padding: 10px;
