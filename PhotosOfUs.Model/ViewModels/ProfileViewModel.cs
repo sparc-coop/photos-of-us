@@ -1,7 +1,7 @@
 ﻿using PhotosOfUs.Model.Models;
+using PhotosOfUs.Model.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PhotosOfUs.Model.ViewModels
 {
@@ -31,7 +31,6 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.TwitterLink = "twitter";//TODO create column to this field
             viewModel.InstagramLink = "instagram";//TODO create column to this field
             viewModel.ProfilePhotoUrl = photographer.ProfilePhotoUrl;
-
             viewModel.Photos = new List<PhotoViewModel>();
 
             foreach (var item in photos)

@@ -8,6 +8,7 @@ namespace PhotosOfUs.Model.Models
     public partial class PhotosOfUsContext : DbContext
     {
         public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<SocialMedia> SocialMedia { get; set; }
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<Folder> Folder { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -89,6 +90,21 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.UserId);
             });
 
+            modelBuilder.Entity<SocialMedia>(entity =>
+            {
+                entity.Property(e => e.Type)
+                    .HasColumnName("AzureID")
+                    .HasMaxLength(128);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("Type");
+
+                entity.Property(e => e.Link);
+
+                entity.Property(e => e.Username)
+                    .HasColumnName("Username");
+            });
+
             modelBuilder.Entity<Card>(entity =>
             {
                 entity.HasIndex(e => e.PhotographerId);
@@ -150,24 +166,6 @@ namespace PhotosOfUs.Model.Models
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Order");
-
-                entity.HasOne(d => d.Photo)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PhotoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Photo");
-
-                entity.HasOne(d => d.PrintType)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PrintTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_PrintType");
 
             });
 
@@ -279,9 +277,9 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<PrintPrice>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
-                entity.Property(e => e.PrintId).HasColumnName("PrintId");
+                entity.Property(e => e.PrintTypeId).HasColumnName("PrintTypeId");
 
                 entity.Property(e => e.Price)
                     .HasColumnName("Price")

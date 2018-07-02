@@ -35,8 +35,8 @@
             </thead>
             <tbody>
                 <tr ng-repeat="card in cards | orderBy: '-id' | filter:searchText | limitTo: 5:(currentPage - 1) * pageSize">
-                    <td class="highlight">{{card.code}}</td>
-                    <td>{{card.createdDate | date: 'MM/dd/yyyy'}}</td>
+                    <td class="highlight">{{card.Code}}</td>
+                    <td>{{card.CreatedDate | date: 'MM/dd/yyyy'}}</td>
                     <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
                 </tr>
             </tbody>
@@ -44,7 +44,7 @@
     </div>
     <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
     <form id="card-downloader" action="@Url.Action("Export")" method="post">
-        <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.id" />
+        <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.Id" />
     </form>
 </div>
 

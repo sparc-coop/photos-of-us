@@ -30,8 +30,8 @@
         }
 
         &--payment {
-            float: right;
-            margin-top: -100px;
+            position: absolute;
+            bottom: 65px;
             width: 240px;
         }
     }
@@ -155,5 +155,17 @@
             border-radius: 0;
             cursor: pointer;
         }
+    }
+
+    &--download {
+        border: 2px solid $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        position: absolute;
+        right: 200px;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
     }
 }

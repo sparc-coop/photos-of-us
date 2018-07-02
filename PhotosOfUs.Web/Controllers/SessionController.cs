@@ -5,14 +5,20 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using PhotosOfUs.Model.Models;
+using System.Security.Claims;
+using PhotosOfUs.Model.Repositories;
 
 namespace PhotosOfUs.Web.Controllers
 {
     public class SessionController : Controller
     {
-        public SessionController(IOptions<AzureAdB2COptions> b2cOptions)
+        private PhotosOfUsContext _context;
+
+        public SessionController(IOptions<AzureAdB2COptions> b2cOptions, PhotosOfUsContext context)
         {
             AzureAdB2COptions = b2cOptions.Value;
+            _context = context;
         }
 
         public AzureAdB2COptions AzureAdB2COptions { get; set; }
@@ -20,11 +26,21 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
+
             var redirectUrl = Url.Action(nameof(PhotographerController.Dashboard), "Photographer");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
-                OpenIdConnectDefaults.AuthenticationScheme);
+                OpenIdConnectDefaults.AuthenticationScheme);     
         }
+
+        //[HttpGet]
+        //public IActionResult SignInCustomer()
+        //{
+        //    var redirectUrl = Url.Action(nameof(PhotographerController.Index), "Customer");
+        //    return Challenge(
+        //        new AuthenticationProperties { RedirectUri = redirectUrl },
+        //        OpenIdConnectDefaults.AuthenticationScheme);
+        //}
 
         [HttpGet]
         public IActionResult ResetPassword()

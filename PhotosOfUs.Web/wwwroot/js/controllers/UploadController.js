@@ -87,16 +87,18 @@
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
+        console.log("upload all clicked");
+       
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
-            var promises = [];
+          
             angular.forEach(items, function (item) {
                 //todo only pushes if not photo code
-                promises.push(item.upload());
+                item.upload();
             });
-            $q.all(promises).then(x => { $window.location.reload(); })
+
+            $scope.saveAllUpload = true;
             
         } else {
             alert("Fix the photos with exclamation first before uploading");
@@ -189,7 +191,7 @@
         console.log(fileItem);
         console.log(uploader.queue);
         
-        if (response != "") {
+        if (response !== "") {
             fileItem.formData[0].photoCode = response;
             fileItem.code = response;
             fileItem.isCode = true;
@@ -223,8 +225,11 @@
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
-        //$window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        
+        if ($scope.saveAllUpload) {
+             $window.location.reload();
+        }
+        
     };
 
 });

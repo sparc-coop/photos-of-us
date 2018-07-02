@@ -70,6 +70,7 @@ namespace PhotosOfUs.Model.Models
                     LastLoginDate = DateTime.UtcNow,
                     UserID = baseUser.Id
                 };
+
                 context.UserIdentity.Add(newIdentity);
                 context.SaveChanges();
                 user = new PhotosOfUsPrincipal(new ClaimsPrincipal(identity));

@@ -15,10 +15,12 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Diagnostics;
+
 
 namespace PhotosOfUs.Web.Controllers
 {
-   [Authorize]
+   
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -29,8 +31,9 @@ namespace PhotosOfUs.Web.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
-        
+
         // GET: Photographer
+        [Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Dashboard");
@@ -39,17 +42,27 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
+            
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
 
-            PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-            model.PhotographerId = photographerId;
-            model.Name = User.Identity.Name;
+            if(photographer.IsPhotographer == true)
+            {
+                PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
+                model.PhotographerId = photographerId;
+                model.Name = User.Identity.Name;
 
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Customer");
+            }
         }
 
         // GET: Photographer/Details/5
+        [Authorize]
         public ActionResult Photos(int id)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -161,6 +174,7 @@ namespace PhotosOfUs.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Cards()
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -170,6 +184,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Export(List<int> ids)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -205,10 +220,12 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            //photoCode = "34234";
 
             if (string.IsNullOrEmpty(photoCode))
             {
@@ -233,7 +250,7 @@ namespace PhotosOfUs.Web.Controllers
 
 
 
-
+        [Authorize]
         public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -246,7 +263,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension, true);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension);
                 }
             }
         }
@@ -256,26 +273,41 @@ namespace PhotosOfUs.Web.Controllers
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
 
-        public ActionResult Profile()
+        public ActionResult Profile(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            //var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
-        public ActionResult SalesHistory()
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(userId);
+        //[Authorize]
+        //public ActionResult SalesHistory(string query = null)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
 
-            var orders = new OrderRepository(_context).GetOrders(user.Id);
+        //    UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
 
-            return View(SalesHistoryViewModel.ToViewModel(user, orders));
-        }
+        //    // if the user can't be found make a safe but empty return
+        //    if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
+
+        //    //var photographerId = userIdentity.UserID;
+        //    var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+
+
+        //    string queryString = HttpContext.Request.QueryString.ToString();
+        //    SalesQueryModel sqm = new SalesQueryModel(queryString);
+
+        //    var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
+        //    SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+        //    salesHistory.UserDisplayName = User.Identity.Name;
+        //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
+        //    return View(salesHistory);
+        //}
 
         public ActionResult NewFolderModal()
         {
@@ -288,6 +320,11 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         public ActionResult Account()
+        {
+            return View();
+        }
+
+        public ActionResult PhotoDetails()
         {
             return View();
         }
@@ -307,6 +344,7 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

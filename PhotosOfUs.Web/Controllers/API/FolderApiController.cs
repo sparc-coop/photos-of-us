@@ -32,6 +32,18 @@ namespace PhotosOfUs.Web.Controllers.API
             return FolderViewModel.ToViewModel(folder);
         }
 
+        [Route("RenameFolder")]
+        [HttpPost]
+        public FolderViewModel Post([FromBody]FolderRenameViewModel model)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
+            var folder = new FolderRepository(_context).Rename(model.Id,model.NewName, photographerId);
+
+            return FolderViewModel.ToViewModel(folder);
+        }
+
         [HttpPost]
         [Route("DeleteFolder/{id:int}")]
         public IActionResult DeleteFolder(int id)

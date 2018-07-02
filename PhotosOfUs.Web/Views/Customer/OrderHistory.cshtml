@@ -1,0 +1,20 @@
+﻿@model List<CustomerOrderViewModel>
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<div class="order-history">
+    <h1 class="header-large">Order History</h1>
+    <div class="divider"></div>
+
+    @foreach (var order in Model)
+    {
+        <div>@order.OrderDate.ToShortDateString()</div>
+        @*@foreach (var orderItem in order.OrderDetail)
+        {
+            <div>@orderItem.Photo.Name</div>
+            <div>@orderItem.Photo.Photographer.DisplayName</div>
+
+        }*@
+    }
+</div>

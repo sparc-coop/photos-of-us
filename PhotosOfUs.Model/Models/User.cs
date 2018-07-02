@@ -28,6 +28,7 @@ namespace PhotosOfUs.Model.Models
         public string Facebook { get; set; }
         public int TemplateSelected { get; set; }
 
+        public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }

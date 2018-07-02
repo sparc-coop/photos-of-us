@@ -4,16 +4,30 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <UserSecretsId>aspnet-PhotosOfUs.Web-BB5B2F30-2418-4ED9-B664-415F60176C36</UserSecretsId>
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
+    <StartupObject></StartupObject>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\JeffsDog.jpeg" />
     <Content Remove="wwwroot\js\API.js.map" />
-    <Content Remove="wwwroot\js\API.ts" />
+    <Content Remove="wwwroot\js\PoU-bundle.es5.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Views\Photographer\Upload.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\PoU-bundle.es5.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="node_modules\angular-socialshare\package.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +46,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.2.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="Stripe.net" Version="13.1.0" />
+    <PackageReference Include="Stripe.net" Version="16.14.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,12 +56,37 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="node_modules\angular-socialshare\dist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\angular-socialshare.js" />
+    <None Include="wwwroot\js\angular-socialshare.js.map" />
+    <None Include="wwwroot\js\angular-socialshare.min.js" />
+    <None Include="node_modules\angular-socialshare\index.js" />
+    <None Include="node_modules\angular-socialshare\Readme.md" />
+    <None Include="wwwroot\js\PoU-bundle.es5.js" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
     <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
     <ProjectReference Include="..\Tesseract\Tesseract.NetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
