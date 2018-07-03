@@ -30,6 +30,8 @@
   width: 542px;
   padding-bottom: 20px;
   padding-top: 20px;
+  font-size: 11px;
+  font-family: 'Dosis';
   /*.form {
         margin-bottom: 10px;
     }
@@ -75,7 +77,8 @@
     font-size: 18px;
     text-align: center;
     align-content: center;
-    box-shadow: 0px; }
+    box-shadow: 0px;
+    margin: 20px; }
   .edit-dialog .bottom {
     display: flex;
     justify-content: space-between; }
@@ -86,7 +89,17 @@
     top: 16px;
     right: 18px; }
   .edit-dialog .input {
+    padding-left: 20px;
+    outline: none !important; }
+  .edit-dialog .label {
+    padding: 8px; }
+  .edit-dialog .folder-name {
+    font-size: 20px;
     padding: 20px; }
+    .edit-dialog .folder-name .input {
+      width: 200px;
+      outline: none !important;
+      border-bottom: 1px solid #f0f0f0; }
 
 .full-width-anchor {
   position: absolute;

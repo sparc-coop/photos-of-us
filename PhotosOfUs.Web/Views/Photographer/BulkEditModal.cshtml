@@ -14,11 +14,15 @@
                 <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
             </div>
         </div>
+        <div class="folder-name">
+            <label>Folder Name:</label>
+        <input placeholder="Enter a name" ng-model="folderName" />
+        </div>
         <div class="input">
             <label>Tags:</label>
             <tags-input ng-model="tags"></tags-input>
             <div class="bottom">
-                <div>Delete images?</div><button class="btn-apply" ng-click="updateTags()">Apply</button>
+                <div>Delete images?</div><button class="btn-apply" ng-click="updatePhotos()">Apply</button>
             </div>
         </div>
     </md-dialog-content>

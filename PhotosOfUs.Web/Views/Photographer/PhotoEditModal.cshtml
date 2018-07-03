@@ -15,14 +15,14 @@
         </div>
         <div class="input">
             <label>File Name:</label>
-            <input />
+            <input ng-model="photoName"/>
             <label>Description:</label>
-            <input />
+            <input ng-model="photoDesc" />
             <label>Tags:</label>
             <tags-input ng-model="tags"></tags-input>
             Make image private
             <div class="bottom">
-                <div>Delete image?</div><button class="btn-apply" ng-click="updateTags()">Save</button>
+                <div>Delete image?</div><button class="btn-apply" ng-click="updatePhoto()">Save</button>
             </div>
         </div>
     </md-dialog-content>

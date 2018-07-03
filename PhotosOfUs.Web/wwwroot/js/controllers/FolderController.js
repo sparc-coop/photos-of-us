@@ -21,14 +21,6 @@
         })
     }
 
-    $scope.renameFolderModal = () => {
-        $mdDialog.show({
-            templateUrl: '/Photographer/EditFolderModal',
-            controller: 'FolderCtrl',
-            clickOutsideToClose: true,
-        })
-    }
-
     $scope.addFolder = function (folderName) {
         folderApi.add(folderName)
             .then(function (x) {
