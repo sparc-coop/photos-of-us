@@ -132,14 +132,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         })
     }
 
-    $scope.renameFolderModal = () => {
-        $mdDialog.show({
-            templateUrl: '/Photographer/EditFolderModal',
-            controller: 'FolderCtrl',
-            clickOutsideToClose: true,
-        })
-    }
-
     $scope.addFolder = function (folderName) {
         folderApi.add(folderName)
             .then(function (x) {
@@ -1000,15 +992,15 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
 angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter, folder) {
 
     $scope.close = () => $mdDialog.hide();
-    $scope.folder = folder;
+    $scope.folderID = folder;
 
     $scope.tags = [];
 
     $scope.test = () => {
-        console.log("-->", $scope.folder);
+ 
         $http.get('/api/Photo/GetFolders').then(x => {
             //photo filter by folder or code?
-            $scope.folder = x.data.filter(fold => fold.Id === folder)[0];
+            $scope.folder = x.data.filter(fold => fold.Id === $scope.folderID)[0];
             $scope.folderName = $scope.folder.Name;
             $scope.num = $scope.folder.Photos.length;
 
@@ -1033,7 +1025,9 @@ angular.module('app').controller('BulkEditController', function ($scope, $http, 
         //    $scope.folder.Photos.Tags.push(tags);
         //});
 
-        //$http.put('/api/Photo/' + folder, folder).then(res => console.log(res));
+        $http.post(`/api/Photo/${folder}`, $scope.folder).then(res => {
+            console.log("test?", res)
+        }).catch(err => console.log(err));
         console.log($scope.folder);
         console.log($scope.tags);
     }
