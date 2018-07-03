@@ -49,6 +49,11 @@ namespace PhotosOfUs.Web.Controllers
             model.PhotographerId = photographerId;
             model.Name = User.Identity.Name;
 
+            var test = _context.Photo.Include(x=>x.PhotoTag).Where(x=>x.Id == 57).First();
+            
+
+            var tags2 = _context.PhotoTag.Include(x=>x.Tag).Where(x => x.PhotoId == 57).ToList();
+
             return View(model);
         }
 

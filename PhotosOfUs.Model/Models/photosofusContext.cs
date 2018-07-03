@@ -20,6 +20,7 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<PrintType> PrintType { get; set; }
         public virtual DbSet<PrintPrice> PrintPrice { get; set; }
         public virtual DbSet<Tag> Tag { get; set; }
+        public virtual DbSet<PhotoTag> PhotoTag { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
@@ -190,6 +191,8 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Photo>(entity =>
             {
+                entity.HasKey(x => x.Id);
+
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(30)
@@ -319,10 +322,26 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Tag>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("Id");
+                entity.HasKey(x => x.Id);
 
-                entity.Property(e => e.TagName).HasColumnName("TagName");
+                entity.Property(e => e.Name).IsRequired();
             });
+
+            modelBuilder.Entity<PhotoTag>(entity =>
+            {
+                entity.HasKey(x => new { x.PhotoId, x.TagId });
+                entity.Property(e => e.RegisterDate).HasColumnType("datetime");
+
+                entity.HasOne(x => x.Photo)
+                    .WithMany(x => x.PhotoTag)
+                    .HasForeignKey(x => x.PhotoId);
+
+                entity.HasOne(x => x.Tag)
+                    .WithMany(x => x.PhotoTag)
+                    .HasForeignKey(x => x.TagId);
+            });
+
+            
         }
     }
 }
