@@ -3,18 +3,20 @@
     ViewData["Title"] = "Order History";
 }
 
-<div class="order-history">
+<div class="order-history" ng-controller="CheckoutCtrl">
     <h1 class="header-large">Order History</h1>
     <div class="divider"></div>
 
+    <input placeholder="Search Order History by Order ID" ng-model="search"/>
+
     @foreach (var order in Model)
     {
-        <div>@order.OrderDate.ToShortDateString()</div>
-        @*@foreach (var orderItem in order.OrderDetail)
-        {
-            <div>@orderItem.Photo.Name</div>
-            <div>@orderItem.Photo.Photographer.DisplayName</div>
+        <div ng-init="getOrderDetails(@order.Id)">
+            <div class="order-details">
 
-        }*@
+            </div>
+            <div>@order.OrderDate.ToShortDateString()</div>
+            <div></div>
+        </div>        
     }
 </div>
