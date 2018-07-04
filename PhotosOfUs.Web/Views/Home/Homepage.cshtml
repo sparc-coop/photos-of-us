@@ -43,10 +43,10 @@
                     Storing, sharing, and selling photos should be the easy part. 
                     Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
                 </div>
-                <div class="invite">
-                    <input placeholder="Your email address" />
-                    <div class="button--invite">Send me an invite</div>
-                </div>
+                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                    <input placeholder="Your email address" name="FromEmail"/>
+                    <button type="submit" class="button--invite">Send me an invite</button>
+                </form>
             </div>
         </div>
         <div class="section2">
@@ -93,10 +93,10 @@
                 <div class="content__subinfo">
                     Keep your eyes peeled! We’re launching soon.
                 </div>
-                <div class="invite">
-                    <input placeholder="Your email address" />
-                    <div class="button--invite">Send me an invite</div>
-                </div>
+                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                    <input placeholder="Your email address" name="FromEmail" />
+                    <button type="submit" class="button--invite">Send me an invite</button>
+                </form>
                 <div class="social">
                     <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
                     <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>
