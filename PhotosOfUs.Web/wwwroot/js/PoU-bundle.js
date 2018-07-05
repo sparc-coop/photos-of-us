@@ -1025,9 +1025,10 @@ angular.module('app').controller('BulkEditController', function ($scope, $http, 
         //    $scope.folder.Photos.Tags.push(tags);
         //});
 
-        $http.post(`/api/Photo/${folder}`, $scope.folder).then(res => {
-            console.log("test?", res)
-        }).catch(err => console.log(err));
+        //$http.post(`/api/Photo/${folder}`, $scope.folder).then(res => {
+        //    console.log("test?", res)
+        //}).catch(err => console.log(err));
+
         console.log($scope.folder);
         console.log($scope.tags);
     }
