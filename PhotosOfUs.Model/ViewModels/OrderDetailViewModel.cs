@@ -16,7 +16,7 @@ namespace PhotosOfUs.Model.ViewModels
 
         //public Order Order { get; set; }
         public Photo Photo { get; set; }
-        //public PrintType PrintType { get; set; }
+        public PrintType PrintType { get; set; }
 
         public static OrderDetailViewModel ToViewModel(OrderDetail orderDetail)
         {
@@ -29,6 +29,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.PrintTypeId = orderDetail.PrintTypeId;
             viewModel.UnitPrice = orderDetail.UnitPrice;
             viewModel.Photo = orderDetail.Photo;
+            viewModel.PrintType = orderDetail.PrintType;
 
             return viewModel;
         }

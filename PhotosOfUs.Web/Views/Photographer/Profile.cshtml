@@ -7,7 +7,7 @@
 @section ProfileImageBackdrop {
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
-<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-init="getUser()">
+<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl">
     <div class="g-row">
         <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
             <div class="photographer-info">
@@ -46,7 +46,7 @@
             </div>
             @if(User.Identity.IsAuthenticated)
             {
-            <div class="gallery-upload-container" ng-if="'@Model.PhotographerId' == user.Id" ng-cloak>
+            <div class="gallery-upload-container" ng-init="getUser()" ng-if="'@Model.PhotographerId' == user.Id" ng-cloak>
                 <a href="#" ng-click="openUpload()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Click here to upload</span></a>
             </div>
             }

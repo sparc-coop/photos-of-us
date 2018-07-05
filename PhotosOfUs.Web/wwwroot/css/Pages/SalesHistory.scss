@@ -1,4 +1,6 @@
-﻿.photographer-sales-history {
+﻿@import '../variables.scss';
+
+.photographer-sales-history {
 
     select {
         color: #43C6BA;
@@ -78,5 +80,80 @@
                 color: white;
             }
         }
+    }
+}
+.order-history {
+    .header--row {
+        display: flex;
+
+        > div {
+            padding: 20px 10px;
+            width: 150px;
+        }
+    }
+
+    .order--row {
+        display: flex;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+
+        > div {
+            padding: 18px 10px;
+            width: 150px;
+        }
+
+        .arrow {
+            transform: rotate(90deg);
+            transition: 0.5s;
+            position: absolute;
+            right: 20px;
+            top: 14px;
+            font-size: 26px;
+            outline: none;
+        }
+
+        .arrow-clicked {
+            transform: rotate(-90deg);
+            transition: 0.5s;
+        }
+    }
+
+    .item--row {
+        display: flex;
+
+        > div {
+            padding: 10px;
+            width: 150px;
+        }
+    }
+
+    .search {
+        height: 32px;
+        border-radius: 15px;
+        border: 1px solid $primary;
+        width: 300px;
+        padding: 0 5%;
+        font-family: 'Dosis';
+        font-size: 16px;
+        outline: none;
+        margin-bottom: 20px;
+
+        &::-moz-placeholder {
+            color: $primary;
+        }
+
+        &:-ms-input-placeholder {
+            color: $primary;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $primary;
+        }
+    }
+
+    .order-info:nth-child(odd) {
+        background-color: rgba(255, 226, 97, 0.4);
+        border-radius: 4px;
     }
 }

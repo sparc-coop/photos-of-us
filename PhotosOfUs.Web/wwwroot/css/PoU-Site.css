@@ -1365,7 +1365,7 @@ td {
     .landing .header__social {
       display: inline;
       position: absolute;
-      top: 32px;
+      top: 42px;
       right: 96px; }
       .landing .header__social img {
         padding: 0 8px; }
@@ -1386,7 +1386,7 @@ td {
     .landing .section1 .content {
       margin-top: 154px; }
       .landing .section1 .content__subinfo {
-        padding: 10px 0 70px 0;
+        padding: 10px 10px 70px 10px;
         font-family: 'Open Sans';
         font-size: 24px;
         color: #FFFFFF;
@@ -1395,7 +1395,7 @@ td {
         max-width: 650px;
         margin: 0 auto; }
       .landing .section1 .content .invite {
-        width: 507px;
+        max-width: 507px;
         height: 60px;
         background-color: #FFFFFF;
         border-radius: 8px;
@@ -1433,7 +1433,7 @@ td {
         color: #194952;
         letter-spacing: 0.25px;
         text-align: center;
-        width: 570px;
+        max-width: 570px;
         margin: 0 auto; }
       .landing .section2 .content__text {
         display: flex;
@@ -1478,10 +1478,10 @@ td {
         color: #194952;
         letter-spacing: 0.25px;
         text-align: center;
-        width: 570px;
+        max-width: 570px;
         margin: 0 auto; }
       .landing .section3 .content .invite {
-        width: 507px;
+        max-width: 507px;
         height: 60px;
         background-color: #FFFFFF;
         border-radius: 8px;
@@ -1529,6 +1529,28 @@ td {
     line-height: 38px;
     cursor: pointer;
     outline: none; }
+
+@media screen and (max-width: 450px) {
+  .landing .header__logo {
+    left: 30px; }
+  .landing .header__social {
+    right: 30px; }
+  .landing .section1 .content .slogan {
+    font-size: 63px; }
+  .landing .section2 .content .slogan {
+    padding-top: 20px; }
+  .landing .section2 .content__text {
+    flex-wrap: wrap; }
+  .landing .section2 .content .copy {
+    font-size: 14px; }
+  .landing .section2 .content__container {
+    padding-top: 20px; }
+  .landing .section3 .content .social {
+    padding-top: 27px; } }
+
+@media screen and (max-width: 450px) {
+  .landing .section2 .img--showcase {
+    display: none; } }
 
 /* main */
 md-dialog {
@@ -1916,6 +1938,17 @@ canvas {
     position: absolute;
     bottom: 4px;
     left: 0; }
+  .photoPage__image-container ul {
+    display: flex;
+    margin: 0 auto;
+    padding: 10px 0; }
+    .photoPage__image-container ul li {
+      list-style: none;
+      padding: 0 15px; }
+      .photoPage__image-container ul li a {
+        text-decoration: none;
+        font-weight: bold;
+        color: #43C6BA; }
 
 .thumbnail {
   width: 100px;
@@ -2332,6 +2365,59 @@ canvas {
     .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
       background-color: #43c6ba;
       color: white; }
+
+.order-history .header--row {
+  display: flex; }
+  .order-history .header--row > div {
+    padding: 20px 10px;
+    width: 150px; }
+
+.order-history .order--row {
+  display: flex;
+  cursor: pointer;
+  outline: none;
+  position: relative; }
+  .order-history .order--row > div {
+    padding: 18px 10px;
+    width: 150px; }
+  .order-history .order--row .arrow {
+    transform: rotate(90deg);
+    transition: 0.5s;
+    position: absolute;
+    right: 20px;
+    top: 14px;
+    font-size: 26px;
+    outline: none; }
+  .order-history .order--row .arrow-clicked {
+    transform: rotate(-90deg);
+    transition: 0.5s; }
+
+.order-history .item--row {
+  display: flex; }
+  .order-history .item--row > div {
+    padding: 10px;
+    width: 150px; }
+
+.order-history .search {
+  height: 32px;
+  border-radius: 15px;
+  border: 1px solid #43C6BA;
+  width: 300px;
+  padding: 0 5%;
+  font-family: 'Dosis';
+  font-size: 16px;
+  outline: none;
+  margin-bottom: 20px; }
+  .order-history .search::-moz-placeholder {
+    color: #43C6BA; }
+  .order-history .search:-ms-input-placeholder {
+    color: #43C6BA; }
+  .order-history .search::-webkit-input-placeholder {
+    color: #43C6BA; }
+
+.order-history .order-info:nth-child(odd) {
+  background-color: rgba(255, 226, 97, 0.4);
+  border-radius: 4px; }
 
 .account-settings .container {
   display: flex; }

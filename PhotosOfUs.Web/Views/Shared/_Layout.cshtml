@@ -33,7 +33,6 @@
                 @*todo and is photographer*@
                 <div class="nav--right">
                     <img src="~/images/icons/alert.png" alt="notifications" />
-                    <img src="~/images/icons/add.png" alt="add" />
                     <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                     <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                 </div>
@@ -52,7 +51,6 @@
             <nav class="nav" ng-if="user.IsPhotographer != true">
                 <a href="/Customer" class="logo"><img src="~/images/logo.png" /></a>
                 <div class="nav--right">
-                    <img src="~/images/icons/alert.png" alt="notifications" />
                     <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" alt="cart" /></div>
                     <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                     <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
@@ -132,11 +130,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.7.2/angular-touch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.2/ui-bootstrap-tpls.min.js"></script>
 
     @*<environment include="Development">*@
     

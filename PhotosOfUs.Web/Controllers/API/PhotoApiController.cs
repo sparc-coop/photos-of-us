@@ -32,6 +32,14 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetCodePhotos/{code}")]
+        public List<PhotoViewModel> GetCodePhotos(string code)
+        {
+            List<Photo> photo = new PhotoRepository(_context).GetPhotosByCode(code);
+            return PhotoViewModel.ToViewModel(photo).ToList();
+        }
+
+        [HttpGet]
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
@@ -87,17 +95,5 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return Ok();
         }
-
-        //public void DownloadPhotos(List<OrderDetail> items)
-        //{
-        //    string pathUser = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        //    string pathDownload = Path.Combine(pathUser, "Downloads\\");
-
-        //    foreach (var item in items)
-        //    {
-                   
-        //    }
-
-        //}
     }
 }

@@ -4,10 +4,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Threading.Tasks;
 using PhotosOfUs.Model.Models;
-using System.Security.Claims;
-using PhotosOfUs.Model.Repositories;
+using Microsoft.AspNetCore.Cors;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -32,15 +30,6 @@ namespace PhotosOfUs.Web.Controllers
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);     
         }
-
-        //[HttpGet]
-        //public IActionResult SignInCustomer()
-        //{
-        //    var redirectUrl = Url.Action(nameof(PhotographerController.Index), "Customer");
-        //    return Challenge(
-        //        new AuthenticationProperties { RedirectUri = redirectUrl },
-        //        OpenIdConnectDefaults.AuthenticationScheme);
-        //}
 
         [HttpGet]
         public IActionResult ResetPassword()

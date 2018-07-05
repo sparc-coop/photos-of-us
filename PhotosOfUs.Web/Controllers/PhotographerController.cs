@@ -15,8 +15,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Diagnostics;
-
 
 namespace PhotosOfUs.Web.Controllers
 {

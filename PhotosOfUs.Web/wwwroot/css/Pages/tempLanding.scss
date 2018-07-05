@@ -29,7 +29,7 @@
         &__social {
             display: inline;
             position: absolute;
-            top: 32px;
+            top: 42px;
             right: 96px;
 
             img {
@@ -61,7 +61,7 @@
             margin-top: 154px;
 
             &__subinfo {
-                padding: 10px 0 70px 0;
+                padding: 10px 10px 70px 10px;
                 font-family: 'Open Sans';
                 font-size: 24px;
                 color: $white;
@@ -72,7 +72,7 @@
             }
 
             .invite {
-                width: 507px;
+                max-width: 507px;
                 height: 60px;
                 background-color: $white;
                 border-radius: 8px;
@@ -114,7 +114,7 @@
 
         .content {
             margin-top: 0px;
-            //margin-bottom: 100px;
+            
             &__subinfo {
                 padding: 10px 0 70px 0;
                 font-family: 'Open Sans';
@@ -122,7 +122,7 @@
                 color: $dark;
                 letter-spacing: 0.25px;
                 text-align: center;
-                width: 570px;
+                max-width: 570px;
                 margin: 0 auto;
             }
 
@@ -185,12 +185,12 @@
                 color: $dark;
                 letter-spacing: 0.25px;
                 text-align: center;
-                width: 570px;
+                max-width: 570px;
                 margin: 0 auto;
             }
 
             .invite {
-                width: 507px;
+                max-width: 507px;
                 height: 60px;
                 background-color: $white;
                 border-radius: 8px;
@@ -254,5 +254,66 @@
         line-height: 38px;
         cursor: pointer;
         outline: none;
+    }
+}
+@media screen and (max-width: 450px)
+{
+    .landing {
+        .header {
+            &__logo {
+                left: 30px;
+            }
+
+            &__social {
+                right: 30px;
+            }
+        }
+
+        .section1{
+            .content{
+                .slogan{
+                    font-size: 63px;
+                }
+            }
+        }
+
+        .section2 {
+            .content {
+
+                .slogan{
+                    padding-top: 20px;
+                }
+
+                &__text {
+                    flex-wrap: wrap;
+                }
+
+                .copy {
+                    font-size: 14px;
+                }
+
+                &__container {
+                    padding-top: 20px;
+                }
+            }
+        }
+
+        .section3 {
+            .content {
+                .social {
+                    padding-top: 27px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .landing {
+        .section2 {
+            .img--showcase {
+                display: none;
+            }
+        }
     }
 }
