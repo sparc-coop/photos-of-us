@@ -223,7 +223,6 @@ namespace PhotosOfUs.Web.Controllers
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            //photoCode = "34234";
 
             if (string.IsNullOrEmpty(photoCode))
             {
@@ -273,12 +272,25 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile(int id)
         {
-            //var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //var photographerId = _context.UserIdentity.Find(azureId).UserID;
             var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
+        }
+
+        public ActionResult SalesHistory(int id)
+        {
+            var orderItems = new OrderRepository(_context).GetPhotographerOrderDetails(id);
+            List<Order> orders = new List<Order>();
+            foreach(var order in orderItems.GroupBy(x => x.OrderId))
+            {
+                orders.Add(new OrderRepository(_context).GetOrder(order.Key));
+            }
+
+            //var orders = new OrderRepository(_context).GetOrders(id);
+            //SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+            //return View(salesHistory);
+            return View(OrderViewModel.ToViewModel(orders).ToList());
         }
 
         //[Authorize]

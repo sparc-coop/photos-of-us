@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter', 'ui.bootstrap']);
 
 app.factory('photoApi', ['$http', '$rootScope', function ($http, $rootScope) {
     var apiRoot = '/api/Photo';
@@ -156,10 +156,27 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         }
     }
 
+    $scope.orderDetailsList = [];
+    $scope.orderTotalList = [];
+
     $scope.getOrderDetails = function (orderId) {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(function (x) {
             $scope.orderDetails = x.data;
-            console.log($scope.orderDetails);
+            angular.forEach($scope.orderDetails, function (value, key) {
+                $scope.orderDetailsList.push(value);
+            });
+        });
+        $scope.getOrderTotal(orderId);
+        console.log($scope.orderDetailsList);
+    };
+
+    $scope.getOrderTotal = function (orderId) {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(function (x) {
+            $scope.orderTotal = x.data;
+            $scope.orderTotalList.push({
+                id: orderId,
+                total: $scope.orderTotal
+            });
         });
     };
 
@@ -183,18 +200,14 @@ app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'user
 
     $scope.orderItems = [];
 
-    $scope.links = ["https://photosofus.blob.core.windows.net/photos/2/40/IMG_014820180625211943.JPG", "https://photosofus.blob.core.windows.net/photos/2/40/DSC_022220180625214453.JPG"];
-
     $scope.getOrderItems = function (orderId) {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(function (x) {
             $scope.orderItems.push(x.data);
         });
-        console.log($scope.orderItems);
     };
 
     $scope.bulkDownload = function (userId) {
         $http.post('/api/Photo/GetForDownload/' + userId);
-        console.log("test");
     };
 }]);
 app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', function ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) {
@@ -323,6 +336,12 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', function ($scope, $
         });
         angular.forEach($scope.orderDetails, function (value, key) {
             $scope.orderTotal + value.UnitPrice;
+        });
+    };
+
+    $scope.getOrderTotal = function (orderId) {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(function (x) {
+            $scope.orderTotal = x.data;
         });
     };
 
@@ -577,6 +596,10 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = function (photoId) {
+        $http.get('/Session/SignIn/').then($window.location.href = '/Photo/Purchase/' + photoId);
+    };
+
     $scope.openUpload = function (folderId) {
         $mdDialog.show({
             templateUrl: '/Photographer/Upload',
@@ -588,6 +611,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.getPhotoCode = function () {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 6;
+
+    $scope.getPhotosByCode = function (code) {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(function (x) {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = function (id) {

@@ -230,7 +230,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-                console.log(JSON.stringify(x.data));
             })
     }
 
@@ -302,7 +301,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
-        console.log('findIndex ' + index);
         $scope.folders[index] = folder;
 
     });
@@ -311,7 +309,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
-        console.log('findIndex ' + index);
         $scope.folders.splice(index,1);
 
     });
@@ -937,8 +934,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
         
         if (response !== "") {
             fileItem.formData[0].photoCode = response;

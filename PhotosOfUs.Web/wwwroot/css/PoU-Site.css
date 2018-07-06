@@ -2367,7 +2367,8 @@ canvas {
       color: white; }
 
 .order-history .header--row {
-  display: flex; }
+  display: flex;
+  padding: 0 10px; }
   .order-history .header--row > div {
     padding: 20px 10px;
     width: 150px; }
@@ -2376,7 +2377,8 @@ canvas {
   display: flex;
   cursor: pointer;
   outline: none;
-  position: relative; }
+  position: relative;
+  padding: 0 10px; }
   .order-history .order--row > div {
     padding: 18px 10px;
     width: 150px; }
@@ -2392,8 +2394,22 @@ canvas {
     transform: rotate(-90deg);
     transition: 0.5s; }
 
+.order-history .order-details .detail-divider {
+  border-top: 1.5px solid #43C6BA;
+  width: 90%;
+  padding: 15px 0 5px 0;
+  margin: auto; }
+
+.order-history .order-details .detail-header {
+  display: flex;
+  padding: 5px 10px; }
+  .order-history .order-details .detail-header > div {
+    width: 150px;
+    padding: 10px; }
+
 .order-history .item--row {
-  display: flex; }
+  display: flex;
+  padding: 3px 10px; }
   .order-history .item--row > div {
     padding: 10px;
     width: 150px; }

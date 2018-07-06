@@ -85,6 +85,7 @@
 .order-history {
     .header--row {
         display: flex;
+        padding: 0 10px;
 
         > div {
             padding: 20px 10px;
@@ -97,6 +98,7 @@
         cursor: pointer;
         outline: none;
         position: relative;
+        padding: 0 10px;
 
         > div {
             padding: 18px 10px;
@@ -119,8 +121,28 @@
         }
     }
 
+    .order-details {
+        .detail-divider {
+            border-top: 1.5px solid $primary;
+            width: 90%;
+            padding: 15px 0 5px 0;
+            margin: auto;
+        }
+
+        .detail-header {
+            display: flex;
+            padding: 5px 10px;
+
+            > div {
+                width: 150px;
+                padding: 10px;
+            }
+        }
+    }
+
     .item--row {
         display: flex;
+        padding: 3px 10px;
 
         > div {
             padding: 10px;
