@@ -52,6 +52,11 @@ namespace PhotosOfUs.Model.Repositories
             _context.SaveChanges();
         }
 
+        public List<Tag> GetAllTags()
+        {
+            return _context.Tag.ToList();
+        }
+
         public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
         {
             return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
