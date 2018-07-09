@@ -1,53 +1,60 @@
-﻿@model SalesHistoryViewModel
+﻿@model List<OrderViewModel>
 @{
     ViewData["Title"] = "Sales History";
 }
 
-<div class="photographer-dashboard--wrapper photographer-sales-history">
-    <h2 class="header-large">Good morning, @Model.UserDisplayName</h2>
+<div class="photographer-dashboard--wrapper photographer-sales-history" ng-controller="CheckoutCtrl">
+    @*<h2 class="header-large">Hello, @Model.UserDisplayName</h2>*@
     <div class="yellow-background line--small"></div>
 
     <div class="flex-box filters">
-        <form action="" method="get" class="search-form">
+        @foreach(var order in Model)
+        {
+            <div ng-init="getOrderDetails(@order.Id)" ng-repeat="order in orderDetailsList">
+                {{order.OrderDate}}
+            </div>
+
+        }
+        @*<form action="" method="get" class="search-form">
             <div class="search-title">
                 <h4>Search Orders</h4>
             </div>
-            @*
-        <input type="number" name="Total" />
-            *@
+
+             <input type="number" name="Total" />
+
             <div class="search-inputs">
                 @{
-                    var q = ViewContext.HttpContext.Request.Query;
-                    // column 1
-                    var firstName = q.Where(x => x.Key == "FirstName").FirstOrDefault().Value.ToString();
+            var q = ViewContext.HttpContext.Request.Query;
+            // column 1
+            var firstName = q.Where(x => x.Key == "FirstName").FirstOrDefault().Value.ToString();
 
-                    var lastName = q.Where(x => x.Key == "LastName").FirstOrDefault().Value.ToString();
+            var lastName = q.Where(x => x.Key == "LastName").FirstOrDefault().Value.ToString();
 
-                    var email= q.Where(x => x.Key == "Email").FirstOrDefault().Value.ToString();
+            var email = q.Where(x => x.Key == "Email").FirstOrDefault().Value.ToString();
 
-                    var isPhotographer = q.Where(x => x.Key == "IsPhotographer").FirstOrDefault().Value.ToString();
+            var isPhotographer = q.Where(x => x.Key == "IsPhotographer").FirstOrDefault().Value.ToString();
 
-                    //column 2
-                    var photoName = q.Where(x => x.Key == "PhotoName").FirstOrDefault().Value.ToString();
+            //column 2
+            var photoName = q.Where(x => x.Key == "PhotoName").FirstOrDefault().Value.ToString();
 
-                    var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
+            var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
 
-                    var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").FirstOrDefault().Value.ToString();
-                    if (dateThirtyDaysAgo.Length == 0)
-                    {
-                        dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
-                    }
+            var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").FirstOrDefault().Value.ToString();
+            if (dateThirtyDaysAgo.Length == 0)
+            {
+                dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
+            }
 
-                    var dateNow = q.Where(x => x.Key == "OrderDateLatest").FirstOrDefault().Value.ToString();
-                    if (dateNow.Length == 0)
-                    {
-                        dateNow = DateTime.Now.ToString("yyyy-MM-dd");
-                    }
+            var dateNow = q.Where(x => x.Key == "OrderDateLatest").FirstOrDefault().Value.ToString();
+            if (dateNow.Length == 0)
+            {
+                dateNow = DateTime.Now.ToString("yyyy-MM-dd");
+            }
 
-                    var displayName = q.Where(x => x.Key == "DisplayName").FirstOrDefault().Value.ToString();
+            var displayName = q.Where(x => x.Key == "DisplayName").FirstOrDefault().Value.ToString();
 
-                    var quantityMin = q.Where(x => x.Key == "QuantityMin").FirstOrDefault().Value.ToString();
-                    var quantityMax = q.Where(x => x.Key == "QuantityMax").FirstOrDefault().Value.ToString();
+            var quantityMin = q.Where(x => x.Key == "QuantityMin").FirstOrDefault().Value.ToString();
+            var quantityMax = q.Where(x => x.Key == "QuantityMax").FirstOrDefault().Value.ToString();
                 }
                 <div class="column">
                     <div class="data">
@@ -64,13 +71,13 @@
                     </div>
                     <div class="data">
                         <label>Is Photographer?</label>
-                        @{ 
-                            var isPhotographerList = new SelectList(new List<object>
-                                {
-                                    new { Value = "", Text = "---" },
-                                    new { Value = "false", Text = "No" },
-                                    new { Value = "true", Text = "Yes" }
-                                }, "Value", "Text", isPhotographer);
+                        @{
+                    var isPhotographerList = new SelectList(new List<object>
+                                                                        {
+                                                                            new { Value = "", Text = "---" },
+                                                                            new { Value = "false", Text = "No" },
+                                                                            new { Value = "true", Text = "Yes" }
+                                                                        }, "Value", "Text", isPhotographer);
                         }
                         @Html.DropDownList("IsPhotographer", isPhotographerList)
                     </div>
@@ -82,13 +89,13 @@
                     </div>
                     <div class="data">
                         <label>Order Status</label>
-                        @{ 
-                            var orderStatusList = new SelectList(new List<object>
-                                {
-                                    new { Value = "", Text = "---" },
-                                    new { Value = "Payment Pending", Text = "Payment Pending" },
-                                    new { Value = "Order Complete", Text = "Order Complete" }
-                                }, "Value", "Text", orderStatus);
+                        @{
+                    var orderStatusList = new SelectList(new List<object>
+                                                                        {
+                                                                            new { Value = "", Text = "---" },
+                                                                            new { Value = "Payment Pending", Text = "Payment Pending" },
+                                                                            new { Value = "Order Complete", Text = "Order Complete" }
+                                                                        }, "Value", "Text", orderStatus);
                         }
                         @Html.DropDownList("OrderStatus", orderStatusList)
                     </div>
@@ -121,7 +128,7 @@
                     <button class="input--light-blue">Submit</button>
                 </div>
             </div>
-        </form>
+        </form>*@
     </div>
 
 
@@ -138,7 +145,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.Orders)
+                @*@foreach (var item in Model.Orders)
                 {
                     <tr>
                         <td>@item.PhotoName</td>
@@ -165,25 +172,25 @@
                             @item.OrderStatus
                         </td>
                     </tr>
-                }
+                }*@
 
             </tbody>
         </table>
     </div>
-
-    <div class="flex-box total">
-        <div class="total-counter">
-            <h4>Total Sales</h4>
-            <h3>@Model.TotalSales</h3>
+    @*
+        <div class="flex-box total">
+            <div class="total-counter">
+                <h4>Total Sales</h4>
+                <h3>@Model.TotalSales</h3>
+            </div>
+            <div class="total-counter">
+                <h4>Total Made</h4>
+                <h3>@string.Format("{0:C}", Model.TotalMade)</h3>
+            </div>
+            <div class="total-counter">
+                <h4>Total Earned</h4>
+                <h3>@string.Format("{0:C}", Model.TotalEarned)</h3>
+            </div>
         </div>
-        <div class="total-counter">
-            <h4>Total Made</h4>
-            <h3>@string.Format("{0:C}", Model.TotalMade)</h3>
-        </div>
-        <div class="total-counter">
-            <h4>Total Earned</h4>
-            <h3>@string.Format("{0:C}", Model.TotalEarned)</h3>
-        </div>
-    </div>
-
+    *@
 </div>

@@ -62,8 +62,8 @@
                                 <div class="col-md-4">
                                     <p class="photo-code">Photo Code</p>
                                     @*<textarea msd-elastic class="code" spellcheck="false" ng-keypress="photoCodeValidation($event, item)" ng-model="item.file.photoCode" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>*@
-                                    <div ng-if="item.code != ''" class="code">{{item.code}}</div>
-                                    <div ng-if="item.code == ''" class="code">XXXXXXX</div>
+                                    <div ng-if="item.code" class="code">{{item.code}}</div>
+                                    <div ng-if="!item.code" class="code">XXXXXXX</div>
                                 </div>
                                 <div>
                                     <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>

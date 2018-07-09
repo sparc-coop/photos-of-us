@@ -9,7 +9,6 @@
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-                console.log(JSON.stringify(x.data));
             })
     }
 
@@ -81,7 +80,6 @@
 
         console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
-        console.log('findIndex ' + index);
         $scope.folders[index] = folder;
 
     });
@@ -90,7 +88,6 @@
 
         console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
-        console.log('findIndex ' + index);
         $scope.folders.splice(index,1);
 
     });

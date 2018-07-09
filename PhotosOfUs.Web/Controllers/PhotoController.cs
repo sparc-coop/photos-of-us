@@ -24,7 +24,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             _context = context;
         }
-        // GET: Photographer
+
         public ActionResult Purchase(int id)
         {
             var photo = new PhotoRepository(_context).GetPhoto(id);

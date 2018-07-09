@@ -7,16 +7,39 @@
     <h1 class="header-large">Order History</h1>
     <div class="divider"></div>
 
-    <input placeholder="Search Order History by Order ID" ng-model="search"/>
-
+    <input placeholder="Search order history by order id" ng-model="search" class="search"/>
+    <div class="header--row">
+        <div>ID</div>
+        <div>Date</div>
+        <div>Status</div>
+        <div>Total</div>
+    </div>
     @foreach (var order in Model)
     {
-        <div ng-init="getOrderDetails(@order.Id)">
-            <div class="order-details">
-
-            </div>
+    <div ng-if="'@order.Id'.includes(search)|| (search == null || search == '')" class="order-info" ng-cloak>
+        <div ng-init="getOrderDetails(@order.Id)" class="order--row" ng-click="showDetails = !showDetails">
+            <div>@order.Id</div>
             <div>@order.OrderDate.ToShortDateString()</div>
-            <div></div>
-        </div>        
+            <div>@order.OrderStatus</div>
+            <div ng-repeat="order in orderTotalList" ng-if="order.id == @order.Id" ng-cloak>${{order.total}}</div>
+            <i class="material-icons arrow" ng-class="{'arrow-clicked': showDetails}">chevron_right</i>
+        </div>
+        <div ng-show="showDetails" class="order-details">
+            <div class="detail-divider"></div>
+            <div class="detail-header">
+                <div>Image Name</div>
+                <div>Quantity</div>
+                <div>Print Type</div>
+                <div>Unit Price</div>
+            </div>
+            <div ng-repeat="item in orderDetailsList" ng-if="item.OrderId == @order.Id" class="item--row">
+                <div>{{item.Photo.Name}}</div>
+                <div>{{item.Quantity}}</div>
+                <div>{{item.PrintType.Type}}</div>
+                <div>${{item.UnitPrice | number: 2}}</div>
+            </div>
+        </div>
+    </div>
+
     }
 </div>

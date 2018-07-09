@@ -89,10 +89,30 @@
         }
     }
 
+    $scope.orderDetailsList = [];
+    $scope.orderTotalList = [];
+
     $scope.getOrderDetails = (orderId) => {
-        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
-            console.log($scope.orderDetails);
+            angular.forEach($scope.orderDetails, function (value, key) {
+                $scope.orderDetailsList.push(value);
+            });
+           
+        });
+        $scope.getOrderTotal(orderId);
+        console.log($scope.orderDetailsList);
+    };
+
+    $scope.getOrderTotal = (orderId) => {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+            $scope.orderTotal = x.data;
+            $scope.orderTotalList.push(
+                {
+                    id: orderId,
+                    total: $scope.orderTotal
+                }
+            );
         });
     };
 

@@ -14,6 +14,6 @@ namespace PhotosOfUs.Model.Models
 
         //public Order Order { get; set; }
         public Photo Photo { get; set; }
-        //public PrintType PrintType { get; set; }
+        public PrintType PrintType { get; set; }
     }
 }

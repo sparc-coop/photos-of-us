@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter', 'ui.bootstrap']);
 
 
 
@@ -159,10 +159,30 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         }
     }
 
+    $scope.orderDetailsList = [];
+    $scope.orderTotalList = [];
+
     $scope.getOrderDetails = (orderId) => {
-        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
-            console.log($scope.orderDetails);
+            angular.forEach($scope.orderDetails, function (value, key) {
+                $scope.orderDetailsList.push(value);
+            });
+           
+        });
+        $scope.getOrderTotal(orderId);
+        console.log($scope.orderDetailsList);
+    };
+
+    $scope.getOrderTotal = (orderId) => {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+            $scope.orderTotal = x.data;
+            $scope.orderTotalList.push(
+                {
+                    id: orderId,
+                    total: $scope.orderTotal
+                }
+            );
         });
     };
 
@@ -210,7 +230,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-                console.log(JSON.stringify(x.data));
             })
     }
 
@@ -282,7 +301,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
-        console.log('findIndex ' + index);
         $scope.folders[index] = folder;
 
     });
@@ -291,7 +309,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
-        console.log('findIndex ' + index);
         $scope.folders.splice(index,1);
 
     });
@@ -590,6 +607,12 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = (photoId) => {
+        $http.get('/Session/SignIn/').then(
+            $window.location.href = '/Photo/Purchase/' + photoId
+        );
+    };
+
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
             templateUrl: '/Photographer/Upload',
@@ -601,6 +624,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 6;
+
+    $scope.getPhotosByCode = (code) => {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = (id) => {
@@ -900,8 +934,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
         
         if (response !== "") {
             fileItem.formData[0].photoCode = response;
