@@ -307,16 +307,28 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Search()
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
 
             //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
             //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
             //var getalltags = new PhotoRepository(_context).GetAllTags();
 
-            return View(ProfileViewModel.ToViewModel(photos, photographer)); ;
+            return View(PhotoViewModel.ToViewModel(photos));
+        }
+
+        public ActionResult Results(string tagnames)
+        {
+            string[] tagarray = tagnames.Split(' ');
+
+            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tagarray);
+
+
+
+            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
+            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
+            //var getalltags = new PhotoRepository(_context).GetAllTags();
+
+            return View(PhotoViewModel.ToViewModel(photos)); ;
         }
 
         public ActionResult NewFolderModal()

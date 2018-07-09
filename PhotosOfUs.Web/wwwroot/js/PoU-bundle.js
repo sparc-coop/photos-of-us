@@ -904,13 +904,9 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         })
     }
 
-    $scope.tags = [
-        { text: 'Tag1' },
-        { text: 'Tag2' },
-        { text: 'Tag3' }
-    ];
+    $scope.tags = [];
 
-    $scope.loadedtags = [{ text: 'TagLoca' }];
+    $scope.loadedtags = [];
 
     //$scope.getPhotographer = (id) => {
     //    $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
@@ -918,15 +914,30 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     //    });
     //};
 
-    $scope.loadTags = function (query) {
+    $scope.loadTags = function () {
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
                 console.log(JSON.stringify(x.data));
             });
-        
-        return $scope.loadedtags;
     };
+
+    $scope.getSearchString = function (searchterms) {
+
+        var string = "";
+
+        searchterms.forEach(function (element, index) {
+            string += "+" + element.text;
+        });
+
+        return string;
+    };
+
+    $scope.searchPhotos = (searchterms) => {
+        $window.location.href = '/Photographer/Results?tagnames=Image' + $scope.getSearchString(searchterms);
+    };
+
+
 
     $scope.arrangePhotos = function () {
         var grid = document.querySelector('.grid');

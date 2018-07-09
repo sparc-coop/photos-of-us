@@ -18,11 +18,11 @@
 }
 
 
-    <div ng-controller="PhotographerCtrl" ng-init="loadTags();">
+    <div ng-controller="PhotographerCtrl">
         <div class="photographer-search-wrap">
             <div class="photographer-search">
                 <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
-                    <auto-complete source="loadedtags"></auto-complete>
+                    <auto-complete source="loadTags($query)"></auto-complete>
                     <button type="submit" ng-click="searchPhotos(tags)" class="photographer-searchButton">
                         <img src="~/images/icons/magnifier_white.png" />
                     </button>
@@ -34,8 +34,7 @@
             <tags-input ng-model="tags" add-on-paste="true">
                 <auto-complete source="loadTags($query)"></auto-complete>
             </tags-input>
-            @*<p>Model: {{tags}}</p>
-            <p>Model: {{loadedtags}}</p>*@
+            <p>Model: {{tags}}</p>
             <div>
                 <div class="grid">
                     <div class="grid-sizer"></div>

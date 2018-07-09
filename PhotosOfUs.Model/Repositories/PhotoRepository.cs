@@ -134,6 +134,43 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Where(x => x.PublicProfile).ToList();
         }
 
+        public List<Photo> GetPublicPhotos()
+        {
+            return _context.Photo.Where(x => x.PublicProfile).ToList();
+        }
+
+        //public List<SearchIndex> GetCases(List<int> citationIds)
+        //{
+        //    return Context.SearchIndexes.Where(x => citationIds.Contains(x.RecordID)).ToList();
+        //}
+
+        public List<Photo> GetPublicPhotosByTag(string[] tagarray)
+        {
+            var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
+
+            List<Tag> tags = _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
+
+            List<int> tagids = new List<int>();
+
+            foreach (Tag tag in tags)
+            {
+                tagids.Add(tag.Id);
+            }
+
+            List<PhotoTag> phototags = _context.PhotoTag.Where(x => tagids.Contains(x.TagId)).ToList();
+
+            List<int> ptids = new List<int>();
+
+            foreach (PhotoTag pt in phototags)
+            {
+                ptids.Add(pt.PhotoId);
+            }
+
+            List<Photo> photos = publicphotos.Where(x => ptids.Contains(x.Id)).ToList();
+
+            return photos;
+        }
+
         public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
