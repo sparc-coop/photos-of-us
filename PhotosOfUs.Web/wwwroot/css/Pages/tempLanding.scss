@@ -269,10 +269,24 @@
             }
         }
 
-        .section1{
-            .content{
-                .slogan{
+        .section1 {
+            .content {
+                .slogan {
                     font-size: 63px;
+                }
+
+                .invite {
+                    max-width: 90%;
+
+                    input {
+                        width: 42%;
+                    }
+
+                    button {
+                        width: 45%;
+                        font-size: 14px;
+                        font-size: 14px;
+                    }
                 }
             }
         }
@@ -280,7 +294,7 @@
         .section2 {
             .content {
 
-                .slogan{
+                .slogan {
                     padding-top: 20px;
                 }
 
@@ -302,6 +316,20 @@
             .content {
                 .social {
                     padding-top: 27px;
+                }
+
+                .invite {
+                    max-width: 90%;
+
+                    input {
+                        width: 42%;
+                    }
+
+                    button {
+                        width: 45%;
+                        font-size: 14px;
+                        font-size: 14px;
+                    }
                 }
             }
         }
