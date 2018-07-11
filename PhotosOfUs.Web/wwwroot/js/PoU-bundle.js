@@ -463,6 +463,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
+    $scope.checkFilter = (itemcode) => {
+        itemcode = itemcode + "";
+
+        if (itemcode.indexOf($scope.searchCode) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
@@ -936,8 +947,6 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     $scope.searchPhotos = (searchterms) => {
         $window.location.href = '/Photographer/Results?tagnames=Image' + $scope.getSearchString(searchterms);
     };
-
-
 
     $scope.arrangePhotos = function () {
         var grid = document.querySelector('.grid');

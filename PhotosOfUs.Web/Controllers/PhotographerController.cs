@@ -322,8 +322,6 @@ namespace PhotosOfUs.Web.Controllers
 
             var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tagarray);
 
-
-
             //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
             //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
             //var getalltags = new PhotoRepository(_context).GetAllTags();

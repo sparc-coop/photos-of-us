@@ -3,6 +3,17 @@
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
+    $scope.checkFilter = (itemcode) => {
+        itemcode = itemcode + "";
+
+        if (itemcode.indexOf($scope.searchCode) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
