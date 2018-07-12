@@ -1537,6 +1537,14 @@ td {
     right: 30px; }
   .landing .section1 .content .slogan {
     font-size: 63px; }
+  .landing .section1 .content .invite {
+    max-width: 90%; }
+    .landing .section1 .content .invite input, .landing .section1 .content .invite .form-input textarea, .form-input .landing .section1 .content .invite textarea {
+      width: 42%; }
+    .landing .section1 .content .invite button {
+      width: 45%;
+      font-size: 14px;
+      font-size: 14px; }
   .landing .section2 .content .slogan {
     padding-top: 20px; }
   .landing .section2 .content__text {
@@ -1546,7 +1554,15 @@ td {
   .landing .section2 .content__container {
     padding-top: 20px; }
   .landing .section3 .content .social {
-    padding-top: 27px; } }
+    padding-top: 27px; }
+  .landing .section3 .content .invite {
+    max-width: 90%; }
+    .landing .section3 .content .invite input, .landing .section3 .content .invite .form-input textarea, .form-input .landing .section3 .content .invite textarea {
+      width: 42%; }
+    .landing .section3 .content .invite button {
+      width: 45%;
+      font-size: 14px;
+      font-size: 14px; } }
 
 @media screen and (max-width: 450px) {
   .landing .section2 .img--showcase {
