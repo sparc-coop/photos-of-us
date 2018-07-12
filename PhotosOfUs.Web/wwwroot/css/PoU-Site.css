@@ -1961,6 +1961,12 @@ canvas {
 .photographer-search {
   width: 100%;
   position: relative; }
+  .photographer-search__title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 42px;
+    color: #194952;
+    letter-spacing: 0; }
 
 .photographer-searchTerm {
   float: left;
