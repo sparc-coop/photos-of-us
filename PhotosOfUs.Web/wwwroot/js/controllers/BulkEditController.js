@@ -5,7 +5,7 @@
 
     $scope.tags = [];
 
-    $scope.test = () => {
+    $scope.load = () => {
  
         $http.get('/api/Photo/GetFolders').then(x => {
             //photo filter by folder or code?
@@ -34,9 +34,9 @@
         //    $scope.folder.Photos.Tags.push(tags);
         //});
 
-        //$http.post(`/api/Photo/${folder}`, $scope.folder).then(res => {
-        //    console.log("test?", res)
-        //}).catch(err => console.log(err));
+        $http.post(`/api/Photo/${folder}`, $scope.folder).then(res => {
+            console.log("test?", res)
+        }).catch(err => console.log(err));
 
         console.log($scope.folder);
         console.log($scope.tags);
