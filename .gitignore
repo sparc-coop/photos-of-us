@@ -261,4 +261,4 @@ __pycache__/
 *.pyc
 
 # Azure Key Vault file
-**/azurekeyvault.json
+#**/azurekeyvault.json

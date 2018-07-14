@@ -1,0 +1,8 @@
+﻿{
+  "azureKeyVault": {
+    "vault": "photoofus-vault",
+    "clientId": "",
+    "clientSecret": ""
+  }
+}
+
