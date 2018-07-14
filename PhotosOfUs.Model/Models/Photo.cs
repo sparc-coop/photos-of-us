@@ -8,6 +8,7 @@ namespace PhotosOfUs.Model.Models
         public Photo()
         {
             OrderDetail = new HashSet<OrderDetail>();
+            //Tag = new HashSet<Tag>();
         }
 
         public int Id { get; set; }
@@ -23,5 +24,7 @@ namespace PhotosOfUs.Model.Models
         public Folder Folder { get; set; }
         public User Photographer { get; set; }
         public ICollection<OrderDetail> OrderDetail { get; set; }
+
+        public ICollection<PhotoTag> PhotoTag { get; set; }
     }
 }

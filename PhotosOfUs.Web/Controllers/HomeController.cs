@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PhotosOfUs.Web.Controllers
@@ -32,6 +33,20 @@ namespace PhotosOfUs.Web.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
+            return View();
+        }
+
+        [AllowAnonymous]
+        [EnableCors("LoginPolicy")]
+        public ActionResult AzureSignIn()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [EnableCors("LoginPolicy")]
+        public ActionResult AzureSignUp()
+        {
             return View();
         }
 
