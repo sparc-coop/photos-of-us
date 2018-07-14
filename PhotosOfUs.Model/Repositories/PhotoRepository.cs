@@ -144,15 +144,18 @@ namespace PhotosOfUs.Model.Repositories
         //    return Context.SearchIndexes.Where(x => citationIds.Contains(x.RecordID)).ToList();
         //}
 
-        public List<Photo> GetPublicPhotosByTag(string[] tagarray)
+        public List<Tag> GetTags(string[] tagarray)
+        {
+            return _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
+        }
+
+        public List<Photo> GetPublicPhotosByTag(List<Tag> taglist)
         {
             var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
 
-            List<Tag> tags = _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
-
             List<int> tagids = new List<int>();
 
-            foreach (Tag tag in tags)
+            foreach (Tag tag in taglist)
             {
                 tagids.Add(tag.Id);
             }
