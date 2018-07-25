@@ -1,0 +1,31 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<style>
+    .bulkedit-dialog {
+        width: 30%;
+    }
+</style>
+<md-dialog class="bulkedit-dialog">
+    <div id="photographer-upload--wrapper">
+        <div class="container-fluid">
+            <!-- header -->
+            <div class="col-md-12">
+                <div class="pull-left">
+                    <h2 class="header-large">Edit Photos</h2>
+                    <div class="yellow-background line--small"></div>
+                </div>
+                <div class="pull-right">
+                    <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div>
+                <button ng-click="deletePhotos(selectedPhotos)">Delete Photos</button>
+            </div>
+        </div>
+    </div>
+</md-dialog>

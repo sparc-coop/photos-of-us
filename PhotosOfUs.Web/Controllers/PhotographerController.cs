@@ -216,6 +216,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult BulkEditModal()
+        {
+            return View();
+        }
+
         [Authorize]
         public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
         {

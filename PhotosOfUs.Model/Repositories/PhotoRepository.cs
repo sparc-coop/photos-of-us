@@ -174,6 +174,15 @@ namespace PhotosOfUs.Model.Repositories
             return photos;
         }
 
+        public void DeletePhotos(List<Photo> photos)
+        {
+            foreach (Photo photo in photos)
+            {
+                _context.Photo.Remove(photo);
+            }
+            _context.SaveChanges();
+        }
+
         public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
