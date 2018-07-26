@@ -2,30 +2,88 @@
     Layout = "~/Views/Shared/_LayoutLanding.cshtml";
 }
 
-<div class="landing pricing">
+<div class="landing pricing" ng-controller="LandingCtrl">
     <div class="section1">
         <div class="header">
-            <div class="header__logo">
+            <a class="header__logo" href="~/Session/SignIn">
                 <img src="~/images/logo.png" />
                 <div class="header__logo__text">Photos of Us</div>
-            </div>
+            </a>
             <div class="header__social">
                 <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
                 <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
                 <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
             </div>
         </div>
-
         <div class="content">
-            <div class="slogan">Less chat, more snaps.</div>
+            <div class="slogan">Paying Is A Snap</div>
             <div class="content__subinfo">
-                Storing, sharing, and selling photos should be the easy part.
-                Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
+                Whether you’re an occasional snapper, a frequent snapper, or a super snapper, we’ve got a plan that will suit your budget.
             </div>
-            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
-                <input placeholder="Your email address" name="FromEmail" />
-                <button type="submit" class="button--invite">Send me an invite</button>
-            </form>
+        </div>
+        <div class="pricing--options">
+            <div class="pricing--options__container">
+                <div class="free" ng-click="selected = 'option1'" ng-class="{'selected': selected == 'option1'}">
+                    <img src="~/images/Camera 1@2x.png" />
+                    <div class="pricing--title">Occasional Snaps</div>
+                    <div class="pricing--subtitle">
+                        Perfect for newbies! This plan is ideal if you snap pics here and there as you get into the swing of things.
+                    </div>
+                    <div class="price">Free</div>
+                    <ul>
+                        <li><i class="material-icons">check_circle_outline</i>2 GB Photo Storage</li>
+                        <li><i class="material-icons">check_circle_outline</i>POU branding</li>
+                        <li><i class="material-icons">check_circle_outline</i>8% Take of all sales</li>
+                        <li class="alt">Option for professional prints</li>
+                    </ul>
+                    <a href="~/Session/SignIn" class="signUp">Sign Up Now</a>
+                </div>
+                <div class="option2" ng-click="selected = 'option2'" ng-class="{'selected': selected == 'option2'}">
+                    <img src="~/images/Camera 2@2x.png" />
+                    <div class="pricing--title">Frequent Snapper</div>
+                    <div class="pricing--subtitle">
+                        Photography is your life! You always have your camera by your side so that you never miss the perfect photo op.
+                    </div>
+                    <div class="price">$7.99/mo</div>
+                    <ul>
+                        <li><i class="material-icons">check_circle_outline</i>100 GB Photo Storage</li>
+                        <li><i class="material-icons">check_circle_outline</i>No POU branding</li>
+                        <li><i class="material-icons">check_circle_outline</i>Custom logo</li>
+                        <li><i class="material-icons">check_circle_outline</i>Option for professional prints</li>
+                    </ul>
+                    <a class="signUp signUp--beta">Free While In Beta</a>
+                </div>
+                <div class="option3" ng-click="selected = 'option3'" ng-class="{'selected': selected == 'option3'}">
+                    <img src="~/images/Camera 3@2x.png" />
+                    <div class="pricing--title">Super Snapper</div>
+                    <div class="pricing--subtitle">
+                        Okay admit it, you snap A LOT of pics! A snapper like you needs unlimited space to keep up with all your clients.
+                    </div>
+                    <div class="price">$10.99/mo</div>
+                    <ul>
+                        <li><i class="material-icons">check_circle_outline</i>Unlimited Photo Storage</li>
+                        <li><i class="material-icons">check_circle_outline</i>No POU branding</li>
+                        <li><i class="material-icons">check_circle_outline</i>Custom logo</li>
+                        <li><i class="material-icons">check_circle_outline</i>Option for professional prints</li>
+                    </ul>
+                    <a class="signUp signUp--beta">Free While In Beta</a>
+                </div>
+            </div>           
+        </div>
+        <div class="pricing--team">
+            <img src="~/images/Team Image@2x.png"/>
+            <div class="pricing--team__content">
+                <div class="pricing--title">Team Snappers</div>
+                <div class="pricing--title2">Got a team? Chat with us to get a quote!</div>
+                <div class="pricing--subtitle">
+                    We know not everyone goes solo. For those of you who need a plan that suits your team of snappers, we’ve got you! Request a quote to get your own personalized plan.
+                </div>
+                <div ng-click="showForm = true" class="button--quote" ng-show="showForm != true">Request A Quote!</div>
+                <form class="teamQuote" method="post" action="/Contact/SendQuoteEmail" ng-show="showForm == true">
+                    <input placeholder="Your email address" name="FromEmail" />
+                    <button type="submit">Submit Email</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>

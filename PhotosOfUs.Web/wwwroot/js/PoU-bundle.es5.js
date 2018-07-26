@@ -620,7 +620,7 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     };
 
     $scope.currentPage = 1;
-    $scope.photosPerPage = 6;
+    $scope.photosPerPage = 8;
 
     $scope.getPhotosByCode = function (code) {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(function (x) {
@@ -1275,7 +1275,8 @@ function TagCtrl($timeout, $q) {
             tag_title: chip
         };
     };
-};
+}
+//})();
 
 app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
