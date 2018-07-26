@@ -69,8 +69,8 @@ app.factory('userApi', [
 
 
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
-    $scope.goToCart = () => {
-        $window.location.href = '/Photo/Cart';
+    $scope.goToCart = (userId) => {
+        $window.location.href = '/Photo/Cart/' + userId;
     };
 
     $scope.goToCheckout = (userId) => {
@@ -80,6 +80,7 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
+            console.log($scope.printTypes);
         });
     };
 
@@ -171,7 +172,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
            
         });
         $scope.getOrderTotal(orderId);
-        console.log($scope.orderDetailsList);
     };
 
     $scope.getOrderTotal = (orderId) => {
@@ -192,6 +192,13 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         })
     };
 
+    $scope.getOpenOrder = (userId) => {
+        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
+            $scope.order = x.data;
+            console.log($scope.order);
+            $scope.getOrderTotal($scope.order.Id);
+        });
+    }; 
 }])
 app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'userApi', ($scope, $window, $mdDialog, $http, userApi) => {
 
@@ -628,7 +635,7 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     };
 
     $scope.currentPage = 1;
-    $scope.photosPerPage = 6;
+    $scope.photosPerPage = 8;
 
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
@@ -1104,7 +1111,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 
     $scope.upload = function (item) {
         item.upload();
-
     };
 
     $scope.uploadAll = function (items) {
@@ -1197,10 +1203,17 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
     $scope.originalSettings = {};
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(JSON.stringify(x));
+            console.log(x.data);
             $scope.accountSettings = x.data;
+            if ($scope.accountSettings.Facebook == null)
+                $scope.accountSettings.Facebook = 'https://www.facebook.com/';
+            if ($scope.accountSettings.Twitter == null)
+                $scope.accountSettings.Twitter = 'https://www.twitter.com/';
+            if ($scope.accountSettings.Instagram == null)
+                $scope.accountSettings.Instagram = 'https://www.instagram.com/';
+            if ($scope.accountSettings.Dribbble == null)
+                $scope.accountSettings.Dribbble = 'https://www.dribbble.com/';
             angular.copy(x.data, $scope.originalSettings);
-            console.log(JSON.stringify($scope.originalSettings));
         })
     }
 
@@ -1241,6 +1254,12 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
             controller: 'UploadProfileImageCtrl',
             clickOutsideToClose: true,
         });
+    };
+
+    $scope.selected = 'details';
+
+    $scope.setSelected = (selected) => {
+        $scope.selected = selected;
     };
 
 

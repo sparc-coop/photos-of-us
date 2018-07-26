@@ -62,7 +62,12 @@ namespace PhotosOfUs.Model.Repositories
             user.DisplayName = model.DisplayName;
             user.JobPosition = model.JobPosition;
             user.Bio = model.Bio;
+            user.Facebook = model.Facebook;
+            user.Twitter = model.Twitter;
+            user.Instagram = model.Instagram;
+            user.Dribbble = model.Dribbble;
 
+            _context.Update(user);
             _context.SaveChanges();
 
             return true;

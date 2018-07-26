@@ -25,9 +25,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             _context = context;
             _viewRenderService = viewRenderService;
-        }
-
-        
+        }      
 
         // GET: api/PhotographerApi/5
         [HttpGet("{id}", Name = "Get")]

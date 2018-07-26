@@ -1,6 +1,6 @@
 ﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
-    $scope.goToCart = () => {
-        $window.location.href = '/Photo/Cart';
+    $scope.goToCart = (userId) => {
+        $window.location.href = '/Photo/Cart/' + userId;
     };
 
     $scope.goToCheckout = (userId) => {
@@ -10,6 +10,7 @@
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
+            console.log($scope.printTypes);
         });
     };
 
@@ -101,7 +102,6 @@
            
         });
         $scope.getOrderTotal(orderId);
-        console.log($scope.orderDetailsList);
     };
 
     $scope.getOrderTotal = (orderId) => {
@@ -122,4 +122,11 @@
         })
     };
 
+    $scope.getOpenOrder = (userId) => {
+        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
+            $scope.order = x.data;
+            console.log($scope.order);
+            $scope.getOrderTotal($scope.order.Id);
+        });
+    }; 
 }])

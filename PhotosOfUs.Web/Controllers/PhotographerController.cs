@@ -42,20 +42,20 @@ namespace PhotosOfUs.Web.Controllers
         {
             
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(userId);
 
             if(photographer.IsPhotographer == true)
             {
                 PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-                model.PhotographerId = photographerId;
+                model.PhotographerId = userId;
                 model.Name = User.Identity.Name;
 
                 return View(model);
             }
             else
             {
-                return RedirectToAction("Index", "Customer");
+                return Redirect("/Customer/OrderHistory/" + userId);
             }
         }
 
@@ -219,7 +219,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
+        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -238,7 +238,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price);
                 }
             }
 
@@ -248,7 +248,7 @@ namespace PhotosOfUs.Web.Controllers
 
 
         [Authorize]
-        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
+        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, int price, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -260,7 +260,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, price, extension);
                 }
             }
         }

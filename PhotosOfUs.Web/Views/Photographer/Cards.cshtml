@@ -42,7 +42,9 @@
             </tbody>
         </table>
     </div>
-    <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
+    <div class="photoPage__image-container" ng-show="(codePhotos.length/pageSize) > 1">
+        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
+    </div>
     <form id="card-downloader" action="@Url.Action("Export")" method="post">
         <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.Id" />
     </form>

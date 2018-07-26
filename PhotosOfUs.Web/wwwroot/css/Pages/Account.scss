@@ -19,6 +19,7 @@
             margin-bottom: 10px;
             font-family: 'Dosis';
             font-weight: 600;
+            outline: none;
 
             .active {
                 color: #194952;
@@ -132,6 +133,12 @@
 
             .material-icons {
                 color: white;
+            }
+        }
+
+        &--social{
+            input{
+                width: 300px;
             }
         }
     }

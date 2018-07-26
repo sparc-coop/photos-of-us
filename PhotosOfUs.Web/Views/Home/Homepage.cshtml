@@ -1,128 +1,89 @@
 ﻿@{
-    Layout = null;
+Layout = "~/Views/Shared/_LayoutLanding.cshtml";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Photos of Us</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,800|Open+Sans:400,600,700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="~/css/sweetalert2.css" rel="stylesheet" />
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-69755150-3"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-69755150-3');
-    </script>
-
-    <environment include="Development">
-        <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/css/PoU-Site.min.css" asp-append-version="true" />
-    </environment>
-
-</head>
-<body>
-    <div class="landing">
-        <div class="section1">
-            <div class="header">
-                <div class="header__logo">
-                    <img src="~/images/logo.png" />
-                    <div class="header__logo__text">Photos of Us</div>
-                </div>
-                <div class="header__social">
-                    <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
-                    <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
-                    <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
-                    @*<a><img src="~/images/icons/dribbble-white.png" /></a>*@
-                </div>
+<div class="landing">
+    <div class="section1">
+        <div class="header">
+            <div class="header__logo">
+                <img src="~/images/logo.png" />
+                <div class="header__logo__text">Photos of Us</div>
             </div>
-
-            <div class="content">
-                <div class="slogan">Less chat, more snaps.</div>
-                <div class="content__subinfo">
-                    Storing, sharing, and selling photos should be the easy part. 
-                    Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
-                </div>
-                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
-                    <input placeholder="Your email address" name="FromEmail"/>
-                    <button type="submit" class="button--invite">Send me an invite</button>
-                </form>
+            <div class="header__social">
+                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
+                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
+                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
             </div>
         </div>
-        <div class="section2">
-            <img src="~/images/Screens-Web-Showcase.png" class="img--showcase" />
-            <div class="content">
-                <div class="slogan">Your one-stop shop.</div>
-                <div class="content__subinfo">
-                    Avoid the hassle of going back and forth between multiple photo sharing sites. 
-                    Simply take a snap, then store it, share it, and sell it all on Photos of Us.
+
+        <div class="content">
+            <div class="slogan">Less chat, more snaps.</div>
+            <div class="content__subinfo">
+                Storing, sharing, and selling photos should be the easy part. 
+                Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
+            </div>
+            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                <input placeholder="Your email address" name="FromEmail"/>
+                <button type="submit" class="button--invite">Send me an invite</button>
+            </form>
+        </div>
+    </div>
+    <div class="section2">
+        <img src="~/images/Screens-Web-Showcase.png" class="img--showcase" />
+        <div class="content">
+            <div class="slogan">Your one-stop shop.</div>
+            <div class="content__subinfo">
+                Avoid the hassle of going back and forth between multiple photo sharing sites. 
+                Simply take a snap, then store it, share it, and sell it all on Photos of Us.
+            </div>
+            <div class="content__text">
+                <div class="content__container">
+                    <img src="~/images/Connect.png" />
+                    <div class="title">Share</div>
+                    <div class="copy">
+                        Snapping a photo of the unique code connects to your customer’s specific face, 
+                        which automatically gets tagged and can be searched in seconds!
+                    </div>
                 </div>
-                <div class="content__text">
-                    <div class="content__container">
-                        <img src="~/images/Connect.png" />
-                        <div class="title">Share</div>
-                        <div class="copy">
-                            Snapping a photo of the unique code connects to your customer’s specific face, 
-                            which automatically gets tagged and can be searched in seconds!
-                        </div>
+                <div class="content__container">
+                    <img src="~/images/Store.png" />
+                    <div class="title">Store</div>
+                    <div class="copy">
+                        We know photographers take a LOT of photos. 
+                        Now you can store thousands of your favorite snaps in the same place you sell them.
                     </div>
-                    <div class="content__container">
-                        <img src="~/images/Store.png" />
-                        <div class="title">Store</div>
-                        <div class="copy">
-                            We know photographers take a LOT of photos. 
-                            Now you can store thousands of your favorite snaps in the same place you sell them.
-                        </div>
-                    </div>
-                    <div class="content__container">
-                        <img src="~/images/Sell.png" />
-                        <div class="title">Sell</div>
-                        <div class="copy">
-                            Make some cash! Upload your photos, and with just a click of a button, they can be 
-                            added to your customer’s cart and purchased at checkout.
-                        </div>
+                </div>
+                <div class="content__container">
+                    <img src="~/images/Sell.png" />
+                    <div class="title">Sell</div>
+                    <div class="copy">
+                        Make some cash! Upload your photos, and with just a click of a button, they can be 
+                        added to your customer’s cart and purchased at checkout.
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="section3">
-            <img src="~/images/PoU_DeviceMockup.png" class="img--showcase" />
-            <div class="content">
-                <div class="slogan">Stay in the know!</div>
-                <div class="content__subinfo">
-                    Keep your eyes peeled! We’re launching soon.
-                </div>
-                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
-                    <input placeholder="Your email address" name="FromEmail" />
-                    <button type="submit" class="button--invite">Send me an invite</button>
-                </form>
-                <div class="social">
-                    <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
-                    <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>
-                    <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/instagram-dark.png" /></a>
-                    @*<a><img src="~/images/icons/dribbl-dark.png" /></a>*@
-                </div>
-            </div>
-            <img src="~/images/Footer bg.png" class="img--footer" />
-        </div>
-
     </div>
 
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.min.js"></script>
-
-<script src="~/js/PoU-bundle.js" asp-append-version="true"></script>
-</body>
-</html>
+    <div class="section3">
+        <img src="~/images/PoU_DeviceMockup.png" class="img--showcase" />
+        <div class="content">
+            <div class="slogan">Stay in the know!</div>
+            <div class="content__subinfo">
+                Keep your eyes peeled! We’re launching soon.
+            </div>
+            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                <input placeholder="Your email address" name="FromEmail" />
+                <button type="submit" class="button--invite">Send me an invite</button>
+            </form>
+            <div class="social">
+                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
+                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>
+                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/instagram-dark.png" /></a>
+                @*<a><img src="~/images/icons/dribbl-dark.png" /></a>*@
+            </div>
+        </div>
+        <img src="~/images/Footer bg.png" class="img--footer" />
+    </div>
+</div>

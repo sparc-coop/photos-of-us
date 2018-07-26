@@ -61,6 +61,7 @@
 
 .button--checkout--preview {
   cursor: pointer;
+  outline: none;
   background-color: #194952;
   text-align: center;
   width: 239px;
@@ -913,7 +914,8 @@ body {
   font-weight: 600; }
   .nav a {
     text-decoration: none;
-    color: #FFFFFF; }
+    color: #FFFFFF;
+    vertical-align: middle; }
   .nav .logo {
     /*position: absolute;
         left: 80px;*/
@@ -938,7 +940,8 @@ body {
       border-radius: 20px;
       display: inline-block;
       margin: 7px 10px 0 0;
-      padding: 4px; }
+      padding: 4px;
+      vertical-align: middle; }
       .nav--right .img-cart img {
         height: 14px;
         padding: 5px;
@@ -956,7 +959,7 @@ body {
       border: 2px solid #FFE261;
       background-color: #194952;
       display: inline-block;
-      margin-top: -4px; }
+      margin-top: 4px; }
     .nav--right .menu-item.active {
       padding-bottom: 5px;
       border-bottom: 2px solid #FFE261; }
@@ -1163,7 +1166,6 @@ td {
 .cart--preview {
   z-index: 100;
   width: 265px;
-  height: 265px;
   background-color: #FFE261;
   border-radius: 6px;
   margin-top: 46px;
@@ -1172,7 +1174,7 @@ td {
   .cart--preview__content {
     position: relative;
     padding: 16px 14px;
-    height: 235px; }
+    padding-bottom: 120px; }
     .cart--preview__content .heading {
       font-family: "Dosis";
       font-weight: 600;
@@ -1181,19 +1183,6 @@ td {
       padding-bottom: 14px; }
       .cart--preview__content .heading .price {
         padding-left: 124px; }
-    .cart--preview__content .cart-items {
-      font-family: "Open Sans";
-      font-weight: 600;
-      font-size: 14px;
-      color: #43C6BA; }
-      .cart--preview__content .cart-items .type {
-        line-height: initial;
-        width: 100px; }
-      .cart--preview__content .cart-items .quantity {
-        padding-left: 20px;
-        width: 30px; }
-      .cart--preview__content .cart-items .price {
-        padding-left: 14px; }
     .cart--preview__content .total {
       position: absolute;
       bottom: 90px;
@@ -1203,6 +1192,21 @@ td {
       color: #194952; }
       .cart--preview__content .total .amount {
         padding-left: 96px; }
+  .cart--preview__item {
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 14px;
+    color: #43C6BA;
+    display: flex;
+    padding-bottom: 5px; }
+    .cart--preview__item .type {
+      line-height: initial;
+      width: 100px; }
+    .cart--preview__item .quantity {
+      padding-left: 20px;
+      width: 30px; }
+    .cart--preview__item .price {
+      padding-left: 14px; }
   .cart--preview--arrow {
     width: 0;
     height: 0;
@@ -1211,7 +1215,7 @@ td {
     border-bottom: 10px solid #FFE261;
     position: absolute;
     top: -8px;
-    right: 82px; }
+    right: 102px; }
 
 .cart .divider {
   background: #FFE261;
@@ -1642,7 +1646,7 @@ md-dialog {
   display: flex; }
 
 /* photo preview */
-#photo-preview {
+.photo-preview {
   margin-top: 24px;
   font-family: 'Dosis', sans-serif;
   font-weight: 600;
@@ -1655,17 +1659,55 @@ md-dialog {
   width: 510px;
   height: 513px;
   position: relative; }
-  #photo-preview .img-container {
-    text-align: center;
-    padding: 10px; }
-  #photo-preview img {
-    width: auto;
-    max-width: 490px;
-    max-height: 330px;
-    border-radius: 8px; }
-  #photo-preview #photo-preview-name {
-    width: 90%;
+  .photo-preview .img-container {
+    text-align: center; }
+    .photo-preview .img-container img {
+      width: auto;
+      max-width: 490px;
+      max-height: 330px;
+      border-radius: 8px; }
+  .photo-preview .info {
+    display: flex;
+    padding: 10px 50px 0 10px; }
+  .photo-preview #photo-preview-name {
+    width: 60%;
     padding-left: 10px; }
+  .photo-preview__dimensions {
+    display: inline;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0;
+    margin: 3px 0 0 10px;
+    width: 20%; }
+    .photo-preview__dimensions p {
+      width: 20%;
+      margin: 0; }
+  .photo-preview__name {
+    display: inline;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 0;
+    color: #F6FFFF;
+    word-wrap: break-word;
+    border: 0;
+    width: 100%; }
+    .photo-preview__name textarea {
+      background-color: #194952;
+      outline: none;
+      border: none;
+      color: #FFFFFF; }
+  .photo-preview__pricing {
+    margin-top: -15px;
+    padding-left: 10px; }
+    .photo-preview__pricing input, .photo-preview__pricing .form-input textarea, .form-input .photo-preview__pricing textarea {
+      border: none;
+      outline: none;
+      color: #FFFFFF;
+      background-color: #194952;
+      padding: 8px 0 0 10px;
+      font-size: 18px; }
 
 .photo-preview-title {
   font-family: 'Open Sans';
@@ -1673,29 +1715,22 @@ md-dialog {
   color: #F6FFFF;
   letter-spacing: 0;
   font-weight: normal;
-  margin: 5px 0 1px 10px; }
-
-#photo-preview-name {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
-  font-size: 28px;
-  letter-spacing: 0;
-  color: #F6FFFF;
-  word-wrap: break-word;
-  border: 0;
-  background: #194952;
-  width: 100%; }
-
-#photo-preview-dimensions {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: 0;
-  margin: 3px 0 0 10px; }
+  margin: 5px 0 1px 10px;
+  position: relative; }
+  .photo-preview-title i {
+    font-size: 14px;
+    cursor: pointer; }
+  .photo-preview-title .hover {
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    padding-left: 10px; }
 
 /* photo list */
 #photo-list {
-  padding: 0 20px; }
+  padding: 0 20px;
+  width: 100%; }
 
 #photos {
   padding: 0;
@@ -2466,7 +2501,8 @@ canvas {
   .account-settings .account-sidemenu .sidemenu-item {
     margin-bottom: 10px;
     font-family: 'Dosis';
-    font-weight: 600; }
+    font-weight: 600;
+    outline: none; }
     .account-settings .account-sidemenu .sidemenu-item .active {
       color: #194952; }
       .account-settings .account-sidemenu .sidemenu-item .active i {
@@ -2551,6 +2587,8 @@ canvas {
     opacity: 1; }
     .account-settings .form-account .img-container:hover .overlay .material-icons {
       color: white; }
+  .account-settings .form-account--social input, .account-settings .form-account--social .form-input textarea, .form-input .account-settings .form-account--social textarea {
+    width: 300px; }
 
 .account-settings .social-accounts .form-input {
   position: relative; }

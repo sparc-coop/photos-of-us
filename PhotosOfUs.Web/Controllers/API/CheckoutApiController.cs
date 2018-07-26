@@ -34,6 +34,14 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetOpenOrder/{userId:int}")]
+        public Order GetOpenOrder(int userId)
+        {
+            var openOrder = new OrderRepository(_context).GetOpenOrder(userId);
+            return openOrder;
+        }
+
+        [HttpGet]
         [Route("GetOrderTotal/{orderId:int}")]
         public decimal GetOrderTotal(int orderId)
         {

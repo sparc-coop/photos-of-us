@@ -29,16 +29,22 @@
             </div>
             <div class="photographer-social">
                 <ul>
-                    <li><a class="twitter" href="http://www.twitter.com" target="_blank">Twitter</a></li>
-                    @if (!string.IsNullOrEmpty(Model.FacebookLink))
+                    @if (!string.IsNullOrEmpty(Model.FacebookLink.Split('/').Last()))
                     {
                         <li><a class="facebook" href="@Model.FacebookLink" target="_blank">Facebook</a></li>
-
                     }
-
-
-                    <li><a class="instagram" href="http://www.instagram.com" target="_blank">Instagram</a></li>
-                    <li><a class="dribbl" href="http://www.dribbl.com" target="_blank">Dribbl</a></li>
+                    @if (!string.IsNullOrEmpty(Model.TwitterLink.Split('/').Last()))
+                    {
+                        <li><a class="twitter" href="@Model.TwitterLink" target="_blank">Twitter</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.InstagramLink.Split('/').Last()))
+                    {
+                        <li><a class="instagram" href="@Model.InstagramLink" target="_blank">Instagram</a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.DribbblLink.Split('/').Last()))
+                    {
+                        <li><a class="dribbl" href="@Model.DribbblLink" target="_blank">Dribble</a></li>
+                    }
                 </ul>
             </div>
             <div class="gallery-search-container">

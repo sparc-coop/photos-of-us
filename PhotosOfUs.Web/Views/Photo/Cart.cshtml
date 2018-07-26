@@ -13,12 +13,11 @@
         <img src="{{item.Photo.Url}}" class="photo"/>
         <div class="cart-photo--container">
             <div class="cart-item">
-                @*<div class="icon"><img src="~/images/icons/portrait.png" /></div>*@
                 @*<div class="type">A5 Portrait</div>
                 <div class="height">Height: 4in</div>
                 <div class="length">Length: 7in</div>*@
                 <div class="quantity">QTY: {{item.Quantity}}</div>
-                <div class="price">${{item.UnitPrice}}</div>
+                <div class="price">${{item.UnitPrice | number:2}}</div>
             </div>
         </div>
     </div>

@@ -11,9 +11,9 @@
        
         <div>
             <div class="account-sidemenu">
-                <div class="sidemenu-item"><a href="#" class="active"><i class="material-icons">face</i> Profile Details</a></div>
+                <div class="sidemenu-item" ng-click="setSelected('details')"><a href="#" ng-class="{'active': selected == 'details'}"><i class="material-icons">face</i> Profile Details</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
-                <div class="sidemenu-item"><a href="#"><i class="material-icons">language</i>Social Accounts</a></div>
+                <div class="sidemenu-item" ng-click="setSelected('social')"><a href="#" ng-class="{'active': selected == 'social'}"><i class="material-icons">language</i>Social Accounts</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
                 <a href="#" class="deactivate">Deactivate Account</a>
             </div>
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div class="form-account" ng-cloak>
+        <div class="form-account" ng-cloak ng-if="selected == 'details'">
             <div class="form-input">
                 <label>Profile Photo</label>
                 <div class="img-container" ng-click="uploadProfileImage()">
@@ -75,9 +75,24 @@
             </form>
 
         </div>
+        <div class="form-account form-account--social" ng-cloak ng-if="selected == 'social'">
+            <div class="form-input">
+                <label>Facebook</label>
+                <input ng-model="accountSettings.Facebook"/>
+            </div>
+            <div class="form-input">
+                <label>Twitter</label>
+                <input ng-model="accountSettings.Twitter" />
+            </div>
+            <div class="form-input">
+                <label>Instagram</label>
+                <input ng-model="accountSettings.Instagram" />
+            </div>
+            <div class="form-input">
+                <label>Dribbble</label>
+                <input ng-model="accountSettings.Dribbble" />
+            </div>
+        </div>
     </div>
-   
-
-
 </div>
 

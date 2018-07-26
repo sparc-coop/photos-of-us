@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutLanding.cshtml";
+}
+
+<div class="landing pricing">
+    <div class="section1">
+        <div class="header">
+            <div class="header__logo">
+                <img src="~/images/logo.png" />
+                <div class="header__logo__text">Photos of Us</div>
+            </div>
+            <div class="header__social">
+                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
+                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
+                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="slogan">Less chat, more snaps.</div>
+            <div class="content__subinfo">
+                Storing, sharing, and selling photos should be the easy part.
+                Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
+            </div>
+            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                <input placeholder="Your email address" name="FromEmail" />
+                <button type="submit" class="button--invite">Send me an invite</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -45,7 +45,6 @@
 
     $scope.upload = function (item) {
         item.upload();
-
     };
 
     $scope.uploadAll = function (items) {

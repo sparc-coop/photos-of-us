@@ -279,7 +279,7 @@ namespace PhotosOfUs.Model.Models
             {
                 entity.Property(e => e.Id).HasColumnName("Id");
 
-                entity.Property(e => e.PrintTypeId).HasColumnName("PrintTypeId");
+                entity.Property(e => e.PhotoId).HasColumnName("PhotoId");
 
                 entity.Property(e => e.Price)
                     .HasColumnName("Price")
