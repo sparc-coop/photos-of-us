@@ -23,7 +23,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public List<PrintType> GetPrintTypes()
         {
-            List<PrintType> types = _context.PrintType.Include("PrintPrice").ToList();
+            List<PrintType> types = _context.PrintType.ToList();
             return types;
         }
     }

@@ -109,16 +109,12 @@ namespace PhotosOfUs.Model.Repositories
                 Url = containerBlob.Uri.AbsoluteUri,
                 Code = photoCode,
                 FolderId = folderId,
-                PublicProfile = publicProfile
+                PublicProfile = publicProfile,
+                Price = price
             };
 
             _context.Photo.Attach(photo);
             _context.SaveChanges();
-
-            //PrintPrice photoPrice = new PrintPrice();
-            //photoPrice.PhotographerId = photographerId;
-            //photoPrice.PhotoId = photo.Id;
-            //photoPrice.Price = price;
 
             return containerBlob.Uri.AbsoluteUri;
         }

@@ -1151,6 +1151,9 @@ td {
     color: #194952;
     width: 70px;
     padding-right: 20px; }
+    .purchase__options--row .quantity input, .purchase__options--row .quantity .form-input textarea, .form-input .purchase__options--row .quantity textarea {
+      width: 25px;
+      text-align: center; }
   .purchase__options--row .price {
     line-height: 57px;
     font-family: "Open Sans";
@@ -1699,7 +1702,7 @@ md-dialog {
       border: none;
       color: #FFFFFF; }
   .photo-preview__pricing {
-    margin-top: -15px;
+    margin-top: -5px;
     padding-left: 10px; }
     .photo-preview__pricing input, .photo-preview__pricing .form-input textarea, .form-input .photo-preview__pricing textarea {
       border: none;

@@ -252,7 +252,9 @@ namespace PhotosOfUs.Web.Controllers
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            
+
+            var photoprice = price;
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -260,7 +262,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, price, extension);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, price, extension);
                 }
             }
         }

@@ -5,7 +5,7 @@
     ViewData["Title"] = "Purchase";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser()">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPrintTypes()">
     <h1 class="header-large">Purchase Photo</h1>
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="row">
                     <div class="title">Photographer</div>
-                    <div class="value">@Model.PhotographerName</div>
+                    <div class="value">@Model.PhotographerName </div>
                 </div>
             </div>
         </div>
@@ -44,11 +44,11 @@
     <div>
         <h2 class="header-medium">Photo Options</h2>
         
-        <div class="purchase__options--container" ng-init="getPrintTypes()">
+        <div class="purchase__options--container">
             <div class="purchase__options--row">
                 <div class="select"><md-checkbox aria-label="Select" ng-click="selectAll(printTypes)"></md-checkbox></div>
-                <div class="type">Type</div>
                 <div class="icon"></div>
+                <div class="type">Type</div>
                 <div class="height">Height</div>
                 <div class="length">Length</div>
                 <div class="quantity">QTY</div>
@@ -56,13 +56,13 @@
 
             </div>
             <div class="purchase__options--row" ng-repeat="print in printTypes">
-                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.Id)" ng-checked="isSelected(print.Id)"></md-checkbox></div>
+                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.Id, print.Quantity)" ng-checked="isSelected(print.Id)"></md-checkbox></div>
                 <div class="icon"><img src="~/images/icons/{{print.Icon}}.png" /></div>
                 <div class="type">{{print.Type}}</div>
                 <div class="height">{{print.Height}}in</div>
                 <div class="length">{{print.Length}}in</div>
-                <div class="quantity">1</div>
-                <div class="price"><strong>${{print.PrintPrice.Price}}</strong></div>
+                <div class="quantity"><input ng-model="print.Quantity" placeholder="1"/></div>
+                <div class="price"><strong>${{print.BaseCost + @Model.Price | number: 2}}</strong></div>
             </div>
         </div>
         <div class="button--yellow button--yellow--large" ng-click="createOrder(user.Id)"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>

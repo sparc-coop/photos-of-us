@@ -10,6 +10,7 @@
     <div class="flex-box filters">
         @foreach(var order in Model)
         {
+            @order.Id
             <div ng-init="getOrderDetails(@order.Id)" ng-repeat="order in orderDetailsList">
                 {{order.OrderDate}}
             </div>

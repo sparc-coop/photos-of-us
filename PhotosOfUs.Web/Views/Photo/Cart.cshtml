@@ -9,13 +9,13 @@
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
 
-    <div class="cart-photo" ng-repeat="item in orderDetails | groupBy: item.PhotoId">
+    <div class="cart-photo" ng-repeat="item in orderDetails">
         <img src="{{item.Photo.Url}}" class="photo"/>
         <div class="cart-photo--container">
             <div class="cart-item">
-                @*<div class="type">A5 Portrait</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>*@
+                <div class="type">{{item.PrintType.Type}}</div>
+                <div class="height">Height: {{item.PrintType.Height}}in</div>
+                <div class="length">Length: {{item.PrintType.Length}}in</div>
                 <div class="quantity">QTY: {{item.Quantity}}</div>
                 <div class="price">${{item.UnitPrice | number:2}}</div>
             </div>

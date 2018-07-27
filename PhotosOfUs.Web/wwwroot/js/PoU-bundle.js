@@ -80,13 +80,12 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
-            console.log($scope.printTypes);
         });
     };
 
     $scope.selectedItems = [];
 
-    $scope.select = (printTypeId) => {
+    $scope.select = (printTypeId, quantity) => {
         var photoId = location.pathname.split("/").filter(x => !!x).pop();
 
         var object = {
@@ -107,15 +106,21 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         localStorage.setItem("cart", JSON.stringify(cartLocalStorage));
 
         if ($scope.selectedItems.length === 0) {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
-        else if ($scope.selectedItems.indexOf(printTypeId) !== -1) {
-            var index = $scope.selectedItems.indexOf(printTypeId);
+        else if ($scope.selectedItems.find((x) => x.printTypeId == printTypeId)) {
+            var index = $scope.selectedItems.find((x) => x.printTypeId == printTypeId);
             $scope.selectedItems.splice(index, 1)
         }
         else {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
+
+        console.log($scope.selectedItems);
     };
 
     $scope.selectAll = function (printTypes) {
@@ -126,9 +131,9 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     }
 
     $scope.isSelected = function (printId) {
-        if ($scope.selectedItems.indexOf(printId) !== - 1) {
+        if ($scope.selectedItems.find((x) => x.printTypeId == printId))
             return true;
-        }
+
         return false;
     }
 
@@ -169,7 +174,7 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
             });
-           
+            console.log($scope.orderDetails);
         });
         $scope.getOrderTotal(orderId);
     };
@@ -1150,6 +1155,8 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
+        var price = fileItem.file.price;
+
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
         image.onload = function (e) {
@@ -1167,6 +1174,7 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 
     uploader.onBeforeUploadItem = function (item) {
         item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
+        console.log(item);
     };
 
     uploader.onProgressItem = function (fileItem, progress) {

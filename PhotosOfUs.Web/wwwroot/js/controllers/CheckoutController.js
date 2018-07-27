@@ -10,13 +10,12 @@
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
-            console.log($scope.printTypes);
         });
     };
 
     $scope.selectedItems = [];
 
-    $scope.select = (printTypeId) => {
+    $scope.select = (printTypeId, quantity) => {
         var photoId = location.pathname.split("/").filter(x => !!x).pop();
 
         var object = {
@@ -37,15 +36,21 @@
         localStorage.setItem("cart", JSON.stringify(cartLocalStorage));
 
         if ($scope.selectedItems.length === 0) {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
-        else if ($scope.selectedItems.indexOf(printTypeId) !== -1) {
-            var index = $scope.selectedItems.indexOf(printTypeId);
+        else if ($scope.selectedItems.find((x) => x.printTypeId == printTypeId)) {
+            var index = $scope.selectedItems.find((x) => x.printTypeId == printTypeId);
             $scope.selectedItems.splice(index, 1)
         }
         else {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
+
+        console.log($scope.selectedItems);
     };
 
     $scope.selectAll = function (printTypes) {
@@ -56,9 +61,9 @@
     }
 
     $scope.isSelected = function (printId) {
-        if ($scope.selectedItems.indexOf(printId) !== - 1) {
+        if ($scope.selectedItems.find((x) => x.printTypeId == printId))
             return true;
-        }
+
         return false;
     }
 
@@ -99,7 +104,7 @@
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
             });
-           
+            console.log($scope.orderDetails);
         });
         $scope.getOrderTotal(orderId);
     };

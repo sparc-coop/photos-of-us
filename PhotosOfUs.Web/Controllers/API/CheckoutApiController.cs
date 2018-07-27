@@ -50,7 +50,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpPost]
         [Route("CreateOrder/{userId:int}/{photoId:int}")]
-        public string CreateOrder(int userId, int photoId, [FromBody]int[] orderitems)
+        public string CreateOrder(int userId, int photoId, [FromBody]List<OrderItemsViewModel> orderitems)
         {
             var existingOrder = new OrderRepository(_context).GetOpenOrder(userId);
             var photo = new PhotoRepository(_context).GetPhoto(photoId);
@@ -61,17 +61,23 @@ namespace PhotosOfUs.Web.Controllers.API
 
                 foreach (var item in orderitems)
                 {
-                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(newOrder.Id, photoId, photo.PhotographerId, item);
+                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(newOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
                 }
             }
             else
             {
                 foreach (var item in orderitems)
                 {
-                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(existingOrder.Id, photoId, photo.PhotographerId, item);
+                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(existingOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
                 }
             }
             return "success";
+        }
+
+        public class OrderItemsViewModel
+        {
+            public int PrintTypeId { get; set; }
+            public string Quantity { get; set; }
         }
     }
 }
