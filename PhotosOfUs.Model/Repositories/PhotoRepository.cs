@@ -69,7 +69,7 @@ namespace PhotosOfUs.Model.Repositories
         //    return photo;
         //}
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, int? price, bool publicProfile = false)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, double? price, bool publicProfile = false)
         {
             var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var url = $"{photographerId}/{folderId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
@@ -110,7 +110,7 @@ namespace PhotosOfUs.Model.Repositories
                 Code = photoCode,
                 FolderId = folderId,
                 PublicProfile = publicProfile,
-                Price = price
+                Price = (decimal)price
             };
 
             _context.Photo.Attach(photo);
@@ -125,7 +125,7 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Where(x => x.PublicProfile && x.PhotographerId == photographerId).ToList();
         }
 
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, int? price, string extension)
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
 

@@ -248,12 +248,12 @@ namespace PhotosOfUs.Web.Controllers
 
 
         [Authorize]
-        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, int price, string extension)
+        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var photoprice = price;
+            double addPrice = double.Parse(price);
 
             var filePath = Path.GetTempFileName();
 
@@ -262,7 +262,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, price, extension);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension);
                 }
             }
         }

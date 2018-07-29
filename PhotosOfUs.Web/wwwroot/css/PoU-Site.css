@@ -96,7 +96,8 @@
   margin: 35px 5px 2px 0;
   position: absolute;
   bottom: 22px;
-  right: 22px; }
+  right: 22px;
+  cursor: pointer; }
 
 .button--discard-changes {
   font-family: 'Dosis', sans-serif;
@@ -110,7 +111,8 @@
   margin: 35px 0 2px 0;
   position: absolute;
   bottom: 22px;
-  right: 218px; }
+  right: 218px;
+  cursor: pointer; }
 
 .button--back {
   height: 19px;

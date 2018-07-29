@@ -931,7 +931,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, price: item.file.price, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
         }
         
     };
@@ -1155,8 +1155,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
-        var price = fileItem.file.price;
-
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
         image.onload = function (e) {
@@ -1173,8 +1171,7 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
-        console.log(item);
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {

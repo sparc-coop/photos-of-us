@@ -84,8 +84,6 @@
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
-        var price = fileItem.file.price;
-
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
         image.onload = function (e) {
@@ -102,8 +100,7 @@
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
-        console.log(item);
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {

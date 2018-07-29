@@ -173,7 +173,7 @@
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, price: item.file.price, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
         }
         
     };
