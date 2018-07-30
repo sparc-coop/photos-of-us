@@ -13,8 +13,7 @@
     <div class="background--yellow line--small"></div>
    
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Library" />
-
+        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library" />
         <div class="view-icons align-right">
             <div class="filter-sort">
                 <select>
@@ -28,8 +27,6 @@
             <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak><img src="~/images/icons/add-photo.png" class="img-upload" />Upload Images</div>
         </div>
     </div>
-
-
 
     <div class="folder-card--wrapper codeView">
         @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))

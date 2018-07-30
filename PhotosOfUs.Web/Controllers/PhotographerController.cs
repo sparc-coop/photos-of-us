@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -224,13 +226,29 @@ namespace PhotosOfUs.Web.Controllers
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
+            byte[] fileBytes;
+
             if (string.IsNullOrEmpty(photoCode))
             {
-                var ocr = new OCR(_context,_hostingEnvironment);
-                var ocrResult = ocr.GetOCRResult(file,photographerId);
-                return ocrResult.Code;
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    fileBytes = ms.ToArray();
+                    string s = Convert.ToBase64String(fileBytes);
+                    // act on the Base64 data
+                }
+                var ocr = new AzureOCR(_context);
+                var results = await ocr.MakeOCRRequest(fileBytes);
+                return ocr.ExtractCardCode(results);
             }
-            
+
+            //if (string.IsNullOrEmpty(photoCode))
+            //{
+            //    var ocr = new OCR(_context,_hostingEnvironment);
+            //    var ocrResult = ocr.GetOCRResult(file,photographerId);
+            //    return ocrResult.Code;
+            //}
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -320,6 +338,30 @@ namespace PhotosOfUs.Web.Controllers
         //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
         //    return View(salesHistory);
         //}
+
+        public ActionResult Search()
+        {
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
+
+            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
+            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
+            //var getalltags = new PhotoRepository(_context).GetAllTags();
+
+            return View(PhotoViewModel.ToViewModel(photos));
+        }
+
+        public ActionResult Results(string tagnames)
+        {
+            string[] tagarray = tagnames.Split(' ');
+
+            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tagarray);
+
+            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
+            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
+            //var getalltags = new PhotoRepository(_context).GetAllTags();
+
+            return View(PhotoViewModel.ToViewModel(photos)); ;
+        }
 
         public ActionResult NewFolderModal()
         {

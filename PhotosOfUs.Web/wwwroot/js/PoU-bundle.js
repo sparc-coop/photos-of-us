@@ -1,8 +1,12 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter', 'ui.bootstrap']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'ui.bootstrap', 'ngTagsInput', 'angular.filter']);
 
-
+app.filter('startFrom', function () {
+    return function (data, start) {
+        return data.slice(start)
+    }
+})
 
 
 
@@ -611,6 +615,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
+    $scope.checkFilter = (itemcode) => {
+        itemcode = itemcode + "";
+
+        if (itemcode.indexOf($scope.searchCode) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
@@ -993,7 +1008,9 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()
@@ -1048,7 +1065,7 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
-    
+
     $scope.openUpload = () => {
         $mdDialog.show({
             templateUrl: '/Photographer/UploadProfilePhoto',
@@ -1063,11 +1080,53 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         })
     }
 
-    $scope.getUser = () => {
-        userApi.getUser().then(function (x) {
-            $scope.user = x.data;
-        });
+    $scope.tags = [];
+
+    $scope.loadedtags = [];
+
+    //$scope.getPhotographer = (id) => {
+    //    $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
+    //        $scope.photographer = x.data;
+    //    });
+    //};
+
+    $scope.loadTags = function () {
+        $http.get('/api/Photo/GetAllTags/')
+            .then(function (x) {
+                angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
+                console.log(JSON.stringify(x.data));
+            });
     };
+
+    $scope.getSearchString = function (searchterms) {
+
+        var string = "";
+
+        searchterms.forEach(function (element, index) {
+            string += "+" + element.text;
+        });
+
+        return string;
+    };
+
+    $scope.searchPhotos = (searchterms) => {
+        $window.location.href = '/Photographer/Results?tagnames=Image' + $scope.getSearchString(searchterms);
+    };
+
+    $scope.arrangePhotos = function () {
+        var grid = document.querySelector('.grid');
+        var msnry;
+
+        imagesLoaded(grid, function () {
+            // init Isotope after all images have loaded
+            msnry = new Masonry(grid, {
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+            });
+        });
+    }
+    
 }])
 app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
@@ -1276,7 +1335,9 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()
