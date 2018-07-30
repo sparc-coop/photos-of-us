@@ -16,6 +16,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string Bio { get; set; }
         public string ProfilePhotoUrl { get; set; }
         public bool? IsPhotographer { get; set; }
+        public bool? IsDeactivated { get; set; }
 
         public static PhotographerAccountViewModel ToViewModel(User u)
         {
@@ -29,6 +30,7 @@ namespace PhotosOfUs.Model.ViewModels
             model.Bio = u.Bio;
             model.ProfilePhotoUrl = u.ProfilePhotoUrl;
             model.IsPhotographer = u.IsPhotographer;
+            model.IsDeactivated = u.IsDeactivated;
             
             return model;
         }

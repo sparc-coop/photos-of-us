@@ -48,5 +48,21 @@
         });
     };
 
+    $scope.close = () => $mdDialog.hide();
+
+    $scope.deactivateModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/DeactivateModal',
+            controller: 'PhotographerAccountCtrl',
+            clickOutsideToClose: true,
+        })
+    }
+
+    $scope.deactivateStatus = () => {
+        // $scope.hidden = !$scope.hidden;
+        console.log("byee")
+        $scope.close();
+    }
+
 
 }])

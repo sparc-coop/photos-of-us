@@ -1930,26 +1930,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Margaret-Devbox\\.nuget\\packages\\": {},
+    "C:\\Users\\layla\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Margaret-Devbox\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
+      "projectUniqueName": "C:\\Users\\layla\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
       "projectName": "Tesseract.NetCore",
-      "projectPath": "C:\\Users\\Margaret-Devbox\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
-      "packagesPath": "C:\\Users\\Margaret-Devbox\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Margaret-Devbox\\Source\\Repos\\PhotosOfUs\\Tesseract\\obj_netfx\\",
+      "projectPath": "C:\\Users\\layla\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
+      "packagesPath": "C:\\Users\\layla\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\layla\\Source\\Repos\\PhotosOfUs\\Tesseract\\obj_netfx\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Margaret-Devbox\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\layla\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

@@ -234,6 +234,8 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.LastName).HasMaxLength(128);
 
                 entity.Property(e => e.IsPhotographer);
+
+                entity.Property(e => e.IsDeactivated);
             });
 
             modelBuilder.Entity<UserIdentity>(entity =>

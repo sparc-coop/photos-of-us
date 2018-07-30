@@ -1,0 +1,55 @@
+﻿.deactivate-dialog {
+    width: 500px;
+
+    .close {
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        top: 16px;
+        right: 18px;
+    }
+
+    .form {
+        margin-bottom: 10px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding-left: 20px;
+        padding-right: 15px;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    .form-button {
+        width: 100%;
+        text-align: center;
+        padding-bottom: 5px;
+    }
+
+    button {
+        //float: right !important;
+        width: 200px;
+    }
+
+    button:disabled {
+        background-color: lightgray;
+        color: black;
+        cursor: not-allowed;
+    }
+
+    .deactivate-message {
+        font-family: 'Open Sans';
+        font-size: 14px;
+        width: 450px;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .deactivate-form {
+        text-align: center;
+        padding: 0px 10px 10px 10px;
+    }
+}
