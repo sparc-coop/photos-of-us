@@ -95,5 +95,15 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("GetAllTags")]
+        public List<TagViewModel> GetAllTags()
+        {
+            var tags = new PhotoRepository(_context).GetAllTags();
+
+            return TagViewModel.ToViewModel(tags);
+            //return tags;
+        }
     }
 }

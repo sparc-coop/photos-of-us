@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Cards";
 }
-
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="initCardCtrl()">
     <h2 class="header-large">Your Codes</h2>
     <div class="yellow-background line--small"></div>
-
+    
     <div class="flex-box filters">
         <input class="input--light-blue searchbox" placeholder="Search Code" ng-model="searchText" />
 
