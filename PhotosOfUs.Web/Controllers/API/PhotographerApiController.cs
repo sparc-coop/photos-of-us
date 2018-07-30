@@ -40,6 +40,35 @@ namespace PhotosOfUs.Web.Controllers.API
             return Ok(model);
         }
 
+        [HttpPost]
+        [Route("GetTagsByPhotos")]
+        public List<TagViewModel> GetTagsByPhotos([FromBody]List<Photo> photos)
+        {
+            var repo = new PhotoRepository(_context);
+
+            var tags = repo.GetTagsByPhotos(photos);
+
+            var tagsmodel = TagViewModel.ToViewModel(tags);
+
+            return tagsmodel;
+        }
+
+        [HttpPost]
+        [Route("AddTags")]
+        public void AddTags([FromBody]List<TagViewModel> tags)
+        {
+            var repo = new PhotoRepository(_context);
+
+            repo.AddTags(tags);
+        }
+
+        [HttpPost]
+        [Route("EditPhotos")]
+        public void EditPhotos([FromBody]PhotoTagViewModel photosviewmodel)
+        {
+            var repo = new PhotoRepository(_context);
+        }
+
         [Route("DeletePhotos")]
         [HttpPost]
         public void Post([FromBody]List<Photo> photos)

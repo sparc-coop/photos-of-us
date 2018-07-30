@@ -227,20 +227,12 @@ namespace PhotosOfUs.Web.Controllers
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            byte[] fileBytes;
-
             if (string.IsNullOrEmpty(photoCode))
             {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    fileBytes = ms.ToArray();
-                    string s = Convert.ToBase64String(fileBytes);
-                    // act on the Base64 data
-                }
-                var ocr = new AzureOCR(_context);
-                var results = await ocr.MakeOCRRequest(fileBytes);
-                return ocr.ExtractCardCode(results);
+                var ac = new AzureCognitive(_context);
+                var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+                var results = await ac.MakeRequest(imgbytes, "tags");
+                return ac.ExtractCardCode(results);
             }
 
             //if (string.IsNullOrEmpty(photoCode))

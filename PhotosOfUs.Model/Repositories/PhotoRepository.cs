@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
+using PhotosOfUs.Model.ViewModels;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -131,18 +132,31 @@ namespace PhotosOfUs.Model.Repositories
         
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _context.Photo.Where(x => x.PublicProfile).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
         }
 
         public List<Photo> GetPublicPhotos()
         {
-            return _context.Photo.Where(x => x.PublicProfile).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
         }
 
         //public List<SearchIndex> GetCases(List<int> citationIds)
         //{
         //    return Context.SearchIndexes.Where(x => citationIds.Contains(x.RecordID)).ToList();
         //}
+
+        public void AddTags(List<TagViewModel> tags)
+        {
+            foreach (TagViewModel tag in tags)
+            {
+                Tag newTag = new Tag
+                {
+                    Name = tag.text
+                };
+                _context.Tag.Add(newTag);
+            }
+            _context.SaveChanges();
+        }
 
         public List<Tag> GetTags(string[] tagarray)
         {
@@ -174,11 +188,45 @@ namespace PhotosOfUs.Model.Repositories
             return photos;
         }
 
+        public List<PhotoTag> GetTagsByPhotos(List<Photo> photos)
+        {
+            var tags = new List<Tag>();
+            var phototags = new List<PhotoTag>();
+
+            //phototags = _context.PhotoTag.ToList();
+
+            foreach (Photo photo in photos)
+            {
+                var tagsfromphoto = _context
+                    .PhotoTag
+                    .Include(item => item.Tag)
+                    .Where(cm => cm.PhotoId == photo.Id)
+                    .ToList();
+
+                foreach (PhotoTag tag in tagsfromphoto)
+                {
+                    phototags.Add(tag);
+                }
+            }
+
+            //foreach (PhotoTag phototag in phototags)
+            //{
+            //    tags = _context
+            //        .Tag
+            //        .Include(item => item.Name)
+            //        .Where(cm => cm.Id == phototag.TagId)
+            //        .ToList();
+            //}
+
+            return phototags;
+        }
+
         public void DeletePhotos(List<Photo> photos)
         {
             foreach (Photo photo in photos)
             {
-                _context.Photo.Remove(photo);
+                var photodb = _context.Photo.Find(photo.Id);
+                photodb.IsDeleted = true;
             }
             _context.SaveChanges();
         }

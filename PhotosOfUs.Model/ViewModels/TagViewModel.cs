@@ -25,7 +25,31 @@ namespace PhotosOfUs.Model.ViewModels
             return viewModel;
         }
 
+        public static TagViewModel ToViewModel(PhotoTag entity)
+        {
+            TagViewModel viewModel = new TagViewModel();
+
+            viewModel.Id = entity.Tag.Id;
+            viewModel.Name = entity.Tag.Name;
+            viewModel.text = entity.Tag.Name;
+            //viewModel.Tags = new List<TagViewModel>();
+
+            return viewModel;
+        }
+
         public static List<TagViewModel> ToViewModel(List<Tag> entities)
+        {
+            List<TagViewModel> viewModels = new List<TagViewModel>();
+
+            foreach (var item in entities)
+            {
+                viewModels.Add(ToViewModel(item));
+            }
+
+            return viewModels;
+        }
+
+        public static List<TagViewModel> ToViewModel(List<PhotoTag> entities)
         {
             List<TagViewModel> viewModels = new List<TagViewModel>();
 

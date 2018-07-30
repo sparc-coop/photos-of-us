@@ -4,28 +4,58 @@
 }
 
 <!DOCTYPE html>
+
+<link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
+
 <style>
     .bulkedit-dialog {
-        width: 30%;
+        width: 500px;
+    }
+
+    .bulkedit-container {
+        margin: 30px;
+    }
+    #photosnumber {
+        color: rgba(0,0,0,0.87);
+        font-family: Roboto,Helvetica Neue,sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    #bulkedit-title {
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 32px;
+        color: #194952;
+        letter-spacing: 0;
     }
 </style>
 <md-dialog class="bulkedit-dialog">
-    <div id="photographer-upload--wrapper">
-        <div class="container-fluid">
-            <!-- header -->
-            <div class="col-md-12">
-                <div class="pull-left">
-                    <h2 class="header-large">Edit Photos</h2>
-                    <div class="yellow-background line--small"></div>
-                </div>
-                <div class="pull-right">
-                    <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-                <button ng-click="deletePhotos(selectedPhotos)">Delete Photos</button>
-            </div>
+    <div class="bulkedit-container" ng-init="getTagsByPhotos()">
+
+
+
+
+        <h2 id="bulkedit-title">Edit Photos  <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
+
+        <div>Tags</div>
+        <div>
+            <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
+                <auto-complete source="loadedtags"></auto-complete>
+
+            </tags-input>
         </div>
+
+        <div class="clearfix"></div>
+        <div>
+            <button ng-click="deletePhotos(selectedPhotos)">Delete Photos</button>
+        </div>
+        <div>
+            <button type="submit" class="btn-apply" ng-click="editPhotos(selectedPhotos, tags)">
+                Apply
+            </button>
+        </div>
+        {{tags}}
+        {{photosviewmodel}}
     </div>
 </md-dialog>
