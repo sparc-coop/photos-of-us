@@ -81,6 +81,33 @@
             }
         }
     }
+
+    .sales {
+        width: 100%;
+    }
+
+    .sales--row {
+        display: flex;
+        padding: 10px 15px;
+
+
+        &:nth-child(odd) {
+            background-color: rgba(255, 226, 97, 0.16);
+        }
+
+        &--name{
+            width: 18%;
+            padding-right: 30px;
+        }
+
+        &--quantity{
+            width: 14%;
+        }
+
+        &--price, &--earning{
+            width: 18%;
+        }
+    }
 }
 .order-history {
     .header--row {

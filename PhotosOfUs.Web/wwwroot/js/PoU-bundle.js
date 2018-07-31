@@ -175,10 +175,11 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
+            console.log(x.data);
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
             });
-            console.log($scope.orderDetails);
+            console.log($scope.orderDetailsList);
         });
         $scope.getOrderTotal(orderId);
     };
@@ -1127,6 +1128,11 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         });
     }
     
+    $scope.getUser = () => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        });
+    };
 }])
 app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 

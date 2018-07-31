@@ -41,6 +41,22 @@ namespace PhotosOfUs.Web.Controllers
 
             return Redirect("/Home/Pricing");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SendConfirmationEmail()
+        {
+            var apiKey = "";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("margaret@kuviocreative.com");
+            var subject = $"Photos Of Us Requesting Team Quote Contact Email";
+            var to = new EmailAddress("margaret@kuviocreative.com");
+            var plainTextContent = "test order confirmation email";
+            var htmlContent = $"testing test order confirmation email";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            await client.SendEmailAsync(msg);
+
+            return Redirect("/Customer/Confirmation");
+        }
     }
 
     public class ContactViewModel

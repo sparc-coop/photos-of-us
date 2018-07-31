@@ -79,6 +79,7 @@ namespace PhotosOfUs.Model.Repositories
         public List<OrderDetail> GetOrderDetails(int orderId)
         {
             List<OrderDetail> orderItems = _context.OrderDetail.Where(x => x.OrderId == orderId).Include("Photo").Include("PrintType").ToList();
+            //List<OrderDetail> orderItems = _context.OrderDetail.Where(x => x.OrderId == orderId).ToList();
             return orderItems;
         }
 

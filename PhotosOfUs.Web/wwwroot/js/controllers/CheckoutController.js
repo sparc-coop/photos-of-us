@@ -101,10 +101,11 @@
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
+            console.log(x.data);
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
             });
-            console.log($scope.orderDetails);
+            console.log($scope.orderDetailsList);
         });
         $scope.getOrderTotal(orderId);
     };

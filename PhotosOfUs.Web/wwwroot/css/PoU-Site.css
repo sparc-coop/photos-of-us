@@ -2489,6 +2489,22 @@ canvas {
       background-color: #43c6ba;
       color: white; }
 
+.photographer-sales-history .sales {
+  width: 100%; }
+
+.photographer-sales-history .sales--row {
+  display: flex;
+  padding: 10px 15px; }
+  .photographer-sales-history .sales--row:nth-child(odd) {
+    background-color: rgba(255, 226, 97, 0.16); }
+  .photographer-sales-history .sales--row--name {
+    width: 18%;
+    padding-right: 30px; }
+  .photographer-sales-history .sales--row--quantity {
+    width: 14%; }
+  .photographer-sales-history .sales--row--price, .photographer-sales-history .sales--row--earning {
+    width: 18%; }
+
 .order-history .header--row {
   display: flex;
   padding: 0 10px; }

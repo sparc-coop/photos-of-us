@@ -298,6 +298,7 @@ namespace PhotosOfUs.Web.Controllers
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
+        [Authorize]
         public ActionResult SalesHistory(int id)
         {
             var orderItems = new OrderRepository(_context).GetPhotographerOrderDetails(id);
@@ -307,9 +308,6 @@ namespace PhotosOfUs.Web.Controllers
                 orders.Add(new OrderRepository(_context).GetOrder(order.Key));
             }
 
-            //var orders = new OrderRepository(_context).GetOrders(id);
-            //SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
-            //return View(salesHistory);
             return View(OrderViewModel.ToViewModel(orders).ToList());
         }
 

@@ -3,180 +3,36 @@
     ViewData["Title"] = "Sales History";
 }
 
-<div class="photographer-dashboard--wrapper photographer-sales-history" ng-controller="CheckoutCtrl">
+<div class="photographer-dashboard--wrapper photographer-sales-history order-history" ng-controller="CheckoutCtrl">
     <h2 class="header-large">Sales History</h2>
     <div class="yellow-background line--small"></div>
-
-    <div class="flex-box filters">
-        @foreach(var order in Model)
-        {
-            @order.Id
-            <div ng-init="getOrderDetails(@order.Id)" ng-repeat="order in orderDetailsList">
-                {{order.OrderDate}}
-            </div>
-
-        }
-        @*<form action="" method="get" class="search-form">
-            <div class="search-title">
-                <h4>Search Orders</h4>
-            </div>
-
-             <input type="number" name="Total" />
-
-            <div class="search-inputs">
-                @{
-            var q = ViewContext.HttpContext.Request.Query;
-            // column 1
-            var firstName = q.Where(x => x.Key == "FirstName").FirstOrDefault().Value.ToString();
-
-            var lastName = q.Where(x => x.Key == "LastName").FirstOrDefault().Value.ToString();
-
-            var email = q.Where(x => x.Key == "Email").FirstOrDefault().Value.ToString();
-
-            var isPhotographer = q.Where(x => x.Key == "IsPhotographer").FirstOrDefault().Value.ToString();
-
-            //column 2
-            var photoName = q.Where(x => x.Key == "PhotoName").FirstOrDefault().Value.ToString();
-
-            var orderStatus = q.Where(x => x.Key == "OrderStatus").FirstOrDefault().Value.ToString();
-
-            var dateThirtyDaysAgo = q.Where(x => x.Key == "OrderDateEarliest").FirstOrDefault().Value.ToString();
-            if (dateThirtyDaysAgo.Length == 0)
-            {
-                dateThirtyDaysAgo = DateTime.Now.AddDays(-30).ToString("yyyy-MM-dd");
-            }
-
-            var dateNow = q.Where(x => x.Key == "OrderDateLatest").FirstOrDefault().Value.ToString();
-            if (dateNow.Length == 0)
-            {
-                dateNow = DateTime.Now.ToString("yyyy-MM-dd");
-            }
-
-            var displayName = q.Where(x => x.Key == "DisplayName").FirstOrDefault().Value.ToString();
-
-            var quantityMin = q.Where(x => x.Key == "QuantityMin").FirstOrDefault().Value.ToString();
-            var quantityMax = q.Where(x => x.Key == "QuantityMax").FirstOrDefault().Value.ToString();
-                }
-                <div class="column">
-                    <div class="data">
-                        <label>First Name</label>
-                        <input type="text" name="FirstName" value="@(firstName)" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Last Name</label>
-                        <input type="text" name="LastName" value="@(lastName)" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Email</label>
-                        <input type="text" name="Email" value="@(email)" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Is Photographer?</label>
-                        @{
-                    var isPhotographerList = new SelectList(new List<object>
-                                                                        {
-                                                                            new { Value = "", Text = "---" },
-                                                                            new { Value = "false", Text = "No" },
-                                                                            new { Value = "true", Text = "Yes" }
-                                                                        }, "Value", "Text", isPhotographer);
-                        }
-                        @Html.DropDownList("IsPhotographer", isPhotographerList)
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="data">
-                        <label>Photo Name</label>
-                        <input type="text" name="PhotoName" value="@photoName" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Order Status</label>
-                        @{
-                    var orderStatusList = new SelectList(new List<object>
-                                                                        {
-                                                                            new { Value = "", Text = "---" },
-                                                                            new { Value = "Payment Pending", Text = "Payment Pending" },
-                                                                            new { Value = "Order Complete", Text = "Order Complete" }
-                                                                        }, "Value", "Text", orderStatus);
-                        }
-                        @Html.DropDownList("OrderStatus", orderStatusList)
-                    </div>
-                    <div class="data">
-                        <label>Order Date</label><br />
-                        <input type="date" name="OrderDateEarliest" value="@dateThirtyDaysAgo" class="input--light-blue" /><br />
-                        -to-<br />
-                        <input type="date" name="OrderDateLatest" value="@(dateNow)" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Display Name</label>
-                        <input type="text" name="DisplayName" value="@(displayName)" class="input--light-blue" />
-                    </div>
-                    <div class="data">
-                        <label>Quantity</label>
-                        <input type="number" name="QuantityMin" min="0" value="@quantityMin" class="input--light-blue small-input" />
-                        -to-
-                        <input type="number" name="QuantityMax" min="0" value="@quantityMax" class="input--light-blue small-input" />
-                    </div>
-                </div>
-                <div class="column">
-                    <br />
-                </div>
-                <div class="column">
-                    <br />
-                </div>
-                <div class="column">
-                </div>
-                <div class="column">
-                    <button class="input--light-blue">Submit</button>
-                </div>
-            </div>
-        </form>*@
-    </div>
-
 
     <div class="flex-box">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <td>Photo Sold</td>
-                    <td>Print Size</td>
-                    <td>Amount</td>
-                    <td>Total Paid</td>
+                    <td>Quantity</td>
+                    <td>Print Price</td>
                     <td>Your Earnings</td>
                     <td>Order Status</td>
                 </tr>
             </thead>
-            <tbody>
-                @*@foreach (var item in Model.Orders)
-                {
-                    <tr>
-                        <td>@item.PhotoName</td>
-                        <td class="highlight">@item.PrintSize</td>
-                        <td>@item.Amount</td>
-                        <td>@string.Format("{0:C}", item.TotalPaid)</td>
-                        <td>@string.Format("{0:C}", item.Earning)</td>
-                        <td>
-                            @if (item.OrderStatus.Equals("Payment Pending"))
-                            {
-                                <i class="material-icons">access_time</i>
 
-                            }
-                            else if (item.OrderStatus.Equals("Order Complete"))
-                            {
-                                <i class="material-icons">check</i>
-                            }
-                            else
-                            {
-
-                                <i class="material-icons">print</i>
-                            }
-
-                            @item.OrderStatus
-                        </td>
-                    </tr>
-                }*@
-
-            </tbody>
         </table>
+        @foreach (var order in Model)
+        {
+            <div class="sales" ng-init="getOrderDetails('@order.Id')" ng-cloak>
+                <div ng-repeat="order in orderDetailsList" class="sales--row" ng-if="order.OrderId == @order.Id">
+                    <div class="sales--row--name">{{order.Photo.Name}}</div>
+                    <div class="sales--row--quantity">{{order.Quantity}}</div>
+                    <div class="sales--row--price">${{order.Photo.Price + order.PrintType.BaseCost | number: 2}}</div>
+                    <div class="sales--row--earning">${{order.Photo.Price}}</div>
+                    <div class="sales--row--status">@order.OrderStatus</div>
+                </div>
+            </div>
+        }
+
     </div>
     @*
         <div class="flex-box total">

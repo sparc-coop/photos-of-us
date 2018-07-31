@@ -36,5 +36,13 @@ namespace PhotosOfUs.Web.Controllers
             List<Order> orders = new OrderRepository(_context).OrderHistory(id);
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
+
+        public ActionResult Confirmation()
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            List<Order> orders = new OrderRepository(_context).OrderHistory(userId);
+            return View(CustomerOrderViewModel.ToViewModel(orders));
+        }
     }
 }
