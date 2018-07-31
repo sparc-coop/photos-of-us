@@ -20,6 +20,7 @@ namespace PhotosOfUs.Model.Models
         public string Name { get; set; }
         public DateTime UploadDate { get; set; }
         public bool PublicProfile { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Folder Folder { get; set; }
         public User Photographer { get; set; }

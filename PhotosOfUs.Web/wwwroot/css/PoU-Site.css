@@ -2095,13 +2095,24 @@ canvas {
 
 .photographer-search {
   width: 100%;
-  position: relative; }
+  position: relative;
+  font-family: "Dosis";
+  font-weight: 600;
+  font-size: 42px;
+  color: #FFE261;
+  letter-spacing: 0; }
   .photographer-search__title {
     font-family: "Dosis";
     font-weight: 600;
     font-size: 42px;
     color: #194952;
     letter-spacing: 0; }
+  .photographer-search__bigtitle {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 30%;
+    right: 30%; }
 
 .photographer-searchTerm {
   float: left;

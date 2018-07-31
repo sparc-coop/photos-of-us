@@ -72,8 +72,44 @@ app.factory('userApi', [
 ]);
 
 
-app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
-    $scope.goToCart = (userId) => {
+app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 'selectedPhotos', ($scope, $window, $mdDialog, $http, selectedPhotos) => {
+    $scope.close = () => $mdDialog.hide();
+    $scope.selectedPhotos = selectedPhotos;
+    $scope.photosviewmodel = { identifier: "ok", "photosid": [], tagsid: [] };
+
+    $scope.deletePhotos = function (photos) {
+        $http.post('/api/Photographer/deletePhotos/', photos);
+        $window.location.href = '/Photographer/Profile/';
+    }
+
+    $scope.getTagsByPhotos = function () {
+        $http.post('/api/Photographer/GetTagsByPhotos/', $scope.selectedPhotos)
+            .then(function (x) {
+                $scope.tags = x.data;
+                
+                console.log($scope.tags);
+            });
+    };
+
+    $scope.editPhotos = function (photos, tags) {
+        photos.forEach(function (item) {
+            $scope.photosviewmodel.photosid.push(item.Id);
+        });
+        tags.forEach(function (item) {
+            $scope.photosviewmodel.tagsid.push(item.Id);
+        });
+        $http.post('/api/Photographer/AddTags/', tags)
+            .then($http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
+                    .then(function (x) {
+                        $scope.tags = x.data;
+
+                        console.log($scope.tags);
+                    }));
+    };
+
+}])
+app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
+    $scope.goToCart = () => {
         $window.location.href = '/Photo/Cart/' + userId;
     };
 
@@ -1063,27 +1099,76 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     });
 }])
 app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) => {
+
+    $scope.tags = [];
+    $scope.loadedtags = [];
+    $scope.isBulkEditEnabled = false;
+    $scope.selectedPhotos = [];
+    $scope.profilePhotos = [];
+    $scope.isNotHighlighted = {
+        "border": "3px solid green"
+    }
+    $scope.isHighlighted = {
+        "border": "3px solid blue"
+    }
+
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
+    $scope.isPhotoSelected = function (photo) {
+        var idx = $scope.selectedPhotos.indexOf(photo);
+        if (idx > -1) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     $scope.openUpload = () => {
         $mdDialog.show({
+            locals: { selectedPhotos: $scope.selectedPhotos },
             templateUrl: '/Photographer/UploadProfilePhoto',
             controller: 'ModalController',
             clickOutsideToClose: true,
         });
     };
 
-    $scope.getProfile = function () {      
+    $scope.openBulkEdit = () => {
+        $mdDialog.show({
+            locals: { selectedPhotos: $scope.selectedPhotos },
+            templateUrl: '/Photographer/BulkEditModal',
+            controller: 'BulkEditModalCtrl',
+            clickOutsideToClose: true,
+        });
+    };
+
+    $scope.getProfile = function () {
+
         photographerApi.getAccountSettings().then(function (x) {
             $scope.photographer = x.data;
         })
     }
 
-    $scope.tags = [];
+    $scope.toggleSelection = function () {
+        $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
+    }
 
-    $scope.loadedtags = [];
+    $scope.selectPhoto = function (item) {
+            var idx = $scope.selectedPhotos.indexOf(item);
+            if (idx > -1) {
+                $scope.selectedPhotos.splice(idx, 1);
+            }
+            else {
+                $scope.selectedPhotos.push(item);
+            }
+            console.log($scope.selectedPhotos);
+    }
+
+    $scope.deletePhotos = function (photos) {
+        $http.post('/api/Photographer/deletePhotos/', photos);
+    }
 
     //$scope.getPhotographer = (id) => {
     //    $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
@@ -1113,6 +1198,14 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     $scope.searchPhotos = (searchterms) => {
         $window.location.href = '/Photographer/Results?tagnames=Image' + $scope.getSearchString(searchterms);
     };
+
+    $scope.getProfilePhotos = function () {
+        $http.get('/api/Photographer/getProfilePhotos/')
+            .then(function (x) {
+                angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
+                console.log(JSON.stringify(x.data));
+            });
+    }
 
     $scope.arrangePhotos = function () {
         var grid = document.querySelector('.grid');

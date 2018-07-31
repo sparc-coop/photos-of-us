@@ -220,26 +220,23 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult BulkEditModal()
+        {
+            return View();
+        }
+
         [Authorize]
         public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            byte[] fileBytes;
-
             if (string.IsNullOrEmpty(photoCode))
             {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    fileBytes = ms.ToArray();
-                    string s = Convert.ToBase64String(fileBytes);
-                    // act on the Base64 data
-                }
-                var ocr = new AzureOCR(_context);
-                var results = await ocr.MakeOCRRequest(fileBytes);
-                return ocr.ExtractCardCode(results);
+                var ac = new AzureCognitive(_context);
+                var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+                var results = await ac.MakeRequest(imgbytes, "tags");
+                return ac.ExtractCardCode(results);
             }
 
             //if (string.IsNullOrEmpty(photoCode))
@@ -352,13 +349,18 @@ namespace PhotosOfUs.Web.Controllers
         {
             string[] tagarray = tagnames.Split(' ');
 
-            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tagarray);
+            var tags = new PhotoRepository(_context).GetTags(tagarray);
+            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tags);
 
+            var searchmodel = new SearchViewModel();
+
+            searchmodel.Photos = PhotoViewModel.ToViewModel(photos);
+            searchmodel.Tags = TagViewModel.ToViewModel(tags);
             //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
             //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
             //var getalltags = new PhotoRepository(_context).GetAllTags();
 
-            return View(PhotoViewModel.ToViewModel(photos)); ;
+            return View(searchmodel);
         }
 
         public ActionResult NewFolderModal()

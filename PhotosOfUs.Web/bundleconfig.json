@@ -14,6 +14,7 @@
     "inputFiles": [
       "wwwroot/js/PoU.js",
       "wwwroot/js/API.js",
+      "wwwroot/js/controllers/BulkEditModalController.js",
       "wwwroot/js/controllers/CheckoutController.js",
       "wwwroot/js/controllers/DownloadController.js",
       "wwwroot/js/controllers/FolderController.js",

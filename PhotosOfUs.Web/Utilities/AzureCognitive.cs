@@ -8,9 +8,24 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using PhotosOfUs.Model.Models;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace PhotosOfUs.Web.Utilities
 {
+    public class Tag
+    {
+        public string name { get; set; }
+        public double confidence { get; set; }
+        public string hint { get; set; }
+    }
+
+    public class Metadata
+    {
+        public int height { get; set; }
+        public int width { get; set; }
+        public string format { get; set; }
+    }
+
     public class Word
     {
         public string boundingBox { get; set; }
@@ -35,13 +50,17 @@ namespace PhotosOfUs.Web.Utilities
         public string orientation { get; set; }
         public double textAngle { get; set; }
         public List<Region> regions { get; set; }
+
+        public List<Tag> tags { get; set; }
+        public string requestId { get; set; }
+        public Metadata metadata { get; set; }
     }
 
-    public class AzureOCR
+    public class AzureCognitive
     {
         private PhotosOfUsContext _context;
 
-        public AzureOCR(PhotosOfUsContext context)
+        public AzureCognitive(PhotosOfUsContext context)
         {
             _context = context;
         }
@@ -58,12 +77,13 @@ namespace PhotosOfUs.Web.Utilities
         // If you use a free trial subscription key, you shouldn't need to change
         // this region.
         const string uriBase =
-            "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
-            //"https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr";
+            //"https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
+            "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/";    
+        //old - "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr";
 
         //tutorial url: "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr";
 
-        public async Task<RootObject> MakeOCRRequest(byte[] file)
+        public async Task<RootObject> MakeRequest(byte[] file, string cognitiveType)
         {
             HttpClient client = new HttpClient();
 
@@ -72,10 +92,25 @@ namespace PhotosOfUs.Web.Utilities
                 "Ocp-Apim-Subscription-Key", subscriptionKey);
 
             // Request parameters.
-            string requestParameters = "language=unk&detectOrientation=true";
+            //string requestParameters = "language=unk&detectOrientation=true";
+
+
+            var tagsQueryString = "analyze?visualFeatures=Tags&language=en";
+            var ocrQueryString = "ocr?language=unk&detectOrientation=true";
+
+            string uri = "";
 
             // Assemble the URI for the REST API Call.
-            string uri = uriBase + "?" + requestParameters;
+            if (cognitiveType == "ocr")
+            {
+                uri = uriBase + ocrQueryString;
+            }
+            else if (cognitiveType == "tags")
+            {
+                uri = uriBase + tagsQueryString;
+            }
+
+            //string uri = uriBase + "?" + requestParameters;
 
             HttpResponseMessage response;
 
@@ -152,6 +187,20 @@ namespace PhotosOfUs.Web.Utilities
                 BinaryReader binaryReader = new BinaryReader(fileStream);
                 return binaryReader.ReadBytes((int)fileStream.Length);
             }
+        }
+
+        public static byte[] TransformImageIntoBytes(IFormFile file)
+        {
+            byte[] fileBytes;
+
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                fileBytes = ms.ToArray();
+                string s = Convert.ToBase64String(fileBytes);
+                // act on the Base64 data
+            }
+            return fileBytes;
         }
 
         //static async void MakeRequest(string imageFilePath)

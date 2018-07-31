@@ -1,4 +1,4 @@
-﻿@model List<PhotoViewModel>
+﻿@model SearchViewModel
 @{
     ViewData["Title"] = "Search";
     Layout = "_Layout";
@@ -11,18 +11,25 @@
 
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
-
-
-
-
     <div ng-controller="PhotographerCtrl">
 
-        <div class="photographer-search__title">@Model.Count "tags" photos</div><br /><br />
+        <div class="photographer-search__title">@Model.Photos.Count 
+        @foreach (var Tag in Model.Tags)
+        {
+            if (Model.Tags.IndexOf(Tag) == Model.Tags.Count - 1)
+            {
+                <span>&quot;@Tag.text&quot</span>
+            }
+            else
+            {
+                <span>&quot;@Tag.text&quot, </span> 
+            }
+        } photos</div><br /><br />
         <div>Similar photos also found in these categories</div>
         <div>
             <div class="grid">
                 <div class="grid-sizer"></div>
-                @foreach (var Photo in @Model)
+                @foreach (var Photo in @Model.Photos)
         {
             <div class="grid-item">
                 <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />

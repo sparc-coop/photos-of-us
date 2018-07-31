@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
+using PhotosOfUs.Model.ViewModels;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -127,12 +128,12 @@ namespace PhotosOfUs.Model.Repositories
         
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _context.Photo.Where(x => x.PublicProfile && x.PhotographerId == photographerId).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
         }
 
         public List<Photo> GetPublicPhotos()
         {
-            return _context.Photo.Where(x => x.PublicProfile).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
         }
 
         //public List<SearchIndex> GetCases(List<int> citationIds)
@@ -140,15 +141,31 @@ namespace PhotosOfUs.Model.Repositories
         //    return Context.SearchIndexes.Where(x => citationIds.Contains(x.RecordID)).ToList();
         //}
 
-        public List<Photo> GetPublicPhotosByTag(string[] tagarray)
+        public void AddTags(List<TagViewModel> tags)
+        {
+            foreach (TagViewModel tag in tags)
+            {
+                Tag newTag = new Tag
+                {
+                    Name = tag.text
+                };
+                _context.Tag.Add(newTag);
+            }
+            _context.SaveChanges();
+        }
+
+        public List<Tag> GetTags(string[] tagarray)
+        {
+            return _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
+        }
+
+        public List<Photo> GetPublicPhotosByTag(List<Tag> taglist)
         {
             var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
 
-            List<Tag> tags = _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
-
             List<int> tagids = new List<int>();
 
-            foreach (Tag tag in tags)
+            foreach (Tag tag in taglist)
             {
                 tagids.Add(tag.Id);
             }
@@ -167,7 +184,49 @@ namespace PhotosOfUs.Model.Repositories
             return photos;
         }
 
-        
+        public List<PhotoTag> GetTagsByPhotos(List<Photo> photos)
+        {
+            var tags = new List<Tag>();
+            var phototags = new List<PhotoTag>();
+
+            //phototags = _context.PhotoTag.ToList();
+
+            foreach (Photo photo in photos)
+            {
+                var tagsfromphoto = _context
+                    .PhotoTag
+                    .Include(item => item.Tag)
+                    .Where(cm => cm.PhotoId == photo.Id)
+                    .ToList();
+
+                foreach (PhotoTag tag in tagsfromphoto)
+                {
+                    phototags.Add(tag);
+                }
+            }
+
+            //foreach (PhotoTag phototag in phototags)
+            //{
+            //    tags = _context
+            //        .Tag
+            //        .Include(item => item.Name)
+            //        .Where(cm => cm.Id == phototag.TagId)
+            //        .ToList();
+            //}
+
+            return phototags;
+        }
+
+        public void DeletePhotos(List<Photo> photos)
+        {
+            foreach (Photo photo in photos)
+            {
+                var photodb = _context.Photo.Find(photo.Id);
+                photodb.IsDeleted = true;
+            }
+            _context.SaveChanges();
+        }
+
         public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
