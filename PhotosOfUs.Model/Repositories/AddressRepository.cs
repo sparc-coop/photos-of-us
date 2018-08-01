@@ -3,6 +3,7 @@ using PhotosOfUs.Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace PhotosOfUs.Model.Repositories
@@ -44,6 +45,11 @@ namespace PhotosOfUs.Model.Repositories
             }
             
             
+        }
+
+        public Address FindAddress(int userId)
+        {
+            return _context.Address.Where(x => x.UserId == userId).FirstOrDefault();
         }
     }
 }

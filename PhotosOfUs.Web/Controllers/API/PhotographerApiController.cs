@@ -29,7 +29,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet]
         [Route("GetProfilePhotos")]
-        public IActionResult GetProfilePhotos()
+        public List<PhotoViewModel> GetProfilePhotos()
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -37,12 +37,12 @@ namespace PhotosOfUs.Web.Controllers.API
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
             var model = PhotoViewModel.ToViewModel(photos);
 
-            return Ok(model);
+            return model;
         }
 
         [HttpPost]
         [Route("GetTagsByPhotos")]
-        public List<TagViewModel> GetTagsByPhotos([FromBody]List<Photo> photos)
+        public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
         {
             var repo = new PhotoRepository(_context);
 
@@ -51,6 +51,22 @@ namespace PhotosOfUs.Web.Controllers.API
             var tagsmodel = TagViewModel.ToViewModel(tags);
 
             return tagsmodel;
+        }
+
+        [HttpGet]
+        [Route("GetPhotoPrice/{photoId:int}")]
+        public decimal? GetPhotoPrice(int photoId)
+        {
+            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+
+            return photo.Price;
+        }
+
+        [HttpPost]
+        [Route("SavePhotoPrice/{photoId:int}/{newPrice:decimal}")]
+        public void GetPhotoPrice(int photoId, decimal newPrice)
+        {
+            new PhotoRepository(_context).UpdatePrice(photoId, newPrice);
         }
 
         [HttpPost]

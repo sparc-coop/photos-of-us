@@ -67,12 +67,6 @@
         return false;
     }
 
-    //$scope.addToCart = function (printId) {
-    //    $scope.select(printId);
-    //    $scope.createOrder();
-    //    //todo broadcast added to cart to update menu
-    //}
-
     $scope.createOrder = (userId) => {
         console.log($scope.selectedItems);
         var photoId = $location.absUrl().split('Purchase/')[1];
@@ -97,15 +91,16 @@
 
     $scope.orderDetailsList = [];
     $scope.orderTotalList = [];
+    $scope.totalSales = 0;
+    $scope.totalEarned = 0;
 
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
-            console.log(x.data);
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
+                $scope.totalEarned += value.Photo.Price;
             });
-            console.log($scope.orderDetailsList);
         });
         $scope.getOrderTotal(orderId);
     };
@@ -119,6 +114,7 @@
                     total: $scope.orderTotal
                 }
             );
+            $scope.totalSales += x.data;
         });
     };
 
@@ -131,8 +127,21 @@
     $scope.getOpenOrder = (userId) => {
         $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
             $scope.order = x.data;
-            console.log($scope.order);
             $scope.getOrderTotal($scope.order.Id);
         });
     }; 
+
+    $scope.getUserAndAddress = (userId) => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+            $http.get('/api/Checkout/GetAddress/' + $scope.user.Id).then(x => {
+                $scope.address = x.data;
+                $scope.getOpenOrder($scope.user.Id);
+            });
+        })
+    }; 
+
+    $scope.initConfirmation = () => {
+        $scope.getUserAndAddress();
+    };
 }])

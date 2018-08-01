@@ -26,6 +26,53 @@
     color: black;
     cursor: not-allowed; }
 
+.bulkedit-dialog {
+  width: 500px; }
+  .bulkedit-dialog .bulkedit-container {
+    margin: 30px; }
+  .bulkedit-dialog #photosnumber {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    font-size: 16px;
+    font-weight: 400; }
+  .bulkedit-dialog #bulkedit-title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 32px;
+    color: #194952;
+    letter-spacing: 0; }
+  .bulkedit-dialog .btn-apply {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #43C6BA;
+    font-weight: 600;
+    color: #194952;
+    padding: 8px 16px;
+    cursor: pointer;
+    outline: none; }
+  .bulkedit-dialog .btn-delete {
+    border: none;
+    background-color: transparent;
+    color: #FF6060;
+    position: absolute;
+    bottom: 20px;
+    right: 125px;
+    cursor: pointer;
+    outline: none; }
+  .bulkedit-dialog .material-icons {
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 20px;
+    right: 20px; }
+  .bulkedit-dialog .tags {
+    margin-bottom: 20px; }
+  .bulkedit-dialog .price {
+    margin-bottom: 20px; }
+
 .full-width-anchor {
   position: absolute;
   width: 100%;
@@ -1265,8 +1312,8 @@ td {
     text-align: center; }
   .cart .checkout .summary .divider {
     position: absolute;
-    bottom: 48px;
-    left: 44px;
+    bottom: 18px;
+    left: 34px;
     margin-top: 10px; }
   .cart .checkout .summary .cart-items {
     display: flex;
@@ -1350,6 +1397,28 @@ td {
 
 .cart-item:nth-child(even) {
   background: rgba(255, 226, 97, 0.16); }
+
+.confirmation .divider {
+  margin-top: 20px; }
+
+.confirmation .heading {
+  font-family: 'Dosis';
+  font-weight: 600;
+  font-size: 32px;
+  color: #43C6BA; }
+
+.confirmation .content {
+  font-size: 20px;
+  color: #194952;
+  font-family: 'Open Sans';
+  font-weight: 600;
+  display: flex;
+  padding: 10px 0; }
+  .confirmation .content--info {
+    font-size: 18px;
+    color: #757575;
+    width: 200px;
+    font-weight: 500; }
 
 .body {
   overflow-x: hidden; }
@@ -2451,70 +2520,75 @@ canvas {
       .photographer-profile--wrapper .photographer-gallery-container .gallery-image {
         height: 400px; } }
 
-.photographer-sales-history select {
-  color: #43C6BA;
-  border: 0;
-  font-size: 14px; }
-
-.photographer-sales-history .total {
-  margin-top: 25px;
-  float: right;
-  font-family: 'Dosis';
-  font-weight: 400; }
-  .photographer-sales-history .total h4 {
+.photographer-sales-history {
+  padding-bottom: 50px; }
+  .photographer-sales-history select {
     color: #43C6BA;
-    margin-bottom: 0px; }
-  .photographer-sales-history .total h3 {
-    color: #194952;
-    margin-top: 5px; }
-  .photographer-sales-history .total-counter {
-    margin-left: 75px; }
-
-.photographer-sales-history .search-form {
-  width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  border: 2px solid #43c6ba; }
-  .photographer-sales-history .search-form .search-title {
-    margin-bottom: 16px; }
-    .photographer-sales-history .search-form .search-title h4 {
-      margin: 0; }
-  .photographer-sales-history .search-form .search-inputs {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between; }
-  .photographer-sales-history .search-form .column {
-    width: 48%; }
-    .photographer-sales-history .search-form .column .data:not(:last-child) {
+    border: 0;
+    font-size: 14px; }
+  .photographer-sales-history .total {
+    margin-top: 25px;
+    float: right;
+    font-family: 'Dosis';
+    font-weight: 400; }
+    .photographer-sales-history .total h4 {
+      color: #43C6BA;
+      margin-bottom: 0px; }
+    .photographer-sales-history .total h3 {
+      color: #194952;
+      margin-top: 5px; }
+    .photographer-sales-history .total-counter {
+      margin-left: 75px; }
+  .photographer-sales-history .search-form {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px solid #43c6ba; }
+    .photographer-sales-history .search-form .search-title {
       margin-bottom: 16px; }
-  .photographer-sales-history .search-form .medium-input {
-    max-width: 100px;
-    padding: 4px; }
-  .photographer-sales-history .search-form .small-input {
-    max-width: 40px;
-    padding: 4px; }
-  .photographer-sales-history .search-form button {
-    background-color: white; }
-    .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
-      background-color: #43c6ba;
-      color: white; }
-
-.photographer-sales-history .sales {
-  width: 100%; }
-
-.photographer-sales-history .sales--row {
-  display: flex;
-  padding: 10px 15px; }
-  .photographer-sales-history .sales--row:nth-child(odd) {
-    background-color: rgba(255, 226, 97, 0.16); }
-  .photographer-sales-history .sales--row--name {
-    width: 18%;
-    padding-right: 30px; }
-  .photographer-sales-history .sales--row--quantity {
-    width: 14%; }
-  .photographer-sales-history .sales--row--price, .photographer-sales-history .sales--row--earning {
-    width: 18%; }
+      .photographer-sales-history .search-form .search-title h4 {
+        margin: 0; }
+    .photographer-sales-history .search-form .search-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between; }
+    .photographer-sales-history .search-form .column {
+      width: 48%; }
+      .photographer-sales-history .search-form .column .data:not(:last-child) {
+        margin-bottom: 16px; }
+    .photographer-sales-history .search-form .medium-input {
+      max-width: 100px;
+      padding: 4px; }
+    .photographer-sales-history .search-form .small-input {
+      max-width: 40px;
+      padding: 4px; }
+    .photographer-sales-history .search-form button {
+      background-color: white; }
+      .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
+        background-color: #43c6ba;
+        color: white; }
+  .photographer-sales-history .sales {
+    width: 100%; }
+    .photographer-sales-history .sales .date {
+      padding: 15px 10px; }
+  .photographer-sales-history .sales--row {
+    display: flex;
+    padding: 15px; }
+    .photographer-sales-history .sales--row:nth-child(even) {
+      background-color: rgba(255, 226, 97, 0.16); }
+    .photographer-sales-history .sales--row--name {
+      width: 18%; }
+    .photographer-sales-history .sales--row--quantity {
+      width: 13%; }
+    .photographer-sales-history .sales--row--type {
+      width: 15%;
+      padding-right: 6px; }
+    .photographer-sales-history .sales--row--price, .photographer-sales-history .sales--row--earning {
+      width: 16%;
+      padding-right: 5px; }
+    .photographer-sales-history .sales--row--status {
+      padding-left: 40px; }
 
 .order-history .header--row {
   display: flex;

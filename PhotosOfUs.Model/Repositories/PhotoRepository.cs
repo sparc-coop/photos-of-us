@@ -42,6 +42,14 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Include("Photographer").Single(x => x.Id == photoId);
         }
 
+        public void UpdatePrice(int photoId, decimal price)
+        {
+            Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
+            photo.Price = price;
+            _context.Photo.Update(photo);
+            _context.SaveChanges();
+        }
+
         public void SavePhoto(Photo photo)
         {
             _context.Photo.Attach(photo);
@@ -128,7 +136,7 @@ namespace PhotosOfUs.Model.Repositories
         
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
         }
 
         public List<Photo> GetPublicPhotos()
@@ -184,14 +192,20 @@ namespace PhotosOfUs.Model.Repositories
             return photos;
         }
 
-        public List<PhotoTag> GetTagsByPhotos(List<Photo> photos)
+        public List<PhotoTag> GetTagsByPhotos(List<int> photos)
         {
             var tags = new List<Tag>();
             var phototags = new List<PhotoTag>();
 
             //phototags = _context.PhotoTag.ToList();
 
-            foreach (Photo photo in photos)
+            var photoList = new List<Photo>();
+            foreach(int id in photos)
+            {
+                photoList.Where(x => x.Id == id);
+            }
+
+            foreach (Photo photo in photoList)
             {
                 var tagsfromphoto = _context
                     .PhotoTag

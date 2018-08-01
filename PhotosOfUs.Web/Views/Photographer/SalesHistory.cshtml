@@ -13,6 +13,7 @@
                 <tr>
                     <td>Photo Sold</td>
                     <td>Quantity</td>
+                    <td>Print Type</td>
                     <td>Print Price</td>
                     <td>Your Earnings</td>
                     <td>Order Status</td>
@@ -23,9 +24,11 @@
         @foreach (var order in Model)
         {
             <div class="sales" ng-init="getOrderDetails('@order.Id')" ng-cloak>
+                <div class="date">Order Date: @order.OrderDate.ToShortDateString()</div>
                 <div ng-repeat="order in orderDetailsList" class="sales--row" ng-if="order.OrderId == @order.Id">
                     <div class="sales--row--name">{{order.Photo.Name}}</div>
                     <div class="sales--row--quantity">{{order.Quantity}}</div>
+                    <div class="sales--row--type">{{order.PrintType.Type}}, {{order.PrintType.Height}} x {{order.PrintType.Length}}</div>
                     <div class="sales--row--price">${{order.Photo.Price + order.PrintType.BaseCost | number: 2}}</div>
                     <div class="sales--row--earning">${{order.Photo.Price}}</div>
                     <div class="sales--row--status">@order.OrderStatus</div>
@@ -33,21 +36,15 @@
             </div>
         }
 
-    </div>
-    @*
+    </div>   
         <div class="flex-box total">
             <div class="total-counter">
                 <h4>Total Sales</h4>
-                <h3>@Model.TotalSales</h3>
-            </div>
-            <div class="total-counter">
-                <h4>Total Made</h4>
-                <h3>@string.Format("{0:C}", Model.TotalMade)</h3>
+                <h3>${{totalSales}}</h3>
             </div>
             <div class="total-counter">
                 <h4>Total Earned</h4>
-                <h3>@string.Format("{0:C}", Model.TotalEarned)</h3>
+                <h3>${{totalEarned}}</h3>
             </div>
-        </div>
-    *@
+        </div>   
 </div>

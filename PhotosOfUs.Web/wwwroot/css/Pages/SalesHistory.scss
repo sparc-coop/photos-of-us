@@ -1,6 +1,7 @@
 ﻿@import '../variables.scss';
 
 .photographer-sales-history {
+    padding-bottom: 50px;
 
     select {
         color: #43C6BA;
@@ -84,28 +85,40 @@
 
     .sales {
         width: 100%;
+
+        .date{
+            padding: 15px 10px;
+        }
     }
 
     .sales--row {
         display: flex;
-        padding: 10px 15px;
+        padding: 15px;
 
-
-        &:nth-child(odd) {
+        &:nth-child(even) {
             background-color: rgba(255, 226, 97, 0.16);
         }
 
-        &--name{
+        &--name {
             width: 18%;
-            padding-right: 30px;
         }
 
-        &--quantity{
-            width: 14%;
+        &--quantity {
+            width: 13%;
         }
 
-        &--price, &--earning{
-            width: 18%;
+        &--type{
+            width: 15%;
+            padding-right: 6px;
+        }
+
+        &--price, &--earning {
+            width: 16%;
+            padding-right: 5px;
+        }
+
+        &--status{
+            padding-left: 40px;
         }
     }
 }

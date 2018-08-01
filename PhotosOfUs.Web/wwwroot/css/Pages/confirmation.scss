@@ -1,0 +1,30 @@
+﻿@import "../variables";
+
+.confirmation {
+    .divider {
+        margin-top: 20px;
+    }
+
+    .heading {
+        font-family: 'Dosis';
+        font-weight: 600;
+        font-size: 32px;
+        color: $primary;
+    }
+
+    .content {
+        font-size: 20px;
+        color: $dark;
+        font-family: 'Open Sans';
+        font-weight: 600;
+        display: flex;
+        padding: 10px 0;
+
+        &--info {
+            font-size: 18px;
+            color: $text-gray;
+            width: 200px;
+            font-weight: 500;
+        }
+    }
+}

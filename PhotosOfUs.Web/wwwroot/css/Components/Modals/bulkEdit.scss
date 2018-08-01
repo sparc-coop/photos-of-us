@@ -1,0 +1,66 @@
+﻿@import '../../variables.scss';
+
+.bulkedit-dialog {
+    width: 500px;
+
+    .bulkedit-container {
+        margin: 30px;
+    }
+
+    #photosnumber {
+        color: rgba(0,0,0,0.87);
+        font-family: Roboto,Helvetica Neue,sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+    }
+
+    #bulkedit-title {
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 32px;
+        color: #194952;
+        letter-spacing: 0;
+    }
+
+    .btn-apply {
+        position: absolute;
+        bottom: 20px;
+        right: 30px;
+        border: none;
+        border-radius: 4px;
+        background-color: $primary;
+        font-weight: 600;
+        color: $dark;
+        padding: 8px 16px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .btn-delete {
+        border: none;
+        background-color: transparent;
+        color: $red;
+        position: absolute;
+        bottom: 20px;
+        right: 125px;
+        cursor: pointer;
+        outline: none;
+    }
+
+    .material-icons {
+        cursor: pointer;
+        outline: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .tags {
+        margin-bottom: 20px;
+    }
+
+    .price {
+        margin-bottom: 20px;
+    }
+}
+
