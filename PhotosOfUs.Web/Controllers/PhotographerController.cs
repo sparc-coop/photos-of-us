@@ -227,11 +227,14 @@ namespace PhotosOfUs.Web.Controllers
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
+            RootObject tags = null;
             if (string.IsNullOrEmpty(photoCode))
             {
                 var ac = new AzureCognitive(_context);
                 var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
-                var results = await ac.MakeRequest(imgbytes, "tags");
+                var results = await ac.MakeRequest(imgbytes, "ocr");
+                tags = await ac.MakeRequest(imgbytes, "tags");
+
                 return ac.ExtractCardCode(results);
             }
 
@@ -249,7 +252,8 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, tags);
+                    
                 }
             }
 

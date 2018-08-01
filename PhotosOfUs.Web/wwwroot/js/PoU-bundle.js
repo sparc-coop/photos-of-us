@@ -66,7 +66,7 @@ app.factory('checkoutApi', [
 app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 'selectedPhotos', ($scope, $window, $mdDialog, $http, selectedPhotos) => {
     $scope.close = () => $mdDialog.hide();
     $scope.selectedPhotos = selectedPhotos;
-    $scope.photosviewmodel = { identifier: "ok", "photosid": [], tagsid: [] };
+    $scope.photosviewmodel = { photos: [], tags: [] };
 
     $scope.deletePhotos = function (photos) {
         $http.post('/api/Photographer/deletePhotos/', photos);
@@ -84,18 +84,21 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
 
     $scope.editPhotos = function (photos, tags) {
         photos.forEach(function (item) {
-            $scope.photosviewmodel.photosid.push(item.Id);
+            $scope.photosviewmodel.photosid.push(item);
         });
         tags.forEach(function (item) {
-            $scope.photosviewmodel.tagsid.push(item.Id);
+            $scope.photosviewmodel.tagsid.push(item);
         });
         $http.post('/api/Photographer/AddTags/', tags)
-            .then($http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
+            .then(function () {
+                $http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
                     .then(function (x) {
                         $scope.tags = x.data;
 
                         console.log($scope.tags);
-                    }));
+                        $window.location.href = '/Photographer/Profile/';
+                    });
+                });
     };
 
 }])

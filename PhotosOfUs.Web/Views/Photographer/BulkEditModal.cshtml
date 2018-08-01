@@ -7,42 +7,15 @@
 
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
-<style>
-    .bulkedit-dialog {
-        width: 500px;
-    }
 
-    .bulkedit-container {
-        margin: 30px;
-    }
-    #photosnumber {
-        color: rgba(0,0,0,0.87);
-        font-family: Roboto,Helvetica Neue,sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-    }
-
-    #bulkedit-title {
-        font-family: "Dosis";
-        font-weight: 600;
-        font-size: 32px;
-        color: #194952;
-        letter-spacing: 0;
-    }
-</style>
 <md-dialog class="bulkedit-dialog">
     <div class="bulkedit-container" ng-init="getTagsByPhotos()">
-
-
-
-
         <h2 id="bulkedit-title">Edit Photos  <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
 
         <div>Tags</div>
         <div>
             <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
                 <auto-complete source="loadedtags"></auto-complete>
-
             </tags-input>
         </div>
 

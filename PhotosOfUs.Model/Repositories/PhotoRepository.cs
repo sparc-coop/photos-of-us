@@ -80,7 +80,7 @@ namespace PhotosOfUs.Model.Repositories
         //    return photo;
         //}
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, bool publicProfile = false)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, RootObject suggestedTags, bool publicProfile = false)
         {
             var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var url = $"{photographerId}/{folderId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
@@ -120,7 +120,8 @@ namespace PhotosOfUs.Model.Repositories
                 Url = containerBlob.Uri.AbsoluteUri,
                 Code = photoCode,
                 FolderId = folderId,
-                PublicProfile = publicProfile
+                PublicProfile = publicProfile,
+                SuggestedTags = suggestedTags
             };
 
             _context.Photo.Attach(photo);
@@ -149,11 +150,14 @@ namespace PhotosOfUs.Model.Repositories
         {
             foreach (TagViewModel tag in tags)
             {
-                Tag newTag = new Tag
+                if (!_context.Tag.Any(o => o.Name == tag.text))
                 {
-                    Name = tag.text
-                };
-                _context.Tag.Add(newTag);
+                    Tag newTag = new Tag
+                    {
+                        Name = tag.text
+                    };
+                    _context.Tag.Add(newTag);
+                }
             }
             _context.SaveChanges();
         }
@@ -165,27 +169,9 @@ namespace PhotosOfUs.Model.Repositories
 
         public List<Photo> GetPublicPhotosByTag(List<Tag> taglist)
         {
-            var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
+            var tagids = taglist.Select(x => x.Id).ToList();
 
-            List<int> tagids = new List<int>();
-
-            foreach (Tag tag in taglist)
-            {
-                tagids.Add(tag.Id);
-            }
-
-            List<PhotoTag> phototags = _context.PhotoTag.Where(x => tagids.Contains(x.TagId)).ToList();
-
-            List<int> ptids = new List<int>();
-
-            foreach (PhotoTag pt in phototags)
-            {
-                ptids.Add(pt.PhotoId);
-            }
-
-            List<Photo> photos = publicphotos.Where(x => ptids.Contains(x.Id)).ToList();
-
-            return photos;
+            return _context.Photo.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagids.Contains(y.TagId))).ToList();
         }
 
         public List<PhotoTag> GetTagsByPhotos(List<Photo> photos)
@@ -238,11 +224,11 @@ namespace PhotosOfUs.Model.Repositories
             if(public_folder.Count() == 0)
             {
                 Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id,true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, null, true);
             }
             else
             {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id,true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, null, true);
             }
         }
     }

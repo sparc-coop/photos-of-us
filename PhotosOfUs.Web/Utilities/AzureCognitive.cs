@@ -9,52 +9,11 @@ using Newtonsoft.Json;
 using PhotosOfUs.Model.Models;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace PhotosOfUs.Web.Utilities
 {
-    public class Tag
-    {
-        public string name { get; set; }
-        public double confidence { get; set; }
-        public string hint { get; set; }
-    }
 
-    public class Metadata
-    {
-        public int height { get; set; }
-        public int width { get; set; }
-        public string format { get; set; }
-    }
-
-    public class Word
-    {
-        public string boundingBox { get; set; }
-        public string text { get; set; }
-    }
-
-    public class Line
-    {
-        public string boundingBox { get; set; }
-        public List<Word> words { get; set; }
-    }
-
-    public class Region
-    {
-        public string boundingBox { get; set; }
-        public List<Line> lines { get; set; }
-    }
-
-    public class RootObject
-    {
-        public string language { get; set; }
-        public string orientation { get; set; }
-        public double textAngle { get; set; }
-        public List<Region> regions { get; set; }
-
-        public List<Tag> tags { get; set; }
-        public string requestId { get; set; }
-        public Metadata metadata { get; set; }
-    }
 
     public class AzureCognitive
     {
