@@ -131,8 +131,14 @@
             }
         }
 
-        &--row:nth-child(odd) {
+        &--row:nth-child(even) {
             background: rgba(255, 226, 97, 0.16)
         }
     }
+}
+
+.photographer-order{
+    height: 300px;
+    width: 400px;
+    padding: 20px;
 }

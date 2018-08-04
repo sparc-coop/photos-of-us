@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Cards";
 }
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
 <div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="initCardCtrl()">
     <h2 class="header-large">Your Codes</h2>
     <div class="yellow-background line--small"></div>
@@ -19,10 +19,8 @@
 
         <a href="" ng-click="exportMultipleCards(1)" class="btn-pou-default">Export new card</a>
         <a href="" ng-click="exportMultipleCardsModal()" class="btn-pou-default">Export multiple cards</a>
-
+        <a href="" class="btn-pou-default" ng-click="MooModal()">Order Printed Cards</a>
     </div>
-
-
 
     <div class="flex-box">
         <table class="table table-striped">
@@ -34,7 +32,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="card in cards | orderBy: '-id' | filter:searchText | limitTo: 5:(currentPage - 1) * pageSize">
+                <tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 5:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">
                     <td class="highlight">{{card.Code}}</td>
                     <td>{{card.CreatedDate | date: 'MM/dd/yyyy'}}</td>
                     <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>

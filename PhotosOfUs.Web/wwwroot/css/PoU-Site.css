@@ -410,13 +410,14 @@ body {
 .filters {
   margin-bottom: 20px; }
   .filters .searchbox.input--light-blue {
-    width: 510px;
+    width: 230px;
     height: 28px;
     background-image: url("/images/icons/search.png");
     background-repeat: no-repeat;
     background-position: 20px 5px;
     padding: 0 50px;
-    color: #43C6BA; }
+    color: #43C6BA;
+    outline: none; }
     .filters .searchbox.input--light-blue::-moz-placeholder {
       color: #43C6BA; }
     .filters .searchbox.input--light-blue:-ms-input-placeholder {
@@ -1212,8 +1213,13 @@ td {
     width: 70px;
     padding-right: 15px; }
 
-.purchase__options--row:nth-child(odd) {
+.purchase__options--row:nth-child(even) {
   background: rgba(255, 226, 97, 0.16); }
+
+.photographer-order {
+  height: 300px;
+  width: 400px;
+  padding: 20px; }
 
 .cart--preview {
   z-index: 100;

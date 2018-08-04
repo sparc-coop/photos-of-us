@@ -270,6 +270,119 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.initConfirmation = () => {
         $scope.getUserAndAddress();
     };
+
+
+    $scope.createPwintyOrder = () => {
+        var data = {
+            //'countryCode': 'US',
+            //'destinationCountryCode': 'US',
+            //'qualityLevel': 'Pro',
+            //'recipientName': 'Margaret Test',
+            //'address1': '123 Street',
+            //'addressTownOrCity': 'Columbus',
+            //'stateOrCounty': 'OH',
+            //'postalOrZipCode': '12345',
+            //'payment' : 'InvoiceMe',
+            //'mobileTelephone' : '123-123-1234'
+            "merchantOrderId": "845",
+            "recipientName": "Pwinty Tester",
+            "Address1": "123 Test Street",
+            "Address2": "TESTING",
+            "addressTownOrCity": "TESTING",
+            "stateOrCounty": "TESTSHIRE",
+            "postalOrZipCode": "TE5 7IN",
+            "email": "test@testing.com",
+            "countryCode": "gb",
+            "preferredShippingMethod": "CHEAPEST",
+            "mobileTelephone": "01811 8055"
+        };
+        $http({
+            method: 'POST',
+            url: 'https://sandbox.pwinty.com/v2.6/Orders',
+            headers: {
+                'X-Pwinty-MerchantId': '',
+                'X-Pwinty-REST-API-Key': '',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'crossDomain': true,
+            },
+            data: data
+        });
+        //}).then(x => {
+        //    $scope.orderId = x.data;
+        //    console.log('return Pwinty');
+        //    console.log(x);
+        //    console.log(x.data);
+        //});
+    };
+
+    $scope.createMooOrder = () => {
+        var data = {
+            'product': 'businesscard',
+            "pack": {
+                "numCards": 50,
+                "productCode": "businesscard",
+                "productVersion": 1,
+                "sides": [
+                ]
+            }
+        };
+        $http.post({
+            method: 'moo.pack.createPack',
+            url: '',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Pwinty');
+            console.log(x);
+            console.log(x.data);
+        });
+    };
+
+    $scope.printQuality = 'Standard';
+
+    $scope.getPwintyCatalog = () => {
+        $http({
+            method: 'GET',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro',
+        }).then(x => {
+            console.log('Pwinty Catalog');
+            console.log(x.data);
+            $scope.proProducts = x.data;
+            });
+        $http({
+            method: 'GET',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard',
+        }).then(x => {
+            console.log('Pwinty Catalog');
+            console.log(x.data);
+            $scope.standardProducts = x.data;
+        });
+    };
+
+    $scope.addPhotoToPwintyOrder = (orderName, quantity) => {
+        $http({
+            method: 'POST',
+            url: 'https://sandbox.pwinty.com/v2.6/Orders/',///{orderId}/Photos
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'crossDomain': true,
+                'X-Pwinty-MerchantId': '',
+                'X-Pwinty-REST-API-Key': '',
+            },
+            data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Pwinty');
+            console.log(x);
+            console.log(x.data);
+        });
+    };
 }])
 app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'userApi', ($scope, $window, $mdDialog, $http, userApi) => {
 
@@ -946,6 +1059,25 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
         });
     };
 
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
+    };
+
     $scope.downloadCards = function (cards) {
         $scope.cardsToExport = cards;
         // Use timeout to wait for Angular to finish rendering the hidden inputs for the POST form
@@ -1327,6 +1459,25 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
+    };
+
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
     };
 
     $scope.downloadCards = function (cards) {

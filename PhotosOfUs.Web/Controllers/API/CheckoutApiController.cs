@@ -10,7 +10,6 @@ using PhotosOfUs.Model.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Security.Claims;
-using System.Text;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -98,8 +97,8 @@ namespace PhotosOfUs.Web.Controllers.API
             var subject = $"Photos Of Us Order Confirmation";
             var to = new EmailAddress(address.Email);
             var plainTextContent = address.FullName + ", thank you for your order.";
-            var htmlContent = $"Hello {address.FullName}, <br/> Thank you for your order. <br/>" +
-                $"Address: <br/>{address.Address1} <br/>{address.City}, {address.State} {address.ZipCode}";
+            var htmlContent = $"Hello {address.FullName}, <br/> Thank you for your order of {order.OrderDetail.Count()} photo(s).<br/>" +
+                $"Shipping Address: <br/>{address.Address1} <br/>{address.City}, {address.State} {address.ZipCode}";
             //  $"<br/> {item.Photo.Name},{item.PrintType.Type}: {item.PrintType.Length} x {item.PrintType.Height}";
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             await client.SendEmailAsync(msg);
