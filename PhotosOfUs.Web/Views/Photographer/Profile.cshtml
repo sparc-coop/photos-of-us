@@ -15,18 +15,21 @@
                     @if (string.IsNullOrEmpty(Model.ProfilePhotoUrl))
                     {
 
-                        @*<div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>*@
-                        <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
+                    @*<div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>*@
+                    <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
                     }
                     else
                     {
-                        <div class="photographer-image" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
+                    <div class="photographer-image" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
 
                     }
 
                     <h2>@Model.Name</h2>
                     <p class="photographer-title">@Model.PhotographerTitle</p>
                     <p class="photographer-bio">@Model.ProfileText</p>
+                    <div ng-if="user.IsDeactivated = true">
+                        Account has been deactivated.
+                    </div>
                 </div>
                 <div class="photographer-social">
                     <ul>

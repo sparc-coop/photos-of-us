@@ -73,6 +73,42 @@
   .bulkedit-dialog .price {
     margin-bottom: 20px; }
 
+.deactivate-dialog {
+  width: 500px; }
+  .deactivate-dialog .close {
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 18px; }
+  .deactivate-dialog .form {
+    margin-bottom: 10px; }
+  .deactivate-dialog .form-input {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 15px; }
+    .deactivate-dialog .form-input input, .deactivate-dialog .form-input textarea {
+      width: 100%; }
+  .deactivate-dialog .form-button {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px; }
+  .deactivate-dialog button {
+    width: 200px; }
+  .deactivate-dialog button:disabled {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed; }
+  .deactivate-dialog .deactivate-message {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    width: 450px;
+    text-align: center;
+    padding-bottom: 10px; }
+  .deactivate-dialog .deactivate-form {
+    text-align: center;
+    padding: 0px 10px 10px 10px; }
+
 .full-width-anchor {
   position: absolute;
   width: 100%;

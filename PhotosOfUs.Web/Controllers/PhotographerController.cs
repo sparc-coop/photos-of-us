@@ -383,6 +383,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult DeactivateModal()
+        {
+            return View();
+        }
+
         public ActionResult PhotoDetails()
         {
             return View();

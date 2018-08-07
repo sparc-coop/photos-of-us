@@ -55,6 +55,26 @@
         });
     };
 
+    $scope.close = () => $mdDialog.hide();
+
+    $scope.deactivateModal = (evt) => {
+        if (evt.target.checked) {
+            $mdDialog.show({
+                templateUrl: '/Photographer/DeactivateModal',
+                controller: 'PhotographerAccountCtrl',
+                clickOutsideToClose: true,
+            })
+        }    
+    }
+
+    $scope.deactivateStatus = () => {
+        // $scope.hidden = !$scope.hidden;
+        $scope.close();
+    }
+
+    //$http.post('/api/Photographer/ActiveStatus', $scope.IsDeactivated).then(x => {
+    
+    //});
     $scope.selected = 'details';
 
     $scope.setSelected = (selected) => {

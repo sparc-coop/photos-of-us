@@ -20,6 +20,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string Twitter { get; set; }
         public string Instagram { get; set; }
         public string Dribbble { get; set; }
+        public bool? IsDeactivated { get; set; }
 
         public static PhotographerAccountViewModel ToViewModel(User u)
         {
@@ -37,6 +38,7 @@ namespace PhotosOfUs.Model.ViewModels
             model.Twitter = u.Twitter;
             model.Instagram = u.Instagram;
             model.Dribbble = u.Dribbble;
+            model.IsDeactivated = u.IsDeactivated;
             
             return model;
         }
