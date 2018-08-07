@@ -1245,20 +1245,24 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
 
     $scope.close = () => $mdDialog.hide();
 
-    $scope.deactivateModal = () => {
-        $mdDialog.show({
-            templateUrl: '/Photographer/DeactivateModal',
-            controller: 'PhotographerAccountCtrl',
-            clickOutsideToClose: true,
-        })
+    $scope.deactivateModal = (evt) => {
+        if (evt.target.checked) {
+            $mdDialog.show({
+                templateUrl: '/Photographer/DeactivateModal',
+                controller: 'PhotographerAccountCtrl',
+                clickOutsideToClose: true,
+            })
+        }    
     }
 
     $scope.deactivateStatus = () => {
         // $scope.hidden = !$scope.hidden;
-        console.log("byee")
         $scope.close();
     }
 
+    //$http.post('/api/Photographer/ActiveStatus', $scope.IsDeactivated).then(x => {
+    
+    //});
 
 }])
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {

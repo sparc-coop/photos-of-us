@@ -15,7 +15,7 @@
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">language</i>Social Accounts</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
-                <div class="deactivate-modal" ng-click="deactivateModal()"><a href="#" class="deactivate">Deactivate Account</a></div>
+                <div class="deactivate"><input type="checkbox" name="deactivate" ng-click="deactivateModal($event)" ng-model="accountSettings.IsDeactivated">Deactivate Account</div>
             </div>
             <div class="btn-group">
                 <a href="#" class="btn-apply" ng-click="saveAccountSettings(accountSettings)">
@@ -32,6 +32,7 @@
 
 
         <div class="form-account" ng-cloak>
+            <div ng-if="user.IsDeactivated = true">Your account is currently deactivated.</div>
             <div class="form-input">
                 <label>Profile Photo</label>
                 <div class="img-container" ng-click="uploadProfileImage()">

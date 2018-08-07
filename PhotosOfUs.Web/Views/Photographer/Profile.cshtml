@@ -26,6 +26,9 @@
                 <h2>@Model.Name</h2>
                 <p class="photographer-title">@Model.PhotographerTitle</p>
                 <p class="photographer-bio">@Model.ProfileText</p>
+                <div ng-if="user.IsDeactivated = true">
+                    Account has been deactivated.
+                </div>
             </div>
             <div class="photographer-social">
                 <ul>
@@ -55,19 +58,18 @@
         </div>
 
         <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
-
             <div class="photographer-gallery-container">
                 <div class="g-row">
                     @foreach (var Photo in Model.Photos)
                     {
-                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="'@Photo.Code'.includes(search) || (search == null || search == '')" ng-cloak> 
+                        <div ng-if="user.IsDeactivated != true" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="'@Photo.Code'.includes(search) || (search == null || search == '')" ng-cloak>
                             <img class="gallery-image" src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
                         </div>
                     }
                 </div>
             </div>
+            </div>
         </div>
-    </div>
 </div>
 
 
