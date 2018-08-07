@@ -1,5 +1,6 @@
 ﻿app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
     $scope.originalSettings = {};
+
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
             console.log(x.data);
@@ -57,24 +58,27 @@
 
     $scope.close = () => $mdDialog.hide();
 
-    $scope.deactivateModal = (evt) => {
-        if (evt.target.checked) {
+    $scope.deactivateModal = (option, user) => {
+        if (option == 'true') {
             $mdDialog.show({
                 templateUrl: '/Photographer/DeactivateModal',
-                controller: 'PhotographerAccountCtrl',
+                controller: 'PhotographerAccountStatusCtrl',
+                user: user,
                 clickOutsideToClose: true,
-            })
-        }    
+            });
+        }
+        else if(option == 'false'){
+            $scope.reactivateAccount(user.Id);
+        }
     }
 
-    $scope.deactivateStatus = () => {
-        // $scope.hidden = !$scope.hidden;
-        $scope.close();
+
+    $scope.reactivateAccount = (userId) => {
+        $http.post('/api/User/Reactivate/' + userId).then(
+            $window.location.reload()
+        );
     }
 
-    //$http.post('/api/Photographer/ActiveStatus', $scope.IsDeactivated).then(x => {
-    
-    //});
     $scope.selected = 'details';
 
     $scope.setSelected = (selected) => {
@@ -83,3 +87,14 @@
 
 
 }])
+.controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'user', ($scope, $window, $location, $http, $mdDialog, user) => {
+    $scope.user = user;
+
+    $scope.deactivateAccount = () => {
+        console.log($scope.user.Id);
+        $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
+            $window.location.reload()
+        );
+    }
+}]);
+

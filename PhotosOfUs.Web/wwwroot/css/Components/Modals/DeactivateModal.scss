@@ -1,4 +1,6 @@
-﻿.deactivate-dialog {
+﻿@import '../../variables.scss';
+
+.deactivate-dialog {
     width: 500px;
 
     .close {
@@ -51,5 +53,17 @@
     .deactivate-form {
         text-align: center;
         padding: 0px 10px 10px 10px;
+    }
+
+    .button--confirm {
+        background-color: $primary;
+        color: $white;
+        padding: 8px 15px;
+        margin: 0 auto;
+        margin-top: 14px;
+        margin-bottom: 14px;
+        border-radius: 4px;
+        width: 150px;
+        cursor: pointer;
     }
 }

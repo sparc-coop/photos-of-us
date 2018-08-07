@@ -1353,6 +1353,7 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 }]);
 app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
     $scope.originalSettings = {};
+
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
             console.log(x.data);
@@ -1408,28 +1409,49 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
         });
     };
 
+    $scope.close = () => $mdDialog.hide();
+
+    $scope.deactivateModal = (option, user) => {
+        if (option == 'true') {
+            $mdDialog.show({
+                templateUrl: '/Photographer/DeactivateModal',
+                controller: 'PhotographerAccountStatusCtrl',
+                user: user,
+                clickOutsideToClose: true,
+            });
+        }
+        else if(option == 'false'){
+            $scope.reactivateAccount(user.Id);
+        }
+    }
+
+
+    $scope.reactivateAccount = (userId) => {
+        $http.post('/api/User/Reactivate/' + userId).then(
+            $window.location.reload()
+        );
+    }
+
     $scope.selected = 'details';
 
     $scope.setSelected = (selected) => {
         $scope.selected = selected;
     };
 
-    $scope.confirmDeactivated = (ev) => {
-        var confirm = $mdDialog.confirm()
-            .title('Would you like to delete your debt?')
-            .textContent('All of the banks have agreed to forgive you your debts.')
-            .ariaLabel('Lucky day')
-            .targetEvent(ev)
-            .ok('Yes, deactivate')
-            .cancel('Cancel');
 
-        $mdDialog.show(confirm).then(function () {
-            $scope.status = 'You decided to get rid of your debt.';
-        }, function () {
-            $scope.status = 'You decided to keep your debt.';
-        });
-    };
 }])
+.controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'user', ($scope, $window, $location, $http, $mdDialog, user) => {
+    $scope.user = user;
+
+    $scope.deactivateAccount = () => {
+        console.log($scope.user.Id);
+        $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
+            $window.location.reload()
+        );
+    }
+}]);
+
+
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
