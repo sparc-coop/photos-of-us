@@ -274,16 +274,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
 
     $scope.createPwintyOrder = () => {
         var data = {
-            //'countryCode': 'US',
-            //'destinationCountryCode': 'US',
-            //'qualityLevel': 'Pro',
-            //'recipientName': 'Margaret Test',
-            //'address1': '123 Street',
-            //'addressTownOrCity': 'Columbus',
-            //'stateOrCounty': 'OH',
-            //'postalOrZipCode': '12345',
-            //'payment' : 'InvoiceMe',
-            //'mobileTelephone' : '123-123-1234'
             "merchantOrderId": "845",
             "recipientName": "Pwinty Tester",
             "Address1": "123 Test Street",
@@ -307,13 +297,12 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
                 'crossDomain': true,
             },
             data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Pwinty');
+            console.log(x);
+            console.log(x.data);
         });
-        //}).then(x => {
-        //    $scope.orderId = x.data;
-        //    console.log('return Pwinty');
-        //    console.log(x);
-        //    console.log(x.data);
-        //});
     };
 
     $scope.createMooOrder = () => {
@@ -329,7 +318,7 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         };
         $http.post({
             method: 'moo.pack.createPack',
-            url: '',
+            url: 'http://www.moo.com/api/service/',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -337,7 +326,7 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
+            console.log('return Moo');
             console.log(x);
             console.log(x.data);
         });
@@ -1425,7 +1414,21 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
         $scope.selected = selected;
     };
 
+    $scope.confirmDeactivated = (ev) => {
+        var confirm = $mdDialog.confirm()
+            .title('Would you like to delete your debt?')
+            .textContent('All of the banks have agreed to forgive you your debts.')
+            .ariaLabel('Lucky day')
+            .targetEvent(ev)
+            .ok('Yes, deactivate')
+            .cancel('Cancel');
 
+        $mdDialog.show(confirm).then(function () {
+            $scope.status = 'You decided to get rid of your debt.';
+        }, function () {
+            $scope.status = 'You decided to keep your debt.';
+        });
+    };
 }])
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();

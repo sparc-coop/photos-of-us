@@ -192,7 +192,7 @@
         };
         $http.post({
             method: 'moo.pack.createPack',
-            url: '',
+            url: 'http://www.moo.com/api/service/',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -200,7 +200,7 @@
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
+            console.log('return Moo');
             console.log(x);
             console.log(x.data);
         });
