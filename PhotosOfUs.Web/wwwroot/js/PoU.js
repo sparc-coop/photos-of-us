@@ -7,5 +7,3 @@ app.filter('startFrom', function () {
         return data.slice(start)
     }
 })
-
-

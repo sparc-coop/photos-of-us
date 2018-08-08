@@ -32,6 +32,21 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetPublicIds")]
+        public List<int> GetPublicIds()
+        {
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
+
+            List<int> photoIds = new List<int>();
+            foreach(var photo in photos)
+            {
+                photoIds.Add(photo.Id);
+            }
+
+            return photoIds;
+        }
+
+        [HttpGet]
         [Route("GetCodePhotos/{code}")]
         public List<PhotoViewModel> GetCodePhotos(string code)
         {

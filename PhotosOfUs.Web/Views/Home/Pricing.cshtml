@@ -2,7 +2,7 @@
     Layout = "~/Views/Shared/_LayoutLanding.cshtml";
 }
 
-<div class="landing pricing" ng-controller="LandingCtrl">
+<div class="preLaunch--landing pricing" ng-controller="PhotoCtrl">
     <div class="section1">
         <div class="header">
             <a class="header__logo" href="~/Session/SignIn">
@@ -23,7 +23,7 @@
         </div>
         <div class="pricing--options">
             <div class="pricing--options__container">
-                <div class="free" ng-click="selected = 'option1'" ng-class="{'selected': selected == 'option1'}">
+                <div class="free" ng-click="pricingOption = 'option1'" ng-class="{'selected': pricingOption == 'option1'}">
                     <img src="~/images/Camera 1@2x.png" />
                     <div class="pricing--title">Occasional Snapper</div>
                     <div class="pricing--subtitle">
@@ -38,7 +38,7 @@
                     </ul>
                     <a href="~/Session/SignIn" class="signUp">Sign Up Now</a>
                 </div>
-                <div class="option2" ng-click="selected = 'option2'" ng-class="{'selected': selected == 'option2'}">
+                <div class="option2" ng-click="pricingOption = 'option2'" ng-class="{'selected': pricingOption == 'option2'}">
                     <img src="~/images/Camera 2@2x.png" />
                     <div class="pricing--title">Frequent Snapper</div>
                     <div class="pricing--subtitle">
@@ -53,7 +53,7 @@
                     </ul>
                     <a class="signUp signUp--beta">Free While In Beta</a>
                 </div>
-                <div class="option3" ng-click="selected = 'option3'" ng-class="{'selected': selected == 'option3'}">
+                <div class="option3" ng-click="pricingOption = 'option3'" ng-class="{'selected': pricingOption == 'option3'}">
                     <img src="~/images/Camera 3@2x.png" />
                     <div class="pricing--title">Super Snapper</div>
                     <div class="pricing--subtitle">

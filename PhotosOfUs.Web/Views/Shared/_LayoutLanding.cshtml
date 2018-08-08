@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -28,7 +28,7 @@
     </environment>
 
 </head>
-<body style="padding: 0" ng-app="landingApp">
+<body style="padding: 0">
     @RenderBody()
 
 
@@ -38,12 +38,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-animate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.7.2/angular-touch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.2/ui-bootstrap-tpls.min.js"></script>
+
+    <script src="~/js/angular-socialshare.js"></script>
+    <script src="~/lib/angular-file-upload/dist/angular-file-upload.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="~/lib/angular-elastic/elastic.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/ng-tags-input/ng-tags-input.min.js"></script>
+
     <script src="~/js/PoU-bundle.js" asp-append-version="true"></script>
-    <script>
-        var app = angular.module("landingApp", []);
-        app.controller('LandingCtrl', function ($scope) {
-            $scope.selected = 'option2';
-        });
-    </script>
+
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -39,7 +39,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public Photo GetPhoto(int photoId)
         {
-            return _context.Photo.Include("Photographer").Single(x => x.Id == photoId);
+            return _context.Photo.Single(x => x.Id == photoId);
         }
 
         public void UpdatePrice(int photoId, decimal price)
@@ -143,11 +143,6 @@ namespace PhotosOfUs.Model.Repositories
         {
             return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
         }
-
-        //public List<SearchIndex> GetCases(List<int> citationIds)
-        //{
-        //    return Context.SearchIndexes.Where(x => citationIds.Contains(x.RecordID)).ToList();
-        //}
 
         public void AddTags(List<TagViewModel> tags)
         {
