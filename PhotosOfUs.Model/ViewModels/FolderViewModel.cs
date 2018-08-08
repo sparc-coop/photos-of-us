@@ -44,4 +44,10 @@ namespace PhotosOfUs.Model.ViewModels
             return viewModels;
         }
     }
+
+    public class FolderRenameViewModel
+    {
+        public int Id { get; set; }
+        public string NewName { get; set; }
+    }
 }

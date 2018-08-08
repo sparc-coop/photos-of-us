@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PhotosOfUs.Model.Services
 {
-    public class CodeHelper
+    public static class CodeHelper
     {
         private static Random random = new Random();
 

@@ -87,18 +87,24 @@
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
+        console.log("upload all clicked");
+       
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
+          
             angular.forEach(items, function (item) {
+                //todo only pushes if not photo code
                 item.upload();
             });
+
+            $scope.saveAllUpload = true;
+            
         } else {
             alert("Fix the photos with exclamation first before uploading");
         }
 
-        $window.location.reload();
+        
     };
 
     $scope.VerifyErrorsInPhotoCode = function () {
@@ -167,7 +173,7 @@
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, price: item.file.price, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
         }
         
     };
@@ -182,10 +188,8 @@
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
         
-        if (response != "") {
+        if (response !== "") {
             fileItem.formData[0].photoCode = response;
             fileItem.code = response;
             fileItem.isCode = true;
@@ -219,8 +223,11 @@
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
-        //$window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        
+        if ($scope.saveAllUpload) {
+             $window.location.reload();
+        }
+        
     };
 
 });

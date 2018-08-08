@@ -1,5 +1,7 @@
 ﻿@import
-'Components//Modals/NewFolderModal.scss',
+'Components/Modals/NewFolderModal',
+'Components/Modals/bulkEdit',
+'Components//Modals/DeactivateModal',
 'Components/anchor',
 'Components/button',
 'Components/card',
@@ -17,6 +19,8 @@
 'Components/icons.scss',
 'Pages/purchase',
 'Pages/cart',
+'Pages/confirmation',
+'Pages/tempLanding',
 'Pages/Upload',
 'Pages/photo',
 'Pages/search',
@@ -25,6 +29,8 @@
 'Pages/SalesHistory.scss',
 'Pages/Account.scss',
 'Pages/Landing.scss',
+'Pages/PhotoDetails.scss',
+'Pages/pricing',
 'MobileSite',
 'sweetalert2',
 'variables';

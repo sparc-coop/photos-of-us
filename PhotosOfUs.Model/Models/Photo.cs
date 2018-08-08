@@ -7,7 +7,8 @@ namespace PhotosOfUs.Model.Models
     {
         public Photo()
         {
-            OrderDetail = new HashSet<OrderDetail>();
+            //OrderDetail = new HashSet<OrderDetail>();
+            //Tag = new HashSet<Tag>();
         }
 
         public int Id { get; set; }
@@ -19,9 +20,12 @@ namespace PhotosOfUs.Model.Models
         public string Name { get; set; }
         public DateTime UploadDate { get; set; }
         public bool PublicProfile { get; set; }
+        public bool IsDeleted { get; set; }
 
         public Folder Folder { get; set; }
         public User Photographer { get; set; }
-        public ICollection<OrderDetail> OrderDetail { get; set; }
+        //public ICollection<OrderDetail> OrderDetail { get; set; }
+
+        public ICollection<PhotoTag> PhotoTag { get; set; }
     }
 }

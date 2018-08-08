@@ -31,6 +31,12 @@
             border-radius: 50px;
             margin-top: 20px;
         }
+
+        .placeholder-img {
+            height: 80px;
+            width: 80px;
+            margin-top: 20px;
+        }
     }
 
     .photo--info {
@@ -72,7 +78,7 @@
             outline: none;
 
             img {
-                height: 18px;
+                height: 24px;
                 width: auto;
             }
         }
@@ -184,7 +190,32 @@
             bottom: 4px;
             left: 0;
         }
+
+        ul {
+            display: flex;
+            margin: 0 auto;
+            padding: 10px 0;
+
+            li {
+                list-style: none;
+                padding: 0 15px;
+
+                a {
+                    text-decoration: none;
+                    font-weight: bold;
+                    color: $primary;
+                }
+            }
+        }
     }
+}
+
+.thumbnail {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    vertical-align: middle;
+    margin: 15px 15px 15px 0;
 }
 
 .divider {
@@ -253,7 +284,7 @@
     .folder-new {
         border: 2px dashed $primary;
         border-radius: 8px;
-        width: 240px;
+        width: 243px;
         height: 237px;
         margin: 0 10px;
         text-align: center;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,9 +10,12 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using Stripe;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Web.Controllers
 {
+    [Authorize]
     public class PhotoController : Controller
     {
         private PhotosOfUsContext _context;
@@ -20,7 +24,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             _context = context;
         }
-        // GET: Photographer
+
         public ActionResult Purchase(int id)
         {
             var photo = new PhotoRepository(_context).GetPhoto(id);
@@ -32,21 +36,26 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Cart(int id)
         {
-            return View();
+            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
         public ActionResult Checkout(int id)
         {
-            return View();
+            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
         [HttpPost]
         public IActionResult Charge(string stripeToken)
         {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
             StripeConfiguration.SetApiKey("");
 
-            int amount = 500;
-            var userId = 1;
+            Order order = new OrderRepository(_context).GetOpenOrder(userId);
+            decimal orderTotal = new OrderRepository(_context).GetOrderTotal(order.Id);
+
             User user = new UserRepository(_context).Find(userId);
             Address address = new UserRepository(_context).GetAddress(userId);
 
@@ -61,13 +70,13 @@ namespace PhotosOfUs.Web.Controllers
 
             var charge = charges.Create(new StripeChargeCreateOptions
             {
-                Amount = amount,
-                Description = "Sample Charge",
+                Amount = (int)(orderTotal * 100),
+                Description = "Photos Of Us Order",
                 Currency = "usd",
                 CustomerId = customer.Id,
             });
 
-            return View();
+            return Redirect("/Customer/Confirmation");
         }
 
         public IActionResult Index()

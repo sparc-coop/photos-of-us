@@ -12,6 +12,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string Height { get; set; }
         public string Length { get; set; }
         public string Icon { get; set; }
+        public double? BaseCost { get; set; }
 
         public static PrintTypeViewModel ToViewModel(PrintType entity)
         {
@@ -22,7 +23,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.Height = entity.Height;
             viewModel.Length = entity.Length;
             viewModel.Icon = entity.Icon;
-
+            viewModel.BaseCost = entity.BaseCost;
 
             return viewModel;
         }

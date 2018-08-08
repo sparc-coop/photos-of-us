@@ -17,7 +17,7 @@ namespace PhotosOfUs.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("PhotosOfUs.Model.Models.Address", b =>
@@ -298,6 +298,45 @@ namespace PhotosOfUs.Model.Migrations
                     b.ToTable("ShoppingCart");
                 });
 
+            modelBuilder.Entity("PhotosOfUs.Model.Models.SocialMedia", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AzureId");
+
+                    b.Property<string>("Link");
+
+                    b.Property<string>("Type")
+                        .HasColumnName("Type")
+                        .HasMaxLength(128);
+
+                    b.Property<int?>("UserId");
+
+                    b.Property<string>("Username")
+                        .HasColumnName("Username");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SocialMedia");
+                });
+
+            modelBuilder.Entity("PhotosOfUs.Model.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("Id");
+
+                    b.Property<string>("TagName")
+                        .HasColumnName("TagName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tag");
+                });
+
             modelBuilder.Entity("PhotosOfUs.Model.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -307,6 +346,9 @@ namespace PhotosOfUs.Model.Migrations
                     b.Property<string>("AzureId")
                         .HasColumnName("AzureID")
                         .HasMaxLength(128);
+
+                    b.Property<string>("Bio")
+                        .HasMaxLength(1000);
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
@@ -318,16 +360,27 @@ namespace PhotosOfUs.Model.Migrations
                         .IsRequired()
                         .HasMaxLength(128);
 
+                    b.Property<string>("Facebook");
+
                     b.Property<string>("FirstName")
                         .HasMaxLength(128);
 
                     b.Property<bool?>("IsPhotographer");
+
+                    b.Property<string>("JobPosition")
+                        .HasMaxLength(128);
 
                     b.Property<DateTime?>("LastLoginDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("LastName")
                         .HasMaxLength(128);
+
+                    b.Property<string>("ProfilePhotoUrl")
+                        .HasMaxLength(1000)
+                        .IsUnicode(false);
+
+                    b.Property<int>("TemplateSelected");
 
                     b.HasKey("Id");
 
@@ -450,6 +503,13 @@ namespace PhotosOfUs.Model.Migrations
                         .WithMany()
                         .HasForeignKey("PhotoId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PhotosOfUs.Model.Models.SocialMedia", b =>
+                {
+                    b.HasOne("PhotosOfUs.Model.Models.User")
+                        .WithMany("SocialMedia")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("PhotosOfUs.Model.Models.UserIdentity", b =>

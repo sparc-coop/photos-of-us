@@ -11,24 +11,39 @@
                 <div class="title">Photographer</div>
                 <div class="name">@Model.PhotographerName</div>
             </div>
-            <img src="@Model.ThumbnailUrl"/>
+            @if(Model.Photographer.ProfilePhotoUrl != null)
+            {
+                <img src="@Model.Photographer.ProfilePhotoUrl" />
+            }
+            else
+            {
+                <img src="/images/icons/profile-icon.png" class="placeholder-img"/>
+            }
         </div>
     </div>
 
-    <div class="photo--info">
+    @*<div class="photo--info">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
         Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
         Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-    </div>
+    </div>*@
 
     <div class="divider"></div>
 
     <div class="photoPage__actions">
-        <div class="back" ng-click="goToGallery('@Model.FolderId')"><img src="~/images/icons/ic_arrow_back_24px.png"/>Back To Gallery</div>
-        <div class="share">Share Photo <img src="~/images/icons/share-arrow.png" /></div>
+        <div class="back" ng-click="goToGallery('@Model.FolderId')"><img src="~/images/icons/ic_arrow_back_24px.png" />Back To Gallery</div>
+        <div class="share">
+            @*Share Photo <img src="~/images/icons/share-arrow.png" />*@
+            <img src="~/images/icons/share/share_googleplus.png" ng-click="shareGooglePlus(@Model.Id)" />
+            <img src="~/images/icons/share/share_facebook.png" ng-click="shareFacebook(@Model.Id)" />
+            <img src="~/images/icons/share/share_twitter.png" ng-click="shareTwitter(@Model.Id)" />
+            <img src="~/images/icons/share/share_pinterest.png" ng-click="sharePinterest(@Model.Id,'@Model.Url')" />
+            <img src="~/images/icons/share/share_tumblr.png" ng-click="shareTumblr(@Model.Id,'@Model.Url')" />
+        </div>
+   
     </div>
 
-    <img src="@Model.Url" class="photo-main"/>
+    <img src="@Model.Url" class="photo-main" />
 
     <div class="photoPage__footer">
         <div class="header">Like This Photo?</div>
@@ -38,10 +53,24 @@
                 We offer many different sizes and stock. Or alternatively, you can purchase a digital version.
             </div>
             <div class="photoPage__footer--right">
-                <div class="title">Starting At Just $5 Per Photo</div>
-                <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')"><img src="~/images/icons/cart-red.png"/>Buy It Now</div>
+                <div class="title">@*Starting At Just $5 Per Photo*@</div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                 <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')">
+                    <img src="~/images/icons/cart-red.png" />
+                    Buy It Now
+                 </div>
+                }
+                else
+                {
+                <div class="button--yellow button--yellow--large" ng-click="signInCustomer(@Model.Id)">
+                    <img src="~/images/icons/cart-red.png" />
+                    Login and Buy It Now
+                </div>
+                }
             </div>
-        </div>       
+        </div>
     </div>
 
 </div>
+
