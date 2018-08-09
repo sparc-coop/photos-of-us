@@ -67,6 +67,8 @@ namespace PhotosOfUs.Web.Controllers.API
         public void EditPhotos([FromBody]PhotoTagViewModel photosviewmodel)
         {
             var repo = new PhotoRepository(_context);
+
+            repo.EditTags(photosviewmodel);
         }
 
         [Route("DeletePhotos")]

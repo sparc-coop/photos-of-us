@@ -84,10 +84,10 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
 
     $scope.editPhotos = function (photos, tags) {
         photos.forEach(function (item) {
-            $scope.photosviewmodel.photosid.push(item);
+            $scope.photosviewmodel.photos.push(item);
         });
         tags.forEach(function (item) {
-            $scope.photosviewmodel.tagsid.push(item);
+            $scope.photosviewmodel.tags.push(item);
         });
         $http.post('/api/Photographer/AddTags/', tags)
             .then(function () {
@@ -738,7 +738,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (errorsFound === false) {
           
             angular.forEach(items, function (item) {
-                //todo only pushes if not photo code
                 item.upload();
             });
 

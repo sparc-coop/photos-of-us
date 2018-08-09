@@ -94,7 +94,6 @@
         if (errorsFound === false) {
           
             angular.forEach(items, function (item) {
-                //todo only pushes if not photo code
                 item.upload();
             });
 

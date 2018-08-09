@@ -34,14 +34,8 @@ namespace PhotosOfUs.Model.Models
 
         public RootObject SuggestedTags
         {
-            get
-            {
-                return JsonConvert.DeserializeObject<RootObject>(SuggestedTagsRaw);
-            }
-            set
-            {
-                SuggestedTagsRaw = JsonConvert.SerializeObject(value);
-            }
+            get => JsonConvert.DeserializeObject<RootObject>(SuggestedTagsRaw);
+            set => SuggestedTagsRaw = JsonConvert.SerializeObject(value);
         }
     }
 }

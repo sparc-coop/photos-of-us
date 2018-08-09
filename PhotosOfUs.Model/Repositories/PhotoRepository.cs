@@ -162,6 +162,52 @@ namespace PhotosOfUs.Model.Repositories
             _context.SaveChanges();
         }
 
+        public void EditTags(PhotoTagViewModel phototagviewmodel)
+        {
+            //List<int> photosid = new List<int>();
+            //List<int> tagsid = new List<int>();
+
+            List<PhotoTag> phototagstodelete = new List<PhotoTag>();
+            List<PhotoTag> phototagstoadd = new List<PhotoTag>();
+
+            foreach (Photo photo in phototagviewmodel.photos)
+            {
+                var phototagdelete = _context.PhotoTag
+                    .Where(x => x.PhotoId == photo.Id)
+                    .FirstOrDefault();
+
+                if (phototagdelete != null)
+                {
+                    phototagstodelete.Add(phototagdelete);
+                }
+            }
+            
+            foreach (PhotoTag phototag in phototagstodelete)
+            {
+                _context.PhotoTag.Remove(phototag);
+            }
+            _context.SaveChanges();
+
+
+            foreach (TagViewModel tag in phototagviewmodel.tags)
+            {
+                var tagtoid = _context.Tag.First(x => x.Name == tag.text);
+
+                foreach (Photo photo in phototagviewmodel.photos)
+                {
+                    var newphototag = new PhotoTag()
+                    {
+                        PhotoId = photo.Id,
+                        TagId = tagtoid.Id,
+                        RegisterDate = DateTime.Now
+                    };
+                    _context.PhotoTag.Add(newphototag);
+                }
+            }
+            _context.SaveChanges();
+
+        }
+
         public List<Tag> GetTags(string[] tagarray)
         {
             return _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();

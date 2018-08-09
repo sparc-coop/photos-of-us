@@ -19,10 +19,10 @@
 
     $scope.editPhotos = function (photos, tags) {
         photos.forEach(function (item) {
-            $scope.photosviewmodel.photosid.push(item);
+            $scope.photosviewmodel.photos.push(item);
         });
         tags.forEach(function (item) {
-            $scope.photosviewmodel.tagsid.push(item);
+            $scope.photosviewmodel.tags.push(item);
         });
         $http.post('/api/Photographer/AddTags/', tags)
             .then(function () {
