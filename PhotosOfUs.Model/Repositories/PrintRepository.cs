@@ -17,13 +17,13 @@ namespace PhotosOfUs.Model.Repositories
 
         public PrintPrice GetPrice(int printId, int photographerId)
         {
-            PrintPrice price = _context.PrintPrice.Where(x => x.PrintTypeId == printId && x.PhotographerId == photographerId).FirstOrDefault();
+            PrintPrice price = _context.PrintPrice.Where(x => x.PhotoId == printId && x.PhotographerId == photographerId).FirstOrDefault();
             return price;
         }
 
         public List<PrintType> GetPrintTypes()
         {
-            List<PrintType> types = _context.PrintType.Include("PrintPrice").ToList();
+            List<PrintType> types = _context.PrintType.ToList();
             return types;
         }
     }

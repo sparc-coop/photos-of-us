@@ -32,6 +32,21 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetPublicIds")]
+        public List<int> GetPublicIds()
+        {
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
+
+            List<int> photoIds = new List<int>();
+            foreach(var photo in photos)
+            {
+                photoIds.Add(photo.Id);
+            }
+
+            return photoIds;
+        }
+
+        [HttpGet]
         [Route("GetCodePhotos/{code}")]
         public List<PhotoViewModel> GetCodePhotos(string code)
         {
@@ -94,6 +109,16 @@ namespace PhotosOfUs.Web.Controllers.API
             //DownloadPhotos(items);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("GetAllTags")]
+        public List<TagViewModel> GetAllTags()
+        {
+            var tags = new PhotoRepository(_context).GetAllTags();
+
+            return TagViewModel.ToViewModel(tags);
+            //return tags;
         }
     }
 }

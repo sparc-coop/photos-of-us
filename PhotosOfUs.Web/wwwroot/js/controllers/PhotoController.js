@@ -3,6 +3,17 @@
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
+    $scope.checkFilter = (itemcode) => {
+        itemcode = itemcode + "";
+
+        if (itemcode.indexOf($scope.searchCode) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
@@ -32,7 +43,7 @@
     };
 
     $scope.currentPage = 1;
-    $scope.photosPerPage = 6;
+    $scope.photosPerPage = 8;
 
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
@@ -145,6 +156,8 @@
                 'socialshareMedia': photoUrl
             }
         });
-    }
+    };
+
+    $scope.pricingOption = 'option2';
     
 }])

@@ -69,8 +69,8 @@ app.factory('userApi', ['$http', '$rootScope', function ($http, $rootScope) {
 }]);
 
 app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', function ($scope, $window, $location, $http, userApi) {
-    $scope.goToCart = function () {
-        $window.location.href = '/Photo/Cart';
+    $scope.goToCart = function (userId) {
+        $window.location.href = '/Photo/Cart/' + userId;
     };
 
     $scope.goToCheckout = function (userId) {
@@ -80,6 +80,7 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getPrintTypes = function () {
         $http.get('/api/Photo/GetPrintTypes').then(function (x) {
             $scope.printTypes = x.data;
+            console.log($scope.printTypes);
         });
     };
 
@@ -167,7 +168,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             });
         });
         $scope.getOrderTotal(orderId);
-        console.log($scope.orderDetailsList);
     };
 
     $scope.getOrderTotal = function (orderId) {
@@ -183,6 +183,14 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getUser = function () {
         userApi.getUser().then(function (x) {
             $scope.user = x.data;
+        });
+    };
+
+    $scope.getOpenOrder = function (userId) {
+        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(function (x) {
+            $scope.order = x.data;
+            console.log($scope.order);
+            $scope.getOrderTotal($scope.order.Id);
         });
     };
 }]);
@@ -223,7 +231,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
             angular.forEach(x.data, function (f) {
                 $scope.folders.push(f);
             });
-            console.log(JSON.stringify(x.data));
         });
     };
 
@@ -289,7 +296,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         var index = $scope.folders.findIndex(function (f) {
             return f.Id == folder.Id;
         });
-        console.log('findIndex ' + index);
         $scope.folders[index] = folder;
     });
 
@@ -299,7 +305,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         var index = $scope.folders.findIndex(function (f) {
             return f.Id == folderId;
         });
-        console.log('findIndex ' + index);
         $scope.folders.splice(index, 1);
     });
 }]);
@@ -615,7 +620,7 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     };
 
     $scope.currentPage = 1;
-    $scope.photosPerPage = 6;
+    $scope.photosPerPage = 8;
 
     $scope.getPhotosByCode = function (code) {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(function (x) {
@@ -899,8 +904,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
 
         if (response !== "") {
             fileItem.formData[0].photoCode = response;
@@ -1133,10 +1136,13 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
     $scope.originalSettings = {};
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(JSON.stringify(x));
+            console.log(x.data);
             $scope.accountSettings = x.data;
+            if ($scope.accountSettings.Facebook == null) $scope.accountSettings.Facebook = 'https://www.facebook.com/';
+            if ($scope.accountSettings.Twitter == null) $scope.accountSettings.Twitter = 'https://www.twitter.com/';
+            if ($scope.accountSettings.Instagram == null) $scope.accountSettings.Instagram = 'https://www.instagram.com/';
+            if ($scope.accountSettings.Dribbble == null) $scope.accountSettings.Dribbble = 'https://www.dribbble.com/';
             angular.copy(x.data, $scope.originalSettings);
-            console.log(JSON.stringify($scope.originalSettings));
         });
     };
 
@@ -1177,6 +1183,12 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
             controller: 'UploadProfileImageCtrl',
             clickOutsideToClose: true
         });
+    };
+
+    $scope.selected = 'details';
+
+    $scope.setSelected = function (selected) {
+        $scope.selected = selected;
     };
 }]);
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', function ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) {

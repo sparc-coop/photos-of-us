@@ -12,7 +12,6 @@ namespace PhotosOfUs.Model.Models
         public int? PrintTypeId { get; set; }
         public decimal UnitPrice { get; set; }
 
-        //public Order Order { get; set; }
         public Photo Photo { get; set; }
         public PrintType PrintType { get; set; }
     }

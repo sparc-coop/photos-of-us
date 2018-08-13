@@ -25,9 +25,78 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             _context = context;
             _viewRenderService = viewRenderService;
+        }      
+
+        [HttpGet]
+        [Route("GetProfilePhotos")]
+        public List<PhotoViewModel> GetProfilePhotos()
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(photographerId);
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            var model = PhotoViewModel.ToViewModel(photos);
+
+            return model;
         }
 
-        
+        [HttpPost]
+        [Route("GetTagsByPhotos")]
+        public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
+        {
+            var repo = new PhotoRepository(_context);
+
+            var tags = repo.GetTagsByPhotos(photos);
+
+            var tagsmodel = TagViewModel.ToViewModel(tags);
+
+            return tagsmodel;
+        }
+
+        [HttpGet]
+        [Route("GetPhotoPrice/{photoId:int}")]
+        public decimal? GetPhotoPrice(int photoId)
+        {
+            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+
+            return photo.Price;
+        }
+
+        [HttpPost]
+        [Route("SavePhotoPrice/{photoId:int}/{newPrice:decimal}")]
+        public void GetPhotoPrice(int photoId, decimal newPrice)
+        {
+            new PhotoRepository(_context).UpdatePrice(photoId, newPrice);
+        }
+
+        [HttpPost]
+        [Route("AddTags")]
+        public void AddTags([FromBody]List<TagViewModel> tags)
+        {
+            var repo = new PhotoRepository(_context);
+
+            repo.AddTags(tags);
+        }
+
+        [HttpPost]
+        [Route("EditPhotos")]
+        public void EditPhotos([FromBody]PhotoTagViewModel photosviewmodel)
+        {
+            var repo = new PhotoRepository(_context);
+        }
+
+        [Route("DeletePhotos")]
+        [HttpPost]
+        public void Post([FromBody]List<Photo> photos)
+        {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+
+
+            var repo = new PhotoRepository(_context);
+
+            repo.DeletePhotos(photos);
+        }
 
         // GET: api/PhotographerApi/5
         [HttpGet("{id}", Name = "Get")]

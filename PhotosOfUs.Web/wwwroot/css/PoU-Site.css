@@ -26,6 +26,99 @@
     color: black;
     cursor: not-allowed; }
 
+.bulkedit-dialog {
+  width: 500px; }
+  .bulkedit-dialog .bulkedit-container {
+    margin: 30px; }
+  .bulkedit-dialog #photosnumber {
+    color: rgba(0, 0, 0, 0.87);
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    font-size: 16px;
+    font-weight: 400; }
+  .bulkedit-dialog #bulkedit-title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 32px;
+    color: #194952;
+    letter-spacing: 0; }
+  .bulkedit-dialog .btn-apply {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #43C6BA;
+    font-weight: 600;
+    color: #194952;
+    padding: 8px 16px;
+    cursor: pointer;
+    outline: none; }
+  .bulkedit-dialog .btn-delete {
+    border: none;
+    background-color: transparent;
+    color: #FF6060;
+    position: absolute;
+    bottom: 20px;
+    right: 125px;
+    cursor: pointer;
+    outline: none; }
+  .bulkedit-dialog .material-icons {
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    top: 20px;
+    right: 20px; }
+  .bulkedit-dialog .tags {
+    margin-bottom: 20px; }
+  .bulkedit-dialog .price {
+    margin-bottom: 20px; }
+
+.deactivate-dialog {
+  width: 500px; }
+  .deactivate-dialog .close {
+    outline: none;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 18px; }
+  .deactivate-dialog .form {
+    margin-bottom: 10px; }
+  .deactivate-dialog .form-input {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 15px; }
+    .deactivate-dialog .form-input input, .deactivate-dialog .form-input textarea {
+      width: 100%; }
+  .deactivate-dialog .form-button {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px; }
+  .deactivate-dialog button {
+    width: 200px; }
+  .deactivate-dialog button:disabled {
+    background-color: lightgray;
+    color: black;
+    cursor: not-allowed; }
+  .deactivate-dialog .deactivate-message {
+    font-family: 'Open Sans';
+    font-size: 14px;
+    width: 450px;
+    text-align: center;
+    padding-bottom: 10px; }
+  .deactivate-dialog .deactivate-form {
+    text-align: center;
+    padding: 0px 10px 10px 10px; }
+  .deactivate-dialog .button--confirm {
+    background-color: #43C6BA;
+    color: #FFFFFF;
+    padding: 8px 15px;
+    margin: 0 auto;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    border-radius: 4px;
+    width: 150px;
+    cursor: pointer; }
+
 .full-width-anchor {
   position: absolute;
   width: 100%;
@@ -61,6 +154,7 @@
 
 .button--checkout--preview {
   cursor: pointer;
+  outline: none;
   background-color: #194952;
   text-align: center;
   width: 239px;
@@ -95,7 +189,8 @@
   margin: 35px 5px 2px 0;
   position: absolute;
   bottom: 22px;
-  right: 22px; }
+  right: 22px;
+  cursor: pointer; }
 
 .button--discard-changes {
   font-family: 'Dosis', sans-serif;
@@ -109,7 +204,8 @@
   margin: 35px 0 2px 0;
   position: absolute;
   bottom: 22px;
-  right: 218px; }
+  right: 218px;
+  cursor: pointer; }
 
 .button--back {
   height: 19px;
@@ -360,13 +456,14 @@ body {
 .filters {
   margin-bottom: 20px; }
   .filters .searchbox.input--light-blue {
-    width: 510px;
+    width: 230px;
     height: 28px;
     background-image: url("/images/icons/search.png");
     background-repeat: no-repeat;
     background-position: 20px 5px;
     padding: 0 50px;
-    color: #43C6BA; }
+    color: #43C6BA;
+    outline: none; }
     .filters .searchbox.input--light-blue::-moz-placeholder {
       color: #43C6BA; }
     .filters .searchbox.input--light-blue:-ms-input-placeholder {
@@ -913,7 +1010,8 @@ body {
   font-weight: 600; }
   .nav a {
     text-decoration: none;
-    color: #FFFFFF; }
+    color: #FFFFFF;
+    vertical-align: middle; }
   .nav .logo {
     /*position: absolute;
         left: 80px;*/
@@ -938,7 +1036,8 @@ body {
       border-radius: 20px;
       display: inline-block;
       margin: 7px 10px 0 0;
-      padding: 4px; }
+      padding: 4px;
+      vertical-align: middle; }
       .nav--right .img-cart img {
         height: 14px;
         padding: 5px;
@@ -956,7 +1055,7 @@ body {
       border: 2px solid #FFE261;
       background-color: #194952;
       display: inline-block;
-      margin-top: -4px; }
+      margin-top: 4px; }
     .nav--right .menu-item.active {
       padding-bottom: 5px;
       border-bottom: 2px solid #FFE261; }
@@ -1148,6 +1247,9 @@ td {
     color: #194952;
     width: 70px;
     padding-right: 20px; }
+    .purchase__options--row .quantity input, .purchase__options--row .quantity .form-input textarea, .form-input .purchase__options--row .quantity textarea {
+      width: 25px;
+      text-align: center; }
   .purchase__options--row .price {
     line-height: 57px;
     font-family: "Open Sans";
@@ -1157,13 +1259,17 @@ td {
     width: 70px;
     padding-right: 15px; }
 
-.purchase__options--row:nth-child(odd) {
+.purchase__options--row:nth-child(even) {
   background: rgba(255, 226, 97, 0.16); }
+
+.photographer-order {
+  height: 300px;
+  width: 400px;
+  padding: 20px; }
 
 .cart--preview {
   z-index: 100;
   width: 265px;
-  height: 265px;
   background-color: #FFE261;
   border-radius: 6px;
   margin-top: 46px;
@@ -1172,7 +1278,7 @@ td {
   .cart--preview__content {
     position: relative;
     padding: 16px 14px;
-    height: 235px; }
+    padding-bottom: 120px; }
     .cart--preview__content .heading {
       font-family: "Dosis";
       font-weight: 600;
@@ -1181,19 +1287,6 @@ td {
       padding-bottom: 14px; }
       .cart--preview__content .heading .price {
         padding-left: 124px; }
-    .cart--preview__content .cart-items {
-      font-family: "Open Sans";
-      font-weight: 600;
-      font-size: 14px;
-      color: #43C6BA; }
-      .cart--preview__content .cart-items .type {
-        line-height: initial;
-        width: 100px; }
-      .cart--preview__content .cart-items .quantity {
-        padding-left: 20px;
-        width: 30px; }
-      .cart--preview__content .cart-items .price {
-        padding-left: 14px; }
     .cart--preview__content .total {
       position: absolute;
       bottom: 90px;
@@ -1203,6 +1296,21 @@ td {
       color: #194952; }
       .cart--preview__content .total .amount {
         padding-left: 96px; }
+  .cart--preview__item {
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 14px;
+    color: #43C6BA;
+    display: flex;
+    padding-bottom: 5px; }
+    .cart--preview__item .type {
+      line-height: initial;
+      width: 100px; }
+    .cart--preview__item .quantity {
+      padding-left: 20px;
+      width: 30px; }
+    .cart--preview__item .price {
+      padding-left: 14px; }
   .cart--preview--arrow {
     width: 0;
     height: 0;
@@ -1211,7 +1319,7 @@ td {
     border-bottom: 10px solid #FFE261;
     position: absolute;
     top: -8px;
-    right: 82px; }
+    right: 102px; }
 
 .cart .divider {
   background: #FFE261;
@@ -1256,8 +1364,8 @@ td {
     text-align: center; }
   .cart .checkout .summary .divider {
     position: absolute;
-    bottom: 48px;
-    left: 44px;
+    bottom: 18px;
+    left: 34px;
     margin-top: 10px; }
   .cart .checkout .summary .cart-items {
     display: flex;
@@ -1342,50 +1450,72 @@ td {
 .cart-item:nth-child(even) {
   background: rgba(255, 226, 97, 0.16); }
 
+.confirmation .divider {
+  margin-top: 20px; }
+
+.confirmation .heading {
+  font-family: 'Dosis';
+  font-weight: 600;
+  font-size: 32px;
+  color: #43C6BA; }
+
+.confirmation .content {
+  font-size: 20px;
+  color: #194952;
+  font-family: 'Open Sans';
+  font-weight: 600;
+  display: flex;
+  padding: 10px 0; }
+  .confirmation .content--info {
+    font-size: 18px;
+    color: #757575;
+    width: 200px;
+    font-weight: 500; }
+
 .body {
   overflow-x: hidden; }
 
-.landing {
+.preLaunch--landing {
   font-family: 'Dosis';
   font-weight: 400; }
-  .landing .header {
+  .preLaunch--landing .header {
     position: relative;
     height: 60px; }
-    .landing .header__logo {
+    .preLaunch--landing .header__logo {
       display: flex;
       position: absolute;
       top: 32px;
       left: 96px; }
-      .landing .header__logo__text {
+      .preLaunch--landing .header__logo__text {
         font-size: 15px;
         font-weight: 600;
         color: #FFFFFF;
         padding-left: 5px;
         padding-top: 10px; }
-    .landing .header__social {
+    .preLaunch--landing .header__social {
       display: inline;
       position: absolute;
       top: 42px;
       right: 96px; }
-      .landing .header__social img {
+      .preLaunch--landing .header__social img {
         padding: 0 8px; }
-      .landing .header__social a {
+      .preLaunch--landing .header__social a {
         cursor: pointer;
         outline: none; }
-  .landing .section1 {
+  .preLaunch--landing .section1 {
     background: url("../../images/Intro BG.png");
     background-size: 100% 100%;
     height: 900px; }
-    .landing .section1 .slogan {
+    .preLaunch--landing .section1 .slogan {
       font-weight: 800;
       font-size: 80px;
       color: #FFFFFF;
       letter-spacing: 0.37px;
       text-align: center;
       text-transform: uppercase; }
-    .landing .section1 .content {
+    .preLaunch--landing .section1 .content {
       margin-top: 154px; }
-      .landing .section1 .content__subinfo {
+      .preLaunch--landing .section1 .content__subinfo {
         padding: 10px 10px 70px 10px;
         font-family: 'Open Sans';
         font-size: 24px;
@@ -1394,7 +1524,7 @@ td {
         text-align: center;
         max-width: 650px;
         margin: 0 auto; }
-      .landing .section1 .content .invite {
+      .preLaunch--landing .section1 .content .invite {
         max-width: 507px;
         height: 60px;
         background-color: #FFFFFF;
@@ -1402,31 +1532,31 @@ td {
         margin: 0 auto;
         display: flex;
         position: relative; }
-        .landing .section1 .content .invite input, .landing .section1 .content .invite .form-input textarea, .form-input .landing .section1 .content .invite textarea {
+        .preLaunch--landing .section1 .content .invite input, .preLaunch--landing .section1 .content .invite .form-input textarea, .form-input .preLaunch--landing .section1 .content .invite textarea {
           border: none;
           outline: none;
           margin: 0 30px 0 20px;
           width: 260px; }
-  .landing .section2 {
+  .preLaunch--landing .section2 {
     background: url("../../images/Mid BG.png");
     background-size: 100% 110%;
     height: auto;
     padding-bottom: 100px;
     text-align: center; }
-    .landing .section2 .img--showcase {
+    .preLaunch--landing .section2 .img--showcase {
       margin: 0 auto;
       margin-top: -340px;
       width: 90%; }
-    .landing .section2 .slogan {
+    .preLaunch--landing .section2 .slogan {
       font-weight: 800;
       font-size: 50px;
       letter-spacing: 0.37px;
       text-align: center;
       color: #194952;
       text-transform: uppercase; }
-    .landing .section2 .content {
+    .preLaunch--landing .section2 .content {
       margin-top: 0px; }
-      .landing .section2 .content__subinfo {
+      .preLaunch--landing .section2 .content__subinfo {
         padding: 10px 0 70px 0;
         font-family: 'Open Sans';
         font-size: 24px;
@@ -1435,7 +1565,7 @@ td {
         text-align: center;
         max-width: 590px;
         margin: 0 auto; }
-      .landing .section2 .content__text {
+      .preLaunch--landing .section2 .content__text {
         display: flex;
         max-width: 1110px;
         height: auto;
@@ -1444,25 +1574,25 @@ td {
         margin: 0 auto;
         padding: 50px 0;
         text-align: center; }
-      .landing .section2 .content__container {
+      .preLaunch--landing .section2 .content__container {
         width: 330px;
         padding: 0 30px; }
-      .landing .section2 .content .copy {
+      .preLaunch--landing .section2 .content .copy {
         font-family: 'Open Sans'; }
-      .landing .section2 .content .title {
+      .preLaunch--landing .section2 .content .title {
         font-weight: 800;
         font-size: 36px;
         color: #194952;
         letter-spacing: 0.37px;
         padding: 25px 0; }
-  .landing .section3 {
+  .preLaunch--landing .section3 {
     margin-bottom: -60px; }
-    .landing .section3 img {
+    .preLaunch--landing .section3 img {
       width: 100%; }
-    .landing .section3 .img--footer {
+    .preLaunch--landing .section3 .img--footer {
       position: absolute;
       bottom: 0; }
-    .landing .section3 .content {
+    .preLaunch--landing .section3 .content {
       margin: 0 auto;
       max-width: 1110px;
       height: 442px;
@@ -1471,7 +1601,7 @@ td {
       margin-top: -200px;
       position: relative;
       z-index: 10; }
-      .landing .section3 .content__subinfo {
+      .preLaunch--landing .section3 .content__subinfo {
         padding: 25px 0 70px 0;
         font-family: 'Open Sans';
         font-size: 24px;
@@ -1480,7 +1610,7 @@ td {
         text-align: center;
         max-width: 570px;
         margin: 0 auto; }
-      .landing .section3 .content .invite {
+      .preLaunch--landing .section3 .content .invite {
         max-width: 507px;
         height: 60px;
         background-color: #FFFFFF;
@@ -1490,12 +1620,12 @@ td {
         display: flex;
         position: relative;
         box-shadow: 0 0 100px 0 #c6ecf2; }
-        .landing .section3 .content .invite input, .landing .section3 .content .invite .form-input textarea, .form-input .landing .section3 .content .invite textarea {
+        .preLaunch--landing .section3 .content .invite input, .preLaunch--landing .section3 .content .invite .form-input textarea, .form-input .preLaunch--landing .section3 .content .invite textarea {
           border: none;
           outline: none;
           margin: 0 30px 0 20px;
           width: 260px; }
-      .landing .section3 .content .slogan {
+      .preLaunch--landing .section3 .content .slogan {
         font-weight: 800;
         font-size: 50px;
         letter-spacing: 0.37px;
@@ -1503,17 +1633,17 @@ td {
         color: #194952;
         padding-top: 50px;
         text-transform: uppercase; }
-      .landing .section3 .content .social {
+      .preLaunch--landing .section3 .content .social {
         text-align: center;
         padding-top: 105px; }
-        .landing .section3 .content .social a {
+        .preLaunch--landing .section3 .content .social a {
           cursor: pointer;
           outline: none; }
-        .landing .section3 .content .social img {
+        .preLaunch--landing .section3 .content .social img {
           height: 14px;
           width: 14px;
           padding: 0 8px; }
-  .landing .button--invite {
+  .preLaunch--landing .button--invite {
     border: none;
     background-color: #FFE261;
     font-weight: 600;
@@ -1642,7 +1772,7 @@ md-dialog {
   display: flex; }
 
 /* photo preview */
-#photo-preview {
+.photo-preview {
   margin-top: 24px;
   font-family: 'Dosis', sans-serif;
   font-weight: 600;
@@ -1655,17 +1785,55 @@ md-dialog {
   width: 510px;
   height: 513px;
   position: relative; }
-  #photo-preview .img-container {
-    text-align: center;
-    padding: 10px; }
-  #photo-preview img {
-    width: auto;
-    max-width: 490px;
-    max-height: 330px;
-    border-radius: 8px; }
-  #photo-preview #photo-preview-name {
-    width: 90%;
+  .photo-preview .img-container {
+    text-align: center; }
+    .photo-preview .img-container img {
+      width: auto;
+      max-width: 490px;
+      max-height: 330px;
+      border-radius: 8px; }
+  .photo-preview .info {
+    display: flex;
+    padding: 10px 50px 0 10px; }
+  .photo-preview #photo-preview-name {
+    width: 60%;
     padding-left: 10px; }
+  .photo-preview__dimensions {
+    display: inline;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: 0;
+    margin: 3px 0 0 10px;
+    width: 20%; }
+    .photo-preview__dimensions p {
+      width: 20%;
+      margin: 0; }
+  .photo-preview__name {
+    display: inline;
+    font-family: 'Dosis', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    letter-spacing: 0;
+    color: #F6FFFF;
+    word-wrap: break-word;
+    border: 0;
+    width: 100%; }
+    .photo-preview__name textarea {
+      background-color: #194952;
+      outline: none;
+      border: none;
+      color: #FFFFFF; }
+  .photo-preview__pricing {
+    margin-top: -5px;
+    padding-left: 10px; }
+    .photo-preview__pricing input, .photo-preview__pricing .form-input textarea, .form-input .photo-preview__pricing textarea {
+      border: none;
+      outline: none;
+      color: #FFFFFF;
+      background-color: #194952;
+      padding: 8px 0 0 10px;
+      font-size: 18px; }
 
 .photo-preview-title {
   font-family: 'Open Sans';
@@ -1673,29 +1841,22 @@ md-dialog {
   color: #F6FFFF;
   letter-spacing: 0;
   font-weight: normal;
-  margin: 5px 0 1px 10px; }
-
-#photo-preview-name {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
-  font-size: 28px;
-  letter-spacing: 0;
-  color: #F6FFFF;
-  word-wrap: break-word;
-  border: 0;
-  background: #194952;
-  width: 100%; }
-
-#photo-preview-dimensions {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 600;
-  font-size: 22px;
-  letter-spacing: 0;
-  margin: 3px 0 0 10px; }
+  margin: 5px 0 1px 10px;
+  position: relative; }
+  .photo-preview-title i {
+    font-size: 14px;
+    cursor: pointer; }
+  .photo-preview-title .hover {
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    padding-left: 10px; }
 
 /* photo list */
 #photo-list {
-  padding: 0 20px; }
+  padding: 0 20px;
+  width: 100%; }
 
 #photos {
   padding: 0;
@@ -2037,6 +2198,84 @@ canvas {
     font-size: 26px;
     color: #194952; }
 
+.photographer-search--backdrop {
+  width: 100%;
+  height: 400px;
+  background-image: url(/images/photo/search_background.png);
+  background-size: cover;
+  background-position: center; }
+
+.photographer-search--backdrop figure {
+  margin: 0;
+  text-align: right;
+  padding: 20px 40px 0 0; }
+
+.photographer-search--backdrop figure img {
+  height: 70px;
+  width: auto; }
+
+.photographer-search {
+  width: 100%;
+  position: relative;
+  font-family: "Dosis";
+  font-weight: 600;
+  font-size: 42px;
+  color: #FFE261;
+  letter-spacing: 0; }
+  .photographer-search__title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 42px;
+    color: #194952;
+    letter-spacing: 0; }
+  .photographer-search__bigtitle {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 30%;
+    right: 30%; }
+
+.photographer-searchTerm {
+  float: left;
+  width: 100%;
+  /*border: 3px solid #00B4CC;*/
+  padding: 5px;
+  height: 60px;
+  border-radius: 5px;
+  outline: none;
+  color: #9DBFAF; }
+
+.photographer-searchTerm:focus {
+  color: #43C6BA; }
+
+.photographer-searchButton {
+  position: absolute;
+  top: -6px;
+  right: -40px;
+  width: 70px;
+  height: 70px;
+  border: 1px solid #43C6BA;
+  background: #43C6BA;
+  text-align: center;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 5px; }
+
+.photographer-searchButton img {
+  padding-top: 2px;
+  width: 40px;
+  height: 40px; }
+
+/*Resize the wrap to see the search bar change!*/
+.photographer-search-wrap {
+  width: 40%;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
 .codePage__background {
   width: 100vw;
   height: 100%;
@@ -2333,54 +2572,75 @@ canvas {
       .photographer-profile--wrapper .photographer-gallery-container .gallery-image {
         height: 400px; } }
 
-.photographer-sales-history select {
-  color: #43C6BA;
-  border: 0;
-  font-size: 14px; }
-
-.photographer-sales-history .total {
-  margin-top: 25px;
-  float: right;
-  font-family: 'Dosis';
-  font-weight: 400; }
-  .photographer-sales-history .total h4 {
+.photographer-sales-history {
+  padding-bottom: 50px; }
+  .photographer-sales-history select {
     color: #43C6BA;
-    margin-bottom: 0px; }
-  .photographer-sales-history .total h3 {
-    color: #194952;
-    margin-top: 5px; }
-  .photographer-sales-history .total-counter {
-    margin-left: 75px; }
-
-.photographer-sales-history .search-form {
-  width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  border: 2px solid #43c6ba; }
-  .photographer-sales-history .search-form .search-title {
-    margin-bottom: 16px; }
-    .photographer-sales-history .search-form .search-title h4 {
-      margin: 0; }
-  .photographer-sales-history .search-form .search-inputs {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-between; }
-  .photographer-sales-history .search-form .column {
-    width: 48%; }
-    .photographer-sales-history .search-form .column .data:not(:last-child) {
+    border: 0;
+    font-size: 14px; }
+  .photographer-sales-history .total {
+    margin-top: 25px;
+    float: right;
+    font-family: 'Dosis';
+    font-weight: 400; }
+    .photographer-sales-history .total h4 {
+      color: #43C6BA;
+      margin-bottom: 0px; }
+    .photographer-sales-history .total h3 {
+      color: #194952;
+      margin-top: 5px; }
+    .photographer-sales-history .total-counter {
+      margin-left: 75px; }
+  .photographer-sales-history .search-form {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px solid #43c6ba; }
+    .photographer-sales-history .search-form .search-title {
       margin-bottom: 16px; }
-  .photographer-sales-history .search-form .medium-input {
-    max-width: 100px;
-    padding: 4px; }
-  .photographer-sales-history .search-form .small-input {
-    max-width: 40px;
-    padding: 4px; }
-  .photographer-sales-history .search-form button {
-    background-color: white; }
-    .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
-      background-color: #43c6ba;
-      color: white; }
+      .photographer-sales-history .search-form .search-title h4 {
+        margin: 0; }
+    .photographer-sales-history .search-form .search-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between; }
+    .photographer-sales-history .search-form .column {
+      width: 48%; }
+      .photographer-sales-history .search-form .column .data:not(:last-child) {
+        margin-bottom: 16px; }
+    .photographer-sales-history .search-form .medium-input {
+      max-width: 100px;
+      padding: 4px; }
+    .photographer-sales-history .search-form .small-input {
+      max-width: 40px;
+      padding: 4px; }
+    .photographer-sales-history .search-form button {
+      background-color: white; }
+      .photographer-sales-history .search-form button:hover, .photographer-sales-history .search-form button:focus {
+        background-color: #43c6ba;
+        color: white; }
+  .photographer-sales-history .sales {
+    width: 100%; }
+    .photographer-sales-history .sales .date {
+      padding: 15px 10px; }
+  .photographer-sales-history .sales--row {
+    display: flex;
+    padding: 15px; }
+    .photographer-sales-history .sales--row:nth-child(even) {
+      background-color: rgba(255, 226, 97, 0.16); }
+    .photographer-sales-history .sales--row--name {
+      width: 18%; }
+    .photographer-sales-history .sales--row--quantity {
+      width: 13%; }
+    .photographer-sales-history .sales--row--type {
+      width: 15%;
+      padding-right: 6px; }
+    .photographer-sales-history .sales--row--price, .photographer-sales-history .sales--row--earning {
+      width: 16%;
+      padding-right: 5px; }
+    .photographer-sales-history .sales--row--status {
+      padding-left: 40px; }
 
 .order-history .header--row {
   display: flex;
@@ -2466,7 +2726,8 @@ canvas {
   .account-settings .account-sidemenu .sidemenu-item {
     margin-bottom: 10px;
     font-family: 'Dosis';
-    font-weight: 600; }
+    font-weight: 600;
+    outline: none; }
     .account-settings .account-sidemenu .sidemenu-item .active {
       color: #194952; }
       .account-settings .account-sidemenu .sidemenu-item .active i {
@@ -2483,8 +2744,11 @@ canvas {
       color: #9b9999; }
   .account-settings .account-sidemenu .deactivate {
     color: #FF6060;
-    font-size: 10px;
-    text-decoration: none; }
+    font-size: 11px;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    margin-top: 25px; }
 
 .account-settings .btn-group {
   display: flex;
@@ -2551,6 +2815,8 @@ canvas {
     opacity: 1; }
     .account-settings .form-account .img-container:hover .overlay .material-icons {
       color: white; }
+  .account-settings .form-account--social input, .account-settings .form-account--social .form-input textarea, .form-input .account-settings .form-account--social textarea {
+    width: 300px; }
 
 .account-settings .social-accounts .form-input {
   position: relative; }
@@ -2562,6 +2828,253 @@ canvas {
     left: 10px;
     top: 27px;
     padding: 9px 8px; }
+
+.landing .logo {
+  padding: 32px 0 0 96px; }
+
+.landing .yellow-text {
+  color: #FFE261; }
+
+.landing .top-photos {
+  /*margin: 0;
+        padding: 0px;
+        //width: 100vw;
+        width: calc(100% + calc(100vw - 100%));
+        right: 0px;
+        overflow-x: hidden;
+        max-width: 100%;*/ }
+
+.landing .bottom-photos {
+  position: absolute;
+  top: 2048px;
+  width: 100vw;
+  max-width: 100%; }
+
+.landing .img-spread {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15); }
+
+.landing .img-round {
+  border-radius: 8px; }
+
+.landing .img-right {
+  border-radius: 8px 0px 0px 8px; }
+
+.landing .img-bottom {
+  border-radius: 8px 8px 0px 0px; }
+
+.landing .main-landing {
+  background-color: #194952;
+  width: 100%;
+  height: 1024px;
+  max-width: 100%;
+  overflow: hidden;
+  margin: 0;
+  position: relative; }
+  .landing .main-landing .welcome-section {
+    background-color: #194952;
+    padding: 195px 0px 0px 188px; }
+  .landing .main-landing .welcome-text {
+    color: #FFE261;
+    font-size: 80px;
+    font-family: 'Dosis';
+    text-transform: uppercase;
+    font-weight: 600;
+    width: 436px;
+    height: 202px;
+    padding-bottom: 38px; }
+  .landing .main-landing .tagline {
+    color: #F6FFFF;
+    font-size: 28px;
+    font-family: 'Open Sans';
+    font-weight: 500;
+    padding-bottom: 38px;
+    width: 563px; }
+  .landing .main-landing--img-container {
+    text-align: right;
+    width: 64%;
+    margin-left: 41%;
+    position: absolute;
+    overflow: hidden;
+    margin-top: -95px; }
+    .landing .main-landing--img-container .random-photo {
+      max-height: 300px;
+      max-width: 300px;
+      border-radius: 8px;
+      margin: 8px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
+
+.landing .button-styling {
+  background-color: #43C6BA;
+  color: #FFE261;
+  font-size: 20px;
+  border-radius: 8px;
+  box-shadow: 0;
+  border: 0;
+  font-weight: 500; }
+
+.landing .start-button {
+  width: 195px;
+  height: 48px;
+  text-decoration: none;
+  padding: 10px 20px; }
+
+.landing .browse-button {
+  width: 330px;
+  height: 48px; }
+
+.landing .steps {
+  width: 100%;
+  height: 845px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  color: #194952;
+  font-family: 'Dosis';
+  font-size: 50px;
+  font-weight: 500;
+  align-items: center; }
+
+.landing .subt-1 {
+  font-size: 25px;
+  color: #43C6BA;
+  font-family: 'Dosis';
+  font-weight: 500; }
+
+.landing .browse {
+  width: 100%;
+  height: 638px;
+  background-color: rgba(255, 226, 97, 0.17);
+  position: relative;
+  overflow: hidden; }
+  .landing .browse--content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    margin-top: 138px; }
+  .landing .browse--img-container {
+    height: 120%;
+    position: absolute;
+    /*display: flex;
+            flex-wrap: wrap;*/ }
+    .landing .browse--img-container.right {
+      width: 40%;
+      margin-left: 66%;
+      text-align: right; }
+    .landing .browse--img-container.left {
+      width: 40%; }
+  .landing .browse .random-photo {
+    max-height: 300px;
+    max-width: 300px;
+    border-radius: 8px;
+    margin: -10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
+    .landing .browse .random-photo:nth-child(even) {
+      margin-bottom: 20px; }
+
+.landing .subt-2 {
+  font-family: 'Dosis';
+  font-size: 20px;
+  color: #43C6BA;
+  padding-bottom: 10px; }
+
+.landing .subt-3 {
+  font-size: 18px;
+  font-family: 'Open Sans';
+  color: #4A4A4A;
+  width: 510px;
+  padding-bottom: 60px; }
+
+.landing .subt-4 {
+  font-size: 14px;
+  font-family: 'Open Sans';
+  color: #FF6060;
+  padding-top: 10px; }
+
+.landing .landing-subtitle {
+  color: #194952;
+  font-size: 50px;
+  font-family: 'Dosis';
+  font-weight: 600;
+  text-align: center;
+  padding-bottom: 18px; }
+
+.landing .landing-subtext {
+  font-size: 20px;
+  font-family: 'Open Sans';
+  color: #4A4A4A;
+  padding: 27px;
+  text-align: center;
+  width: 570px; }
+
+.landing .footer {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 0px;
+  background-color: #194952;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+  .landing .footer .links-nav {
+    display: flex;
+    flex-direction: row; }
+  .landing .footer .navigation {
+    display: flex;
+    flex-direction: column;
+    padding: 86px 50px 20px 50px; }
+  .landing .footer .navigation a {
+    font-family: 'Dosis';
+    color: #FFE261;
+    text-decoration: none;
+    line-height: 26px;
+    font-weight: 600; }
+  .landing .footer .nav-sm a {
+    color: #43C6BA; }
+  .landing .footer .footer-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; }
+  .landing .footer .code-enter {
+    color: #FFE261;
+    margin: 43px;
+    font-size: 14px;
+    line-height: 28px; }
+  .landing .footer .code-enter-sub {
+    display: flex; }
+  .landing .footer .code-input {
+    height: 40px;
+    width: 160px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 8px 0px 0px 8px;
+    font-family: 'Open Sans';
+    font-size: 20px;
+    color: #757575;
+    outline: none; }
+  .landing .footer .code-button {
+    font-family: 'Open Sans';
+    color: #194952;
+    font-size: 20px;
+    background-color: #FFE261;
+    border: 0;
+    border-radius: 0px 8px 8px 0px;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    padding: 6px 10px; }
+  .landing .footer .bottom-logo {
+    font-size: 20px;
+    line-height: 28px;
+    font-family: 'Dosis';
+    color: #FFE261;
+    font-weight: 500;
+    display: flex;
+    align-content: flex-end; }
 
 .photo-details {
   font-family: 'Dosis'; }
@@ -2582,6 +3095,160 @@ canvas {
   border-radius: 10px;
   max-width: 450px;
   max-height: 250px; }
+
+.pricing {
+  overflow-x: hidden; }
+  .pricing .section1 {
+    background: url("../../images/pricing_bg.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: unset;
+    padding-bottom: 90px; }
+    .pricing .section1 .header__logo__text {
+      text-decoration: none; }
+    .pricing .section1 .slogan {
+      font-size: 50px; }
+  .pricing--options {
+    padding: 0 0 60px 0;
+    width: 100%; }
+    .pricing--options__container {
+      margin: 0 auto;
+      max-width: 1050px;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 30px; }
+      .pricing--options__container > div {
+        width: 300px;
+        height: 570px;
+        background: #FCFCFC;
+        box-shadow: 0 0 100px 0 rgba(25, 73, 82, 0.3);
+        border-radius: 4px;
+        text-align: center;
+        padding: 30px;
+        margin-bottom: 30px;
+        margin-right: -10px;
+        margin-left: -10px; }
+        .pricing--options__container > div img {
+          width: 258px;
+          height: 137px;
+          padding-bottom: 30px; }
+        .pricing--options__container > div ul {
+          list-style: none; }
+        .pricing--options__container > div li {
+          text-align: left;
+          font-size: 16px;
+          font-weight: 600;
+          padding: 10px 0;
+          color: #194952;
+          letter-spacing: 0.17px; }
+          .pricing--options__container > div li i {
+            color: #FFE261;
+            padding-right: 10px;
+            vertical-align: middle;
+            font-size: 20px; }
+          .pricing--options__container > div li.alt {
+            padding-left: 30px;
+            text-decoration: line-through;
+            color: #757575; }
+    .pricing--options .selected {
+      width: 330px;
+      height: 600px;
+      margin-top: -15px;
+      z-index: 1; }
+    .pricing--options .signUp {
+      border: 2px solid #FFE261;
+      border-radius: 8px;
+      display: block;
+      padding: 8px;
+      height: 28px;
+      width: 270px;
+      font-weight: 600;
+      font-size: 22px;
+      color: #194952;
+      letter-spacing: -0.12px;
+      margin: 0 auto;
+      cursor: pointer;
+      text-decoration: none; }
+      .pricing--options .signUp--beta {
+        color: #757575;
+        border: 2px solid #757575;
+        cursor: unset; }
+    .pricing--options .pricing--subtitle {
+      height: 60px; }
+  .pricing .price {
+    font-weight: 800;
+    font-size: 32px;
+    color: #43C6BA;
+    letter-spacing: 0.33px; }
+  .pricing--title {
+    font-weight: 800;
+    font-size: 30px;
+    color: #194952;
+    letter-spacing: 0.31px; }
+  .pricing--title2 {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 24px;
+    color: #43C6BA;
+    letter-spacing: 0.25px; }
+  .pricing--subtitle {
+    font-family: 'Open Sans';
+    font-size: 13px;
+    color: #b2b2b2;
+    letter-spacing: 0.14px;
+    padding: 10px 0; }
+  .pricing--team {
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 2px solid #43C6BA;
+    border-radius: 4px;
+    height: 249px;
+    width: 870px;
+    display: flex; }
+    .pricing--team img {
+      width: 330px;
+      height: auto; }
+    .pricing--team__content {
+      padding: 32px 30px 28px 30px; }
+    .pricing--team .button--quote {
+      width: 479px;
+      height: 32px;
+      background: #FFE261;
+      border-radius: 8px;
+      color: #194952;
+      font-weight: 600;
+      font-size: 22px;
+      text-align: center;
+      padding: 5px;
+      cursor: pointer; }
+    .pricing--team .teamQuote {
+      width: 479px;
+      height: 42px;
+      background: #FFE261;
+      border-radius: 8px;
+      color: #194952;
+      font-weight: 600;
+      font-size: 22px;
+      text-align: center;
+      cursor: pointer; }
+      .pricing--team .teamQuote input, .pricing--team .teamQuote .form-input textarea, .form-input .pricing--team .teamQuote textarea {
+        border: none;
+        border-radius: 8px;
+        padding: 0 10px;
+        outline: none;
+        height: 32px;
+        margin-top: -8px;
+        vertical-align: middle; }
+      .pricing--team .teamQuote button {
+        margin: 0 -11px 0 23px;
+        border: 2px solid #43C6BA;
+        border-radius: 8px;
+        background: #FFE261;
+        color: #194952;
+        font-family: 'Dosis';
+        font-weight: 600;
+        outline: none;
+        padding: 5px 18px; }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;

@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
+using PhotosOfUs.Model.ViewModels;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -38,13 +39,26 @@ namespace PhotosOfUs.Model.Repositories
 
         public Photo GetPhoto(int photoId)
         {
-            return _context.Photo.Include("Photographer").Single(x => x.Id == photoId);
+            return _context.Photo.Single(x => x.Id == photoId);
+        }
+
+        public void UpdatePrice(int photoId, decimal price)
+        {
+            Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
+            photo.Price = price;
+            _context.Photo.Update(photo);
+            _context.SaveChanges();
         }
 
         public void SavePhoto(Photo photo)
         {
             _context.Photo.Attach(photo);
             _context.SaveChanges();
+        }
+
+        public List<Tag> GetAllTags()
+        {
+            return _context.Tag.ToList();
         }
 
         public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
@@ -69,7 +83,7 @@ namespace PhotosOfUs.Model.Repositories
         //    return photo;
         //}
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, bool publicProfile = false)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, double? price, bool publicProfile = false)
         {
             var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var url = $"{photographerId}/{folderId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
@@ -109,7 +123,8 @@ namespace PhotosOfUs.Model.Repositories
                 Url = containerBlob.Uri.AbsoluteUri,
                 Code = photoCode,
                 FolderId = folderId,
-                PublicProfile = publicProfile
+                PublicProfile = publicProfile,
+                Price = (decimal)price
             };
 
             _context.Photo.Attach(photo);
@@ -121,21 +136,118 @@ namespace PhotosOfUs.Model.Repositories
         
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _context.Photo.Where(x => x.PublicProfile && x.PhotographerId == photographerId).ToList();
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
         }
 
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, string extension)
+        public List<Photo> GetPublicPhotos()
+        {
+            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
+        }
+
+        public void AddTags(List<TagViewModel> tags)
+        {
+            foreach (TagViewModel tag in tags)
+            {
+                Tag newTag = new Tag
+                {
+                    Name = tag.text
+                };
+                _context.Tag.Add(newTag);
+            }
+            _context.SaveChanges();
+        }
+
+        public List<Tag> GetTags(string[] tagarray)
+        {
+            return _context.Tag.Where(x => tagarray.Contains(x.Name)).ToList();
+        }
+
+        public List<Photo> GetPublicPhotosByTag(List<Tag> taglist)
+        {
+            var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
+
+            List<int> tagids = new List<int>();
+
+            foreach (Tag tag in taglist)
+            {
+                tagids.Add(tag.Id);
+            }
+
+            List<PhotoTag> phototags = _context.PhotoTag.Where(x => tagids.Contains(x.TagId)).ToList();
+
+            List<int> ptids = new List<int>();
+
+            foreach (PhotoTag pt in phototags)
+            {
+                ptids.Add(pt.PhotoId);
+            }
+
+            List<Photo> photos = publicphotos.Where(x => ptids.Contains(x.Id)).ToList();
+
+            return photos;
+        }
+
+        public List<PhotoTag> GetTagsByPhotos(List<int> photos)
+        {
+            var tags = new List<Tag>();
+            var phototags = new List<PhotoTag>();
+
+            //phototags = _context.PhotoTag.ToList();
+
+            var photoList = new List<Photo>();
+            foreach(int id in photos)
+            {
+                photoList.Where(x => x.Id == id);
+            }
+
+            foreach (Photo photo in photoList)
+            {
+                var tagsfromphoto = _context
+                    .PhotoTag
+                    .Include(item => item.Tag)
+                    .Where(cm => cm.PhotoId == photo.Id)
+                    .ToList();
+
+                foreach (PhotoTag tag in tagsfromphoto)
+                {
+                    phototags.Add(tag);
+                }
+            }
+
+            //foreach (PhotoTag phototag in phototags)
+            //{
+            //    tags = _context
+            //        .Tag
+            //        .Include(item => item.Name)
+            //        .Where(cm => cm.Id == phototag.TagId)
+            //        .ToList();
+            //}
+
+            return phototags;
+        }
+
+        public void DeletePhotos(List<Photo> photos)
+        {
+            foreach (Photo photo in photos)
+            {
+                var photodb = _context.Photo.Find(photo.Id);
+                photodb.IsDeleted = true;
+            }
+            _context.SaveChanges();
+        }
+
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
 
             if(public_folder.Count() == 0)
             {
                 Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id,true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, price, true);
             }
             else
             {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id,true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, price, true);
             }
         }
     }

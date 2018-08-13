@@ -32,5 +32,31 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return UserViewModel.ToViewModel(user);           
         }
+
+        [HttpPost]
+        [Route("Deactivate/{userId:int}")]
+        public UserViewModel DeactivateAccount(int userId)
+        {
+            User user = new UserRepository(_context).Find(userId);
+            user.IsDeactivated = true;
+
+            _context.Update(user);
+            _context.SaveChanges();
+
+            return UserViewModel.ToViewModel(user);
+        }
+
+        [HttpPost]
+        [Route("Reactivate/{userId:int}")]
+        public UserViewModel ReactivateAccount(int userId)
+        {
+            User user = new UserRepository(_context).Find(userId);
+            user.IsDeactivated = false;
+
+            _context.Update(user);
+            _context.SaveChanges();
+
+            return UserViewModel.ToViewModel(user);
+        }
     }
 }

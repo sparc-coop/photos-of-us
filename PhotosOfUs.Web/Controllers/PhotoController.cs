@@ -76,7 +76,7 @@ namespace PhotosOfUs.Web.Controllers
                 CustomerId = customer.Id,
             });
 
-            return RedirectToAction("OrderHistory", "Customer");
+            return Redirect("/Customer/Confirmation");
         }
 
         public IActionResult Index()

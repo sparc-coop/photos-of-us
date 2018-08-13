@@ -45,7 +45,6 @@
 
     $scope.upload = function (item) {
         item.upload();
-
     };
 
     $scope.uploadAll = function (items) {
@@ -101,7 +100,7 @@
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {

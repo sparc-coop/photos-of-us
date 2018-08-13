@@ -4,7 +4,6 @@
     &--preview {
         z-index: 100;
         width: 265px;
-        height: 265px;
         background-color: $yellow;
         border-radius: 6px;
         margin-top: 46px;
@@ -14,7 +13,7 @@
         &__content {
             position: relative;
             padding: 16px 14px;
-            height: 235px;
+            padding-bottom: 120px;
 
             .heading {
                 font-family: "Dosis";
@@ -25,27 +24,6 @@
 
                 .price {
                     padding-left: 124px;
-                }
-            }
-
-            .cart-items {
-                font-family: "Open Sans";
-                font-weight: 600;
-                font-size: 14px;
-                color: $primary;
-
-                .type {
-                    line-height: initial;
-                    width: 100px;
-                }
-
-                .quantity {
-                    padding-left: 20px;
-                    width: 30px;
-                }
-
-                .price {
-                    padding-left: 14px;
                 }
             }
 
@@ -63,6 +41,29 @@
             }
         }
 
+        &__item {
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 14px;
+            color: $primary;
+            display: flex;
+            padding-bottom: 5px;
+
+            .type {
+                line-height: initial;
+                width: 100px;
+            }
+
+            .quantity {
+                padding-left: 20px;
+                width: 30px;
+            }
+
+            .price {
+                padding-left: 14px;
+            }
+        }
+
         &--arrow {
             width: 0;
             height: 0;
@@ -71,7 +72,7 @@
             border-bottom: 10px solid $yellow;
             position: absolute;
             top: -8px;
-            right: 82px;
+            right: 102px;
         }
     }
 
@@ -128,8 +129,8 @@
 
             .divider {
                 position: absolute;
-                bottom: 48px;
-                left: 44px;
+                bottom: 18px;
+                left: 34px;
                 margin-top: 10px;
             }
 

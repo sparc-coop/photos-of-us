@@ -41,16 +41,17 @@ namespace PhotosOfUs.Model.Repositories
             return order;
         }
 
-        public OrderDetail CreateOrderDetails(int orderId, int photoId, int photographerId, int itemId)
+        public OrderDetail CreateOrderDetails(int orderId, int photoId, int photographerId, int itemId, int quantity)
         {
             OrderDetail orderItem = new OrderDetail();
-            //PrintPrice price = new PrintRepository(_context).GetPrice(itemId, photographerId);
+            Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
+            PrintType type = _context.PrintType.Where(x => x.Id == itemId).FirstOrDefault();
 
             orderItem.OrderId = orderId;
             orderItem.PhotoId = photoId;
             orderItem.PrintTypeId = itemId;
-            orderItem.Quantity = 1;
-            orderItem.UnitPrice = 3;
+            orderItem.Quantity = quantity;
+            orderItem.UnitPrice = (decimal)photo.Price + (decimal)type.BaseCost;
 
             _context.OrderDetail.Add(orderItem);
             _context.SaveChanges();
@@ -78,12 +79,14 @@ namespace PhotosOfUs.Model.Repositories
         public List<OrderDetail> GetOrderDetails(int orderId)
         {
             List<OrderDetail> orderItems = _context.OrderDetail.Where(x => x.OrderId == orderId).Include("Photo").Include("PrintType").ToList();
+            //List<OrderDetail> orderItems = _context.OrderDetail.Where(x => x.OrderId == orderId).ToList();
             return orderItems;
         }
 
         public List<OrderDetail> GetPhotographerOrderDetails(int photographerId)
         {
-            List<OrderDetail> orderItems = _context.OrderDetail.Include("Photo").Include("PrintType").Where(x => x.Photo.PhotographerId == photographerId).ToList();
+            List<OrderDetail> orderItems = _context.OrderDetail.Include("Photo").Where(x => x.Photo.PhotographerId == photographerId).ToList();
+
             return orderItems;
         }
 

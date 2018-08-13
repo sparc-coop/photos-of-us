@@ -23,39 +23,39 @@ namespace PhotosOfUs.Web.Controllers.API
             _context = context;
         }
 
-        [HttpPost]
-        [Route("Charge")]
-        public StripeCharge Charge([FromBody] PaymentModel payment)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
+        //[HttpPost]
+        //[Route("Charge")]
+        //public StripeCharge Charge([FromBody] PaymentModel payment)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var userId = _context.UserIdentity.Find(azureId).UserID;
 
-            StripeConfiguration.SetApiKey("");//("");
-            Debug.WriteLine(payment);
-            //int amount = payment.Amount;
-            int amount = 500; // TODO: swap this out for the line above to have actual amounts sent
+        //    StripeConfiguration.SetApiKey("");//("");
+        //    Debug.WriteLine(payment);
+        //    //int amount = payment.Amount;
+        //    int amount = 500; // TODO: swap this out for the line above to have actual amounts sent
 
-            User user = new UserRepository(_context).Find(userId);
-            Address address = new UserRepository(_context).GetAddress(userId);
+        //    User user = new UserRepository(_context).Find(userId);
+        //    Address address = new UserRepository(_context).GetAddress(userId);
 
-            var customers = new StripeCustomerService();
-            var charges = new StripeChargeService();
+        //    var customers = new StripeCustomerService();
+        //    var charges = new StripeChargeService();
 
-            var customer = customers.Create(new StripeCustomerCreateOptions
-            {
-                Email = address.Email,
-                SourceToken = payment.StripeToken
-            });
+        //    var customer = customers.Create(new StripeCustomerCreateOptions
+        //    {
+        //        Email = address.Email,
+        //        SourceToken = payment.StripeToken
+        //    });
 
-            var charge = charges.Create(new StripeChargeCreateOptions
-            {
-                Amount = amount,
-                Description = "Sample Charge",
-                Currency = "usd",
-                CustomerId = customer.Id,
-            });
+        //    var charge = charges.Create(new StripeChargeCreateOptions
+        //    {
+        //        Amount = amount,
+        //        Description = "Sample Charge",
+        //        Currency = "usd",
+        //        CustomerId = customer.Id,
+        //    });
 
-            return charge;
-        }
+        //    return charge;
+        //}
     }
 }

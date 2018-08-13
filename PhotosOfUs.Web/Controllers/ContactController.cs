@@ -25,6 +25,22 @@ namespace PhotosOfUs.Web.Controllers
 
             return Redirect("/");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SendQuoteEmail(ContactViewModel model)
+        {
+            var apiKey = "";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress(model.FromEmail);
+            var subject = $"Photos Of Us Requesting Team Quote Contact Email";
+            var to = new EmailAddress("marketing@kuviocreative.com");
+            var plainTextContent = model.FromEmail;
+            var htmlContent = $"Respond to {model.FromEmail} regarting a team quote.";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            await client.SendEmailAsync(msg);
+
+            return Redirect("/Home/Pricing");
+        }
     }
 
     public class ContactViewModel
