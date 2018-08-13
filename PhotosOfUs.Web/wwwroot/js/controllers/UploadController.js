@@ -94,6 +94,12 @@
         if (errorsFound === false) {
           
             angular.forEach(items, function (item) {
+                item.formData[0].photoName = item.file.name
+
+                angular.forEach(item.tags, function (tag) {
+                    item.formData[0].tags += " " + tag.text;
+                })
+
                 item.upload();
             });
 
@@ -120,6 +126,7 @@
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
+        console.log(uploader.queue);
     };
 
     $scope.removeItem = function (removedItem) {
@@ -172,7 +179,7 @@
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId, tags: "" });
         }
         
     };
@@ -190,25 +197,21 @@
         console.log(fileItem);
         console.log(uploader.queue);
         
-        if (response !== "") {
-            fileItem.formData[0].photoCode = response;
-            fileItem.code = response;
+        if (response.Code !== "") {
+            fileItem.formData[0].photoCode = response.Code;
+            fileItem.code = response.Code;
             fileItem.isCode = true;
+            fileItem.suggestedTags = response.SuggestedTags;
 
-            var foundItem = $filter('filter')(uploader.queue, { code: response }, true)[0];
-            //get the index
-            var index = uploader.queue.indexOf(foundItem);
-            console.log(index);
+           
 
-            for (var i = (index - 1); i >= 0; i--) {
-                if (!uploader.queue[i].isCode) {
-                    uploader.queue[i].code = response;
-                } else {
-                    break;
-                }
-            }
+        } else {
+            var index = uploader.queue.indexOf(fileItem)
+
+            fileItem.formData[0].photoCode = uploader.queue[index - 1].code;
+            fileItem.code = uploader.queue[index - 1].code;
+            fileItem.suggestedTags = response.SuggestedTags;
         }
-        
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {

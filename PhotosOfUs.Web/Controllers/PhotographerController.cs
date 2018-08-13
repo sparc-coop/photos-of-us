@@ -222,20 +222,25 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
+        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            RootObject tags = null;
+            RootObject tagsfromazure = null;
+
+            var ac = new AzureCognitive(_context);
+            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
+
             if (string.IsNullOrEmpty(photoCode))
             {
-                var ac = new AzureCognitive(_context);
-                var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
-                var results = await ac.MakeRequest(imgbytes, "ocr");
-                tags = await ac.MakeRequest(imgbytes, "tags");
+                var codefromazure = await ac.MakeRequest(imgbytes, "ocr");
 
-                return ac.ExtractCardCode(results);
+                var suggestedtags = ac.ExtractTags(tagsfromazure);
+                var code = ac.ExtractCardCode(codefromazure);
+
+                return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
             }
 
             //if (string.IsNullOrEmpty(photoCode))
@@ -244,6 +249,13 @@ namespace PhotosOfUs.Web.Controllers
             //    var ocrResult = ocr.GetOCRResult(file,photographerId);
             //    return ocrResult.Code;
             //}
+            var listoftags = new List<TagViewModel>();
+            List<string> result = tags.Split(' ').ToList();
+
+            foreach (string obj in result)
+            {
+                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+            }
 
             var filePath = Path.GetTempFileName();
 
@@ -252,12 +264,12 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, tags);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, tagsfromazure, listoftags);
                     
                 }
             }
 
-            return "";
+            return new AzureCognitiveViewModel();
         }
 
 

@@ -138,6 +138,20 @@ namespace PhotosOfUs.Web.Utilities
             return string.Empty;
         }
 
+        public List<string> ExtractTags(RootObject result)
+        {
+            var sortedresults = result.tags.OrderBy(o => o.confidence).ToList();
+
+            var tags = new List<string>();
+
+            foreach (AzureTag tag in sortedresults)
+            {
+                tags.Add(tag.name);
+            }
+
+            return tags;
+        }
+
         public static byte[] GetImageAsByteArray(string imageFilePath)
         {
             using (FileStream fileStream =
