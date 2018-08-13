@@ -11,13 +11,14 @@
                 <div class="title">Photographer</div>
                 <div class="name">@Model.PhotographerName</div>
             </div>
-            @if(Model.Photographer.ProfilePhotoUrl != null)
+            @if (String.IsNullOrEmpty(Model.Photographer.ProfilePhotoUrl))
             {
-                <img src="@Model.Photographer.ProfilePhotoUrl" />
+                <img src="/images/icons/profile-icon.png" class="placeholder-img" />
+
             }
             else
             {
-                <img src="/images/icons/profile-icon.png" class="placeholder-img"/>
+                <img src="@Model.Photographer.ProfilePhotoUrl" />
             }
         </div>
     </div>

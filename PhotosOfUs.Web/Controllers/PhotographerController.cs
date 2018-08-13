@@ -75,7 +75,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Photo(int id)
         {
-            var photo = new PhotoRepository(_context).GetPhoto(id);
+            var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
         }
 

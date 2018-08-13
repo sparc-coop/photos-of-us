@@ -42,6 +42,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Single(x => x.Id == photoId);
         }
 
+        public Photo GetPhotoAndPhotographer(int photoId)
+        {
+            return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
+        }
+
         public void UpdatePrice(int photoId, decimal price)
         {
             Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
