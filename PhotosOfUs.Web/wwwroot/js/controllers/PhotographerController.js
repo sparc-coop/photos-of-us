@@ -1,4 +1,4 @@
-﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
+﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) => {
 
     $scope.tags = [];
     $scope.loadedtags = [];
@@ -16,8 +16,8 @@
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
-    $scope.isPhotoSelected = function (photo) {
-        var idx = $scope.selectedPhotos.indexOf(photo);
+    $scope.isPhotoSelected = function (photoId) {
+        var idx = $scope.selectedPhotos.indexOf(photoId);
         if (idx > -1) {
             return true;
         }
@@ -45,7 +45,6 @@
     };
 
     $scope.getProfile = function () {
-
         photographerApi.getAccountSettings().then(function (x) {
             $scope.photographer = x.data;
         })
@@ -55,15 +54,14 @@
         $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
     }
 
-    $scope.selectPhoto = function (item) {
-            var idx = $scope.selectedPhotos.indexOf(item);
-            if (idx > -1) {
-                $scope.selectedPhotos.splice(idx, 1);
-            }
-            else {
-                $scope.selectedPhotos.push(item);
-            }
-            console.log($scope.selectedPhotos);
+    $scope.selectPhoto = function (photoId) {
+        var idx = $scope.selectedPhotos.indexOf(photoId);
+        if (idx > -1) {
+            $scope.selectedPhotos.splice(idx, 1);
+        }
+        else {
+            $scope.selectedPhotos.push(photoId);
+        }
     }
 
     $scope.deletePhotos = function (photos) {
@@ -103,7 +101,6 @@
         $http.get('/api/Photographer/getProfilePhotos/')
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
-                console.log(JSON.stringify(x.data));
             });
     }
 
@@ -121,4 +118,9 @@
         });
     }
     
+    $scope.getUser = () => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        });
+    };
 }])

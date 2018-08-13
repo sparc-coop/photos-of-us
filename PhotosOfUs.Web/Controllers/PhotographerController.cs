@@ -42,19 +42,23 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-
-            PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-            model.PhotographerId = photographerId;
-            model.Name = User.Identity.Name;
-
-            var test = _context.Photo.Include(x=>x.PhotoTag).Where(x=>x.Id == 57).First();
             
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(userId);
 
-            var tags2 = _context.PhotoTag.Include(x=>x.Tag).Where(x => x.PhotoId == 57).ToList();
+            if(photographer.IsPhotographer == true)
+            {
+                PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
+                model.PhotographerId = userId;
+                model.Name = User.Identity.Name;
 
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                return Redirect("/Customer/OrderHistory/" + userId);
+            }
         }
 
         // GET: Photographer/Details/5
@@ -71,7 +75,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Photo(int id)
         {
-            var photo = new PhotoRepository(_context).GetPhoto(id);
+            var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
         }
 
@@ -222,7 +226,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, string tags)
+        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -264,8 +268,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, tagsfromazure, listoftags);
-                    
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, listoftags);
                 }
             }
 
@@ -275,11 +278,13 @@ namespace PhotosOfUs.Web.Controllers
 
 
         [Authorize]
-        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
+        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            
+
+            double addPrice = double.Parse(price);
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -287,7 +292,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension);
                 }
             }
         }
@@ -297,42 +302,52 @@ namespace PhotosOfUs.Web.Controllers
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
 
-        [Authorize]
-        public ActionResult Profile()
+        public ActionResult Profile(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
         [Authorize]
-        public ActionResult SalesHistory(string query = null)
+        public ActionResult SalesHistory(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+            var orderItems = new OrderRepository(_context).GetPhotographerOrderDetails(id);
+            List<Order> orders = new List<Order>();
+            foreach(var order in orderItems.GroupBy(x => x.OrderId))
+            {
+                orders.Add(new OrderRepository(_context).GetOrder(order.Key));
+            }
 
-            UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
-
-            // if the user can't be found make a safe but empty return
-            if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
-
-
-            //var photographerId = userIdentity.UserID;
-            var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
-
-
-            string queryString = HttpContext.Request.QueryString.ToString();
-            SalesQueryModel sqm = new SalesQueryModel(queryString);
-
-            var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
-            SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
-            salesHistory.UserDisplayName = User.Identity.Name;
-            Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
-            return View(salesHistory);
+            return View(OrderViewModel.ToViewModel(orders).ToList());
         }
+
+        //[Authorize]
+        //public ActionResult SalesHistory(string query = null)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
+        //    UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
+
+        //    // if the user can't be found make a safe but empty return
+        //    if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
+
+        //    //var photographerId = userIdentity.UserID;
+        //    var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+
+
+        //    string queryString = HttpContext.Request.QueryString.ToString();
+        //    SalesQueryModel sqm = new SalesQueryModel(queryString);
+
+        //    var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
+        //    SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+        //    salesHistory.UserDisplayName = User.Identity.Name;
+        //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
+        //    return View(salesHistory);
+        //}
 
         public ActionResult Search()
         {
@@ -373,7 +388,17 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult MooOrderModal()
+        {
+            return View();
+        }
+
         public ActionResult Account()
+        {
+            return View();
+        }
+
+        public ActionResult DeactivateModal()
         {
             return View();
         }

@@ -22,6 +22,16 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public IActionResult Pricing()
+        {
+            return View();
+        }
+
+        public IActionResult Landing()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

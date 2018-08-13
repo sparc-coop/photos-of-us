@@ -35,18 +35,38 @@
                 </div>
             </div>
             <div class="upload--container">
-                <div id="photo-preview" ng-if="uploader.queue.length > 0">
+                <div class="photo-preview" ng-if="uploader.queue.length > 0">
                     <div class="img-container">
                         <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
                     </div>
-                    <div class="col-md-8">
+                    <div class="info">
+                        <div class="photo-preview__name">
+                            <p class="photo-preview-title">Name</p>
+                            <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
+                        </div>
+                        <div class="photo-preview__dimensions">
+                            <p class="photo-preview-title">Dimensions</p>
+                            <p class="dimensions">{{ selectedItem.file.dimensions }}</p>
+                        </div>
+                    </div>
+                    <div class="photo-preview__pricing">
+                        <p class="photo-preview-title">
+                            Price You Receive For This Photo
+                            <i class="material-icons" ng-mouseenter="hover = true" ng-mouseleave="hover = false">info</i>
+                            <span class="hover" ng-if="hover == true">
+                                This is the amount you will receive upon sale of this photo.
+                            </span>
+                        </p>
+                        <input placeholder="$0.00" ng-model="selectedItem.file.price" type="number" />
+                    </div>
+                    @*<div class="col-md-8">
                         <p class="photo-preview-title">Name</p>
                         <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isUploading || !selectedItem.isSuccess"></textarea>
                     </div>
                     <div class="col-md-4">
                         <p class="photo-preview-title">Dimensions</p>
                         <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
-                    </div>
+                    </div>*@
                     <div>
                         <div class="col-md-4">
                             <p class="photo-preview-title">Tags</p>
@@ -81,8 +101,8 @@
                                 <div class="col-md-4">
                                     <p class="photo-code">Photo Code</p>
                                     @*<textarea msd-elastic class="code" spellcheck="false" ng-keypress="photoCodeValidation($event, item)" ng-model="item.file.photoCode" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>*@
-                                    <div ng-if="item.code != ''" class="code">{{item.code}}</div>
-                                    <div ng-if="item.code == ''" class="code">XXXXXXX</div>
+                                    <div ng-if="item.code" class="code">{{item.code}}</div>
+                                    <div ng-if="!item.code" class="code">XXXXXXX</div>
                                 </div>
                                 <div>
                                     <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>

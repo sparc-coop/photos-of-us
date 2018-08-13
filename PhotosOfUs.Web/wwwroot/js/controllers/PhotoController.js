@@ -22,9 +22,14 @@
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = (photoId) => {
+        $http.get('/Session/SignIn/').then(
+            $window.location.href = '/Photo/Purchase/' + photoId
+        );
+    };
+
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
-
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
@@ -34,6 +39,17 @@
 
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 8;
+
+    $scope.getPhotosByCode = (code) => {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = (id) => {
@@ -140,6 +156,8 @@
                 'socialshareMedia': photoUrl
             }
         });
-    }
+    };
+
+    $scope.pricingOption = 'option2';
     
 }])

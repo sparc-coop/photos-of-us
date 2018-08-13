@@ -8,6 +8,8 @@ using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
 using System.Security.Claims;
+using System.Net;
+using System.IO;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -30,10 +32,33 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        [Route("GetPublicIds")]
+        public List<int> GetPublicIds()
+        {
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
+
+            List<int> photoIds = new List<int>();
+            foreach(var photo in photos)
+            {
+                photoIds.Add(photo.Id);
+            }
+
+            return photoIds;
+        }
+
+        [HttpGet]
+        [Route("GetCodePhotos/{code}")]
+        public List<PhotoViewModel> GetCodePhotos(string code)
+        {
+            List<Photo> photo = new PhotoRepository(_context).GetPhotosByCode(code);
+            return PhotoViewModel.ToViewModel(photo).ToList();
+        }
+
+        [HttpGet]
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            var printType = new PhotoRepository(_context).GetPrintTypes();
+            var printType = new PrintRepository(_context).GetPrintTypes();
             return PrintTypeViewModel.ToViewModel(printType);
         }
 
@@ -54,6 +79,36 @@ namespace PhotosOfUs.Web.Controllers.API
             var folders = new PhotoRepository(_context).GetFolders(photographerId);
 
             return FolderViewModel.ToViewModel(folders);
+        }
+
+        [HttpGet]
+        [Route("GetOrderPhotos/{id:int}")]
+        public List<CustomerOrderViewModel> GetOrderPhotos(int id)
+        {
+            List<Order> orders = new OrderRepository(_context).GetUserOrders(id);
+            return CustomerOrderViewModel.ToViewModel(orders).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetOrderItems/{id:int}")]
+        public List<OrderDetailViewModel> GetOrderItems(int id)
+        {
+            return new OrderRepository(_context)
+                .GetOrderDetails(id)
+                .Select(x => OrderDetailViewModel.ToViewModel(x))
+                .ToList();
+        }
+
+        [HttpPost]
+        [Route("GetForDownload/{id:int}")]
+        public IActionResult GetForDownload(int id)
+        {
+            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            List<OrderDetail> items = new OrderRepository(_context).GetOrderDetails(order.Id);
+
+            //DownloadPhotos(items);
+
+            return Ok();
         }
 
         [HttpGet]

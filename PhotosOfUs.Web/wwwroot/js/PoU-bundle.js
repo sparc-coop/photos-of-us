@@ -1,15 +1,12 @@
 'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'ui.bootstrap', 'ngTagsInput']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'ui.bootstrap', 'ngTagsInput', 'angular.filter']);
 
 app.filter('startFrom', function () {
     return function (data, start) {
         return data.slice(start)
     }
 })
-
-
-
 app.factory('photoApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Photo';
@@ -57,7 +54,16 @@ app.factory('checkoutApi', [
     '$http', '$rootScope', function ($http, $rootScope) {
         var apiRoot = '/api/Checkout';
         return {
-            
+            createOrder: function (userId, orderItems) { return $http.get(apiRoot + '/CreateOrder/' + userId, orderItems) },
+        };
+    }
+]);
+
+app.factory('userApi', [
+    '$http', '$rootScope', function ($http, $rootScope) {
+        var apiRoot = '/api/User';
+        return {
+            getUser: function () { return $http.get(apiRoot + '/GetUser')}
         };
     }
 ]);
@@ -66,7 +72,7 @@ app.factory('checkoutApi', [
 app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 'selectedPhotos', ($scope, $window, $mdDialog, $http, selectedPhotos) => {
     $scope.close = () => $mdDialog.hide();
     $scope.selectedPhotos = selectedPhotos;
-    $scope.photosviewmodel = { photos: [], tags: [] };
+    $scope.photosviewmodel = { identifier: "ok", "photosid": [], tagsid: [] };
 
     $scope.deletePhotos = function (photos) {
         $http.post('/api/Photographer/deletePhotos/', photos);
@@ -74,53 +80,65 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
     }
 
     $scope.getTagsByPhotos = function () {
+        console.log($scope.selectedPhotos);
         $http.post('/api/Photographer/GetTagsByPhotos/', $scope.selectedPhotos)
             .then(function (x) {
                 $scope.tags = x.data;
-                
                 console.log($scope.tags);
             });
     };
 
-    $scope.editPhotos = function (photos, tags) {
+    $scope.getPhotoPrice = () => {
+        if ($scope.selectedPhotos.length < 2) {
+            $http.get('/api/Photographer/GetPhotoPrice/' + $scope.selectedPhotos)
+                .then(function (x) {
+                    $scope.price = x.data;
+                });
+        }
+    };
+
+    $scope.editPhotos = function (photos, tags, price) {
         photos.forEach(function (item) {
-            $scope.photosviewmodel.photos.push(item);
+            //$scope.photosviewmodel.photosid.push(item.Id);
+            $scope.photosviewmodel.photosid.push(item);
         });
         tags.forEach(function (item) {
-            $scope.photosviewmodel.tags.push(item);
+            //$scope.photosviewmodel.tagsid.push(item.Id);
+            $scope.photosviewmodel.tagsid.push(item);
         });
-        $http.post('/api/Photographer/AddTags/', tags)
-            .then(function () {
-                $http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
-                    .then(function (x) {
-                        $scope.tags = x.data;
 
-                        console.log($scope.tags);
-                        $window.location.href = '/Photographer/Profile/';
-                    });
-                });
+        if (price != null && $scope.selectedPhotos.length < 2) {
+            $http.post('/api/Photographer/SavePhotoPrice/' + photos + '/' + price + '/');
+        }
+
+        $http.post('/api/Photographer/AddTags/', tags)
+            .then($http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
+            .then(function (x) {
+                $scope.tags = x.data;
+                }));
+
+        $scope.close();
     };
 
 }])
-app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
-    $scope.goToCart = () => {
-        $window.location.href = '/Photo/Cart';
+app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
+    $scope.goToCart = (userId) => {
+        $window.location.href = '/Photo/Cart/' + userId;
     };
 
-    $scope.goToCheckout = () => {
-        $window.location.href = '/Photo/Checkout';
+    $scope.goToCheckout = (userId) => {
+        $window.location.href = '/Photo/Checkout/' + userId;
     };
 
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;
-            console.log($scope.printTypes);
         });
     };
 
     $scope.selectedItems = [];
 
-    $scope.select = (printTypeId) => {
+    $scope.select = (printTypeId, quantity) => {
         var photoId = location.pathname.split("/").filter(x => !!x).pop();
 
         var object = {
@@ -136,22 +154,26 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
                 cartLocalStorage = {};
             }
         }
-        console.log(photoId);
         cartLocalStorage[photoId] = object;
 
         localStorage.setItem("cart", JSON.stringify(cartLocalStorage));
-        console.log(localStorage.getItem("cart"));
 
         if ($scope.selectedItems.length === 0) {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
-        else if ($scope.selectedItems.indexOf(printTypeId) !== -1) {
-            var index = $scope.selectedItems.indexOf(printTypeId);
+        else if ($scope.selectedItems.find((x) => x.printTypeId == printTypeId)) {
+            var index = $scope.selectedItems.find((x) => x.printTypeId == printTypeId);
             $scope.selectedItems.splice(index, 1)
         }
         else {
-            $scope.selectedItems.push(printTypeId);
+            if (quantity == undefined)
+                quantity = 1;
+            $scope.selectedItems.push({ printTypeId, quantity });
         }
+
+        console.log($scope.selectedItems);
     };
 
     $scope.selectAll = function (printTypes) {
@@ -162,22 +184,18 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
     }
 
     $scope.isSelected = function (printId) {
-        if ($scope.selectedItems.indexOf(printId) !== - 1) {
+        if ($scope.selectedItems.find((x) => x.printTypeId == printId))
             return true;
-        }
+
         return false;
     }
 
-    $scope.addToCart = function (printId) {
-        $scope.select(printId);
-        $scope.createOrder();
-        //todo broadcast added to cart to update menu
-    }
-
-    $scope.createOrder = () => {
-        // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
-        $window.location.href = '/Photo/Cart';
-        //});
+    $scope.createOrder = (userId) => {
+        console.log($scope.selectedItems);
+        var photoId = $location.absUrl().split('Purchase/')[1];
+        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
+            $window.location.href = '/Photo/Cart/' + userId;
+        });
     };
 
     function testLocalStorage () {
@@ -194,12 +212,188 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', ($sco
         }
     }
 
-    $scope.getOrder = () => {
-        $http.get('/api/Checkout/GetOrder').then(x => {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+    $scope.orderDetailsList = [];
+    $scope.orderTotalList = [];
+    $scope.totalSales = 0;
+    $scope.totalEarned = 0;
+
+    $scope.getOrderDetails = (orderId) => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
+            $scope.orderDetails = x.data;
+            angular.forEach($scope.orderDetails, function (value, key) {
+                $scope.orderDetailsList.push(value);
+                $scope.totalEarned += value.Photo.Price;
+            });
+        });
+        $scope.getOrderTotal(orderId);
+    };
+
+    $scope.getOrderTotal = (orderId) => {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+            $scope.orderTotal = x.data;
+            $scope.orderTotalList.push(
+                {
+                    id: orderId,
+                    total: $scope.orderTotal
+                }
+            );
+            $scope.totalSales += x.data;
         });
     };
+
+    $scope.getUser = () => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        })
+    };
+
+    $scope.getOpenOrder = (userId) => {
+        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
+            $scope.order = x.data;
+            $scope.getOrderTotal($scope.order.Id);
+        });
+    }; 
+
+    $scope.getUserAndAddress = (userId) => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+            $http.get('/api/Checkout/GetAddress/' + $scope.user.Id).then(x => {
+                $scope.address = x.data;
+                $scope.getOpenOrder($scope.user.Id);
+            });
+        })
+    }; 
+
+    $scope.initConfirmation = () => {
+        $scope.getUserAndAddress();
+    };
+
+
+    $scope.createPwintyOrder = () => {
+        var data = {
+            "merchantOrderId": "845",
+            "recipientName": "Pwinty Tester",
+            "Address1": "123 Test Street",
+            "Address2": "TESTING",
+            "addressTownOrCity": "TESTING",
+            "stateOrCounty": "TESTSHIRE",
+            "postalOrZipCode": "TE5 7IN",
+            "email": "test@testing.com",
+            "countryCode": "gb",
+            "preferredShippingMethod": "CHEAPEST",
+            "mobileTelephone": "01811 8055"
+        };
+        $http({
+            method: 'POST',
+            url: 'https://sandbox.pwinty.com/v2.6/Orders',
+            headers: {
+                'X-Pwinty-MerchantId': '',
+                'X-Pwinty-REST-API-Key': '',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'crossDomain': true,
+            },
+            data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Pwinty');
+            console.log(x);
+            console.log(x.data);
+        });
+    };
+
+    $scope.createMooOrder = () => {
+        var data = {
+            'product': 'businesscard',
+            "pack": {
+                "numCards": 50,
+                "productCode": "businesscard",
+                "productVersion": 1,
+                "sides": [
+                ]
+            }
+        };
+        $http.post({
+            method: 'moo.pack.createPack',
+            url: 'http://www.moo.com/api/service/',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Moo');
+            console.log(x);
+            console.log(x.data);
+        });
+    };
+
+    $scope.printQuality = 'Standard';
+
+    $scope.getPwintyCatalog = () => {
+        $http({
+            method: 'GET',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro',
+        }).then(x => {
+            console.log('Pwinty Catalog');
+            console.log(x.data);
+            $scope.proProducts = x.data;
+            });
+        $http({
+            method: 'GET',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard',
+        }).then(x => {
+            console.log('Pwinty Catalog');
+            console.log(x.data);
+            $scope.standardProducts = x.data;
+        });
+    };
+
+    $scope.addPhotoToPwintyOrder = (orderName, quantity) => {
+        $http({
+            method: 'POST',
+            url: 'https://sandbox.pwinty.com/v2.6/Orders/',///{orderId}/Photos
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'crossDomain': true,
+                'X-Pwinty-MerchantId': '',
+                'X-Pwinty-REST-API-Key': '',
+            },
+            data: data
+        }).then(x => {
+            $scope.orderId = x.data;
+            console.log('return Pwinty');
+            console.log(x);
+            console.log(x.data);
+        });
+    };
+}])
+app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'userApi', ($scope, $window, $mdDialog, $http, userApi) => {
+
+    $scope.getOrders = (userId) => {
+        $http.get('/api/Photo/GetOrderPhotos/' + userId).then(x => {
+            $scope.orders = x.data;
+            console.log(x.data);
+            angular.forEach($scope.orders, function (key, value) {
+                $scope.getOrderItems(key.Id);
+            });           
+        });
+    };
+
+    $scope.orderItems = [];
+
+    $scope.getOrderItems = (orderId) => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+            $scope.orderItems.push(x.data);          
+        });
+    };
+
+    $scope.bulkDownload = (userId) => {
+        $http.post('/api/Photo/GetForDownload/' + userId);
+    };
+
 
 }])
 app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) => {
@@ -213,7 +407,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         photoApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-                console.log(JSON.stringify(x.data));
             })
     }
 
@@ -285,7 +478,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
-        console.log('findIndex ' + index);
         $scope.folders[index] = folder;
 
     });
@@ -294,7 +486,6 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
 
         console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
-        console.log('findIndex ' + index);
         $scope.folders.splice(index,1);
 
     });
@@ -323,74 +514,27 @@ app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $w
 
 }])
 app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $http) => {
-    $scope.cartItems = [];
-    var cartLocalStorage = {};
-    if (testLocalStorage()) {
-        var item = localStorage.getItem("cart");
-        if (item) {
-            cartLocalStorage = JSON.parse(item);
-        } else {
-            cartLocalStorage = {};
-        }
 
-        console.log(cartLocalStorage);
+    $scope.orderTotal = 0;
 
-        Object.values(cartLocalStorage).map(x => $scope.cartItems.push(new Photo(x, $http)));
-        console.log($scope.cartItems);
-    } else {
-        console.log("local storage unavailable");
-    }
-    function testLocalStorage () {
-        var available = true;
-        try {
-            localStorage.setItem("__availability_test", "test");
-            localStorage.removeItem("__availability_test");
-        }
-        catch (e) {
-            available = false;
-        }
-        finally {
-            return available;
-        }
-    }
-    $scope.printTypes = {};
-    $scope.getPrintTypes = () => {
-        $http.get('/api/Photo/GetPrintTypes').then(x => {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+    $scope.getOrderDetails = (orderId) => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+            $scope.orderDetails = x.data;
+            console.log($scope.orderDetails);
         });
+        angular.forEach($scope.orderDetails, function (value, key) {
+            $scope.orderTotal + value.UnitPrice;
+        }); 
     };
-    $scope.getPrintTypes();
 
-    $scope.getAssociatedPrintType = (x) => {
-        var type = $scope.printTypes[x];
-        if (!type) return x;
-        return new PrintType($scope.printTypes[x]);
-    }
-
-    $scope.sumCart = () => {
-        var value = $scope.cartItems.reduce((a, b) => (a.price || 0) + (b.price || 0), 0);
-        console.log("sum", value);
-        return value;
-    }
-
-    $scope.address = {};
-    $scope.saveAddress = (address) => {
-        var addressInfo = {
-            FullName: address.FirstName + ' ' + address.LastName,
-            City: address.City,
-            State: address.State,
-            ZipCode: address.ZipCode,
-            Email: address.Email
-        };
-
-        $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
-            console.log("Address saved");
+    $scope.getOrderTotal = (orderId) => {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+            $scope.orderTotal = x.data;
         });
     };
 
     $scope.initStripe = () => {
-        var stripe = Stripe('pk_test_P8L41KOstSk7oCzeV7mDoRY3');
+        var stripe = Stripe('');
         var elements = stripe.elements();
 
         // Custom styling can be passed to options when creating an Element.
@@ -426,17 +570,11 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
             hiddenInput.setAttribute('value', token.id);
             form.appendChild(hiddenInput);
 
-            var formData = {
-                StripeToken: token.id,
-                Amount: $scope.sumCart()
-            }
-
             // Submit the form
-            //form.submit();
+            form.submit();
 
-            var apiRoot = "/api/Payment/Charge";
-            //var apiRoot = "/Photo/Charge";
-            $http.post(apiRoot, formData);
+            //var apiRoot = "/api/Payment/Charge/";
+            //$http.post(apiRoot, token.id);
         };
 
         // Create a token or display an error the form is submitted.
@@ -455,48 +593,30 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
                 }
             });
         });
+    };
 
+
+    $scope.address = {};
+    $scope.saveAddress = (address) => {
+        var addressInfo = {
+            FullName: address.FirstName + ' ' + address.LastName,
+            Address1: address.Address1,
+            City: address.City,
+            State: address.State,
+            ZipCode: address.ZipCode,
+            Email: address.Email
+        };
+
+        $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
+            console.log("Address saved");
+        });
+
+        $http.post('/api/Checkout/ConfirmationEmail', addressInfo).then(x => {
+            $window.location.href = "/Customer/Confirmation";
+        });
     };
 
 }])
-
-function PrintType (data) {
-    this.id;
-    this.type;
-    this.height;
-    this.length;
-    this.icon;
-
-    function constructor(data) {
-        this.id = data.id;
-        this.type = data.type;
-        this.height = data.height;
-        this.length = data.length;
-        this.icon = data.icon;
-    }
-    constructor.call(this, data);
-}
-
-function Photo(data, $http) {
-    var self = this;
-
-    function constructor(data) {
-        this.printTypeId = data.printTypeId;
-        this.getPhotoInfo = getPhotoInfo.bind(this);
-
-        getPhotoInfo(data.photoId);
-    }
-    constructor.call(this, data);
-
-    function getPhotoInfo(photoId) {
-        $http.get('/api/Photo/' + photoId).then(x => {
-                console.log(x.data);
-                Object.keys(x.data).map(y => {
-                self[y] = x.data[y];
-            });
-        });
-    }
-}
 app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) => {
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
@@ -521,9 +641,14 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = (photoId) => {
+        $http.get('/Session/SignIn/').then(
+            $window.location.href = '/Photo/Purchase/' + photoId
+        );
+    };
+
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
-
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
@@ -533,6 +658,17 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 8;
+
+    $scope.getPhotosByCode = (code) => {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = (id) => {
@@ -639,7 +775,9 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
                 'socialshareMedia': photoUrl
             }
         });
-    }
+    };
+
+    $scope.pricingOption = 'option2';
     
 }])
 angular.module('app').controller('UploadController', function ($scope, $http, FileUploader, $window, $mdDialog, $filter, folder) {
@@ -738,12 +876,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (errorsFound === false) {
           
             angular.forEach(items, function (item) {
-                item.formData[0].photoName = item.file.name
-
-                angular.forEach(item.tags, function (tag) {
-                    item.formData[0].tags += " " + tag.text;
-                })
-
+                //todo only pushes if not photo code
                 item.upload();
             });
 
@@ -770,7 +903,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
-        console.log(uploader.queue);
     };
 
     $scope.removeItem = function (removedItem) {
@@ -823,7 +955,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId, tags: "" });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, price: item.file.price, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
         }
         
     };
@@ -838,24 +970,26 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
         
-        if (response.Code !== "") {
-            fileItem.formData[0].photoCode = response.Code;
-            fileItem.code = response.Code;
+        if (response !== "") {
+            fileItem.formData[0].photoCode = response;
+            fileItem.code = response;
             fileItem.isCode = true;
-            fileItem.suggestedTags = response.SuggestedTags;
 
-           
+            var foundItem = $filter('filter')(uploader.queue, { code: response }, true)[0];
+            //get the index
+            var index = uploader.queue.indexOf(foundItem);
+            console.log(index);
 
-        } else {
-            var index = uploader.queue.indexOf(fileItem)
-
-            fileItem.formData[0].photoCode = uploader.queue[index - 1].code;
-            fileItem.code = uploader.queue[index - 1].code;
-            fileItem.suggestedTags = response.SuggestedTags;
+            for (var i = (index - 1); i >= 0; i--) {
+                if (!uploader.queue[i].isCode) {
+                    uploader.queue[i].code = response;
+                } else {
+                    break;
+                }
+            }
         }
+        
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -913,6 +1047,25 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
         });
     };
 
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
+    };
+
     $scope.downloadCards = function (cards) {
         $scope.cardsToExport = cards;
         // Use timeout to wait for Angular to finish rendering the hidden inputs for the POST form
@@ -936,7 +1089,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     });
 }])
-app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
+app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) => {
 
     $scope.tags = [];
     $scope.loadedtags = [];
@@ -954,8 +1107,8 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
-    $scope.isPhotoSelected = function (photo) {
-        var idx = $scope.selectedPhotos.indexOf(photo);
+    $scope.isPhotoSelected = function (photoId) {
+        var idx = $scope.selectedPhotos.indexOf(photoId);
         if (idx > -1) {
             return true;
         }
@@ -983,7 +1136,6 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     };
 
     $scope.getProfile = function () {
-
         photographerApi.getAccountSettings().then(function (x) {
             $scope.photographer = x.data;
         })
@@ -993,15 +1145,14 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
     }
 
-    $scope.selectPhoto = function (item) {
-            var idx = $scope.selectedPhotos.indexOf(item);
-            if (idx > -1) {
-                $scope.selectedPhotos.splice(idx, 1);
-            }
-            else {
-                $scope.selectedPhotos.push(item);
-            }
-            console.log($scope.selectedPhotos);
+    $scope.selectPhoto = function (photoId) {
+        var idx = $scope.selectedPhotos.indexOf(photoId);
+        if (idx > -1) {
+            $scope.selectedPhotos.splice(idx, 1);
+        }
+        else {
+            $scope.selectedPhotos.push(photoId);
+        }
     }
 
     $scope.deletePhotos = function (photos) {
@@ -1041,7 +1192,6 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $http.get('/api/Photographer/getProfilePhotos/')
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
-                console.log(JSON.stringify(x.data));
             });
     }
 
@@ -1059,6 +1209,11 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         });
     }
     
+    $scope.getUser = () => {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        });
+    };
 }])
 app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
@@ -1107,7 +1262,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 
     $scope.upload = function (item) {
         item.upload();
-
     };
 
     $scope.uploadAll = function (items) {
@@ -1163,7 +1317,7 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, extension: '.' + item.file.fileExtension });
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
@@ -1198,12 +1352,20 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 }]);
 app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
     $scope.originalSettings = {};
+
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(JSON.stringify(x));
+            console.log(x.data);
             $scope.accountSettings = x.data;
+            if ($scope.accountSettings.Facebook == null)
+                $scope.accountSettings.Facebook = 'https://www.facebook.com/';
+            if ($scope.accountSettings.Twitter == null)
+                $scope.accountSettings.Twitter = 'https://www.twitter.com/';
+            if ($scope.accountSettings.Instagram == null)
+                $scope.accountSettings.Instagram = 'https://www.instagram.com/';
+            if ($scope.accountSettings.Dribbble == null)
+                $scope.accountSettings.Dribbble = 'https://www.dribbble.com/';
             angular.copy(x.data, $scope.originalSettings);
-            console.log(JSON.stringify($scope.originalSettings));
         })
     }
 
@@ -1246,8 +1408,49 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
         });
     };
 
+    $scope.close = () => $mdDialog.hide();
+
+    $scope.deactivateModal = (option, user) => {
+        if (option == 'true') {
+            $mdDialog.show({
+                templateUrl: '/Photographer/DeactivateModal',
+                controller: 'PhotographerAccountStatusCtrl',
+                user: user,
+                clickOutsideToClose: true,
+            });
+        }
+        else if(option == 'false'){
+            $scope.reactivateAccount(user.Id);
+        }
+    }
+
+
+    $scope.reactivateAccount = (userId) => {
+        $http.post('/api/User/Reactivate/' + userId).then(
+            $window.location.reload()
+        );
+    }
+
+    $scope.selected = 'details';
+
+    $scope.setSelected = (selected) => {
+        $scope.selected = selected;
+    };
+
 
 }])
+.controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'user', ($scope, $window, $location, $http, $mdDialog, user) => {
+    $scope.user = user;
+
+    $scope.deactivateAccount = () => {
+        console.log($scope.user.Id);
+        $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
+            $window.location.reload()
+        );
+    }
+}]);
+
+
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
@@ -1280,6 +1483,25 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
+    };
+
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
     };
 
     $scope.downloadCards = function (cards) {
@@ -1473,6 +1695,63 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
     uploader.onCompleteAll = () => {
         //alert("Complete");
         $window.location.reload(); //.location.href = '/Photographer/Dashboard'
+    };
+
+}]);
+app.controller('RandomPhotoCtrl', ['$scope', '$window', '$location', '$http', ($scope, $window, $location, $http) => {
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    //let area = document.getElementsByClassName("main-landing")[0];
+    $scope.getRandomPosition = (element) => {
+        var x = 800 - element.clientHeight;
+        var y = document.body.offsetWidth - element.clientWidth;
+        //var randomX = Math.floor(Math.random() * x);
+        //var randomY = Math.floor(Math.random() * y);
+        let coords = [getRandomInt(0, x), getRandomInt(650, 900)];
+        console.log(coords);
+        return coords;
+    }
+
+    //$scope.loadImages = (ph) => {
+    //    var img = document.createElement('img');
+    //    img.setAttribute("src", ph.Url);
+    //    img.setAttribute("style", "position:absolute; border-radius: 20px; max-width: 400px; max-height: 400px; margin: 50px;");
+    //    var xy = $scope.getRandomPosition(img);
+    //    img.style.top = xy[0] + 'px';
+    //    img.style.left = xy[1] + 'px';
+
+    //    var element = document.getElementById("main-landing");
+    //    element.appendChild(img);
+    //};
+
+    $scope.photoList = [];
+
+    $scope.getRandomPhoto = () => {
+        $http.get('/api/Photo/GetPublicIds').then(x => {
+            $scope.randomize(x.data);
+        });
+    }; 
+
+    $scope.randomize = (photos) => {        
+        let counter = 0;
+        let interval = setInterval(function () {
+            counter += 1;
+            if (counter === 15) {
+                clearInterval(interval);
+            }
+            let idList = photos;
+
+            var id = idList[getRandomInt(0, photos.length - 1)];
+            $http.get('/api/Photo/' + id).then(x => {
+                if ($scope.photoList['Id'] != id) {
+                    $scope.photoList.push(x.data);
+                }
+            });
+
+        }, 800);
     };
 
 }]);

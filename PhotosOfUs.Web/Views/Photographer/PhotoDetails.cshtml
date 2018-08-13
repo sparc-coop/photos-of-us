@@ -19,20 +19,15 @@
              </div>
      </div>
 
-<div ng-controller="PhotoTagCtrl as ctrl" layout="column" ng-cloak="">
-    <md-content class="md-padding" layout="column">
-        <md-chips ng-model="ctrl.tags" readonly="ctrl.readonly" md-transform-chip="ctrl.newTag($chip)">
-            <md-chip-template>
-                <span>
-                    <strong>{{$chip.tag_title}}</strong>
-                </span>
-            </md-chip-template>
-        </md-chips>
-    </md-content>
-</div>
-        </div>
-
-
-
-
+    <div ng-controller="PhotoTagCtrl as ctrl" layout="column" ng-cloak="">
+        <md-content class="md-padding" layout="column">
+            <md-chips ng-model="ctrl.tags" readonly="ctrl.readonly" md-transform-chip="ctrl.newTag($chip)">
+                <md-chip-template>
+                    <span>
+                        <strong>{{$chip.tag_title}}</strong>
+                    </span>
+                </md-chip-template>
+            </md-chips>
+        </md-content>
     </div>
+</div>

@@ -194,8 +194,6 @@
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
         
         if (response.Code !== "") {
             fileItem.formData[0].photoCode = response.Code;

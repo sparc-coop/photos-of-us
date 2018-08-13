@@ -16,6 +16,7 @@
       "wwwroot/js/API.js",
       "wwwroot/js/controllers/BulkEditModalController.js",
       "wwwroot/js/controllers/CheckoutController.js",
+      "wwwroot/js/controllers/DownloadController.js",
       "wwwroot/js/controllers/FolderController.js",
       "wwwroot/js/controllers/FolderRenameModalController.js",
       "wwwroot/js/controllers/ModalController.js",
@@ -29,7 +30,8 @@
       "wwwroot/js/controllers/CardController.js",
       "wwwroot/js/controllers/SalesHistoryController.js",
       "wwwroot/js/controllers/PhotoTagsController.js",
-      "wwwroot/js/controllers/UploadProfileImageController.js"
+      "wwwroot/js/controllers/UploadProfileImageController.js",
+      "wwwroot/js/controllers/RandomPhotoController.js"
     ]
   }
 ]

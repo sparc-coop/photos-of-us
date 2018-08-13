@@ -7,69 +7,85 @@
 @section ProfileImageBackdrop {
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
+    <div ng-if="'@Model.IsDeactivated' == 'True'" ng-cloak>
+        Oops! We can't find that account. <a href="/Home/Homepage">Return Home</a>
+    </div>
+    <div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-if="'@Model.IsDeactivated' == 'False' || '@Model.IsDeactivated' == ''" ng-cloak>
+        <div class="g-row">
+            <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
+                <div class="photographer-info">
+                    @if (string.IsNullOrEmpty(Model.ProfilePhotoUrl))
+                    {
+                    <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
+                    }
+                    else
+                    {
+                    <div class="photographer-image" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
+                    }
 
-<div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-init="getProfilePhotos()">
-    <div class="g-row">
-        <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
-            <div class="photographer-info">
-                @if (string.IsNullOrEmpty(Model.ProfilePhotoUrl))
-            {
-
-                <div class="photographer-image" style="background-image: url(/images/avatar.png)"></div>
-        }
-        else
-        {
-            <div class="photographer-image" style="background-image: url(@Model.ProfilePhotoUrl)"></div>
-
-    }
-
-                <h2>@Model.Name</h2>
-                <p class="photographer-title">@Model.PhotographerTitle</p>
-                <p class="photographer-bio">@Model.ProfileText</p>
-            </div>
-            <div class="photographer-social">
-                <ul>
-                    <li><a class="twitter" href="http://www.twitter.com" target="_blank">Twitter</a></li>
-                    @if (!string.IsNullOrEmpty(Model.FacebookLink))
-                {
-                    <li><a class="facebook" href="@Model.FacebookLink" target="_blank">Facebook</a></li>
-
-            }
-
-
-                    <li><a class="instagram" href="http://www.instagram.com" target="_blank">Instagram</a></li>
-                    <li><a class="dribbl" href="http://www.dribbl.com" target="_blank">Dribbl</a></li>
-                </ul>
-            </div>
-            <div class="gallery-search-container">
-                <input class="input--light-blue searchbox" placeholder="Search Gallery..." />
-            </div>
-            <div class="gallery-upload-container">
-                <a href="#" ng-click="toggleSelection()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Select Photos</span></a><br />
-                <a href="#" ng-click="openBulkEdit()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Edit Photos</span></a><br />
-
-                <a href="#" ng-click="openUpload()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Click here to upload</span></a>
-            </div>
-        </div>
-        <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
-
-            <div class="photographer-gallery-container">
-                <div class="g-row">
-                    <div ng-repeat="photo in profilePhotos track by $index" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
-                        <img class="gallery-image" src="{{photo.Url}}" ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" ng-style="isBulkEditEnabled ? (isPhotoSelected(photo) ? isHighlighted : isNotHighlighted) : {}" />
+                    <h2>@Model.Name</h2>
+                    <p class="photographer-title">@Model.PhotographerTitle</p>
+                    <p class="photographer-bio">@Model.ProfileText</p>
+                    <div ng-if="user.IsDeactivated == true">
+                        Account has been deactivated.
                     </div>
                 </div>
-                @*<div class="g-row">
-                    @foreach (var Photo in @Model.Photos)
-                    {
-                        <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
-                            <img class="gallery-image" src="@Photo.Url" ng-click="isBulkEditEnabled ? selectPhoto() : viewPhoto(@Photo.Id)" />
+                <div class="photographer-social">
+                    <ul>
+                        @if (!string.IsNullOrEmpty(Model.FacebookLink) && !string.IsNullOrEmpty(Model.FacebookLink.Split('/').Last()))
+                        {
+                            <li><a class="facebook" href="@Model.FacebookLink" target="_blank">Facebook</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.TwitterLink) && !string.IsNullOrEmpty(Model.TwitterLink.Split('/').Last()))
+                        {
+                            <li><a class="twitter" href="@Model.TwitterLink" target="_blank">Twitter</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.InstagramLink) && !string.IsNullOrEmpty(Model.InstagramLink.Split('/').Last()))
+                        {
+                            <li><a class="instagram" href="@Model.InstagramLink" target="_blank">Instagram</a></li>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.DribbblLink) && !string.IsNullOrEmpty(Model.DribbblLink.Split('/').Last()))
+                        {
+                            <li><a class="dribbl" href="@Model.DribbblLink" target="_blank">Dribble</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="gallery-search-container">
+                    <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="gallery-upload-container" ng-init="getUser()" ng-cloak ng-show="user.IsPhotographer">
+                        <div ng-if="@Model.PhotographerId == user.Id" ng-cloak>
+                            <a href="#" ng-click="toggleSelection()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Select Photos</span></a><br />
+                            <a href="#" ng-click="openBulkEdit()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Edit Photos</span></a><br />
+                            <a href="#" ng-click="openUpload()" class="btn-upload">
+                                <img src="~/images/icons/add-photo.png" />
+                                <span class="upload-text">Click here to upload</span>
+                            </a>
                         </div>
-                    }
-                </div>*@
+                    </div>
+                }
+            </div>
+            <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
+
+                <div class="photographer-gallery-container">
+                    @*<div class="g-row">
+                        <div ng-repeat="photo in profilePhotos track by $index" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                            <img class="gallery-image" src="{{photo.Url}}" ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" ng-style="isBulkEditEnabled ? (isPhotoSelected(photo) ? isHighlighted : isNotHighlighted) : {}" />
+                        </div>
+                    </div>*@
+                    <div class="g-row">
+                        @foreach (var photo in Model.Photos)
+                        {
+                            <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                                <img class="gallery-image" src="@photo.Url" ng-click="isBulkEditEnabled ? selectPhoto(@photo.Id) : viewPhoto(@photo.Id)" ng-style="isBulkEditEnabled ? (isPhotoSelected(@photo.Id) ? isHighlighted : isNotHighlighted) : {}" />
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 

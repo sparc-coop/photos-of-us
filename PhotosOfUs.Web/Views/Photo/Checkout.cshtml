@@ -1,17 +1,17 @@
 ﻿@using Microsoft.Extensions.Options
 @inject IOptions<PhotosOfUs.Web.Extensions.StripeSettings> Stripe
-@model List<ShoppingCartViewModel>
+@model CustomerOrderViewModel
 
 @{
     ViewData["Title"] = "Cart";
 }
-<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe()">
+<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.Id); getOrderTotal(@Model.Id)">
     <h1 class="header-large">Checkout</h1>
-    <div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
 
     <div class="checkout">
-        <div style="display: flex;">
+        <div style="display: flex; max-width: 600px">
             <div>
                 <div class="info-title">Delivery Information</div>
                 <form action="/Photo/SaveAddress" method="POST" class="form">
@@ -25,11 +25,15 @@
                     </div>
                     <div class="form-input">
                         <label>Phone Number</label>
-                        <input ng-model="address.Phone"/>
+                        <input ng-model="address.Phone" />
+                    </div>
+                    <div class="form-input">
+                        <label>Street Address</label>
+                        <input ng-model="address.Address1" />
                     </div>
                     <div class="form-input">
                         <label>City</label>
-                        <input ng-model="address.City"/>
+                        <input ng-model="address.City" />
                     </div>
                     <div class="form-input">
                         <label>State</label>
@@ -37,7 +41,7 @@
                     </div>
                     <div class="form-input">
                         <label>Zip</label>
-                        <input ng-model="address.ZipCode"/>
+                        <input ng-model="address.ZipCode" />
                     </div>
                     <div class="form-input form-input--email">
                         <label>Email</label>
@@ -47,22 +51,24 @@
 
             </div>
             <div class="summary">
-                <div class="title">Order Summary</div>
-                <div class="cart-items">
-                    <div ng-repeat="item in cartItems" class="cart-item">
-                        <div class="type">{{getAssociatedPrintType(item.printTypeId).type}}</div>
-                        <div class="price">{{item.name}}</div>
+                <div style="position: relative;">
+                    <div class="title">Order Summary</div>
+                    <div class="cart-items">
+                        <div ng-repeat="item in orderDetails" class="cart-item">
+                            <div class="name">{{item.Photo.Name}}</div>
+                            <div class="amount">${{item.UnitPrice | number: 2}}</div>
+                        </div>
                     </div>
-                </div>
-                <div class="shipping"><div></div>Standard Shipping</div>
-                <div class="divider"></div>
-                <div class="total">
-                    <div class="heading">Order Total</div>
-                    <div class="total-price">{{sumCart()}}</div>
+                    @*<div class="shipping"><div></div>Standard Shipping</div>*@
+                    <div class="divider"></div>
+                    <div class="total">
+                        <div class="heading">Order Total</div>
+                        <div class="total-price">${{orderTotal}}</div>
+                    </div>
                 </div>
             </div>
         </div>     
-        <div>
+        <div>           
             <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
             <div>
                 <form action="/Photo/Charge" method="POST" id="payment-form">

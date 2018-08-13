@@ -7,28 +7,32 @@
 
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
-
 <md-dialog class="bulkedit-dialog">
-    <div class="bulkedit-container" ng-init="getTagsByPhotos()">
+    <div class="bulkedit-container" ng-init="getTagsByPhotos(); getPhotoPrice()">
+        <i class="material-icons" ng-click="close()">close</i>
+
         <h2 id="bulkedit-title">Edit Photos  <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
 
-        <div>Tags</div>
-        <div>
-            <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
-                <auto-complete source="loadedtags"></auto-complete>
-            </tags-input>
+        <div class="tags">
+            <div>Tags</div>
+            <div>
+                <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
+                    <auto-complete source="loadedtags"></auto-complete>
+
+                </tags-input>
+            </div>
+        </div>
+
+        <div ng-show="selectedPhotos.length < 2" class="price">
+            <div>Edit Price</div>
+            <input ng-model="price" />
         </div>
 
         <div class="clearfix"></div>
-        <div>
-            <button ng-click="deletePhotos(selectedPhotos)">Delete Photos</button>
-        </div>
-        <div>
-            <button type="submit" class="btn-apply" ng-click="editPhotos(selectedPhotos, tags)">
-                Apply
-            </button>
-        </div>
-        {{tags}}
-        {{photosviewmodel}}
+        <button ng-click="deletePhotos(selectedPhotos)" class="btn-delete">Delete Photos</button>
+
+        <button type="submit" class="btn-apply" ng-click="editPhotos(selectedPhotos, tags, price)">
+            Apply
+        </button>
     </div>
 </md-dialog>

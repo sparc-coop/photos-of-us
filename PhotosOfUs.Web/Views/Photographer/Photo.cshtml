@@ -11,15 +11,23 @@
                 <div class="title">Photographer</div>
                 <div class="name">@Model.PhotographerName</div>
             </div>
-            <img src="@Model.Photographer.ProfilePhotoUrl" />
+            @if (String.IsNullOrEmpty(Model.Photographer.ProfilePhotoUrl))
+            {
+                <img src="/images/icons/profile-icon.png" class="placeholder-img" />
+
+            }
+            else
+            {
+                <img src="@Model.Photographer.ProfilePhotoUrl" />
+            }
         </div>
     </div>
 
-    <div class="photo--info">
+    @*<div class="photo--info">
         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
         Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
         Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-    </div>
+    </div>*@
 
     <div class="divider"></div>
 
@@ -46,8 +54,21 @@
                 We offer many different sizes and stock. Or alternatively, you can purchase a digital version.
             </div>
             <div class="photoPage__footer--right">
-                <div class="title">Starting At Just $5 Per Photo</div>
-                <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')"><img src="~/images/icons/cart-red.png" />Buy It Now</div>
+                <div class="title">@*Starting At Just $5 Per Photo*@</div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                 <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Id')">
+                    <img src="~/images/icons/cart-red.png" />
+                    Buy It Now
+                 </div>
+                }
+                else
+                {
+                <div class="button--yellow button--yellow--large" ng-click="signInCustomer(@Model.Id)">
+                    <img src="~/images/icons/cart-red.png" />
+                    Login and Buy It Now
+                </div>
+                }
             </div>
         </div>
     </div>

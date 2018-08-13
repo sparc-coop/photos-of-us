@@ -9,7 +9,17 @@
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="~/css/sweetalert2.css" rel="stylesheet" />
-  
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-69755150-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-69755150-3');
+    </script>
+
     <environment include="Development">
         <link rel="stylesheet" href="~/css/PoU-Site.min.css" />
     </environment>
@@ -20,70 +30,93 @@
 </head>
 <body>
     <div ng-cloak>
-
-
-
         @if (User.Identity.IsAuthenticated)
         {
-            <nav class="nav" ng-controller="PhotographerCtrl" ng-init="getProfile()">
-                <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
+        <div ng-controller="PhotographerCtrl" ng-init="getProfile(); getUser()">
+            <nav class="nav" ng-if="user.IsPhotographer == true">
+                <a href="/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
                 @*<div class="nav--center">
-                        <a ng-click="openUpload()" class="menu-item">Upload</a>
-                            <a href="/" class="menu-item">Page Title</a>
-                            <a href="/" class="menu-item">Page Title</a>
-                    </div>*@
+                <a ng-click="openUpload()" class="menu-item">Upload</a>
+                    <a href="/" class="menu-item">Page Title</a>
+                    <a href="/" class="menu-item">Page Title</a>
+            </div>*@
                 @*todo and is photographer*@
                 <div class="nav--right">
-                    <img src="~/images/icons/alert.png" alt="notifications" />
-                    <img src="~/images/icons/add.png" alt="add" />
+                    @*<a href="/Photographer/SalesHistory/{{user.Id}}"><img src="~/images/icons/alert.png" alt="notifications" /></a>*@
                     <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                     <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                 </div>
                 <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                     <div class="adminMenu__arrow"></div>
                     <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
-                    <a class="adminMenu__list" href="#">Personal Brand Settings</a>
-                    <a class="adminMenu__list" href="@Url.Action("SalesHistory","Photographer")">Sales History</a>
+                    @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
+                    <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
                     <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
                     <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
-                    <a class="adminMenu__list" href="@Url.Action("Profile","Photographer")">Profile</a>
+                    <a class="adminMenu__list" href="/Photographer/Profile/{{photographer.Id}}">Profile</a>
 
                     <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                 </div>
             </nav>
-        }
-        else
-        {
-            <nav class="nav" ng-controller="CheckoutCtrl" ng-cloak>
-                <a href="/Photographer/" class="logo"><img src="~/images/logo.png" /></a>
+            <nav class="nav" ng-if="user.IsPhotographer != true" ng-cloak>
+                <a href="/Customer/OrderHistory/{{user.Id}}" class="logo"><img src="~/images/logo.png" /></a>
                 <div class="nav--right">
-                    @*@await Html.PartialAsync("_LoginPartial")*@
-                    <a href="~/Session/SignIn">Log In</a>
-                    <!--If user is customer-->
-                    <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" />
+                    <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" alt="cart" /></div>
+                    <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                    <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                 </div>
+                <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+                    <div class="adminMenu__arrow"></div>
+                    <a class="adminMenu__list" href="/Customer/OrderHistory/{{user.Id}}">Order History</a>
 
-                <div ng-if="cartPreview" class="cart--preview" id="cart--preview">
+                    <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+                </div>
+                <div ng-if="cartPreview" class="cart--preview" id="cart--preview" ng-controller="CheckoutCtrl" ng-init="getOpenOrder(user.Id); getPrintTypes()">
                     <div class="cart--preview__content">
                         <div class="cart--preview--arrow"></div>
                         <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
-                        <div class="cart-items">
-                            @*ng-repeat="item in cart">*@
-                            <div>
-                                <div class="type">A6 Landscape</div><div class="quantity">x1</div><div class="price">$18.00</div>
-                            </div>
-                            <div>
-                                <div class="type">A5 Portrait</div><div class="quantity">x2</div><div class="price">$10.00</div>
+                        <div class="cart--preview__items">
+                            <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
+                                <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
                             </div>
                         </div>
-                        <div class="total"><span class="label">Cart Total</span><span class="amount">$30.00</span></div>
-                        <div class="button--checkout--preview" ng-click="goToCart()"><img src="~/images/icons/cart-red.png" />Checkout</div>
+                        <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
+                        <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
                     </div>
                 </div>
             </nav>
+        </div>
+
+
         }
+        else
+        {
+        <nav class="nav" ng-controller="CheckoutCtrl" ng-cloak>
+            <a href="#" class="logo"><img src="~/images/logo.png" /></a>
+            <div class="nav--right">
+                @*@await Html.PartialAsync("_LoginPartial")*@
+                <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
+                <!--If user is customer-->
+                <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" alt="cart" /></div>
+            </div>
 
-
+            <div ng-if="cartPreview" class="cart--preview" id="cart--preview">
+                <div class="cart--preview__content">
+                    <div class="cart--preview--arrow"></div>
+                    <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
+                    <div class="cart-items">
+                        <div class="cart--preview__items">
+                            <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
+                                <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                            </div>
+                        </div>
+                        <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
+                        <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        }
 
     </div>
 
@@ -99,14 +132,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-resource/1.6.9/angular-resource.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-touch/1.7.2/angular-touch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
     <!-- Include a polyfill for ES6 Promises (optional) for IE11, UC Browser and Android browser support -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <script src="~/lib/ng-tags-input/ng-tags-input.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.3.2/ui-bootstrap-tpls.min.js"></script>
 
     @*<environment include="Development">*@
 

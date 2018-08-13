@@ -23,6 +23,11 @@ namespace PhotosOfUs.Model.Repositories
             return _context.User.Find(userId);
         }
 
+        public UserIdentity GetUser(string azureId)
+        {
+            return _context.UserIdentity.FirstOrDefault(x => x.AzureID == azureId);
+        }
+
         public bool UpdateAccountProfileSettings(ProfileSettingsViewModel model)
         {
             var user = Find(model.UserId);
@@ -57,7 +62,12 @@ namespace PhotosOfUs.Model.Repositories
             user.DisplayName = model.DisplayName;
             user.JobPosition = model.JobPosition;
             user.Bio = model.Bio;
+            user.Facebook = model.Facebook;
+            user.Twitter = model.Twitter;
+            user.Instagram = model.Instagram;
+            user.Dribbble = model.Dribbble;
 
+            _context.Update(user);
             _context.SaveChanges();
 
             return true;

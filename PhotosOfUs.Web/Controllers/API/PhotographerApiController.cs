@@ -25,11 +25,11 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             _context = context;
             _viewRenderService = viewRenderService;
-        }
+        }      
 
         [HttpGet]
         [Route("GetProfilePhotos")]
-        public IActionResult GetProfilePhotos()
+        public List<PhotoViewModel> GetProfilePhotos()
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
@@ -37,12 +37,12 @@ namespace PhotosOfUs.Web.Controllers.API
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
             var model = PhotoViewModel.ToViewModel(photos);
 
-            return Ok(model);
+            return model;
         }
 
         [HttpPost]
         [Route("GetTagsByPhotos")]
-        public List<TagViewModel> GetTagsByPhotos([FromBody]List<Photo> photos)
+        public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
         {
             var repo = new PhotoRepository(_context);
 
@@ -51,6 +51,22 @@ namespace PhotosOfUs.Web.Controllers.API
             var tagsmodel = TagViewModel.ToViewModel(tags);
 
             return tagsmodel;
+        }
+
+        [HttpGet]
+        [Route("GetPhotoPrice/{photoId:int}")]
+        public decimal? GetPhotoPrice(int photoId)
+        {
+            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+
+            return photo.Price;
+        }
+
+        [HttpPost]
+        [Route("SavePhotoPrice/{photoId:int}/{newPrice:decimal}")]
+        public void GetPhotoPrice(int photoId, decimal newPrice)
+        {
+            new PhotoRepository(_context).UpdatePrice(photoId, newPrice);
         }
 
         [HttpPost]
@@ -91,26 +107,26 @@ namespace PhotosOfUs.Web.Controllers.API
             return "value";
         }
 
-        [HttpGet("{query}")]
-        [Route("SalesHistory")]
-        public async Task<IActionResult> SalesHistory(string query)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(userId);
+        //[HttpGet("{query}")]
+        //[Route("SalesHistory")]
+        //public async Task<IActionResult> SalesHistory(string query)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var userId = _context.UserIdentity.Find(azureId).UserID;
+        //    var user = _context.User.Find(userId);
 
-            List<Order> queriedOrders;
-            if(null == query || query.Equals(""))
-                queriedOrders = new OrderRepository(_context).GetOrders(user.Id);
-            else
-                queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
+        //    List<Order> queriedOrders;
+        //    if(null == query || query.Equals(""))
+        //        queriedOrders = new OrderRepository(_context).GetOrders(user.Id);
+        //    else
+        //        queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
 
-            var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
+        //    var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
 
-            var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
+        //    var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpGet]
         [Route("GetAccountSettings")]

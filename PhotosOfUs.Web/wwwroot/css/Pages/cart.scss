@@ -4,7 +4,6 @@
     &--preview {
         z-index: 100;
         width: 265px;
-        height: 265px;
         background-color: $yellow;
         border-radius: 6px;
         margin-top: 46px;
@@ -14,10 +13,10 @@
         &__content {
             position: relative;
             padding: 16px 14px;
-            height: 235px;
+            padding-bottom: 120px;
 
             .heading {
-                font-family: "Dosis-SemiBold";
+                font-family: "Dosis";
                 font-weight: 600;
                 font-size: 18px;
                 color: $dark;
@@ -25,27 +24,6 @@
 
                 .price {
                     padding-left: 124px;
-                }
-            }
-
-            .cart-items {
-                font-family: "Open Sans";
-                font-weight: 600;
-                font-size: 14px;
-                color: $primary;
-
-                .type {
-                    line-height: initial;
-                    width: 100px;
-                }
-
-                .quantity {
-                    padding-left: 20px;
-                    width: 30px;
-                }
-
-                .price {
-                    padding-left: 14px;
                 }
             }
 
@@ -63,6 +41,29 @@
             }
         }
 
+        &__item {
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 14px;
+            color: $primary;
+            display: flex;
+            padding-bottom: 5px;
+
+            .type {
+                line-height: initial;
+                width: 100px;
+            }
+
+            .quantity {
+                padding-left: 20px;
+                width: 30px;
+            }
+
+            .price {
+                padding-left: 14px;
+            }
+        }
+
         &--arrow {
             width: 0;
             height: 0;
@@ -71,7 +72,7 @@
             border-bottom: 10px solid $yellow;
             position: absolute;
             top: -8px;
-            right: 82px;
+            right: 102px;
         }
     }
 
@@ -101,8 +102,10 @@
             border-radius: 4px;
             padding: 26px 16px;
             width: 208px;
-            height: 180px;
-            position: relative;
+            height: auto;
+            position: absolute;
+            right: 100px;
+            top: 268px;
 
             .title {
                 font-family: "Dosis";
@@ -120,31 +123,37 @@
                 font-size: 12px;
                 color: $text-gray;
                 padding: 4px;
-                position: absolute;
-                bottom: 84px;
                 width: 185px;
                 text-align: center;
             }
 
             .divider {
                 position: absolute;
-                bottom: 48px;
-                left: 44px;
+                bottom: 18px;
+                left: 34px;
+                margin-top: 10px;
             }
 
             .cart-items {
                 display: flex;
+                flex-wrap: wrap;
                 font-family: "Open Sans";
                 font-size: 12px;
                 color: $text-gray;
-                padding-bottom: 10px;
+                padding-bottom: 20px;
+
+                .cart-item {
+                    margin: 2px 0;
+                    padding: 5px;
+                }
 
                 .type {
                     width: 120px;
                     padding-right: 40px;
                 }
 
-                .price {
+                .amount {
+                    padding-left: 15px;
                 }
             }
 
@@ -153,8 +162,7 @@
                 font-size: 14px;
                 color: $text-gray;
                 display: flex;
-                position: absolute;
-                bottom: 28px;
+                padding-top: 15px;
 
                 .total-price {
                     font-weight: 600;
@@ -171,7 +179,7 @@
             width: 240px;
             height: 156px;
             border-radius: 8px;
-            padding: 24px 40px 0 0;
+            margin: 24px 40px 0 0;
         }
 
         &--container {

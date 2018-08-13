@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic']);
+var app = angular.module('app', ['ngMaterial', 'angularFileUpload', 'monospaced.elastic', '720kb.socialshare', 'angular.filter', 'ui.bootstrap']);
 
 app.factory('photoApi', ['$http', '$rootScope', function ($http, $rootScope) {
     var apiRoot = '/api/Photo';
@@ -16,6 +16,9 @@ app.factory('folderApi', ['$http', '$rootScope', function ($http, $rootScope) {
     return {
         add: function add(foldername) {
             return $http.post(apiRoot + '/?name=' + foldername);
+        },
+        rename: function rename(folderId, folderName) {
+            return $http.post(apiRoot + "/RenameFolder", JSON.stringify({ Id: folderId, NewName: folderName }));
         },
         'delete': function _delete(folderId) {
             return $http.post(apiRoot + "/DeleteFolder/" + folderId);
@@ -49,16 +52,29 @@ app.factory('photographerApi', ['$http', '$rootScope', function ($http, $rootSco
 
 app.factory('checkoutApi', ['$http', '$rootScope', function ($http, $rootScope) {
     var apiRoot = '/api/Checkout';
-    return {};
+    return {
+        createOrder: function createOrder(userId, orderItems) {
+            return $http.get(apiRoot + '/CreateOrder/' + userId, orderItems);
+        }
+    };
 }]);
 
-app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', function ($scope, $window, $location, $http) {
-    $scope.goToCart = function () {
-        $window.location.href = '/Photo/Cart';
+app.factory('userApi', ['$http', '$rootScope', function ($http, $rootScope) {
+    var apiRoot = '/api/User';
+    return {
+        getUser: function getUser() {
+            return $http.get(apiRoot + '/GetUser');
+        }
+    };
+}]);
+
+app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', function ($scope, $window, $location, $http, userApi) {
+    $scope.goToCart = function (userId) {
+        $window.location.href = '/Photo/Cart/' + userId;
     };
 
-    $scope.goToCheckout = function () {
-        $window.location.href = '/Photo/Checkout';
+    $scope.goToCheckout = function (userId) {
+        $window.location.href = '/Photo/Checkout/' + userId;
     };
 
     $scope.getPrintTypes = function () {
@@ -88,11 +104,9 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', funct
                 cartLocalStorage = {};
             }
         }
-        console.log(photoId);
         cartLocalStorage[photoId] = object;
 
         localStorage.setItem("cart", JSON.stringify(cartLocalStorage));
-        console.log(localStorage.getItem("cart"));
 
         if ($scope.selectedItems.length === 0) {
             $scope.selectedItems.push(printTypeId);
@@ -104,16 +118,31 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', funct
         }
     };
 
-    $scope.addToCart = function (printId) {
-        $scope.select(printId);
-        $scope.createOrder();
-        //todo broadcast added to cart to update menu
+    $scope.selectAll = function (printTypes) {
+        for (var i = 0; i < printTypes.length; i++) {
+            $scope.select(printTypes[i].Id);
+        }
     };
 
-    $scope.createOrder = function () {
-        // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
-        $window.location.href = '/Photo/Cart';
-        //});
+    $scope.isSelected = function (printId) {
+        if ($scope.selectedItems.indexOf(printId) !== -1) {
+            return true;
+        }
+        return false;
+    };
+
+    //$scope.addToCart = function (printId) {
+    //    $scope.select(printId);
+    //    $scope.createOrder();
+    //    //todo broadcast added to cart to update menu
+    //}
+
+    $scope.createOrder = function (userId) {
+        console.log($scope.selectedItems);
+        var photoId = $location.absUrl().split('Purchase/')[1];
+        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(function (x) {
+            $window.location.href = '/Photo/Cart/' + userId;
+        });
     };
 
     function testLocalStorage() {
@@ -128,34 +157,101 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', funct
         }
     }
 
-    $scope.getOrder = function () {
-        $http.get('/api/Checkout/GetOrder').then(function (x) {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+    $scope.orderDetailsList = [];
+    $scope.orderTotalList = [];
+
+    $scope.getOrderDetails = function (orderId) {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(function (x) {
+            $scope.orderDetails = x.data;
+            angular.forEach($scope.orderDetails, function (value, key) {
+                $scope.orderDetailsList.push(value);
+            });
+        });
+        $scope.getOrderTotal(orderId);
+    };
+
+    $scope.getOrderTotal = function (orderId) {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(function (x) {
+            $scope.orderTotal = x.data;
+            $scope.orderTotalList.push({
+                id: orderId,
+                total: $scope.orderTotal
+            });
+        });
+    };
+
+    $scope.getUser = function () {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
+        });
+    };
+
+    $scope.getOpenOrder = function (userId) {
+        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(function (x) {
+            $scope.order = x.data;
+            console.log($scope.order);
+            $scope.getOrderTotal($scope.order.Id);
         });
     };
 }]);
+app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'userApi', function ($scope, $window, $mdDialog, $http, userApi) {
+
+    $scope.getOrders = function (userId) {
+        $http.get('/api/Photo/GetOrderPhotos/' + userId).then(function (x) {
+            $scope.orders = x.data;
+            console.log(x.data);
+            angular.forEach($scope.orders, function (key, value) {
+                $scope.getOrderItems(key.Id);
+            });
+        });
+    };
+
+    $scope.orderItems = [];
+
+    $scope.getOrderItems = function (orderId) {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(function (x) {
+            $scope.orderItems.push(x.data);
+        });
+    };
+
+    $scope.bulkDownload = function (userId) {
+        $http.post('/api/Photo/GetForDownload/' + userId);
+    };
+}]);
 app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', function ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) {
+
     $scope.close = function () {
         return $mdDialog.hide();
     };
     $scope.folders = [];
 
     $scope.initFolderCtrl = function () {
-
+        $scope.orderByOption = "Name";
         photoApi.getFolders().then(function (x) {
             angular.forEach(x.data, function (f) {
                 $scope.folders.push(f);
             });
-            //$scope.folders = x.data;
-            console.log(JSON.stringify(x.data));
         });
+    };
+
+    $scope.initRenameFolderModal = function () {
+        $scope.folderId = folderId;
+        $scope.folderName = folderName;
     };
 
     $scope.newFolderModal = function () {
         $mdDialog.show({
             templateUrl: '/Photographer/NewFolderModal',
             controller: 'FolderCtrl',
+            clickOutsideToClose: true
+        });
+    };
+
+    $scope.renameFolderModal = function (folder) {
+        $mdDialog.show({
+            templateUrl: '/Photographer/NewFolderModal',
+            controller: 'FolderRenameModalCtrl',
+            locals: { folderId: folder.Id, folderName: folder.Name },
             clickOutsideToClose: true
         });
     };
@@ -168,89 +264,94 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
         });
     };
 
+    $scope.deleteFolder = function (folderId) {
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then(function (result) {
+            if (result.value) {
+                folderApi['delete'](folderId).then(function (data) {
+                    $rootScope.$broadcast('FolderRemoved', folderId);
+                    swal('Deleted!', 'Your folder has been deleted.', 'success');
+                });
+            }
+        });
+    };
+
     $scope.$on('FolderAdded', function (e, folder) {
 
         console.log('added folder - ' + JSON.stringify(folder));
 
         $scope.folders.push(folder);
     });
+
+    $scope.$on('FolderRenamed', function (e, folder) {
+
+        console.log('renamed folder - ' + JSON.stringify(folder));
+        var index = $scope.folders.findIndex(function (f) {
+            return f.Id == folder.Id;
+        });
+        $scope.folders[index] = folder;
+    });
+
+    $scope.$on('FolderRemoved', function (e, folderId) {
+
+        console.log('removed folder - ' + JSON.stringify(folderId));
+        var index = $scope.folders.findIndex(function (f) {
+            return f.Id == folderId;
+        });
+        $scope.folders.splice(index, 1);
+    });
 }]);
+
+app.controller('FolderRenameModalCtrl', function ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi, folderId, folderName) {
+
+    $scope.close = function () {
+        return $mdDialog.hide();
+    };
+    $scope.folderId = folderId;
+    $scope.folderName = folderName;
+
+    $scope.renameFolder = function (folderId, folderName) {
+        folderApi.rename(folderId, folderName).then(function (x) {
+            $scope.close();
+            $rootScope.$broadcast('FolderRenamed', x.data);
+        });
+    };
+});
+
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', function ($scope, $window, $mdDialog) {
     $scope.close = function () {
         return $mdDialog.hide();
     };
 }]);
 app.controller('PaymentCtrl', ['$scope', '$window', '$http', function ($scope, $window, $http) {
-    $scope.cartItems = [];
-    var cartLocalStorage = {};
-    if (testLocalStorage()) {
-        var item = localStorage.getItem("cart");
-        if (item) {
-            cartLocalStorage = JSON.parse(item);
-        } else {
-            cartLocalStorage = {};
-        }
 
-        console.log(cartLocalStorage);
+    $scope.orderTotal = 0;
 
-        Object.values(cartLocalStorage).map(function (x) {
-            return $scope.cartItems.push(new Photo(x, $http));
+    $scope.getOrderDetails = function (orderId) {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(function (x) {
+            $scope.orderDetails = x.data;
+            console.log($scope.orderDetails);
         });
-        console.log($scope.cartItems);
-    } else {
-        console.log("local storage unavailable");
-    }
-    function testLocalStorage() {
-        var available = true;
-        try {
-            localStorage.setItem("__availability_test", "test");
-            localStorage.removeItem("__availability_test");
-        } catch (e) {
-            available = false;
-        } finally {
-            return available;
-        }
-    }
-    $scope.printTypes = {};
-    $scope.getPrintTypes = function () {
-        $http.get('/api/Photo/GetPrintTypes').then(function (x) {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+        angular.forEach($scope.orderDetails, function (value, key) {
+            $scope.orderTotal + value.UnitPrice;
         });
     };
-    $scope.getPrintTypes();
 
-    $scope.getAssociatedPrintType = function (x) {
-        var type = $scope.printTypes[x];
-        if (!type) return x;
-        return new PrintType($scope.printTypes[x]);
-    };
-
-    $scope.sumCart = function () {
-        var value = $scope.cartItems.reduce(function (a, b) {
-            return (a.price || 0) + (b.price || 0);
-        }, 0);
-        console.log("sum", value);
-        return value;
-    };
-
-    $scope.address = {};
-    $scope.saveAddress = function (address) {
-        var addressInfo = {
-            FullName: address.FirstName + ' ' + address.LastName,
-            City: address.City,
-            State: address.State,
-            ZipCode: address.ZipCode,
-            Email: address.Email
-        };
-
-        $http.post('/api/Checkout/SaveAddress', addressInfo).then(function (x) {
-            console.log("Address saved");
+    $scope.getOrderTotal = function (orderId) {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(function (x) {
+            $scope.orderTotal = x.data;
         });
     };
 
     $scope.initStripe = function () {
-        var stripe = Stripe('pk_test_P8L41KOstSk7oCzeV7mDoRY3');
+        var stripe = Stripe('');
         var elements = stripe.elements();
 
         // Custom styling can be passed to options when creating an Element.
@@ -288,17 +389,11 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', function ($scope, $
             hiddenInput.setAttribute('value', token.id);
             form.appendChild(hiddenInput);
 
-            var formData = {
-                StripeToken: token.id,
-                Amount: $scope.sumCart()
-            };
-
             // Submit the form
-            //form.submit();
+            form.submit();
 
-            var apiRoot = "/api/Payment/Charge";
-            //var apiRoot = "/Photo/Charge";
-            $http.post(apiRoot, formData);
+            //var apiRoot = "/api/Payment/Charge/";
+            //$http.post(apiRoot, token.id);
         };
 
         // Create a token or display an error the form is submitted.
@@ -318,46 +413,182 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', function ($scope, $
             });
         });
     };
+
+    //$scope.printTypes = {};
+    //$scope.getPrintTypes = () => {
+    //    $http.get('/api/Photo/GetPrintTypes').then(x => {
+    //        $scope.printTypes = x.data;
+    //        console.log($scope.printTypes);
+    //    });
+    //};
+    //$scope.getPrintTypes();
+
+    //$scope.cartItems = [];
+    //var cartLocalStorage = {};
+    //if (testLocalStorage()) {
+    //    var item = localStorage.getItem("cart");
+    //    if (item) {
+    //        cartLocalStorage = JSON.parse(item);
+    //    } else {
+    //        cartLocalStorage = {};
+    //    }
+
+    //    console.log(cartLocalStorage);
+
+    //    Object.values(cartLocalStorage).map(x => $scope.cartItems.push(new Photo(x, $http)));
+    //    console.log($scope.cartItems);
+    //} else {
+    //    console.log("local storage unavailable");
+    //}
+    //function testLocalStorage () {
+    //    var available = true;
+    //    try {
+    //        localStorage.setItem("__availability_test", "test");
+    //        localStorage.removeItem("__availability_test");
+    //    }
+    //    catch (e) {
+    //        available = false;
+    //    }
+    //    finally {
+    //        return available;
+    //    }
+    //}
+
+    //$scope.getAssociatedPrintType = (x) => {
+    //    var type = $scope.printTypes[x];
+    //    if (!type) return x;
+    //    return new PrintType($scope.printTypes[x]);
+    //}
+
+    //$scope.sumCart = () => {
+    //    var value = $scope.cartItems.reduce((a, b) => (a.price || 0) + (b.price || 0), 0);
+    //    console.log("sum", value);
+    //    return value;
+    //}
+
+    $scope.address = {};
+    $scope.saveAddress = function (address) {
+        var addressInfo = {
+            FullName: address.FirstName + ' ' + address.LastName,
+            City: address.City,
+            State: address.State,
+            ZipCode: address.ZipCode,
+            Email: address.Email
+        };
+
+        $http.post('/api/Checkout/SaveAddress', addressInfo).then(function (x) {
+            console.log("Address saved");
+        });
+    };
+
+    //$scope.initStripe = () => {
+    //    var stripe = Stripe('pk_test_P8L41KOstSk7oCzeV7mDoRY3');
+    //    var elements = stripe.elements();
+
+    //    // Custom styling can be passed to options when creating an Element.
+    //    var style = {
+    //        base: {
+    //            // Add your base input styles here. For example:
+    //            fontSize: '16px',
+    //            lineHeight: '24px'
+    //        }
+    //    };
+
+    //    // Create an instance of the card Element
+    //    var card = elements.create('card', { style });
+
+    //    // Add an instance of the card Element into the `card-element` <div>
+    //    card.mount('#card-element');
+
+    //    card.addEventListener('change', ({ error }) => {
+    //        var displayError = document.getElementById('card-errors');
+    //        if (error) {
+    //            displayError.textContent = error.message;
+    //        } else {
+    //            displayError.textContent = '';
+    //        }
+    //    });
+
+    //    var stripeTokenHandler = (token) => {
+    //        // Insert the token ID into the form so it gets submitted to the server
+    //        var form = document.getElementById('payment-form');
+    //        var hiddenInput = document.createElement('input');
+    //        hiddenInput.setAttribute('type', 'hidden');
+    //        hiddenInput.setAttribute('name', 'stripeToken');
+    //        hiddenInput.setAttribute('value', token.id);
+    //        form.appendChild(hiddenInput);
+
+    //        var formData = {
+    //            StripeToken: token.id,
+    //            Amount: $scope.sumCart()
+    //        }
+
+    //        // Submit the form
+    //        //form.submit();
+
+    //        var apiRoot = "/api/Payment/Charge";
+    //        //var apiRoot = "/Photo/Charge";
+    //        $http.post(apiRoot, formData);
+    //    };
+
+    //    // Create a token or display an error the form is submitted.
+    //    var form = document.getElementById('payment-form');
+    //    form.addEventListener('submit', event => {
+    //        event.preventDefault();
+
+    //        stripe.createToken(card).then(result => {
+    //            if (result.error) {
+    //                // Inform the user if there was an error
+    //                var errorElement = document.getElementById('card-errors');
+    //                errorElement.textContent = result.error.message;
+    //            } else {
+    //                // Send the token to your server
+    //                stripeTokenHandler(result.token);
+    //            }
+    //        });
+    //    });
+
+    //};
 }]);
 
-function PrintType(data) {
-    this.id;
-    this.type;
-    this.height;
-    this.length;
-    this.icon;
+//function PrintType (data) {
+//    this.id;
+//    this.type;
+//    this.height;
+//    this.length;
+//    this.icon;
 
-    function constructor(data) {
-        this.id = data.id;
-        this.type = data.type;
-        this.height = data.height;
-        this.length = data.length;
-        this.icon = data.icon;
-    }
-    constructor.call(this, data);
-}
+//    function constructor(data) {
+//        this.id = data.id;
+//        this.type = data.type;
+//        this.height = data.height;
+//        this.length = data.length;
+//        this.icon = data.icon;
+//    }
+//    constructor.call(this, data);
+//}
 
-function Photo(data, $http) {
-    var self = this;
+//function Photo(data, $http) {
+//    var self = this;
 
-    function constructor(data) {
-        this.printTypeId = data.printTypeId;
-        this.getPhotoInfo = getPhotoInfo.bind(this);
+//    function constructor(data) {
+//        this.printTypeId = data.printTypeId;
+//        this.getPhotoInfo = getPhotoInfo.bind(this);
 
-        getPhotoInfo(data.photoId);
-    }
-    constructor.call(this, data);
+//        getPhotoInfo(data.photoId);
+//    }
+//    constructor.call(this, data);
 
-    function getPhotoInfo(photoId) {
-        $http.get('/api/Photo/' + photoId).then(function (x) {
-            console.log(x.data);
-            Object.keys(x.data).map(function (y) {
-                self[y] = x.data[y];
-            });
-        });
-    }
-}
-app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', function ($scope, $window, $location, $http, $mdDialog) {
+//    function getPhotoInfo(photoId) {
+//        $http.get('/api/Photo/' + photoId).then(x => {
+//                console.log(x.data);
+//                Object.keys(x.data).map(y => {
+//                self[y] = x.data[y];
+//            });
+//        });
+//    }
+//}
+app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', function ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) {
     $scope.viewPhoto = function (photoId) {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
@@ -370,9 +601,12 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = function (photoId) {
+        $http.get('/Session/SignIn/').then($window.location.href = '/Photo/Purchase/' + photoId);
+    };
+
     $scope.openUpload = function (folderId) {
         $mdDialog.show({
-
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
@@ -382,11 +616,116 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.getPhotoCode = function () {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 8;
+
+    $scope.getPhotosByCode = function (code) {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(function (x) {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = function (id) {
         $http.get('/api/Photo/GetPhotographer/' + id).then(function (x) {
             $scope.photographer = x.data;
+        });
+    };
+
+    var self = undefined;
+
+    self.readonly = false;
+
+    // Lists of fruit names and Vegetable objects
+    self.fruitNames = ['Apple', 'Banana', 'Orange'];
+    self.ngChangeFruitNames = angular.copy(self.fruitNames);
+    self.roFruitNames = angular.copy(self.fruitNames);
+    self.editableFruitNames = angular.copy(self.fruitNames);
+
+    self.tags = [];
+    self.vegObjs = [{
+        'name': 'Broccoli',
+        'type': 'Brassica'
+    }, {
+        'name': 'Cabbage',
+        'type': 'Brassica'
+    }, {
+        'name': 'Carrot',
+        'type': 'Umbelliferous'
+    }];
+
+    self.newVeg = function (chip) {
+        return {
+            name: chip,
+            type: 'unknown'
+        };
+    };
+
+    self.onModelChange = function (newModel) {
+        alert('The model has changed');
+    };
+    $scope.shareFacebook = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'facebook',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareHashtags': 'PoU, kuvio, PhotosOfUs'
+            }
+        });
+    };
+
+    $scope.shareTwitter = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'twitter',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText': "Look at this awesome photo at PoU",
+                'socialshareHashtags': 'PoU, kuvio, PhotosOfUs'
+            }
+        });
+    };
+
+    $scope.shareGooglePlus = function (photoId) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'google',
+            'attrs': {
+                'socialshareUrl': url
+            }
+        });
+    };
+
+    $scope.sharePinterest = function (photoId, photoUrl) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'pinterest',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText': 'Look at this awesome photo at PoU',
+                'socialshareMedia': photoUrl
+            }
+        });
+    };
+
+    $scope.shareTumblr = function (photoId, photoUrl) {
+        var url = $location.absUrl().split('?')[0];
+        console.log(url);
+        Socialshare.share({
+            'provider': 'tumblr',
+            'attrs': {
+                'socialshareUrl': url,
+                'socialshareText': 'Look at this awesome photo at PoU',
+                'socialshareMedia': photoUrl
+            }
         });
     };
 }]);
@@ -477,18 +816,18 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
+        console.log("upload all clicked");
+
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
         if (errorsFound === false) {
-            var promises = [];
+
             angular.forEach(items, function (item) {
                 //todo only pushes if not photo code
-                promises.push(item.upload());
+                item.upload();
             });
-            $q.all(promises).then(function (x) {
-                $window.location.reload();
-            });
+
+            $scope.saveAllUpload = true;
         } else {
             alert("Fix the photos with exclamation first before uploading");
         }
@@ -565,10 +904,8 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
-        console.log(fileItem);
-        console.log(uploader.queue);
 
-        if (response != "") {
+        if (response !== "") {
             fileItem.formData[0].photoCode = response;
             fileItem.code = response;
             fileItem.isCode = true;
@@ -595,8 +932,10 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     uploader.onCompleteItem = function (fileItem, response, status, headers) {};
 
     uploader.onCompleteAll = function () {
-        //alert("Complete");
-        //$window.location.reload(); //.location.href = '/Photographer/Dashboard';
+
+        if ($scope.saveAllUpload) {
+            $window.location.reload();
+        }
     };
 });
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', function ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) {
@@ -655,7 +994,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
         $scope.folders.push(folder);
     });
 }]);
-app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', function ($scope, $window, $location, $http, $mdDialog, photographerApi) {
+app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', function ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) {
     $scope.viewPhoto = function (photoId) {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
@@ -669,9 +1008,14 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     };
 
     $scope.getProfile = function () {
-
         photographerApi.getAccountSettings().then(function (x) {
             $scope.photographer = x.data;
+        });
+    };
+
+    $scope.getUser = function () {
+        userApi.getUser().then(function (x) {
+            $scope.user = x.data;
         });
     };
 }]);
@@ -792,10 +1136,13 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
     $scope.originalSettings = {};
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(JSON.stringify(x));
+            console.log(x.data);
             $scope.accountSettings = x.data;
+            if ($scope.accountSettings.Facebook == null) $scope.accountSettings.Facebook = 'https://www.facebook.com/';
+            if ($scope.accountSettings.Twitter == null) $scope.accountSettings.Twitter = 'https://www.twitter.com/';
+            if ($scope.accountSettings.Instagram == null) $scope.accountSettings.Instagram = 'https://www.instagram.com/';
+            if ($scope.accountSettings.Dribbble == null) $scope.accountSettings.Dribbble = 'https://www.dribbble.com/';
             angular.copy(x.data, $scope.originalSettings);
-            console.log(JSON.stringify($scope.originalSettings));
         });
     };
 
@@ -836,6 +1183,12 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
             controller: 'UploadProfileImageCtrl',
             clickOutsideToClose: true
         });
+    };
+
+    $scope.selected = 'details';
+
+    $scope.setSelected = function (selected) {
+        $scope.selected = selected;
     };
 }]);
 app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', function ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) {
@@ -908,6 +1261,23 @@ app.controller('SalesHistoryCtrl', ['$scope', '$window', '$location', '$http', f
         });
     };
 }]);
+app.controller('PhotoTagCtrl', TagCtrl);
+
+function TagCtrl($timeout, $q) {
+    var self = this;
+
+    self.tags = [{
+        'tag_title': 'Travel'
+    }];
+
+    self.newTag = function (chip) {
+        return {
+            tag_title: chip
+        };
+    };
+}
+//})();
+
 app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
     $scope.close = function () {
@@ -1022,7 +1392,7 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
 
     uploader.onCompleteAll = function () {
         //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        $window.location.reload(); //.location.href = '/Photographer/Dashboard'
     };
 }]);
 

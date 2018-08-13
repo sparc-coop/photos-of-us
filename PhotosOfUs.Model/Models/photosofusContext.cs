@@ -169,24 +169,6 @@ namespace PhotosOfUs.Model.Models
             {
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Order");
-
-                entity.HasOne(d => d.Photo)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PhotoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Photo");
-
-                entity.HasOne(d => d.PrintType)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PrintTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_PrintType");
-
             });
 
             modelBuilder.Entity<Photo>(entity =>
@@ -256,6 +238,8 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.LastName).HasMaxLength(128);
 
                 entity.Property(e => e.IsPhotographer);
+
+                entity.Property(e => e.IsDeactivated);
             });
 
             modelBuilder.Entity<UserIdentity>(entity =>
@@ -299,9 +283,9 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<PrintPrice>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
-                entity.Property(e => e.PrintId).HasColumnName("PrintId");
+                entity.Property(e => e.PhotoId).HasColumnName("PhotoId");
 
                 entity.Property(e => e.Price)
                     .HasColumnName("Price")

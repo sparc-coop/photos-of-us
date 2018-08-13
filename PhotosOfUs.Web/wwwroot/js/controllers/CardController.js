@@ -32,6 +32,25 @@
         });
     };
 
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
+    };
+
     $scope.downloadCards = function (cards) {
         $scope.cardsToExport = cards;
         // Use timeout to wait for Angular to finish rendering the hidden inputs for the POST form

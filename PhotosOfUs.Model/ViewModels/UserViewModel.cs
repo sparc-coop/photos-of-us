@@ -18,6 +18,7 @@ namespace PhotosOfUs.Model.ViewModels
         public DateTime CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
+        public bool? IsDeactivated { get; set; }
 
         public ICollection<SocialMedia> socialMedia { get; set; }
         public ICollection<Card> Card { get; set; }
@@ -38,6 +39,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.DisplayName = entity.DisplayName;
             viewModel.CreateDate = entity.CreateDate;
             viewModel.IsPhotographer = entity.IsPhotographer;
+            viewModel.IsDeactivated = entity.IsDeactivated;
             viewModel.JobPosition = entity.JobPosition;
             viewModel.Bio = entity.Bio;
             viewModel.ProfilePhotoUrl = entity.ProfilePhotoUrl;

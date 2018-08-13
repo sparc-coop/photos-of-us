@@ -54,13 +54,14 @@ body {
     margin-bottom: 20px;
 
     .searchbox.input--light-blue {
-        width: 510px;
-        height:28px;
+        width: 230px;
+        height: 28px;
         background-image: url('/images/icons/search.png');
         background-repeat: no-repeat;
         background-position: 20px 5px;
         padding: 0 50px;
         color: $primary;
+        outline: none;
 
         &::-moz-placeholder {
             color: $primary;

@@ -93,7 +93,7 @@ md-dialog {
 }
 
 /* photo preview */
-#photo-preview {
+.photo-preview {
     margin-top: 24px;
     font-family: 'Dosis', sans-serif;
     font-weight: 600;
@@ -107,21 +107,74 @@ md-dialog {
     height: 580px;
     position: relative;
 
-    .img-container{
-        text-align:center;
-        padding:10px;
+    .img-container {
+        text-align: center;
+
+        img {
+            width: auto;
+            max-width: 490px;
+            max-height: 330px;
+            border-radius: 8px;
+        }
     }
 
-    img {
-        width: auto;
-        max-width:490px;
-        max-height: 330px;
-        border-radius: 8px;
+    .info{
+        display: flex;
+        padding: 10px 50px 0 10px;
     }
+
 
     #photo-preview-name {
-        width: 90%;
+        width: 60%;
         padding-left: 10px;
+    }
+
+    &__dimensions {
+        display: inline;
+        font-family: 'Dosis', sans-serif;
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: 0;
+        margin: 3px 0 0 10px;
+        width: 20%;
+
+        p{
+            width: 20%;
+            margin: 0;
+        }
+    }
+
+    &__name {
+        display: inline;
+        font-family: 'Dosis', sans-serif;
+        font-weight: 600;
+        font-size: 24px;
+        letter-spacing: 0;
+        color: #F6FFFF;
+        word-wrap: break-word;
+        border: 0;
+        width: 100%;
+
+        textarea{
+            background-color: $dark;
+            outline: none;
+            border: none;
+            color: $white;
+        }
+    }
+
+    &__pricing {
+        margin-top: -5px;
+        padding-left: 10px;
+
+        input{
+            border: none;
+            outline: none;  
+            color: $white;
+            background-color: $dark;
+            padding: 8px 0 0 10px;
+            font-size: 18px;
+        }
     }
 }
 
@@ -132,31 +185,27 @@ md-dialog {
     letter-spacing: 0;
     font-weight: normal;
     margin: 5px 0 1px 10px;
+    position: relative;
+
+    i{
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .hover{
+        color: white;
+        font-size: 12px;
+        position: absolute;
+        top: 0;
+        padding-left: 10px;
+    }
 }
 
-#photo-preview-name {
-    font-family: 'Dosis', sans-serif;
-    font-weight: 600;
-    font-size: 28px;
-    letter-spacing: 0;
-    color: #F6FFFF;
-    word-wrap: break-word;
-    border: 0;
-    background: #194952;
-    width: 100%;
-}
-
-#photo-preview-dimensions {
-    font-family: 'Dosis', sans-serif;
-    font-weight: 600;
-    font-size: 22px;
-    letter-spacing: 0;
-    margin: 3px 0 0 10px;
-}
 
 /* photo list */
 #photo-list {
     padding: 0 20px;
+    width: 100%;
 }
 
 #photos {
