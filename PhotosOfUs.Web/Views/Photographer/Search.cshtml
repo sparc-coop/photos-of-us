@@ -11,36 +11,37 @@
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
 @section ProfileImageBackdrop {
-<div class="photographer-search__title_yellow">
-    LESS FAFF, MORE SNAPS
+    <div class="nav-padding"></div>
+    <div class="photographer-search photographer-search__title_yellow">
+        LESS FAFF, MORE SNAPS
     </div>
     <div class="photographer-search--backdrop"></div>
 }
-    <div ng-controller="PhotographerCtrl" ng-init="loadTags();">
-        <div class="photographer-search-wrap">
-            <div class="photographer-search">
-                <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
-                    <auto-complete source="loadedtags"></auto-complete>
-                    <button type="submit" ng-click="searchPhotos(tags)" class="photographer-searchButton">
-                        <img src="~/images/icons/magnifier_white.png" />
-                    </button>
-                </tags-input>
-            </div>
+<div ng-controller="PhotographerCtrl" ng-init="loadTags();">
+    <div class="photographer-search-wrap">
+        <div class="photographer-search">
+            <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
+                <auto-complete source="loadedtags"></auto-complete>
+                <button type="submit" ng-click="searchPhotos(tags)" class="photographer-searchButton">
+                    <img src="~/images/icons/magnifier_white.png" />
+                </button>
+            </tags-input>
         </div>
-            <div>
-                <div class="grid">
-                    <div class="grid-sizer"></div>
-                    @foreach (var Photo in @Model )
-                    {
-                        <div class="grid-item">
-                            <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
-                        </div>
-                    }
-                </div>
-                {{ arrangePhotos() }}
-            </div>
-        
     </div>
+    <div>
+        <div class="grid">
+            <div class="grid-sizer"></div>
+            @foreach (var Photo in @Model)
+            {
+                <div class="grid-item">
+                    <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
+                </div>
+            }
+        </div>
+        {{ arrangePhotos() }}
+    </div>
+
+</div>
 <style>
     * {
         box-sizing: border-box;
@@ -83,8 +84,3 @@
             width: 100%;
         }
 </style>
-
-
-
-
-

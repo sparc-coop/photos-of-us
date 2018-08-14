@@ -2236,12 +2236,10 @@ canvas {
     font-family: 'Dosis';
     font-weight: 600;
     font-size: 42px;
-    color: yellow;
+    color: #FFE261;
     letter-spacing: 0;
     margin-top: 100px;
-    margin-left: 180px;
-    left: 30%;
-    right: 30%; }
+    text-align: center; }
   .photographer-search__bigtitle {
     position: absolute;
     margin-left: auto;
@@ -2252,7 +2250,7 @@ canvas {
 .photographer-searchTerm {
   float: left;
   width: 100%;
-  /*border: 3px solid #00B4CC;*/
+  border: none;
   padding: 5px;
   height: 60px;
   border-radius: 5px;
@@ -2289,6 +2287,27 @@ canvas {
   top: 10%;
   left: 50%;
   transform: translate(-50%, -50%); }
+
+.nav-padding {
+  background-color: #43C6BA;
+  height: 20px; }
+
+tags-input .tags {
+  padding: 10px !important;
+  border: none !important;
+  border-radius: 4px; }
+
+tags-input .autocomplete {
+  margin-top: 0 !important;
+  background-color: #43C6BA !important;
+  color: #FFFFFF !important;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border: none !important; }
+
+tags-input .suggestion-item.selected {
+  background-color: #43C6BA !important;
+  color: #FFFFFF !important; }
 
 .codePage__background {
   width: 100vw;
