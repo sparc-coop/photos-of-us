@@ -1110,8 +1110,8 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
-    $scope.isPhotoSelected = function (photoId) {
-        var idx = $scope.selectedPhotos.indexOf(photoId);
+    $scope.isPhotoSelected = function (photo) {
+        var idx = $scope.selectedPhotos.indexOf(photo);
         if (idx > -1) {
             return true;
         }
@@ -1148,13 +1148,13 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
     }
 
-    $scope.selectPhoto = function (photoId) {
-        var idx = $scope.selectedPhotos.indexOf(photoId);
+    $scope.selectPhoto = function (photo) {
+        var idx = $scope.selectedPhotos.indexOf(photo);
         if (idx > -1) {
             $scope.selectedPhotos.splice(idx, 1);
         }
         else {
-            $scope.selectedPhotos.push(photoId);
+            $scope.selectedPhotos.push(photo);
         }
     }
 

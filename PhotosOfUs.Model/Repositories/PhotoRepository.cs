@@ -254,7 +254,8 @@ namespace PhotosOfUs.Model.Repositories
             var photoList = new List<Photo>();
             foreach(int id in photos)
             {
-                photoList.Where(x => x.Id == id);
+                Photo photo = _context.Photo.Where(x => x.Id == id).FirstOrDefault();
+                photoList.Add(photo);
             }
 
             foreach (Photo photo in photoList)
