@@ -72,7 +72,7 @@ app.factory('userApi', [
 app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 'selectedPhotos', ($scope, $window, $mdDialog, $http, selectedPhotos) => {
     $scope.close = () => $mdDialog.hide();
     $scope.selectedPhotos = selectedPhotos;
-    $scope.photosviewmodel = { identifier: "ok", "photosid": [], tagsid: [] };
+    $scope.photosviewmodel = { photos: [], tags: [] };
 
     $scope.deletePhotos = function (photos) {
         $http.post('/api/Photographer/deletePhotos/', photos);
@@ -99,12 +99,10 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
 
     $scope.editPhotos = function (photos, tags, price) {
         photos.forEach(function (item) {
-            //$scope.photosviewmodel.photosid.push(item.Id);
-            $scope.photosviewmodel.photosid.push(item);
+            $scope.photosviewmodel.photos.push(item);
         });
         tags.forEach(function (item) {
-            //$scope.photosviewmodel.tagsid.push(item.Id);
-            $scope.photosviewmodel.tagsid.push(item);
+            $scope.photosviewmodel.tags.push(item);
         });
 
         if (price != null && $scope.selectedPhotos.length < 2) {
@@ -112,12 +110,15 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
         }
 
         $http.post('/api/Photographer/AddTags/', tags)
-            .then($http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
-            .then(function (x) {
-                $scope.tags = x.data;
-                }));
+            .then(function () {
+                $http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
+                    .then(function (x) {
+                        $scope.tags = x.data;
 
-        $scope.close();
+                        console.log($scope.tags);
+                        $window.location.href = '/Photographer/Profile/';
+                    });
+                });
     };
 
 }])
@@ -876,7 +877,12 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (errorsFound === false) {
           
             angular.forEach(items, function (item) {
-                //todo only pushes if not photo code
+                item.formData[0].photoName = item.file.name
+
+                angular.forEach(item.tags, function (tag) {
+                    item.formData[0].tags += " " + tag.text;
+                })
+
                 item.upload();
             });
 
@@ -903,6 +909,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
+        console.log(uploader.queue);
     };
 
     $scope.removeItem = function (removedItem) {
@@ -955,7 +962,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, price: item.file.price, extension: '.' + item.file.fileExtension, folderId: $scope.folderId });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId, tags: "" });
         }
         
     };
@@ -971,25 +978,21 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
         console.log('uploader.onSuccessItem ' + response);
         
-        if (response !== "") {
-            fileItem.formData[0].photoCode = response;
-            fileItem.code = response;
+        if (response.Code !== "") {
+            fileItem.formData[0].photoCode = response.Code;
+            fileItem.code = response.Code;
             fileItem.isCode = true;
+            fileItem.suggestedTags = response.SuggestedTags;
 
-            var foundItem = $filter('filter')(uploader.queue, { code: response }, true)[0];
-            //get the index
-            var index = uploader.queue.indexOf(foundItem);
-            console.log(index);
+           
 
-            for (var i = (index - 1); i >= 0; i--) {
-                if (!uploader.queue[i].isCode) {
-                    uploader.queue[i].code = response;
-                } else {
-                    break;
-                }
-            }
+        } else {
+            var index = uploader.queue.indexOf(fileItem)
+
+            fileItem.formData[0].photoCode = uploader.queue[index - 1].code;
+            fileItem.code = uploader.queue[index - 1].code;
+            fileItem.suggestedTags = response.SuggestedTags;
         }
-        
     };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
@@ -1267,8 +1270,15 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     $scope.uploadAll = function (items) {
         console.log("clicked upload");
         angular.forEach(items, function (item) {
+            item.formData[0].photoName = item.file.name
+
+            angular.forEach(item.tags, function (tag) {
+                item.formData[0].tags += " " + tag.text;
+            })
+
             item.upload();
         });
+        $scope.saveAllUpload = true;
     };
 
    
@@ -1301,6 +1311,8 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
+        fileItem.upload();
+
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
         image.onload = function (e) {
@@ -1317,7 +1329,9 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
+
+
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension, tags: "" });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
@@ -1328,9 +1342,10 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 
     };
 
-    //uploader.onSuccessItem = function (fileItem, response, status, headers) {
-    //    console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
-    //};
+    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+        //console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
+        fileItem.suggestedTags = response.SuggestedTags;
+    };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
 
@@ -1345,8 +1360,9 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        if ($scope.saveAllUpload) {
+            $window.location.reload();
+        }
     };
 
 }]);

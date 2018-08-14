@@ -129,7 +129,7 @@ namespace PhotosOfUs.Model.Repositories
                 Code = photoCode,
                 FolderId = folderId,
                 PublicProfile = publicProfile,
-                Price = (decimal)price
+                Price = (decimal)price,
                 SuggestedTags = suggestedTags
             };
 
@@ -293,18 +293,18 @@ namespace PhotosOfUs.Model.Repositories
             _context.SaveChanges();
         }
 
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension)
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension, RootObject suggestedTags, List<TagViewModel> listoftags)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
 
             if(public_folder.Count() == 0)
             {
                 Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, price, null, null, true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, price, suggestedTags, listoftags, true);
             }
             else
             {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, price, null, null, true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, price, suggestedTags, listoftags, true);
             }
         }
     }

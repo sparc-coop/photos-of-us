@@ -1021,6 +1021,9 @@ body {
     .nav--center .menu-item {
       margin: 0 26px;
       cursor: pointer; }
+    .nav--center .menu-item:hover {
+      padding-bottom: 5px;
+      border-bottom: 2px solid #FFE261; }
   .nav--right {
     position: absolute;
     right: 46px;

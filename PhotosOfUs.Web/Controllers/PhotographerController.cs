@@ -278,12 +278,32 @@ namespace PhotosOfUs.Web.Controllers
 
 
         [Authorize]
-        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension)
+        public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
+            RootObject tagsfromazure = null;
+
+            var ac = new AzureCognitive(_context);
+            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
+            var suggestedtags = ac.ExtractTags(tagsfromazure);
+
+            if (string.IsNullOrEmpty(tags))
+            {
+                return AzureCognitiveViewModel.ToViewModel(suggestedtags);
+            }
+
             double addPrice = double.Parse(price);
+
+            var listoftags = new List<TagViewModel>();
+            List<string> result = tags.Split(' ').ToList();
+
+            foreach (string obj in result)
+            {
+                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+            }
 
             var filePath = Path.GetTempFileName();
 
@@ -292,9 +312,11 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension, tagsfromazure, listoftags);
                 }
             }
+
+            return AzureCognitiveViewModel.ToViewModel(suggestedtags);
         }
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)

@@ -1483,7 +1483,7 @@
       ]
     },
     "System.Runtime.Serialization.Formatters/4.3.0": {
-      "sha512": "uls0RKD46OytKLS9DTX9fuiN4ry1OfeyKDrmu0OZiD9BGAPcsPn6+wOJokWtsbCeQhv72jDclBiANWU5zAW9oQ==",
+      "sha512": "KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
       "type": "package",
       "path": "system.runtime.serialization.formatters/4.3.0",
       "files": [
@@ -1930,23 +1930,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Margaret Landefeld\\.nuget\\packages\\": {},
+    "C:\\Users\\Nanrod\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
+    "restoreSettings": {
+      "hideWarningsAndErrors": true
+    },
     "restore": {
-      "projectUniqueName": "C:\\Users\\Margaret Landefeld\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
+      "projectUniqueName": "C:\\Users\\Nanrod\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
       "projectName": "Tesseract.NetCore",
-      "projectPath": "C:\\Users\\Margaret Landefeld\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
-      "packagesPath": "C:\\Users\\Margaret Landefeld\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Margaret Landefeld\\Source\\Repos\\PhotosOfUs\\Tesseract\\obj_netfx\\",
+      "projectPath": "C:\\Users\\Nanrod\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
+      "packagesPath": "C:\\Users\\Nanrod\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Nanrod\\Source\\Repos\\PhotosOfUs\\Tesseract\\obj_netfx\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Margaret Landefeld\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nanrod\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

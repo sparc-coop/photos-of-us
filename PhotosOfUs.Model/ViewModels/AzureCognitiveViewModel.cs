@@ -22,5 +22,17 @@ namespace PhotosOfUs.Model.ViewModels
 
             return viewModel;
         }
+
+        public static AzureCognitiveViewModel ToViewModel(List<string> suggestedtags)
+        {
+            AzureCognitiveViewModel viewModel = new AzureCognitiveViewModel
+            {
+                Code = "",
+                SuggestedTags = suggestedtags,
+                IsValid = true
+            };
+
+            return viewModel;
+        }
     }
 }
