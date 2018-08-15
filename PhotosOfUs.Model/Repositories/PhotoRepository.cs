@@ -24,7 +24,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public List<Folder> GetFolders(int photographerId)
         {
-            return _context.Folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId).ToList();
+            return _context.Folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId && x.IsDeleted == false).ToList();
         }
 
         public Folder GetPhotos(int photographerId, int folderId)
@@ -254,8 +254,7 @@ namespace PhotosOfUs.Model.Repositories
             var photoList = new List<Photo>();
             foreach(int id in photos)
             {
-                Photo photo = _context.Photo.Where(x => x.Id == id).FirstOrDefault();
-                photoList.Add(photo);
+                photoList.Where(x => x.Id == id);
             }
 
             foreach (Photo photo in photoList)

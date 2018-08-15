@@ -32,8 +32,9 @@ namespace PhotosOfUs.Model.Repositories
         public void Delete(int id)
         {
             Folder folder = _context.Folder.Find(id);
-            _context.Photo.RemoveRange(folder.Photo);
-            _context.Folder.Remove(folder);
+            //_context.Photo.RemoveRange(folder.Photo);
+            //_context.Folder.Remove(folder);
+            folder.IsDeleted = true;
             _context.SaveChanges();
         }
 
