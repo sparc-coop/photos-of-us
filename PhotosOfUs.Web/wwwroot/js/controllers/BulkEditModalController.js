@@ -45,7 +45,7 @@
                         $scope.tags = x.data;
 
                         console.log($scope.tags);
-                        $window.location.href = '/Photographer/Profile/';
+                        $window.location.reload();
                     });
                 });
     };

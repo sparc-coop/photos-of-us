@@ -194,15 +194,19 @@ namespace PhotosOfUs.Model.Repositories
             List<PhotoTag> phototagstodelete = new List<PhotoTag>();
             List<PhotoTag> phototagstoadd = new List<PhotoTag>();
 
-            foreach (Photo photo in phototagviewmodel.photos)
+            foreach (int photoid in phototagviewmodel.photos)
             {
+
                 var phototagdelete = _context.PhotoTag
-                    .Where(x => x.PhotoId == photo.Id)
-                    .FirstOrDefault();
+                    .Where(x => x.PhotoId == photoid)
+                    .ToList();
 
                 if (phototagdelete != null)
                 {
-                    phototagstodelete.Add(phototagdelete);
+                    foreach (PhotoTag phototag in phototagdelete)
+                    {
+                        phototagstodelete.Add(phototag);
+                    }
                 }
             }
             
@@ -217,11 +221,11 @@ namespace PhotosOfUs.Model.Repositories
             {
                 var tagtoid = _context.Tag.First(x => x.Name == tag.text);
 
-                foreach (Photo photo in phototagviewmodel.photos)
+                foreach (int photoid in phototagviewmodel.photos)
                 {
                     var newphototag = new PhotoTag()
                     {
-                        PhotoId = photo.Id,
+                        PhotoId = photoid,
                         TagId = tagtoid.Id,
                         RegisterDate = DateTime.Now
                     };
