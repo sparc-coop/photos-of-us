@@ -20,13 +20,21 @@ Layout = "~/Views/Shared/_LayoutLanding.cshtml";
         <div class="content">
             <div class="slogan">Less chat, more snaps.</div>
             <div class="content__subinfo">
-                Storing, sharing, and selling photos should be the easy part. 
+                Storing, sharing, and selling photos should be the easy part.
                 Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
             </div>
-            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
-                <input placeholder="Your email address" name="FromEmail"/>
-                <button type="submit" class="button--invite">Send me an invite</button>
-            </form>
+            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
+            {
+                <div class="content__subinfo"><b>Now that was a snap! We'll keep you in the loop!</b></div>
+            }
+            else
+            {
+                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                    <input placeholder="Your email address" name="FromEmail" />
+                    <button type="submit" class="button--invite">Send me an invite</button>
+                </form>
+
+            }
         </div>
     </div>
     <div class="section2">
@@ -73,10 +81,18 @@ Layout = "~/Views/Shared/_LayoutLanding.cshtml";
             <div class="content__subinfo">
                 Keep your eyes peeled! We’re launching soon.
             </div>
-            <form class="invite" method="post" action="/Contact/SendLaunchEmail">
-                <input placeholder="Your email address" name="FromEmail" />
-                <button type="submit" class="button--invite">Send me an invite</button>
-            </form>
+            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
+            {
+                <div class="content__subinfo"><b>Now that was a snap!<br />We'll keep you in the loop!</b></div>
+            }
+            else
+            {
+                <form class="invite" method="post" action="/Contact/SendLaunchEmail">
+                    <input placeholder="Your email address" name="FromEmail" />
+                    <button type="submit" class="button--invite">Send me an invite</button>
+                </form>
+
+            }
             <div class="social">
                 <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
                 <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>

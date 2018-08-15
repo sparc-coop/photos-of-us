@@ -37,6 +37,8 @@ namespace PhotosOfUs.Web.Controllers
             //member.MergeFields.Add("LNAME", "LastName");
             await mailChimpManager.Members.AddOrUpdateAsync(listId, member);
 
+            TempData["IsEmailSent"] = true;
+
             return Redirect("/");
         }
 
