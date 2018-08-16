@@ -25,9 +25,14 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet, HttpPost]
         [Route("SaveAddress")]
-        public AddressViewModel SaveAddress(AddressViewModel vm)
+        public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
         {
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+
             var address = AddressViewModel.ToEntity(vm);
+
+            address.UserId = userId;
             address = new AddressRepository(_context).Create(address);
             if(address == null)
             {
