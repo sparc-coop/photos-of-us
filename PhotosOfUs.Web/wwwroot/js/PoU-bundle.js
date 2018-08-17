@@ -636,6 +636,11 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         }
     }
 
+    $scope.goToCode = (code) => {
+        console.log('the code is ' + code)
+        $window.location.href = '/Photographer/PhotoCode?code=' + code;
+    }
+
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
