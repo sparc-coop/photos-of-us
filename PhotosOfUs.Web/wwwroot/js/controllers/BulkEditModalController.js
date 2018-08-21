@@ -1,7 +1,7 @@
 ﻿app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 'selectedPhotos', ($scope, $window, $mdDialog, $http, selectedPhotos) => {
     $scope.close = () => $mdDialog.hide();
     $scope.selectedPhotos = selectedPhotos;
-    $scope.photosviewmodel = { identifier: "ok", "photosid": [], tagsid: [] };
+    $scope.photosviewmodel = { photos: [], tags: [] };
 
     $scope.deletePhotos = function (photos) {
         $http.post('/api/Photographer/deletePhotos/', photos);
@@ -28,12 +28,10 @@
 
     $scope.editPhotos = function (photos, tags, price) {
         photos.forEach(function (item) {
-            //$scope.photosviewmodel.photosid.push(item.Id);
-            $scope.photosviewmodel.photosid.push(item);
+            $scope.photosviewmodel.photos.push(item);
         });
         tags.forEach(function (item) {
-            //$scope.photosviewmodel.tagsid.push(item.Id);
-            $scope.photosviewmodel.tagsid.push(item);
+            $scope.photosviewmodel.tags.push(item);
         });
 
         if (price != null && $scope.selectedPhotos.length < 2) {
@@ -41,12 +39,15 @@
         }
 
         $http.post('/api/Photographer/AddTags/', tags)
-            .then($http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
-            .then(function (x) {
-                $scope.tags = x.data;
-                }));
+            .then(function () {
+                $http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
+                    .then(function (x) {
+                        $scope.tags = x.data;
 
-        $scope.close();
+                        console.log($scope.tags);
+                        $window.location.reload();
+                    });
+                });
     };
 
 }])

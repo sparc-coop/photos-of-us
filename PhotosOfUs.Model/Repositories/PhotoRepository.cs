@@ -24,7 +24,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public List<Folder> GetFolders(int photographerId)
         {
-            return _context.Folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId).ToList();
+            return _context.Folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId && x.IsDeleted == false).ToList();
         }
 
         public Folder GetPhotos(int photographerId, int folderId)
@@ -88,7 +88,7 @@ namespace PhotosOfUs.Model.Repositories
         //    return photo;
         //}
 
-        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, double? price, bool publicProfile = false)
+        public async Task<string> UploadFile(int photographerId, Stream stream, string photoName, string photoCode, string extension, int folderId, double? price, RootObject suggestedTags, List<TagViewModel> listoftags, bool publicProfile = false)
         {
             var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
             var url = $"{photographerId}/{folderId}/{photoName.Split('.')[0] + urlTimeStamp + extension}";
@@ -129,10 +129,31 @@ namespace PhotosOfUs.Model.Repositories
                 Code = photoCode,
                 FolderId = folderId,
                 PublicProfile = publicProfile,
-                Price = (decimal)price
+                Price = (decimal)price,
+                SuggestedTags = suggestedTags
             };
 
             _context.Photo.Attach(photo);
+            _context.SaveChanges();
+
+            if (listoftags != null)
+            {
+                AddTags(listoftags);
+
+                foreach (TagViewModel tag in listoftags)
+                {
+                    var tagtoid = _context.Tag.First(x => x.Name == tag.text);
+
+                    var newphototag = new PhotoTag()
+                    {
+                        PhotoId = photo.Id,
+                        TagId = tagtoid.Id,
+                        RegisterDate = DateTime.Now
+                    };
+                    _context.PhotoTag.Add(newphototag);
+                }
+            }
+
             _context.SaveChanges();
 
             return containerBlob.Uri.AbsoluteUri;
@@ -153,13 +174,66 @@ namespace PhotosOfUs.Model.Repositories
         {
             foreach (TagViewModel tag in tags)
             {
-                Tag newTag = new Tag
+                if (!_context.Tag.Any(o => o.Name == tag.text))
                 {
-                    Name = tag.text
-                };
-                _context.Tag.Add(newTag);
+                    Tag newTag = new Tag
+                    {
+                        Name = tag.text
+                    };
+                    _context.Tag.Add(newTag);
+                }
             }
             _context.SaveChanges();
+        }
+
+        public void EditTags(PhotoTagViewModel phototagviewmodel)
+        {
+            //List<int> photosid = new List<int>();
+            //List<int> tagsid = new List<int>();
+
+            List<PhotoTag> phototagstodelete = new List<PhotoTag>();
+            List<PhotoTag> phototagstoadd = new List<PhotoTag>();
+
+            foreach (int photoid in phototagviewmodel.photos)
+            {
+
+                var phototagdelete = _context.PhotoTag
+                    .Where(x => x.PhotoId == photoid)
+                    .ToList();
+
+                if (phototagdelete != null)
+                {
+                    foreach (PhotoTag phototag in phototagdelete)
+                    {
+                        phototagstodelete.Add(phototag);
+                    }
+                }
+            }
+            
+            foreach (PhotoTag phototag in phototagstodelete)
+            {
+                _context.PhotoTag.Remove(phototag);
+            }
+            _context.SaveChanges();
+
+
+            foreach (TagViewModel tag in phototagviewmodel.tags)
+            {
+                var tagtoid = _context.Tag.First(x => x.Name == tag.text);
+
+                foreach (int photoid in phototagviewmodel.photos)
+                {
+                    var newphototag = new PhotoTag()
+                    {
+                        PhotoId = photoid,
+                        TagId = tagtoid.Id,
+                        RegisterDate = DateTime.Now
+                    };
+                    _context.PhotoTag.Add(newphototag);
+                }
+            }
+            _context.SaveChanges();
+
         }
 
         public List<Tag> GetTags(string[] tagarray)
@@ -169,27 +243,9 @@ namespace PhotosOfUs.Model.Repositories
 
         public List<Photo> GetPublicPhotosByTag(List<Tag> taglist)
         {
-            var publicphotos = _context.Photo.Where(x => x.PublicProfile).ToList();
+            var tagids = taglist.Select(x => x.Id).ToList();
 
-            List<int> tagids = new List<int>();
-
-            foreach (Tag tag in taglist)
-            {
-                tagids.Add(tag.Id);
-            }
-
-            List<PhotoTag> phototags = _context.PhotoTag.Where(x => tagids.Contains(x.TagId)).ToList();
-
-            List<int> ptids = new List<int>();
-
-            foreach (PhotoTag pt in phototags)
-            {
-                ptids.Add(pt.PhotoId);
-            }
-
-            List<Photo> photos = publicphotos.Where(x => ptids.Contains(x.Id)).ToList();
-
-            return photos;
+            return _context.Photo.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagids.Contains(y.TagId))).ToList();
         }
 
         public List<PhotoTag> GetTagsByPhotos(List<int> photos)
@@ -202,7 +258,8 @@ namespace PhotosOfUs.Model.Repositories
             var photoList = new List<Photo>();
             foreach(int id in photos)
             {
-                photoList.Where(x => x.Id == id);
+                Photo photo = _context.Photo.Where(x => x.Id == id).FirstOrDefault();
+                photoList.Add(photo);
             }
 
             foreach (Photo photo in photoList)
@@ -241,18 +298,18 @@ namespace PhotosOfUs.Model.Repositories
             _context.SaveChanges();
         }
 
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension)
+        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension, RootObject suggestedTags, List<TagViewModel> listoftags)
         {
             var public_folder = _context.Folder.Where(x => x.PhotographerId == photographerId && x.Name.ToLower() == "public");
 
             if(public_folder.Count() == 0)
             {
                 Folder pFolder = new FolderRepository(_context).Add("Public", photographerId);
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, price, true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, pFolder.Id, price, suggestedTags, listoftags, true);
             }
             else
             {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, price, true);
+                await UploadFile(photographerId, stream, photoName, string.Empty, extension, public_folder.First().Id, price, suggestedTags, listoftags, true);
             }
         }
     }

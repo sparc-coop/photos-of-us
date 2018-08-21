@@ -89,9 +89,11 @@
             City: address.City,
             State: address.State,
             ZipCode: address.ZipCode,
-            Email: address.Email
+            Email: address.Email,
+            Phone: address.Phone
         };
 
+        console.log(addressInfo);
         $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
             console.log("Address saved");
         });

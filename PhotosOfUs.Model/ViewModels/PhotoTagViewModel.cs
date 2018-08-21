@@ -7,8 +7,7 @@ namespace PhotosOfUs.Model.ViewModels
 {
     public class PhotoTagViewModel
     {
-        string identifier { get; set; }
-        int[] photosid { get; set; }
-        int[] tagsid { get; set; }
+        public List<int> photos { get; set; }
+        public List<TagViewModel> tags { get; set; }
     }
 }

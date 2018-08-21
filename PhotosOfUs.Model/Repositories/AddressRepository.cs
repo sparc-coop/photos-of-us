@@ -21,7 +21,7 @@ namespace PhotosOfUs.Model.Repositories
         {
             var newAddress = new Address()
             {
-                UserId = 1,
+                UserId = address.UserId,
                 FullName = address.FullName,
                 Address1 = address.Address1,
                 Address2 = address.Address2,
@@ -34,7 +34,7 @@ namespace PhotosOfUs.Model.Repositories
 
             try
             {
-                _context.Address.Attach(newAddress);
+                _context.Address.Add(newAddress);
                 _context.SaveChanges();
                 return address;
             }

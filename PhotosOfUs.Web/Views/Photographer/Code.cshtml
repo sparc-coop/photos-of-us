@@ -16,7 +16,7 @@
                 ridiculus mus. Donec
             </div>
             <input ng-model="code" placeholder="Enter Your Code" class="codePage__container__search"/>
-            <a data-ng-href="@Url.Action("PhotoCode", "Photographer")?code={{code}}" class="button--go">Go!</a>
+            <button ng-click="goToCode(code)" class="button--go">Go!</button>
             <div class="button--lostcode">Lost your code?</div>
         </div>
         <img src="~/images/tag.png" class="codePage__pouLogo" />

@@ -50,8 +50,15 @@
     $scope.uploadAll = function (items) {
         console.log("clicked upload");
         angular.forEach(items, function (item) {
+            item.formData[0].photoName = item.file.name
+
+            angular.forEach(item.tags, function (tag) {
+                item.formData[0].tags += " " + tag.text;
+            })
+
             item.upload();
         });
+        $scope.saveAllUpload = true;
     };
 
    
@@ -84,6 +91,8 @@
         var extension = fileItem.file.name;
         fileItem.file.fileExtension = extension.split('.').pop();
 
+        fileItem.upload();
+
         var image = new Image();
         image.src = window.URL.createObjectURL(fileItem._file);
         image.onload = function (e) {
@@ -100,7 +109,9 @@
     };
 
     uploader.onBeforeUploadItem = function (item) {
-        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension });
+
+
+        item.formData.push({ photoName: item.file.name, price: item.file.price, extension: '.' + item.file.fileExtension, tags: "" });
     };
 
     uploader.onProgressItem = function (fileItem, progress) {
@@ -111,9 +122,10 @@
 
     };
 
-    //uploader.onSuccessItem = function (fileItem, response, status, headers) {
-    //    console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
-    //};
+    uploader.onSuccessItem = function (fileItem, response, status, headers) {
+        //console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
+        fileItem.suggestedTags = response.SuggestedTags;
+    };
 
     uploader.onErrorItem = function (fileItem, response, status, headers) {
 
@@ -128,8 +140,9 @@
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        if ($scope.saveAllUpload) {
+            $window.location.reload();
+        }
     };
 
 }]);

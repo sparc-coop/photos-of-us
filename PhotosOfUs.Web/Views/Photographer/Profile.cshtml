@@ -78,8 +78,15 @@
                     <div class="g-row">
                         @foreach (var photo in Model.Photos)
                         {
-                            <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                            @*<div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
                                 <img class="gallery-image" src="@photo.Url" ng-click="isBulkEditEnabled ? selectPhoto(@photo.Id) : viewPhoto(@photo.Id)" ng-style="isBulkEditEnabled ? (isPhotoSelected(@photo.Id) ? isHighlighted : isNotHighlighted) : {}" />
+                            </div>*@
+                            <div class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad">
+                                    <div class="gallery-image"
+                                        ng-click="isBulkEditEnabled ? selectPhoto(@photo.Id) : viewPhoto(@photo.Id)"
+                                        style="background-image: url('@photo.Url')"
+                                        ng-style="isBulkEditEnabled ? (isPhotoSelected(@photo.Id) ? isHighlighted : isNotHighlighted) : {}">
+                                    </div>
                             </div>
                         }
                     </div>

@@ -325,7 +325,7 @@ namespace PhotosOfUs.Model.Models
                     .HasForeignKey(x => x.TagId);
             });
 
-            
+            modelBuilder.Ignore<RootObject>();
         }
     }
 }
