@@ -254,12 +254,17 @@ namespace PhotosOfUs.Web.Controllers
             //    return ocrResult.Code;
             //}
             var listoftags = new List<TagViewModel>();
-            List<string> result = tags.Split(' ').ToList();
-
-            foreach (string obj in result)
+            if (tags != null)
             {
-                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                List<string> result = tags.Split(' ').ToList();
+
+                foreach (string obj in result)
+                {
+                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                }
             }
+            
+
 
             var filePath = Path.GetTempFileName();
 
