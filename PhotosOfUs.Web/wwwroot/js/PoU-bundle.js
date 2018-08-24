@@ -664,6 +664,18 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         });
     };
 
+    $scope.openBulkEdit = (code) => {
+        $scope.getPhotosByCode(code);
+        $scope.selectedPhotos = [];
+        angular.forEach($scope.codePhotos, function (item) { $scope.selectedPhotos.push(item.Id) });
+        $mdDialog.show({
+            locals: { selectedPhotos: $scope.selectedPhotos },
+            templateUrl: '/Photographer/BulkEditModal',
+            controller: 'BulkEditModalCtrl',
+            clickOutsideToClose: true,
+        });
+    };
+
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
         $scope.getPhotosByCode($scope.code);
