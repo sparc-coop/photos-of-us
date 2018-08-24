@@ -89,7 +89,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [Route("DeletePhotos")]
         [HttpPost]
-        public void Post([FromBody]List<Photo> photos)
+        public void Post([FromBody]List<int> photos)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;

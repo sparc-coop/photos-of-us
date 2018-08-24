@@ -331,6 +331,12 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile(int id)
         {
+            if (id == 0)
+            {
+                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                id = _context.UserIdentity.Find(azureId).UserID;
+            }
+
             var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
