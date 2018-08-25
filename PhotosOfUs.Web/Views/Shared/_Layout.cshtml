@@ -39,9 +39,10 @@
                     @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
                     <a href="/Photographer/Dashboard" class="menu-item">Home</a>
                     <a href="/Photographer/Search" class="menu-item">Search</a>
+                    <a href="/Photographer/Cards" class="menu-item">Cards</a>
                     <a href="/Photographer/Code" class="menu-item">Code</a>
                     @*<a href="/" class="menu-item">Page Title</a>*@
-            </div>
+                </div>
                 @*todo and is photographer*@
                 <div class="nav--right">
                     @*<a href="/Photographer/SalesHistory/{{user.Id}}"><img src="~/images/icons/alert.png" alt="notifications" /></a>*@
@@ -66,6 +67,13 @@
                     <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" alt="cart" /></div>
                     <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                     <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                </div>
+                <div class="nav--center">
+                    @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
+                    <a href="/" class="menu-item">Home</a>
+                    <a href="/Photographer/Search" class="menu-item">Search</a>
+                    <a href="/Photographer/Code" class="menu-item">Code</a>
+                    @*<a href="/" class="menu-item">Page Title</a>*@
                 </div>
                 <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                     <div class="adminMenu__arrow"></div>

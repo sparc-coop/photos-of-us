@@ -8,38 +8,41 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-
+@section ProfileImageBackdrop {
+    <div class="nav-padding"></div>
+}
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
-    <div ng-controller="PhotographerCtrl">
 
-        <div class="photographer-search__title">@Model.Photos.Count 
-        @foreach (var Tag in Model.Tags)
+<div ng-controller="PhotographerCtrl">
+    <div class="photographer-search__title">
+        @Model.Photos.Count
+    @foreach (var Tag in Model.Tags)
+    {
+        if (Model.Tags.IndexOf(Tag) == Model.Tags.Count - 1)
         {
-            if (Model.Tags.IndexOf(Tag) == Model.Tags.Count - 1)
-            {
-                <span>&quot;@Tag.text&quot</span>
-            }
-            else
-            {
-                <span>&quot;@Tag.text&quot, </span> 
-            }
-        } photos</div><br /><br />
-        <div>Similar photos also found in these categories</div>
-        <div>
-            <div class="grid">
-                <div class="grid-sizer"></div>
-                @foreach (var Photo in @Model.Photos)
+            <span>&quot;@Tag.text&quot</span>
+        }
+        else
+        {
+            <span>&quot;@Tag.text&quot, </span>
+        }
+    } photos
+</div><br /><br />
+<div>Similar photos also found in these categories</div>
+<div>
+    <div class="grid">
+        <div class="grid-sizer"></div>
+        @foreach (var Photo in @Model.Photos)
         {
             <div class="grid-item">
                 <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
             </div>
-}
-            </div>
-            {{ arrangePhotos() }}
-        </div>
-        
+        }
     </div>
+    {{ arrangePhotos() }}
+</div>
+</div>
 <style>
     * {
         box-sizing: border-box;
