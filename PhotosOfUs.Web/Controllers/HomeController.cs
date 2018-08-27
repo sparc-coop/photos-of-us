@@ -14,12 +14,12 @@ namespace PhotosOfUs.Web.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Dashboard", "Photographer");
+            return View("Landing");
         }
 
         public IActionResult Homepage()
         {
-            return View();
+            return View("Landing");
         }
 
         public IActionResult Pricing()

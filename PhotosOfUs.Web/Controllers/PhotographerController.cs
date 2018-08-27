@@ -254,12 +254,17 @@ namespace PhotosOfUs.Web.Controllers
             //    return ocrResult.Code;
             //}
             var listoftags = new List<TagViewModel>();
-            List<string> result = tags.Split(' ').ToList();
-
-            foreach (string obj in result)
+            if (tags != null)
             {
-                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                List<string> result = tags.Split(' ').ToList();
+
+                foreach (string obj in result)
+                {
+                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                }
             }
+            
+
 
             var filePath = Path.GetTempFileName();
 
@@ -326,6 +331,12 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile(int id)
         {
+            if (id == 0)
+            {
+                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                id = _context.UserIdentity.Find(azureId).UserID;
+            }
+
             var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
