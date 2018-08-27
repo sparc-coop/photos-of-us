@@ -11,7 +11,6 @@
         //var randomX = Math.floor(Math.random() * x);
         //var randomY = Math.floor(Math.random() * y);
         let coords = [getRandomInt(0, x), getRandomInt(650, 900)];
-        console.log(coords);
         return coords;
     }
 

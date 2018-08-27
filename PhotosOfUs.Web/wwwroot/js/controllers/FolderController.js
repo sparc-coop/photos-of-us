@@ -69,24 +69,17 @@
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
-
-        console.log('added folder - ' + JSON.stringify(folder));
-
         $scope.folders.push(folder);
         
     });
 
     $scope.$on('FolderRenamed', function (e, folder) {
-
-        console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
         $scope.folders[index] = folder;
 
     });
 
     $scope.$on('FolderRemoved', function (e, folderId) {
-
-        console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
         $scope.folders.splice(index,1);
 

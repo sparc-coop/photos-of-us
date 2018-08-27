@@ -87,7 +87,6 @@
     };
 
     $scope.uploadAll = function (items) {
-        console.log("upload all clicked");
        
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
@@ -126,7 +125,6 @@
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
-        console.log(uploader.queue);
     };
 
     $scope.removeItem = function (removedItem) {
@@ -145,7 +143,6 @@
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -172,7 +169,6 @@
 
     uploader.onBeforeUploadItem = function (item) {
         var photoCode = "";
-        console.log(item.code);
         if (item.code)
             photoCode = item.code;
 
@@ -193,7 +189,6 @@
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        console.log('uploader.onSuccessItem ' + response);
         
         if (response.Code !== "") {
             fileItem.formData[0].photoCode = response.Code;

@@ -78,7 +78,6 @@
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
-                console.log(JSON.stringify(x.data));
             });
     };
 

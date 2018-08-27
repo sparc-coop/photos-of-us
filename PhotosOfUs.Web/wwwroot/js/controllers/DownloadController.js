@@ -3,7 +3,6 @@
     $scope.getOrders = (userId) => {
         $http.get('/api/Photo/GetOrderPhotos/' + userId).then(x => {
             $scope.orders = x.data;
-            console.log(x.data);
             angular.forEach($scope.orders, function (key, value) {
                 $scope.getOrderItems(key.Id);
             });           

@@ -23,10 +23,7 @@
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function(x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -34,10 +31,7 @@
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function (x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -67,8 +61,6 @@
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
-
-        console.log('added folder - ' + JSON.stringify(folder));
 
         $scope.folders.push(folder);
 

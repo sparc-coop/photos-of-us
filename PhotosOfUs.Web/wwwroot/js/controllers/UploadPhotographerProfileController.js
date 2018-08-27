@@ -48,7 +48,6 @@
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
         angular.forEach(items, function (item) {
             item.formData[0].photoName = item.file.name
 
@@ -83,7 +82,6 @@
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -123,7 +121,6 @@
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        //console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
         fileItem.suggestedTags = response.SuggestedTags;
     };
 

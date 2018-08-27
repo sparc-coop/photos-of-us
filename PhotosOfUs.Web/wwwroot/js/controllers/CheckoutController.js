@@ -50,7 +50,6 @@
             $scope.selectedItems.push({ printTypeId, quantity });
         }
 
-        console.log($scope.selectedItems);
     };
 
     $scope.selectAll = function (printTypes) {
@@ -68,7 +67,6 @@
     }
 
     $scope.createOrder = (userId) => {
-        console.log($scope.selectedItems);
         var photoId = $location.absUrl().split('Purchase/')[1];
         $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
             $window.location.href = '/Photo/Cart/' + userId;
@@ -173,9 +171,6 @@
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
-            console.log(x);
-            console.log(x.data);
         });
     };
 
@@ -200,9 +195,6 @@
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Moo');
-            console.log(x);
-            console.log(x.data);
         });
     };
 
@@ -213,16 +205,12 @@
             method: 'GET',
             url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro',
         }).then(x => {
-            console.log('Pwinty Catalog');
-            console.log(x.data);
             $scope.proProducts = x.data;
             });
         $http({
             method: 'GET',
             url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard',
         }).then(x => {
-            console.log('Pwinty Catalog');
-            console.log(x.data);
             $scope.standardProducts = x.data;
         });
     };
@@ -241,9 +229,6 @@
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
-            console.log(x);
-            console.log(x.data);
         });
     };
 }])

@@ -9,11 +9,9 @@
     }
 
     $scope.getTagsByPhotos = function () {
-        console.log($scope.selectedPhotos);
         $http.post('/api/Photographer/GetTagsByPhotos/', $scope.selectedPhotos)
             .then(function (x) {
                 $scope.tags = x.data;
-                console.log($scope.tags);
             });
     };
 
@@ -44,7 +42,6 @@
                     .then(function (x) {
                         $scope.tags = x.data;
 
-                        console.log($scope.tags);
                         $window.location.reload();
                     });
                 });

@@ -3,7 +3,6 @@
 
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(x.data);
             $scope.accountSettings = x.data;
             if ($scope.accountSettings.Facebook == null)
                 $scope.accountSettings.Facebook = 'https://www.facebook.com/';
@@ -18,15 +17,12 @@
     }
 
     $scope.discardChanges = function () {
-        console.log(JSON.stringify($scope.originalSettings));
         $scope.accountSettings = angular.copy($scope.originalSettings);
     }
 
     $scope.saveAccountSettings = function (accountSettings) {
-        console.log(JSON.stringify(accountSettings));
         $scope.showLoader = true;
         photographerApi.saveAccountSettings(accountSettings).then(function (x) {
-            console.log(JSON.stringify(x));
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
@@ -36,7 +32,6 @@
                 timer: 1500
             });
         }, function (x) {
-            console.log(JSON.stringify(x));
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
@@ -91,7 +86,6 @@
     $scope.user = user;
 
     $scope.deactivateAccount = () => {
-        console.log($scope.user.Id);
         $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
             $window.location.reload()
         );

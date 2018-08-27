@@ -51,7 +51,6 @@
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
         angular.forEach(items, function (item) {
             item.upload();
         });
@@ -79,7 +78,6 @@
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -131,7 +129,6 @@
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
         $window.location.reload(); //.location.href = '/Photographer/Dashboard'
     };
 

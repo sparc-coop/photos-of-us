@@ -15,7 +15,6 @@
     }
 
     $scope.goToCode = (code) => {
-        console.log('the code is ' + code)
         $window.location.href = '/Photographer/PhotoCode?code=' + code;
     }
 
@@ -53,7 +52,6 @@
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
             $scope.codePhotos = x.data;
-            console.log($scope.codePhotos);
         });
     };
 
@@ -102,7 +100,6 @@
         };
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'facebook',
             'attrs': {
@@ -115,7 +112,6 @@
 
     $scope.shareTwitter = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'twitter',
             'attrs': {
@@ -128,7 +124,6 @@
 
     $scope.shareGooglePlus = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'google',
             'attrs': {
@@ -139,7 +134,6 @@
 
     $scope.sharePinterest = function (photoId, photoUrl) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'pinterest',
             'attrs': {
@@ -152,7 +146,6 @@
 
     $scope.shareTumblr = function (photoId, photoUrl) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'tumblr',
             'attrs': {

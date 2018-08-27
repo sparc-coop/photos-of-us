@@ -5,7 +5,6 @@
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
             $scope.orderDetails = x.data;
-            console.log($scope.orderDetails);
         });
         angular.forEach($scope.orderDetails, function (value, key) {
             $scope.orderTotal + value.UnitPrice;
@@ -93,9 +92,7 @@
             Phone: address.Phone
         };
 
-        console.log(addressInfo);
         $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
-            console.log("Address saved");
         });
 
         $http.post('/api/Checkout/ConfirmationEmail', addressInfo).then(x => {
