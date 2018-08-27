@@ -80,11 +80,9 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
     }
 
     $scope.getTagsByPhotos = function () {
-        console.log($scope.selectedPhotos);
         $http.post('/api/Photographer/GetTagsByPhotos/', $scope.selectedPhotos)
             .then(function (x) {
                 $scope.tags = x.data;
-                console.log($scope.tags);
             });
     };
 
@@ -115,7 +113,6 @@ app.controller('BulkEditModalCtrl', ['$scope', '$window', '$mdDialog', '$http', 
                     .then(function (x) {
                         $scope.tags = x.data;
 
-                        console.log($scope.tags);
                         $window.location.reload();
                     });
                 });
@@ -174,7 +171,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             $scope.selectedItems.push({ printTypeId, quantity });
         }
 
-        console.log($scope.selectedItems);
     };
 
     $scope.selectAll = function (printTypes) {
@@ -192,7 +188,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     }
 
     $scope.createOrder = (userId) => {
-        console.log($scope.selectedItems);
         var photoId = $location.absUrl().split('Purchase/')[1];
         $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
             $window.location.href = '/Photo/Cart/' + userId;
@@ -297,9 +292,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
-            console.log(x);
-            console.log(x.data);
         });
     };
 
@@ -324,9 +316,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Moo');
-            console.log(x);
-            console.log(x.data);
         });
     };
 
@@ -337,16 +326,12 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             method: 'GET',
             url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro',
         }).then(x => {
-            console.log('Pwinty Catalog');
-            console.log(x.data);
             $scope.proProducts = x.data;
             });
         $http({
             method: 'GET',
             url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard',
         }).then(x => {
-            console.log('Pwinty Catalog');
-            console.log(x.data);
             $scope.standardProducts = x.data;
         });
     };
@@ -365,9 +350,6 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
             data: data
         }).then(x => {
             $scope.orderId = x.data;
-            console.log('return Pwinty');
-            console.log(x);
-            console.log(x.data);
         });
     };
 }])
@@ -376,7 +358,6 @@ app.controller('DownloadCtrl', ['$scope', '$window', '$mdDialog', '$http', 'user
     $scope.getOrders = (userId) => {
         $http.get('/api/Photo/GetOrderPhotos/' + userId).then(x => {
             $scope.orders = x.data;
-            console.log(x.data);
             angular.forEach($scope.orders, function (key, value) {
                 $scope.getOrderItems(key.Id);
             });           
@@ -468,24 +449,17 @@ app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'p
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
-
-        console.log('added folder - ' + JSON.stringify(folder));
-
         $scope.folders.push(folder);
         
     });
 
     $scope.$on('FolderRenamed', function (e, folder) {
-
-        console.log('renamed folder - ' + JSON.stringify(folder));
         var index = $scope.folders.findIndex(f => f.Id == folder.Id);
         $scope.folders[index] = folder;
 
     });
 
     $scope.$on('FolderRemoved', function (e, folderId) {
-
-        console.log('removed folder - ' + JSON.stringify(folderId));
         var index = $scope.folders.findIndex(f => f.Id == folderId);
         $scope.folders.splice(index,1);
 
@@ -521,7 +495,6 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
             $scope.orderDetails = x.data;
-            console.log($scope.orderDetails);
         });
         angular.forEach($scope.orderDetails, function (value, key) {
             $scope.orderTotal + value.UnitPrice;
@@ -609,9 +582,7 @@ app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $
             Phone: address.Phone
         };
 
-        console.log(addressInfo);
         $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
-            console.log("Address saved");
         });
 
         $http.post('/api/Checkout/ConfirmationEmail', addressInfo).then(x => {
@@ -637,7 +608,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     }
 
     $scope.goToCode = (code) => {
-        console.log('the code is ' + code)
         $window.location.href = '/Photographer/PhotoCode?code=' + code;
     }
 
@@ -675,7 +645,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
             $scope.codePhotos = x.data;
-            console.log($scope.codePhotos);
         });
     };
 
@@ -724,7 +693,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         };
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'facebook',
             'attrs': {
@@ -737,7 +705,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.shareTwitter = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'twitter',
             'attrs': {
@@ -750,7 +717,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.shareGooglePlus = function (photoId) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'google',
             'attrs': {
@@ -761,7 +727,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.sharePinterest = function (photoId, photoUrl) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'pinterest',
             'attrs': {
@@ -774,7 +739,6 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
 
     $scope.shareTumblr = function (photoId, photoUrl) {
         var url = $location.absUrl().split('?')[0];
-        console.log(url);
         Socialshare.share({
             'provider': 'tumblr',
             'attrs': {
@@ -877,7 +841,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
     $scope.uploadAll = function (items) {
-        console.log("upload all clicked");
        
         var errorsFound = $scope.VerifyErrorsInPhotoCode();
 
@@ -916,7 +879,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     $scope.selectItem = function (e, i) {
         $scope.selectedItem = i;
-        console.log(uploader.queue);
     };
 
     $scope.removeItem = function (removedItem) {
@@ -935,7 +897,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -962,7 +923,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
 
     uploader.onBeforeUploadItem = function (item) {
         var photoCode = "";
-        console.log(item.code);
         if (item.code)
             photoCode = item.code;
 
@@ -983,7 +943,6 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        console.log('uploader.onSuccessItem ' + response);
         
         if (response.Code !== "") {
             fileItem.formData[0].photoCode = response.Code;
@@ -1048,10 +1007,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function(x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -1059,10 +1015,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function (x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -1092,8 +1045,6 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
-
-        console.log('added folder - ' + JSON.stringify(folder));
 
         $scope.folders.push(folder);
 
@@ -1179,7 +1130,6 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
-                console.log(JSON.stringify(x.data));
             });
     };
 
@@ -1275,7 +1225,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
         angular.forEach(items, function (item) {
             item.formData[0].photoName = item.file.name
 
@@ -1310,7 +1259,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -1350,7 +1298,6 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
     uploader.onSuccessItem = function (fileItem, response, status, headers) {
-        //console.log('uploader.onSuccessItem ' + JSON.stringify(fileItem));
         fileItem.suggestedTags = response.SuggestedTags;
     };
 
@@ -1378,7 +1325,6 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
 
     $scope.initAccountSettings = function () {
         photographerApi.getAccountSettings().then(function (x) {
-            console.log(x.data);
             $scope.accountSettings = x.data;
             if ($scope.accountSettings.Facebook == null)
                 $scope.accountSettings.Facebook = 'https://www.facebook.com/';
@@ -1393,15 +1339,12 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
     }
 
     $scope.discardChanges = function () {
-        console.log(JSON.stringify($scope.originalSettings));
         $scope.accountSettings = angular.copy($scope.originalSettings);
     }
 
     $scope.saveAccountSettings = function (accountSettings) {
-        console.log(JSON.stringify(accountSettings));
         $scope.showLoader = true;
         photographerApi.saveAccountSettings(accountSettings).then(function (x) {
-            console.log(JSON.stringify(x));
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
@@ -1411,7 +1354,6 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
                 timer: 1500
             });
         }, function (x) {
-            console.log(JSON.stringify(x));
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
@@ -1466,7 +1408,6 @@ app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$h
     $scope.user = user;
 
     $scope.deactivateAccount = () => {
-        console.log($scope.user.Id);
         $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
             $window.location.reload()
         );
@@ -1499,10 +1440,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function(x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -1510,10 +1448,7 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function (x) {
-            console.log(x.data);
-            console.log($scope.cards);
             $scope.cards = x.data.concat($scope.cards);
-            console.log($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
@@ -1543,8 +1478,6 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     }
 
     $scope.$on('FolderAdded', function (e, folder) {
-
-        console.log('added folder - ' + JSON.stringify(folder));
 
         $scope.folders.push(folder);
 
@@ -1636,7 +1569,6 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
     };
 
     $scope.uploadAll = function (items) {
-        console.log("clicked upload");
         angular.forEach(items, function (item) {
             item.upload();
         });
@@ -1664,7 +1596,6 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
 
     uploader.onAfterAddingFile = function (fileItem) {
         // decrease height to drop zone if photo uploaded
-        console.log('on after adding file');
         $scope.dropZone = {
             Height: 100
         };
@@ -1716,7 +1647,6 @@ app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$w
     };
 
     uploader.onCompleteAll = () => {
-        //alert("Complete");
         $window.location.reload(); //.location.href = '/Photographer/Dashboard'
     };
 
@@ -1734,7 +1664,6 @@ app.controller('RandomPhotoCtrl', ['$scope', '$window', '$location', '$http', ($
         //var randomX = Math.floor(Math.random() * x);
         //var randomY = Math.floor(Math.random() * y);
         let coords = [getRandomInt(0, x), getRandomInt(650, 900)];
-        console.log(coords);
         return coords;
     }
 
