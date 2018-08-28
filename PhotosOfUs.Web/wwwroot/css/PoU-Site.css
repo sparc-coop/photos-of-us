@@ -151,6 +151,9 @@
     position: absolute;
     bottom: 65px;
     width: 240px; }
+    .button--yellow--payment.disabled {
+      background: #757575;
+      cursor: not-allowed; }
 
 .button--checkout--preview {
   cursor: pointer;
@@ -224,7 +227,8 @@
   font-weight: 600;
   font-size: 20px;
   vertical-align: middle;
-  text-decoration: none; }
+  text-decoration: none;
+  border: none; }
 
 .button--lostcode {
   cursor: pointer;
@@ -1275,7 +1279,8 @@ td {
   width: 265px;
   background-color: #FFE261;
   border-radius: 6px;
-  margin-top: 46px;
+  margin-top: 21px;
+  margin-right: -46px;
   position: absolute;
   right: 0; }
   .cart--preview__content {
@@ -1379,7 +1384,10 @@ td {
     padding-bottom: 20px; }
     .cart .checkout .summary .cart-items .cart-item {
       margin: 2px 0;
-      padding: 5px; }
+      padding: 5px;
+      width: 200px; }
+      .cart .checkout .summary .cart-items .cart-item .name {
+        width: 153px; }
     .cart .checkout .summary .cart-items .type {
       width: 120px;
       padding-right: 40px; }
@@ -1977,7 +1985,9 @@ canvas {
 .photoPage__photographer-info {
   display: flex;
   float: right;
-  margin-top: -111px; }
+  margin-top: -111px;
+  cursor: pointer;
+  outline: none; }
   .photoPage__photographer-info > div {
     margin: 30px 18px 0 0;
     text-align: right; }
@@ -2246,16 +2256,23 @@ canvas {
     margin-right: auto;
     left: 30%;
     right: 30%; }
+  .photographer-search__container {
+    width: 100%;
+    margin: 0 auto; }
+  .photographer-search--photos {
+    margin-top: 200px; }
 
 .photographer-searchTerm {
-  float: left;
   width: 100%;
+  max-width: 500px;
   border: none;
   padding: 5px;
   height: 60px;
   border-radius: 5px;
   outline: none;
-  color: #9DBFAF; }
+  color: #9DBFAF;
+  margin: 0 auto;
+  margin-top: -240px; }
 
 .photographer-searchTerm:focus {
   color: #43C6BA; }
@@ -2273,7 +2290,8 @@ canvas {
   border-radius: 50%;
   cursor: pointer;
   font-size: 20px;
-  box-shadow: 5px; }
+  box-shadow: 5px;
+  outline: none; }
 
 .photographer-searchButton img {
   padding-top: 2px;
@@ -2281,17 +2299,13 @@ canvas {
   height: 40px; }
 
 /*Resize the wrap to see the search bar change!*/
-.photographer-search-wrap {
-  width: 40%;
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translate(-50%, -50%); }
-
-.nav-padding {
-  background-color: #43C6BA;
-  height: 20px; }
-
+/*.photographer-search-wrap {
+    width: 40%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}*/
 tags-input .tags {
   padding: 10px !important;
   border: none !important;
@@ -2308,6 +2322,12 @@ tags-input .autocomplete {
 tags-input .suggestion-item.selected {
   background-color: #43C6BA !important;
   color: #FFFFFF !important; }
+
+tags-input .tag-item {
+  border: 1px solid #43C6BA !important;
+  background: none !important;
+  color: #194952 !important;
+  font-size: 16px !important; }
 
 .codePage__background {
   width: 100vw;
@@ -2456,6 +2476,33 @@ tags-input .suggestion-item.selected {
       .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .button--go {
         font-size: 16px;
         padding: 7px 8px; }
+
+.publicCode .landing .main-landing {
+  height: 100vh; }
+  .publicCode .landing .main-landing .welcome-section {
+    padding: 195px 0 0 15%; }
+
+.publicCode a {
+  text-decoration: none;
+  display: block; }
+
+.publicCode .button--go {
+  background-color: #f6ffff;
+  color: #194952;
+  height: 51px; }
+
+.search--grid {
+  margin-top: 200px;
+  display: flex;
+  flex-wrap: wrap; }
+  .search--grid .grid-item {
+    width: 31%;
+    padding: 10px;
+    outline: none;
+    cursor: pointer; }
+  .search--grid .grid-item img {
+    display: block;
+    width: 100%; }
 
 .photographer-cards .btn-pou-default {
   color: #43C6BA;
@@ -2986,7 +3033,9 @@ tags-input .suggestion-item.selected {
 
 .landing .browse-button {
   width: 330px;
-  height: 48px; }
+  height: 48px;
+  text-decoration: none;
+  line-height: 48px; }
 
 .landing .steps {
   width: 100%;
@@ -3176,7 +3225,9 @@ tags-input .suggestion-item.selected {
       font-size: 50px; }
   .pricing--options {
     padding: 0 0 60px 0;
-    width: 100%; }
+    width: 100%;
+    cursor: pointer;
+    outline: none; }
     .pricing--options__container {
       margin: 0 auto;
       max-width: 1050px;
@@ -3220,7 +3271,8 @@ tags-input .suggestion-item.selected {
       width: 330px;
       height: 600px;
       margin-top: -15px;
-      z-index: 1; }
+      z-index: 1;
+      outline: none; }
     .pricing--options .signUp {
       border: 2px solid #FFE261;
       border-radius: 8px;

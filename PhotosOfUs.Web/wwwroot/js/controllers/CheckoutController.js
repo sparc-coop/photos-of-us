@@ -67,12 +67,23 @@
         return false;
     }
 
+    $scope.showCart = false;
+
+    $scope.cartPreview = () => {       
+        if ($scope.showCart == false) {
+            $scope.showCart = true;
+            $scope.getOpenOrder($scope.user.Id);
+            $scope.getPrintTypes();
+        }
+        else if ($scope.showCart == true) {
+            $scope.showCart = false;
+        }
+    };
+
     $scope.createOrder = (userId) => {
         console.log($scope.selectedItems);
         var photoId = $location.absUrl().split('Purchase/')[1];
-        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
-            $window.location.href = '/Photo/Cart/' + userId;
-        });
+        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems);
     };
 
     function testLocalStorage () {
@@ -127,7 +138,9 @@
     $scope.getOpenOrder = (userId) => {
         $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
             $scope.order = x.data;
-            $scope.getOrderTotal($scope.order.Id);
+            if (x.data != '') {
+                $scope.getOrderTotal($scope.order.Id);
+            }
         });
     }; 
 

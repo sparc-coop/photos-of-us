@@ -57,7 +57,7 @@ namespace PhotosOfUs.Web.Controllers
             }
             else
             {
-                return Redirect("/Customer/OrderHistory/" + userId);
+                return Redirect("/Photographer/Search");
             }
         }
 
@@ -77,6 +77,11 @@ namespace PhotosOfUs.Web.Controllers
         {
             var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
+        }
+
+        public ActionResult PublicCode()
+        {
+            return View();
         }
 
         public ActionResult Code(int id)

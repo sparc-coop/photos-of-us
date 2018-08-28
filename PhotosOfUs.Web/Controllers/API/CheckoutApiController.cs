@@ -46,7 +46,12 @@ namespace PhotosOfUs.Web.Controllers.API
         public Order GetOpenOrder(int userId)
         {
             var openOrder = new OrderRepository(_context).GetOpenOrder(userId);
-            return openOrder;
+            if(openOrder != null)
+            {
+                return openOrder;
+            }
+
+            return null;
         }
 
         [HttpGet]

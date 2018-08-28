@@ -17,22 +17,22 @@
 <div ng-controller="PhotographerCtrl">
     <div class="photographer-search__title">
         @Model.Photos.Count
-    @foreach (var Tag in Model.Tags)
-    {
-        if (Model.Tags.IndexOf(Tag) == Model.Tags.Count - 1)
+        @foreach (var Tag in Model.Tags)
         {
-            <span>&quot;@Tag.text&quot</span>
-        }
-        else
-        {
-            <span>&quot;@Tag.text&quot, </span>
-        }
-    } photos
-</div><br /><br />
+            if (Model.Tags.IndexOf(Tag) == Model.Tags.Count - 1)
+            {
+                <span>&quot;@Tag.text&quot</span>
+            }
+            else
+            {
+                <span>&quot;@Tag.text&quot, </span>
+            }
+        } photos
+    </div>
+<br /><br />
 <div>Similar photos also found in these categories</div>
 <div>
-    <div class="grid">
-        <div class="grid-sizer"></div>
+    <div class="search--grid">
         @foreach (var Photo in @Model.Photos)
         {
             <div class="grid-item">
@@ -43,48 +43,6 @@
     {{ arrangePhotos() }}
 </div>
 </div>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    /* force scrollbar */
-    html {
-        overflow-y: scroll;
-    }
-
-    body {
-        font-family: sans-serif;
-    }
-
-    .grid {
-        /*background: #DDD;*/
-    }
-
-        /* clear fix */
-        .grid:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-    /* ---- .grid-item ---- */
-
-    .grid-sizer,
-    .grid-item {
-        width: 33%;
-        padding: 10px;
-    }
-
-    .grid-item {
-        float: left;
-    }
-
-        .grid-item img {
-            display: block;
-            width: 100%;
-        }
-</style>
 
 
 
