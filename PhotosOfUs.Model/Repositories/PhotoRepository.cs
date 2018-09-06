@@ -270,9 +270,12 @@ namespace PhotosOfUs.Model.Repositories
                     .Where(cm => cm.PhotoId == photo.Id)
                     .ToList();
 
-                foreach (PhotoTag tag in tagsfromphoto)
+                foreach (PhotoTag phototag in tagsfromphoto)
                 {
-                    phototags.Add(tag);
+                    if (!phototags.Any(x => x.Tag == phototag.Tag))
+                    {
+                        phototags.Add(phototag);
+                    }
                 }
             }
 

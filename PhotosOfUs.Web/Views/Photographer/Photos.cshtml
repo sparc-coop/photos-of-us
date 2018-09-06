@@ -41,7 +41,7 @@
                     <div class="label">Date Uploaded</div>
                     <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
                 </div>
-                <div class="codeView__card--edit" ng-click="openBulkEdit(@item.Code)">Bulk Edit</div>
+                <div class="codeView__card--edit" ng-click="openPhotosEdit(@item.Code)">Bulk Edit</div>
             </a>
             <a class="codeView__card" ng-if="'@item.Code' == ''" ng-cloak>
                 <div class="codeView__card--title">
@@ -52,7 +52,7 @@
                     <div class="label">Date Uploaded</div>
                     <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
                 </div>
-                <div class="codeView__card--edit" ng-click="openBulkEdit(@item.Code)">Bulk Edit</div>
+                <div class="codeView__card--edit" ng-click="openPhotosEdit(@item.Code)">Bulk Edit</div>
             </a>
             @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
             {
