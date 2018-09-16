@@ -3,6 +3,7 @@ using PhotosOfUs.Model.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 namespace PhotosOfUs.Model.Repositories
@@ -20,7 +21,7 @@ namespace PhotosOfUs.Model.Repositories
         {
             var newAddress = new Address()
             {
-                UserId = 1,
+                UserId = address.UserId,
                 FullName = address.FullName,
                 Address1 = address.Address1,
                 Address2 = address.Address2,
@@ -33,7 +34,7 @@ namespace PhotosOfUs.Model.Repositories
 
             try
             {
-                _context.Address.Attach(newAddress);
+                _context.Address.Add(newAddress);
                 _context.SaveChanges();
                 return address;
             }
@@ -44,6 +45,11 @@ namespace PhotosOfUs.Model.Repositories
             }
             
             
+        }
+
+        public Address FindAddress(int userId)
+        {
+            return _context.Address.Where(x => x.UserId == userId).FirstOrDefault();
         }
     }
 }

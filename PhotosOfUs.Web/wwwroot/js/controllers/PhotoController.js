@@ -1,28 +1,79 @@
-﻿app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, Socialshare) => {
+﻿app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) => {
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
     };
+
+    $scope.checkFilter = (itemcode) => {
+        itemcode = itemcode + "";
+
+        if (itemcode.indexOf($scope.searchCode) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    $scope.goToCode = (code) => {
+        console.log('the code is ' + code)
+        $window.location.href = '/Photographer/PhotoCode?code=' + code;
+    }
 
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
 
+    $scope.goToProfile = (photographerId) => {
+        $window.location.href = '/Photographer/Profile/' + photographerId;
+    };
+
+
     $scope.goToGallery = (folderId) => {
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
+    $scope.signInCustomer = (photoId) => {
+        $http.get('/Session/SignIn/').then(
+            $window.location.href = '/Photo/Purchase/' + photoId
+        );
+    };
+
     $scope.openUpload = (folderId) => {
         $mdDialog.show({
-            
             templateUrl: '/Photographer/Upload',
             controller: 'UploadController',
             locals: { folder: folderId },
             clickOutsideToClose: true
         });
     };
-    
+
+    $scope.openPhotosEdit = (code) => {
+        $scope.selectedPhotos = [];
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
+            $scope.codePhotos = x.data;
+            angular.forEach($scope.codePhotos, function (item) { $scope.selectedPhotos.push(item.Id) });
+            $mdDialog.show({
+                locals: { selectedPhotos: $scope.selectedPhotos },
+                templateUrl: '/Photographer/BulkEditModal',
+                controller: 'BulkEditModalCtrl',
+                clickOutsideToClose: true,
+            });
+        });
+    };
+
     $scope.getPhotoCode = () => {
         $scope.code = $location.absUrl().split('=')[1];
+        $scope.getPhotosByCode($scope.code);
+    };
+
+    $scope.currentPage = 1;
+    $scope.photosPerPage = 8;
+
+    $scope.getPhotosByCode = (code) => {
+        $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
+            $scope.codePhotos = x.data;
+            console.log($scope.codePhotos);
+        });
     };
 
     $scope.getPhotographer = (id) => {
@@ -31,6 +82,49 @@
         });
     };
 
+    $scope.getUser = () => {
+        userApi.getUser().then(x => {
+            $scope.user = x.data;
+        });
+    };
+
+  
+        //var self = this;
+
+        //self.readonly = false;
+
+        //// Lists of fruit names and Vegetable objects
+        //self.fruitNames = ['Apple', 'Banana', 'Orange'];
+        //self.ngChangeFruitNames = angular.copy(self.fruitNames);
+        //self.roFruitNames = angular.copy(self.fruitNames);
+        //self.editableFruitNames = angular.copy(self.fruitNames);
+
+        //self.tags = [];
+        //self.vegObjs = [
+        //    {
+        //        'name': 'Broccoli',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Cabbage',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Carrot',
+        //        'type': 'Umbelliferous'
+        //    }
+        //];
+
+        //self.newVeg = function (chip) {
+        //    return {
+        //        name: chip,
+        //        type: 'unknown'
+        //    };
+        //};
+
+        //self.onModelChange = function (newModel) {
+        //    alert('The model has changed');
+        //};
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
         console.log(url);
@@ -92,6 +186,8 @@
                 'socialshareMedia': photoUrl
             }
         });
-    }
+    };
+
+    $scope.pricingOption = 'option2';
     
 }])

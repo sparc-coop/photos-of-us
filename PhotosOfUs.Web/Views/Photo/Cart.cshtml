@@ -1,59 +1,25 @@
-﻿@model List<ShoppingCartViewModel>
+﻿@model CustomerOrderViewModel
 
 @{
     ViewData["Title"] = "Cart";
 }
 
-<div class="cart" ng-controller="CheckoutCtrl">
+<div class="cart" ng-controller="CheckoutCtrl" ng-init="getOrderDetails(@Model.Id)">
     <h1 class="header-large">Shopping Cart</h1>
-    <div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>
+    @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
 
-    <div class="cart-photo"> @*ng-repeat="item in cart">*@
-        <img src="~/images/photo/dog.png" class="photo"/>
+    <div class="cart-photo" ng-repeat="item in orderDetails">
+        <img src="{{item.Photo.Url}}" class="photo"/>
         <div class="cart-photo--container">
             <div class="cart-item">
-                <div class="icon"><img src="~/images/icons/portrait.png" /></div>
-                <div class="type">A5 Portrait</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>
-                <div class="quantity">QTY: 1</div>
-                <div class="price">$6.00</div>
-            </div>
-            <div class="cart-item">
-                <div class="icon"><img src="~/images/icons/landscape.png" /></div>
-                <div class="type">A5 Landscape</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>
-                <div class="quantity">QTY: 1</div>
-                <div class="price">$6.00</div>
-            </div>
-            <div class="cart-item">
-                <div class="icon"><img src="~/images/icons/wallet.png" /></div>
-                <div class="type">A5 Wallet</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>
-                <div class="quantity">QTY: 1</div>
-                <div class="price">$6.00</div>
-            </div>
-            <div class="cart-item">
-                <div class="icon"><img src="~/images/icons/portrait.png" /></div>
-                <div class="type">A5 Portrait</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>
-                <div class="quantity">QTY: 1</div>
-                <div class="price">$6.00</div>
-            </div>
-            <div class="cart-item">
-                <div class="icon"><img src="~/images/icons/wallet.png" /></div>
-                <div class="type">A5 Wallet</div>
-                <div class="height">Height: 4in</div>
-                <div class="length">Length: 7in</div>
-                <div class="quantity">QTY: 1</div>
-                <div class="price">$6.00</div>
+                <div class="type">{{item.PrintType.Type}}</div>
+                <div class="height">Height: {{item.PrintType.Height}}in</div>
+                <div class="length">Length: {{item.PrintType.Length}}in</div>
+                <div class="quantity">QTY: {{item.Quantity}}</div>
+                <div class="price">${{item.UnitPrice | number:2}}</div>
             </div>
         </div>
     </div>
-
-    <div class="button--yellow button--yellow--large" ng-click="goToCheckout()"><img src="~/images/icons/cart-red.png" />Continue To Checkout</div>
+    <div class="button--yellow button--yellow--large" ng-click="goToCheckout(@Model.UserId)"><img src="~/images/icons/cart-red.png" />Continue To Checkout</div>
 </div>

@@ -27,9 +27,22 @@ namespace PhotosOfUs.Web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("azurekeyvault.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            var config = builder.Build();
+
+            builder.AddAzureKeyVault(
+                $"https://{config["azureKeyVault:vault"]}.vault.azure.net/",
+                config["azureKeyVault:clientId"],
+                config["azureKeyVault:clientSecret"]
+            );
+
             Configuration = builder.Build();
+
+            //var connectionString = Configuration["photoofus-prod-connectionstring"];
+           
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -63,7 +76,7 @@ namespace PhotosOfUs.Web
                  .AllowCredentials();
             }));
 
-            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration.GetConnectionString("PhotosOfUsDatabase")));
+            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["photoofus-prod-connectionstring"]));
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
@@ -95,7 +108,7 @@ namespace PhotosOfUs.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Homepage}/{id?}");
             });
         }
     }
