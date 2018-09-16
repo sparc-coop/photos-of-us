@@ -7,8 +7,8 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class PhotosOfUsContext : DbContext
     {
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
@@ -35,6 +35,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Order>(entity =>
             {
+                entity.ToTable("Order");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
             });
@@ -56,6 +57,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("User");
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
