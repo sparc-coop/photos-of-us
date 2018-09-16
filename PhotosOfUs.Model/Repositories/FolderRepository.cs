@@ -1,6 +1,8 @@
-﻿using PhotosOfUs.Model.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotosOfUs.Model.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PhotosOfUs.Model.Repositories
@@ -30,8 +32,21 @@ namespace PhotosOfUs.Model.Repositories
         public void Delete(int id)
         {
             Folder folder = _context.Folder.Find(id);
-            _context.Folder.Remove(folder);
+            //_context.Photo.RemoveRange(folder.Photo);
+            //_context.Folder.Remove(folder);
+            folder.IsDeleted = true;
             _context.SaveChanges();
+        }
+
+        public Folder Rename(int id, string newName, int photographerId)
+        {
+            var folder = _context.Folder.Include("Photo").SingleOrDefault(x=>x.Id == id);
+            folder.Name = newName;
+
+            _context.Entry(folder).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return folder;
         }
     }
 }

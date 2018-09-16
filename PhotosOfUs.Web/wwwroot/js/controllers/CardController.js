@@ -2,7 +2,9 @@
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-
+    $scope.pageSize = 5;
+    $scope.currentPage = 1;
+    
     $scope.initCardCtrl = function () {
         $scope.cards = [];
         cardApi.getAll()
@@ -28,6 +30,25 @@
             $mdDialog.hide();
             $scope.downloadCards(x.data);
         });
+    };
+
+    $scope.exportMultipleCards = function (quantity) {
+        cardApi.create(quantity).then(function (x) {
+            console.log(x.data);
+            console.log($scope.cards);
+            $scope.cards = x.data.concat($scope.cards);
+            console.log($scope.cards);
+            $mdDialog.hide();
+            $scope.downloadCards(x.data);
+        });
+    };
+
+    $scope.MooModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/MooOrderModal',
+            scope: $scope,
+            clickOutsideToClose: true
+        })
     };
 
     $scope.downloadCards = function (cards) {

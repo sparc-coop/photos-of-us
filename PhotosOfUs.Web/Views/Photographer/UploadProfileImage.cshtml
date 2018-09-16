@@ -29,16 +29,15 @@
                 </div>
             </div>
             <div class="upload--container">
-                <div id="photo-preview" ng-if="uploader.queue.length > 0">
+                <div class="photo-preview" ng-if="uploader.queue.length > 0">
                     <div class="img-container">
-                        <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
-                    </div>
-                   
-                    <div class="col-md-8">
+                        <img ng-src="{{ selectedItem.file.src }}" />
+                    </div>                   
+                    <div class="photo-preview__name">
                         <p class="photo-preview-title">Name</p>
                         <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
                     </div>
-                    <div class="col-md-4">
+                    <div class="photo-preview__dimensions">
                         <p class="photo-preview-title">Dimensions</p>
                         <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
                     </div>

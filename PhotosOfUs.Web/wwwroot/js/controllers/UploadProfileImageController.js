@@ -132,7 +132,7 @@
 
     uploader.onCompleteAll = () => {
         //alert("Complete");
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard';
+        $window.location.reload(); //.location.href = '/Photographer/Dashboard'
     };
 
 }]);

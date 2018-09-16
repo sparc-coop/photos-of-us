@@ -8,6 +8,7 @@ namespace PhotosOfUs.Model.Models
     public partial class PhotosOfUsContext : DbContext
     {
         public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<SocialMedia> SocialMedia { get; set; }
         public virtual DbSet<Card> Card { get; set; }
         public virtual DbSet<Folder> Folder { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -18,6 +19,8 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
         public virtual DbSet<PrintType> PrintType { get; set; }
         public virtual DbSet<PrintPrice> PrintPrice { get; set; }
+        public virtual DbSet<Tag> Tag { get; set; }
+        public virtual DbSet<PhotoTag> PhotoTag { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
@@ -89,6 +92,21 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.UserId);
             });
 
+            modelBuilder.Entity<SocialMedia>(entity =>
+            {
+                entity.Property(e => e.Type)
+                    .HasColumnName("AzureID")
+                    .HasMaxLength(128);
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("Type");
+
+                entity.Property(e => e.Link);
+
+                entity.Property(e => e.Username)
+                    .HasColumnName("Username");
+            });
+
             modelBuilder.Entity<Card>(entity =>
             {
                 entity.HasIndex(e => e.PhotographerId);
@@ -151,28 +169,12 @@ namespace PhotosOfUs.Model.Models
             {
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Order");
-
-                entity.HasOne(d => d.Photo)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PhotoId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Photo");
-
-                entity.HasOne(d => d.PrintType)
-                    .WithMany(p => p.OrderDetail)
-                    .HasForeignKey(d => d.PrintTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_PrintType");
-
             });
 
             modelBuilder.Entity<Photo>(entity =>
             {
+                entity.HasKey(x => x.Id);
+
                 entity.Property(e => e.Code)
                     .IsRequired()
                     .HasMaxLength(30)
@@ -236,6 +238,8 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.LastName).HasMaxLength(128);
 
                 entity.Property(e => e.IsPhotographer);
+
+                entity.Property(e => e.IsDeactivated);
             });
 
             modelBuilder.Entity<UserIdentity>(entity =>
@@ -279,9 +283,9 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<PrintPrice>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("Id");
 
-                entity.Property(e => e.PrintId).HasColumnName("PrintId");
+                entity.Property(e => e.PhotoId).HasColumnName("PhotoId");
 
                 entity.Property(e => e.Price)
                     .HasColumnName("Price")
@@ -299,6 +303,29 @@ namespace PhotosOfUs.Model.Models
                 //    .HasForeignKey(d => d.PrintId)
                 //    .HasConstraintName("FK_PrintPrice_PrintType");
             });
+
+            modelBuilder.Entity<Tag>(entity =>
+            {
+                entity.HasKey(x => x.Id);
+
+                entity.Property(e => e.Name).IsRequired();
+            });
+
+            modelBuilder.Entity<PhotoTag>(entity =>
+            {
+                entity.HasKey(x => new { x.PhotoId, x.TagId });
+                entity.Property(e => e.RegisterDate).HasColumnType("datetime");
+
+                entity.HasOne(x => x.Photo)
+                    .WithMany(x => x.PhotoTag)
+                    .HasForeignKey(x => x.PhotoId);
+
+                entity.HasOne(x => x.Tag)
+                    .WithMany(x => x.PhotoTag)
+                    .HasForeignKey(x => x.TagId);
+            });
+
+            modelBuilder.Ignore<RootObject>();
         }
     }
 }

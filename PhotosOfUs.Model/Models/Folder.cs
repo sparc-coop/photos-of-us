@@ -13,6 +13,7 @@ namespace PhotosOfUs.Model.Models
         public int Id { get; set; }
         public int PhotographerId { get; set; }
         public string Name { get; set; }
+        public bool IsDeleted { get; set; }
         public DateTime CreatedDate { get; set; }
 
         public User Photographer { get; set; }

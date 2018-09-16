@@ -10,5 +10,5 @@
                 $('.sales-container .overlay').removeClass('loading');
             }
         });
-    }
-}])
+    };
+}]);

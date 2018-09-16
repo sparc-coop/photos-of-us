@@ -1,7 +1,7 @@
 ﻿using PhotosOfUs.Model.Models;
+using PhotosOfUs.Model.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PhotosOfUs.Model.ViewModels
 {
@@ -15,7 +15,8 @@ namespace PhotosOfUs.Model.ViewModels
         public string FacebookLink { get; set; }
         public string TwitterLink { get; set; }
         public string InstagramLink { get; set; }
-        public string DribblLink { get; set; }
+        public string DribbblLink { get; set; }
+        public bool? IsDeactivated { get; set; }
 
         public List<PhotoViewModel> Photos { get; set; }
 
@@ -28,10 +29,11 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.PhotographerTitle = photographer.JobPosition; //TODO create column to this field
             viewModel.ProfileText = photographer.Bio; //TODO create column to this field
             viewModel.FacebookLink = photographer.Facebook;
-            viewModel.TwitterLink = "twitter";//TODO create column to this field
-            viewModel.InstagramLink = "instagram";//TODO create column to this field
+            viewModel.TwitterLink = photographer.Twitter;
+            viewModel.InstagramLink = photographer.Instagram;
+            viewModel.DribbblLink = photographer.Dribbble;
             viewModel.ProfilePhotoUrl = photographer.ProfilePhotoUrl;
-
+            viewModel.IsDeactivated = photographer.IsDeactivated;
             viewModel.Photos = new List<PhotoViewModel>();
 
             foreach (var item in photos)

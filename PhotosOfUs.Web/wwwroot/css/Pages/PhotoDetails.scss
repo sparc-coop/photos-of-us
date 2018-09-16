@@ -1,0 +1,28 @@
+﻿@import "../variables";
+
+
+.photo-details {
+    font-family: 'Dosis';
+
+    .header {
+        font-size: 28px;
+        font-weight: 600;
+        color: $primary;
+    }
+}
+
+.photo-section {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+}
+
+.photo-section div {
+    margin: 20px;
+}
+
+.img {
+    border-radius: 10px;
+    max-width: 450px;
+    max-height: 250px;
+}

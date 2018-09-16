@@ -46,12 +46,25 @@ namespace PhotosOfUs.Model.Models
                 var baseUser = context.User.FirstOrDefault(x => x.Email == user.Email);
                 if (baseUser == null)
                 {
-                    baseUser = new User
+                    if (identity.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"))
                     {
-                        CreateDate = DateTime.UtcNow,
-                        DisplayName = user.DisplayName,
-                        Email = user.Email,
-                    };
+                        baseUser = new User
+                        {
+                            CreateDate = DateTime.UtcNow,
+                            DisplayName = user.DisplayName,
+                            Email = user.Email,
+                            IsPhotographer = true
+                        };
+                    }
+                    else
+                    {
+                        baseUser = new User
+                        {
+                            CreateDate = DateTime.UtcNow,
+                            DisplayName = user.DisplayName,
+                            Email = user.Email
+                        };
+                    }
                     context.User.Add(baseUser);
                     try
                     {
@@ -70,6 +83,7 @@ namespace PhotosOfUs.Model.Models
                     LastLoginDate = DateTime.UtcNow,
                     UserID = baseUser.Id
                 };
+
                 context.UserIdentity.Add(newIdentity);
                 context.SaveChanges();
                 user = new PhotosOfUsPrincipal(new ClaimsPrincipal(identity));
