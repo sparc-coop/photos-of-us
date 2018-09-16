@@ -177,16 +177,11 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         console.log($scope.selectedItems);
     };
 
-    $scope.createOrder = () => {
-        // $http.post('/api/Checkout/CreateOrder', $scope.selectedItems).then(x => {
-        $window.location.href = '/Photo/Cart';
-        //});
-    };
-
     $scope.selectAll = function (printTypes) {
         for (var i = 0; i < printTypes.length; i++) {
             $scope.select(printTypes[i].Id);
         }
+        
     }
 
     $scope.isSelected = function (printId) {
@@ -942,7 +937,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
             alert("Fix the photos with exclamation first before uploading");
         }
 
-        $window.location.reload();
+        
     };
 
     $scope.VerifyErrorsInPhotoCode = function () {
@@ -1066,7 +1061,7 @@ angular.module('app').controller('UploadController', function ($scope, $http, Fi
     };
 
 });
-app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi) => {
+app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
@@ -1074,21 +1069,20 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
     $scope.currentPage = 1;
     
     $scope.initCardCtrl = function () {
-        
+        $scope.cards = [];
         cardApi.getAll()
             .then(function (x) {
-                angular.forEach(x.data, function (c) { $scope.cards.push(c); });
-                console.log(JSON.stringify(x.data));
-            })
-    }
+                $scope.cards = x.data;
+            });
+    };
 
-    $scope.exportMultipleCardsModal = function() {
+    $scope.exportMultipleCardsModal = function () {
         $mdDialog.show({
             templateUrl: '/Photographer/MultipleCardsModal',
-            controller: 'CardCtrl',
-            clickOutsideToClose: true,
+            scope: $scope,
+            clickOutsideToClose: true
         })
-    }
+    };
 
     $scope.exportMultipleCards = function (quantity) {
         cardApi.create(quantity).then(function(x) {
@@ -1631,6 +1625,7 @@ app.controller('PhotoTagCtrl', TagCtrl);
             };
         };
     }
+//})();
 
 app.controller('UploadProfileImageCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
 
