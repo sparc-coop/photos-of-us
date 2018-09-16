@@ -25,11 +25,15 @@ namespace PhotosOfUs.Web.Controllers
     {
         private PhotosOfUsContext _context;
         private IHostingEnvironment _hostingEnvironment;
+        private PhotoRepository _photoRepository;
+        private UserRepository _userRepository;
 
-        public PhotographerController(PhotosOfUsContext context, IHostingEnvironment hostingEnvironment)
+        public PhotographerController(PhotosOfUsContext context, PhotoRepository photoRepository, UserRepository userRepository, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _hostingEnvironment = hostingEnvironment;
+            _photoRepository = photoRepository;
+            _userRepository = userRepository;
         }
 
         // GET: Photographer
@@ -68,14 +72,14 @@ namespace PhotosOfUs.Web.Controllers
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var folder = new PhotoRepository(_context).GetPhotos(photographerId, id);
+            var folder = _photoRepository.GetPhotos(photographerId, id);
 
             return View(FolderViewModel.ToViewModel(folder));
         }
 
         public ActionResult Photo(int id)
         {
-            var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
+            var photo = _photoRepository.GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
         }
 
@@ -106,7 +110,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult PhotoCode(string code)
         {
-            var photos = new PhotoRepository(_context).GetPhotosByCode(code);
+            var photos = _photoRepository.GetPhotosByCode(code);
             return View(PhotoViewModel.ToViewModel(photos));
         }
 
@@ -278,7 +282,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, listoftags);
+                    await _photoRepository.UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, listoftags);
                 }
             }
 
@@ -322,7 +326,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension, tagsfromazure, listoftags);
+                    await _photoRepository.UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension, tagsfromazure, listoftags);
                 }
             }
 
@@ -331,7 +335,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
-            return Json(new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
+            return Json(new { PhotoExisting = _photoRepository.IsPhotoCodeAlreadyUsed(1, code) });
         }
 
         public ActionResult Profile(int id)
@@ -343,7 +347,7 @@ namespace PhotosOfUs.Web.Controllers
             }
 
             var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
+            var photos = _photoRepository.GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
@@ -389,11 +393,11 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Search()
         {
-            var photos = new PhotoRepository(_context).GetPublicPhotos();
+            var photos = _photoRepository.GetPublicPhotos();
 
             //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
             //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
-            //var getalltags = new PhotoRepository(_context).GetAllTags();
+            //var getalltags = _photoRepository.GetAllTags();
 
             return View(PhotoViewModel.ToViewModel(photos));
         }
@@ -402,8 +406,8 @@ namespace PhotosOfUs.Web.Controllers
         {
             string[] tagarray = tagnames.Split(' ');
 
-            var tags = new PhotoRepository(_context).GetTags(tagarray);
-            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tags);
+            var tags = _photoRepository.GetTags(tagarray);
+            var photos = _photoRepository.GetPublicPhotosByTag(tags);
 
             var searchmodel = new SearchViewModel();
 
@@ -411,7 +415,7 @@ namespace PhotosOfUs.Web.Controllers
             searchmodel.Tags = TagViewModel.ToViewModel(tags);
             //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
             //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
-            //var getalltags = new PhotoRepository(_context).GetAllTags();
+            //var getalltags = _photoRepository.GetAllTags();
 
             return View(searchmodel);
         }
@@ -478,7 +482,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new UserRepository(_context).UpdateProfileImageAsync(photographerId, stream, photoName, string.Empty, extension);
+                    await _userRepository.UpdateProfileImageAsync(photographerId, stream, photoName, string.Empty, extension);
                 }
             }
         }

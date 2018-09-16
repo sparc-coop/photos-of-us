@@ -16,10 +16,12 @@ namespace PhotosOfUs.Web.Controllers.API
     public class AccountSettingsApiController : Controller
     {
         private PhotosOfUsContext _context;
+        private UserRepository _userRepository;
 
-        public AccountSettingsApiController(PhotosOfUsContext context)
+        public AccountSettingsApiController(PhotosOfUsContext context, UserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = _context.UserIdentity.Find(azureId).UserID;
 
-            var user = new UserRepository(_context).Find(userId);
+            var user = _userRepository.Find(userId);
 
             return ProfileSettingsViewModel.ToViewModel(user);
         }
@@ -44,7 +46,7 @@ namespace PhotosOfUs.Web.Controllers.API
             if(userId != model.UserId)
                 return new HttpResponseMessage(HttpStatusCode.Forbidden);
 
-            var success = new UserRepository(_context).UpdateAccountProfileSettings(model);
+            var success = _userRepository.UpdateAccountProfileSettings(model);
 
             return !success ? new HttpResponseMessage(HttpStatusCode.Conflict) : new HttpResponseMessage(HttpStatusCode.OK);
         }

@@ -10,16 +10,19 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
 using PhotosOfUs.Model.ViewModels;
+using Kuvio.Kernel.Azure;
 
 namespace PhotosOfUs.Model.Repositories
 {
     public class PhotoRepository
     {
         private PhotosOfUsContext _context;
+        private StorageContext _storageContext;
 
-        public PhotoRepository(PhotosOfUsContext context)
+        public PhotoRepository(PhotosOfUsContext context, StorageContext storageContext)
         {
             _context = context;
+            _storageContext = storageContext;
         }
 
         public List<Folder> GetFolders(int photographerId)
@@ -95,7 +98,7 @@ namespace PhotosOfUs.Model.Repositories
 
             stream.Position = 0;
             var container = new MemoryStream();
-            var containerBlob = StorageHelpers.Container("photos").GetBlockBlobReference(url);
+            var containerBlob = _storageContext.Container("photos").GetBlockBlobReference(url);
             containerBlob.Properties.CacheControl = "public, max-age=31556926";
             container.Position = 0;
             await containerBlob.UploadFromStreamAsync(stream);
@@ -104,7 +107,7 @@ namespace PhotosOfUs.Model.Repositories
             stream.Position = 0;
             var watermarkImg = new MemoryStream();
             ImageHelper.AddWatermark(stream, watermarkImg, extension);
-            var watermarkBlob = StorageHelpers.Container("watermark").GetBlockBlobReference(url);
+            var watermarkBlob = _storageContext.Container("watermark").GetBlockBlobReference(url);
             watermarkBlob.Properties.CacheControl = "public, max-age=31556926";
             watermarkImg.Position = 0;
             await watermarkBlob.UploadFromStreamAsync(watermarkImg);
@@ -115,7 +118,7 @@ namespace PhotosOfUs.Model.Repositories
             stream.Position = 0;
             var thumbnail = new MemoryStream();
             ImageHelper.ConvertImageToThumbnailJpg(stream, thumbnail, extension);
-            var thumbnailBlob = StorageHelpers.Container("thumbnails").GetBlockBlobReference(url);
+            var thumbnailBlob = _storageContext.Container("thumbnails").GetBlockBlobReference(url);
             thumbnailBlob.Properties.CacheControl = "public, max-age=31556926";
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);

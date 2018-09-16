@@ -17,10 +17,16 @@ namespace PhotosOfUs.Web.Controllers.API
     public class CheckoutApiController : Controller
     {
         private PhotosOfUsContext _context;
+        private OrderRepository _orderRepository;
+        private AddressRepository _addressRepository;
+        private PhotoRepository _photoRepository;
 
-        public CheckoutApiController(PhotosOfUsContext context)
+        public CheckoutApiController(PhotosOfUsContext context, OrderRepository orderRepository, AddressRepository addressRepository, PhotoRepository photoRepository)
         {
             _context = context;
+            _orderRepository = orderRepository;
+            _addressRepository = addressRepository;
+            _photoRepository = photoRepository;
         }
 
         [HttpGet, HttpPost]
@@ -33,7 +39,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var address = AddressViewModel.ToEntity(vm);
 
             address.UserId = userId;
-            address = new AddressRepository(_context).Create(address);
+            address = _addressRepository.Create(address);
             if(address == null)
             {
                 return new AddressViewModel();
@@ -45,7 +51,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOpenOrder/{userId:int}")]
         public Order GetOpenOrder(int userId)
         {
-            var openOrder = new OrderRepository(_context).GetOpenOrder(userId);
+            var openOrder = _orderRepository.GetOpenOrder(userId);
             if(openOrder != null)
             {
                 return openOrder;
@@ -58,30 +64,30 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderTotal/{orderId:int}")]
         public decimal GetOrderTotal(int orderId)
         {
-            return new OrderRepository(_context).GetOrderTotal(orderId);
+            return _orderRepository.GetOrderTotal(orderId);
         }
 
         [HttpPost]
         [Route("CreateOrder/{userId:int}/{photoId:int}")]
         public string CreateOrder(int userId, int photoId, [FromBody]List<OrderItemsViewModel> orderitems)
         {
-            var existingOrder = new OrderRepository(_context).GetOpenOrder(userId);
-            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+            var existingOrder = _orderRepository.GetOpenOrder(userId);
+            var photo = _photoRepository.GetPhoto(photoId);
 
             if(existingOrder == null)
             {
-                var newOrder = new OrderRepository(_context).CreateOrder(userId);
+                var newOrder = _orderRepository.CreateOrder(userId);
 
                 foreach (var item in orderitems)
                 {
-                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(newOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
+                    var newOrderDetail = _orderRepository.CreateOrderDetails(newOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
                 }
             }
             else
             {
                 foreach (var item in orderitems)
                 {
-                    var newOrderDetail = new OrderRepository(_context).CreateOrderDetails(existingOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
+                    var newOrderDetail = _orderRepository.CreateOrderDetails(existingOrder.Id, photoId, photo.PhotographerId, item.PrintTypeId, int.Parse(item.Quantity));
                 }
             }
             return "success";
@@ -99,7 +105,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = _context.UserIdentity.Find(azureId).UserID;
-            var order = new OrderRepository(_context).GetOpenOrder(userId);
+            var order = _orderRepository.GetOpenOrder(userId);
 
             var apiKey = "";
             var client = new SendGridClient(apiKey);
@@ -120,7 +126,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetAddress/{userId:int}")]
         public Address GetAddress(int userId)
         {
-            Address address = new AddressRepository(_context).FindAddress(userId);
+            Address address = _addressRepository.FindAddress(userId);
             return address;
         }
     }

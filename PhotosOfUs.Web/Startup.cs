@@ -14,9 +14,13 @@ using PhotosOfUs.Model.Models;
 using Stripe;
 using PhotosOfUs.Web.Extensions;
 using Microsoft.AspNetCore.Http;
-using PhotosOfUs.Web.Auth;
 using PhotosOfUs.Web.Utilities;
 using Newtonsoft.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using PhotosOfUs.Model.Repositories;
+using Kuvio.Kernel.Azure;
+using PhotosOfUs.Web.Auth;
 
 namespace PhotosOfUs.Web
 {
@@ -40,9 +44,6 @@ namespace PhotosOfUs.Web
             );
 
             Configuration = builder.Build();
-
-            //var connectionString = Configuration["photoofus-prod-connectionstring"];
-           
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -57,7 +58,19 @@ namespace PhotosOfUs.Web
                 sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
+            .AddOpenIdConnect("B2CWeb", options =>
+                {
+                    options.ClientId = Configuration["AzureAdB2C:ClientId"];
+                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0/";
+                    options.UseTokenLifetime = true;
+                    options.SignInScheme = "B2C";
+                    options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
+                    options.Events = new OpenIdConnectEvents
+                    {
+                        OnRedirectToIdentityProvider = OnRedirectToIdentityProviderAsync,
+                        OnTokenValidated = OnTokenValidatedAsync
+                    };
+                })
             .AddCookie();
 
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
@@ -76,8 +89,10 @@ namespace PhotosOfUs.Web
                  .AllowCredentials();
             }));
 
-            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["photoofus-prod-connectionstring"]));
+            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
+            services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+            services.Configure<AzureAdB2COptions>(Configuration.GetSection("Authentication:AzureAdB2C"));
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
         }
@@ -110,6 +125,26 @@ namespace PhotosOfUs.Web
                     name: "default",
                     template: "{controller=Home}/{action=Homepage}/{id?}");
             });
+        }
+
+        private Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context)
+        {
+            context.HttpContext.RequestServices.GetRequiredService<UserRepository>().Login(context.Principal);
+            return Task.FromResult(0);
+        }
+
+        private Task OnRedirectToIdentityProviderAsync(RedirectContext context)
+        {
+            var defaultPolicy = Configuration["AzureAdB2C:Policy"];
+            if (context.Properties.Items.TryGetValue("Policy", out var policy) && !policy.Equals(defaultPolicy))
+            {
+                context.ProtocolMessage.Scope = OpenIdConnectScope.OpenIdProfile;
+                context.ProtocolMessage.ResponseType = OpenIdConnectResponseType.IdToken;
+                context.ProtocolMessage.IssuerAddress = context.ProtocolMessage.IssuerAddress.ToLower().Replace(defaultPolicy.ToLower(), policy.ToLower());
+                context.Properties.Items.Remove("Policy");
+            }
+
+            return Task.FromResult(0);
         }
     }
 }

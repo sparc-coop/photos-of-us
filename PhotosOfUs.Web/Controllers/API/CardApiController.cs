@@ -17,10 +17,12 @@ namespace PhotosOfUs.Web.Controllers.API
     public class CardApiController : Controller
     {
         private PhotosOfUsContext _context;
+        private readonly CardRepository _cardRepository;
 
-        public CardApiController(PhotosOfUsContext context)
+        public CardApiController(PhotosOfUsContext context, CardRepository cardRepository)
         {
             _context = context;
+            _cardRepository = cardRepository;
         }
 
         [HttpGet]
@@ -38,7 +40,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = new CardRepository(_context).AddMultiple(photographer.UserID, quantity);
+            var nCard = _cardRepository.AddMultiple(photographer.UserID, quantity);
 
             return nCard.Select(CardViewModel.ToViewModel).ToList();
         }

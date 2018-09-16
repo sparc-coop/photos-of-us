@@ -25,21 +25,6 @@ namespace PhotosOfUs.Model.Models
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
 
-
-        public PhotosOfUsContext()
-        { }
-
-        public IConfigurationRoot Configuration { get; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer(@"Trusted_Connection=False;Encrypt=True;");
-                base.OnConfiguring(optionsBuilder);
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Address>(entity =>
@@ -205,6 +190,11 @@ namespace PhotosOfUs.Model.Models
                     .HasForeignKey(d => d.PhotographerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Photo_Photographer");
+
+                entity.Property(x => x.SuggestedTags)
+                    //.HasConversion(x => JsonConvert.DeserializeObject<RootObject>(x),
+                    //x => JsonConvert.SerializeObject(x))
+                ;
             });
 
             modelBuilder.Entity<User>(entity =>

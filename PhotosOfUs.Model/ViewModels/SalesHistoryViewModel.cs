@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PhotosOfUs.Model.Models;
-using PhotosOfUs.Model.Repositories;
 
 namespace PhotosOfUs.Model.ViewModels
 {

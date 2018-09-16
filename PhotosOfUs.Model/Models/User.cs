@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -39,5 +40,18 @@ namespace PhotosOfUs.Model.Models
         public ICollection<Photo> Photo { get; set; }
         public ICollection<PrintPrice> PrintPrice { get; set; }
         public Address Address { get; set; }
+
+        public Claim[] GenerateClaims()
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer"),
+                new Claim("userid", Id.ToString())
+            };
+
+            return claims.ToArray();
+        }
     }
 }

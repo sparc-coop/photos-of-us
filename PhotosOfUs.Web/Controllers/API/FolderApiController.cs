@@ -15,10 +15,12 @@ namespace PhotosOfUs.Web.Controllers.API
     public class FolderApiController : Controller
     {
         private PhotosOfUsContext _context;
+        private readonly FolderRepository _folderRepository;
 
-        public FolderApiController(PhotosOfUsContext context)
+        public FolderApiController(PhotosOfUsContext context, FolderRepository folderRepository)
         {
             _context = context;
+            _folderRepository = folderRepository;
         }
 
         [HttpPost]
@@ -27,7 +29,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var folder = new FolderRepository(_context).Add(name,photographerId);
+            var folder = _folderRepository.Add(name,photographerId);
 
             return FolderViewModel.ToViewModel(folder);
         }
@@ -39,7 +41,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
-            var folder = new FolderRepository(_context).Rename(model.Id,model.NewName, photographerId);
+            var folder = _folderRepository.Rename(model.Id,model.NewName, photographerId);
 
             return FolderViewModel.ToViewModel(folder);
         }
@@ -48,7 +50,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("DeleteFolder/{id:int}")]
         public IActionResult DeleteFolder(int id)
         {
-            new FolderRepository(_context).Delete(id);
+            _folderRepository.Delete(id);
 
             return Ok();
         }

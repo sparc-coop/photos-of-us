@@ -17,17 +17,25 @@ namespace PhotosOfUs.Web.Controllers.API
     public class PhotoApiController : Controller
     {
         private PhotosOfUsContext _context;
+        private readonly PhotoRepository _photoRepository;
+        private readonly PrintRepository _printRepository;
+        private readonly OrderRepository _orderRepository;
+        private readonly UserRepository _userRepository;
 
-        public PhotoApiController(PhotosOfUsContext context)
+        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, PrintRepository printRepository, OrderRepository orderRepository, UserRepository userRepository)
         {
             _context = context;
+            _photoRepository = photoRepository;
+            _printRepository = printRepository;
+            _orderRepository = orderRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
         [Route("{photoId:int}")]
         public PhotoViewModel GetPhoto(int photoId)
         {
-            var photo = new PhotoRepository(_context).GetPhoto(photoId);
+            var photo = _photoRepository.GetPhoto(photoId);
             return PhotoViewModel.ToViewModel(photo);
         }
 
@@ -35,7 +43,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPublicIds")]
         public List<int> GetPublicIds()
         {
-            var photos = new PhotoRepository(_context).GetPublicPhotos();
+            var photos = _photoRepository.GetPublicPhotos();
 
             List<int> photoIds = new List<int>();
             foreach(var photo in photos)
@@ -50,7 +58,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetCodePhotos/{code}")]
         public List<PhotoViewModel> GetCodePhotos(string code)
         {
-            List<Photo> photo = new PhotoRepository(_context).GetPhotosByCode(code);
+            List<Photo> photo = _photoRepository.GetPhotosByCode(code);
             return PhotoViewModel.ToViewModel(photo).ToList();
         }
 
@@ -58,7 +66,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            var printType = new PrintRepository(_context).GetPrintTypes();
+            var printType = _printRepository.GetPrintTypes();
             return PrintTypeViewModel.ToViewModel(printType);
         }
 
@@ -66,7 +74,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPhotographer/{id:int}")]
         public UserViewModel GetPhotographer(int id)
         {
-            var photographer = new UserRepository(_context).Find(id);
+            var photographer = _userRepository.Find(id);
             return UserViewModel.ToViewModel(photographer);
         }
 
@@ -76,7 +84,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var folders = new PhotoRepository(_context).GetFolders(photographerId);
+            var folders = _photoRepository.GetFolders(photographerId);
 
             return FolderViewModel.ToViewModel(folders);
         }
@@ -85,7 +93,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderPhotos/{id:int}")]
         public List<CustomerOrderViewModel> GetOrderPhotos(int id)
         {
-            List<Order> orders = new OrderRepository(_context).GetUserOrders(id);
+            List<Order> orders = _orderRepository.GetUserOrders(id);
             return CustomerOrderViewModel.ToViewModel(orders).ToList();
         }
 
@@ -93,7 +101,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderItems/{id:int}")]
         public List<OrderDetailViewModel> GetOrderItems(int id)
         {
-            return new OrderRepository(_context)
+            return _orderRepository
                 .GetOrderDetails(id)
                 .Select(x => OrderDetailViewModel.ToViewModel(x))
                 .ToList();
@@ -103,8 +111,8 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetForDownload/{id:int}")]
         public IActionResult GetForDownload(int id)
         {
-            Order order = new OrderRepository(_context).GetOpenOrder(id);
-            List<OrderDetail> items = new OrderRepository(_context).GetOrderDetails(order.Id);
+            Order order = _orderRepository.GetOpenOrder(id);
+            List<OrderDetail> items = _orderRepository.GetOrderDetails(order.Id);
 
             //DownloadPhotos(items);
 
@@ -115,7 +123,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetAllTags")]
         public List<TagViewModel> GetAllTags()
         {
-            var tags = new PhotoRepository(_context).GetAllTags();
+            var tags = _photoRepository.GetAllTags();
 
             return TagViewModel.ToViewModel(tags);
             //return tags;

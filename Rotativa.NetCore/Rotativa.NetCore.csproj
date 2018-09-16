@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Rotativa\wkhtmltoimage.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -32,7 +28,6 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>A port of the Rotativa library for the ASP.NET Core library.</Description>
     <PackageReleaseNotes>This is the initial version of the port and might have some bugs as it is not fully tested.</PackageReleaseNotes>

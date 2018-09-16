@@ -19,15 +19,21 @@ namespace PhotosOfUs.Web.Controllers
     public class PhotoController : Controller
     {
         private PhotosOfUsContext _context;
+        private readonly OrderRepository _orderRepository;
+        private readonly PhotoRepository _photoRepository;
+        private readonly UserRepository _userRepository;
 
-        public PhotoController(PhotosOfUsContext context)
+        public PhotoController(PhotosOfUsContext context, OrderRepository orderRepository, PhotoRepository photoRepository, UserRepository userRepository)
         {
             _context = context;
+            _orderRepository = orderRepository;
+            _photoRepository = photoRepository;
+            _userRepository = userRepository;
         }
 
         public ActionResult Purchase(int id)
         {
-            var photo = new PhotoRepository(_context).GetPhoto(id);
+            var photo = _photoRepository.GetPhoto(id);
 
             var viewModel = PhotoViewModel.ToViewModel(photo);
 
@@ -36,13 +42,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Cart(int id)
         {
-            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            Order order = _orderRepository.GetOpenOrder(id);
             return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
         public ActionResult Checkout(int id)
         {
-            Order order = new OrderRepository(_context).GetOpenOrder(id);
+            Order order = _orderRepository.GetOpenOrder(id);
             return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
@@ -53,14 +59,14 @@ namespace PhotosOfUs.Web.Controllers
             var userId = _context.UserIdentity.Find(azureId).UserID;
             StripeConfiguration.SetApiKey("");
 
-            OrderRepository repo = new OrderRepository(_context);
+            OrderRepository repo = _orderRepository;
             Order order = repo.GetOpenOrder(userId);
             repo.OrderStatusPending(order.Id);
             
-            decimal orderTotal = new OrderRepository(_context).GetOrderTotal(order.Id);
+            decimal orderTotal = _orderRepository.GetOrderTotal(order.Id);
 
-            User user = new UserRepository(_context).Find(userId);
-            Address address = new UserRepository(_context).GetAddress(userId);
+            User user = _userRepository.Find(userId);
+            Address address = _userRepository.GetAddress(userId);
 
             var customers = new StripeCustomerService();
             var charges = new StripeChargeService();

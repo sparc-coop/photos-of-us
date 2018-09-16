@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -23,19 +21,12 @@ namespace PhotosOfUs.Model.Models
         public DateTime UploadDate { get; set; }
         public bool PublicProfile { get; set; }
         public bool IsDeleted { get; set; }
-        [Column("SuggestedTags")]
-        public string SuggestedTagsRaw { get; set; }
+        public RootObject SuggestedTags { get; set; }
 
         public Folder Folder { get; set; }
         public User Photographer { get; set; }
         //public ICollection<OrderDetail> OrderDetail { get; set; }
 
         public ICollection<PhotoTag> PhotoTag { get; set; }
-
-        public RootObject SuggestedTags
-        {
-            get => JsonConvert.DeserializeObject<RootObject>(SuggestedTagsRaw);
-            set => SuggestedTagsRaw = JsonConvert.SerializeObject(value);
-        }
     }
 }

@@ -16,10 +16,12 @@ namespace PhotosOfUs.Web.Controllers
     public class CustomerController : Controller
     {
         private PhotosOfUsContext _context;
+        private OrderRepository _orderRepository;
 
-        public CustomerController(PhotosOfUsContext context)
+        public CustomerController(PhotosOfUsContext context, OrderRepository orderRepository)
         {
             _context = context;
+            _orderRepository = orderRepository;
         }
 
         public ActionResult Index()
@@ -33,7 +35,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult OrderHistory(int id)
         {
-            List<Order> orders = new OrderRepository(_context).OrderHistory(id);
+            List<Order> orders = _orderRepository.OrderHistory(id);
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
 
@@ -41,7 +43,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userId = _context.UserIdentity.Find(azureId).UserID;
-            List<Order> orders = new OrderRepository(_context).OrderHistory(userId);
+            List<Order> orders = _orderRepository.OrderHistory(userId);
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
     }

@@ -27,11 +27,11 @@ namespace PhotosOfUs.Model.Models
             Regex regex = new Regex("^\\?", RegexOptions.IgnoreCase);
             Regex regex2 = new Regex("\\+", RegexOptions.IgnoreCase);
             string cleaned = regex.Replace(queryString, "");
-            var queryArray = cleaned.Split("&");
+            var queryArray = cleaned.Split('&');
 
             foreach(string queryPair in queryArray)
             {
-                string[] pairArray = queryPair.Split("=");
+                string[] pairArray = queryPair.Split('=');
                 if (pairArray.Length != 2) return;
 
                 var property = this.GetType().GetProperty(pairArray[0]);

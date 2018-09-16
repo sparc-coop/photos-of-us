@@ -6,16 +6,23 @@ using System.Text;
 using PhotosOfUs.Model.ViewModels;
 using System.IO;
 using PhotosOfUs.Model.Services;
+using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Kuvio.Kernel.Auth;
+using Kuvio.Kernel.Azure;
 
 namespace PhotosOfUs.Model.Repositories
 {
     public class UserRepository
     {
         private PhotosOfUsContext _context;
+        private StorageContext _storageContext;
 
-        public UserRepository(PhotosOfUsContext context)
+        public UserRepository(PhotosOfUsContext context, StorageContext storageContext)
         {
             _context = context;
+            _storageContext = storageContext;
         }
 
         public User Find(int userId)
@@ -80,7 +87,7 @@ namespace PhotosOfUs.Model.Repositories
 
             stream.Position = 0;
             var container = new MemoryStream();
-            var containerBlob = StorageHelpers.Container("photos").GetBlockBlobReference(url);
+            var containerBlob = _storageContext.Container("photos").GetBlockBlobReference(url);
             containerBlob.Properties.CacheControl = "public, max-age=31556926";
             container.Position = 0;
             await containerBlob.UploadFromStreamAsync(stream);
@@ -89,7 +96,7 @@ namespace PhotosOfUs.Model.Repositories
             stream.Position = 0;
             var thumbnail = new MemoryStream();
             ImageHelper.ConvertImageToThumbnailJpg(stream, thumbnail, extension);
-            var thumbnailBlob = StorageHelpers.Container("thumbnails").GetBlockBlobReference(url);
+            var thumbnailBlob = _storageContext.Container("thumbnails").GetBlockBlobReference(url);
             thumbnailBlob.Properties.CacheControl = "public, max-age=31556926";
             thumbnail.Position = 0;
             await thumbnailBlob.UploadFromStreamAsync(thumbnail);
@@ -107,6 +114,53 @@ namespace PhotosOfUs.Model.Repositories
         public Address GetAddress(int userId)
         {
             return _context.Address.Where(x => x.UserId == userId).First();
+        }
+
+        private UserIdentity GetIdentity(ClaimsPrincipal principal)
+        {
+            var identity = _context.UserIdentity.Include(x => x.User).FirstOrDefault(x => x.AzureID == principal.AzureID());
+            if (identity == null)
+            {
+                var baseUser = _context.User.FirstOrDefault(x => x.Email == principal.Email());
+                if (baseUser == null)
+                {
+                    baseUser = new User
+                    {
+                        CreateDate = DateTime.UtcNow,
+                        DisplayName = principal.DisplayName(),
+                        Email = principal.Email(),
+                        IsPhotographer = principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer")
+
+                    };
+                    _context.User.Add(baseUser);
+                    _context.SaveChanges();
+                }
+
+                identity = new UserIdentity
+                {
+                    AzureID = principal.AzureID(),
+                    IdentityProvider = "Azure",
+                    CreateDate = DateTime.UtcNow,
+                    UserID = baseUser.Id
+                };
+                _context.UserIdentity.Add(identity);
+                _context.SaveChanges();
+            }
+
+            return identity;
+        }
+
+        public void Login(ClaimsPrincipal principal)
+        {
+            var identity = GetIdentity(principal);
+
+            // Logging in is simply adding claims to the existing principal
+            foreach (var claim in identity.User.GenerateClaims().Where(x => !principal.HasClaim(y => y.Type == x.Type)))
+                (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
+
+            // And setting a new login date
+            identity.LastLoginDate = DateTime.UtcNow;
+            _context.SaveChanges();
         }
     }
 }
