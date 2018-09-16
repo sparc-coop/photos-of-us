@@ -29,6 +29,16 @@ namespace PhotosOfUs.Model.Repositories
             return order;
         }
 
+        public Order OrderStatusPending(int id)
+        {
+            Order order = _context.Order.Where(x => x.Id == id).FirstOrDefault();
+            order.OrderStatus = "Pending";
+
+            _context.Order.Update(order);
+            _context.SaveChanges();
+            return order;
+        }
+
         public Order GetOrder(int orderId)
         {
             Order order = _context.Order.Where(x => x.Id == orderId).Include("OrderDetail").FirstOrDefault();
@@ -51,7 +61,15 @@ namespace PhotosOfUs.Model.Repositories
             orderItem.PhotoId = photoId;
             orderItem.PrintTypeId = itemId;
             orderItem.Quantity = quantity;
-            orderItem.UnitPrice = (decimal)photo.Price + (decimal)type.BaseCost;
+            if(photo.Price != null)
+            {
+                orderItem.UnitPrice = (decimal)photo.Price + (decimal)type.BaseCost;
+            }
+            else
+            {
+                orderItem.UnitPrice = (decimal)type.BaseCost;
+            }
+            
 
             _context.OrderDetail.Add(orderItem);
             _context.SaveChanges();
@@ -94,15 +112,6 @@ namespace PhotosOfUs.Model.Repositories
         {
             return _context.Order.Where(x => x.UserId == userId).ToList();
         }
-
-        //public List<Order> GetPhotographerOrders(List<OrderDetail> orderItems)
-        //{
-        //    List<Order> orders = new List<Order>();
-        //    var orderIds = orderItems.GroupBy(x => x.OrderId);
-                
-        //    return orders;
-        //}
-
 
         public List<Order> GetOrders(int userId, SalesQueryModel query = null)
         {

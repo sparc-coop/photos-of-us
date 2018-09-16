@@ -20,6 +20,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string Resolution { get; set; }
         public string FileSize { get; set; }
         public User Photographer { get; set; }
+        public string WaterMarkUrl { get; set; }
         public string SuggestedTagsRaw { get; set; }
         public RootObject SuggestedTags { get; set; }
 
@@ -38,6 +39,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.FolderId = entity.FolderId;
             viewModel.Url = entity.Url;
             viewModel.ThumbnailUrl = entity.Url.Replace("/photos/", "/thumbnails/");
+            viewModel.WaterMarkUrl = entity.Url.Replace("/photos/", "/watermark/");
             viewModel.Code = entity.Code;
             viewModel.Name = entity.Name;
             viewModel.UploadDate = entity.UploadDate;

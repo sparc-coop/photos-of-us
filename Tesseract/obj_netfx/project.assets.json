@@ -1935,9 +1935,6 @@
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
       "projectUniqueName": "C:\\Users\\Nanrod\\Source\\Repos\\PhotosOfUs\\Tesseract\\Tesseract.NetCore.csproj",
       "projectName": "Tesseract.NetCore",

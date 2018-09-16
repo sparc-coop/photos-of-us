@@ -57,7 +57,7 @@ namespace PhotosOfUs.Web.Controllers
             }
             else
             {
-                return Redirect("/Customer/OrderHistory/" + userId);
+                return Redirect("/Photographer/Search");
             }
         }
 
@@ -77,6 +77,11 @@ namespace PhotosOfUs.Web.Controllers
         {
             var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
+        }
+
+        public ActionResult PublicCode()
+        {
+            return View();
         }
 
         public ActionResult Code(int id)
@@ -254,12 +259,17 @@ namespace PhotosOfUs.Web.Controllers
             //    return ocrResult.Code;
             //}
             var listoftags = new List<TagViewModel>();
-            List<string> result = tags.Split(' ').ToList();
-
-            foreach (string obj in result)
+            if (tags != null)
             {
-                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                List<string> result = tags.Split(' ').ToList();
+
+                foreach (string obj in result)
+                {
+                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                }
             }
+            
+
 
             var filePath = Path.GetTempFileName();
 
@@ -321,11 +331,17 @@ namespace PhotosOfUs.Web.Controllers
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
-            return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
+            return Json(new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
 
         public ActionResult Profile(int id)
         {
+            if (id == 0)
+            {
+                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                id = _context.UserIdentity.Find(azureId).UserID;
+            }
+
             var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
             var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             

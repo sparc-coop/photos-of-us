@@ -270,9 +270,12 @@ namespace PhotosOfUs.Model.Repositories
                     .Where(cm => cm.PhotoId == photo.Id)
                     .ToList();
 
-                foreach (PhotoTag tag in tagsfromphoto)
+                foreach (PhotoTag phototag in tagsfromphoto)
                 {
-                    phototags.Add(tag);
+                    if (!phototags.Any(x => x.Tag == phototag.Tag))
+                    {
+                        phototags.Add(phototag);
+                    }
                 }
             }
 
@@ -288,11 +291,11 @@ namespace PhotosOfUs.Model.Repositories
             return phototags;
         }
 
-        public void DeletePhotos(List<Photo> photos)
+        public void DeletePhotos(List<int> photos)
         {
-            foreach (Photo photo in photos)
+            foreach (int photo in photos)
             {
-                var photodb = _context.Photo.Find(photo.Id);
+                var photodb = _context.Photo.Where(x => x.Id == photo).FirstOrDefault();
                 photodb.IsDeleted = true;
             }
             _context.SaveChanges();

@@ -11,26 +11,22 @@
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
 
 @section ProfileImageBackdrop {
-    <div class="nav-padding"></div>
     <div class="photographer-search photographer-search__title_yellow">
-        LESS FAFF, MORE SNAPS
+        LESS CHAT, MORE SNAPS
     </div>
     <div class="photographer-search--backdrop"></div>
 }
-<div ng-controller="PhotographerCtrl" ng-init="loadTags();">
-    <div class="photographer-search-wrap">
-        <div class="photographer-search">
-            <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
-                <auto-complete source="loadedtags"></auto-complete>
-                <button type="submit" ng-click="searchPhotos(tags)" class="photographer-searchButton">
-                    <img src="~/images/icons/magnifier_white.png" />
-                </button>
-            </tags-input>
-        </div>
+<div ng-controller="PhotographerCtrl" ng-init="getAllTags();">
+    <div class="photographer-search__container">
+        <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
+            <auto-complete source="loadTags($query)"></auto-complete>
+            <button type="submit" ng-click="searchPhotos(tags)" class="photographer-searchButton">
+                <img src="~/images/icons/magnifier_white.png" />
+            </button>
+        </tags-input>
     </div>
     <div>
-        <div class="grid">
-            <div class="grid-sizer"></div>
+        <div class="search--grid">
             @foreach (var Photo in @Model)
             {
                 <div class="grid-item">
@@ -40,47 +36,4 @@
         </div>
         {{ arrangePhotos() }}
     </div>
-
 </div>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    /* force scrollbar */
-    html {
-        overflow-y: scroll;
-    }
-
-    body {
-        font-family: sans-serif;
-    }
-
-    .grid {
-        /*background: #DDD;*/
-    }
-
-        /* clear fix */
-        .grid:after {
-            content: '';
-            display: block;
-            clear: both;
-        }
-
-    /* ---- .grid-item ---- */
-
-    .grid-sizer,
-    .grid-item {
-        width: 33%;
-        padding: 10px;
-    }
-
-    .grid-item {
-        float: left;
-    }
-
-        .grid-item img {
-            display: block;
-            width: 100%;
-        }
-</style>

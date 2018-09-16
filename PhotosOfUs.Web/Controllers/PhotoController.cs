@@ -53,7 +53,10 @@ namespace PhotosOfUs.Web.Controllers
             var userId = _context.UserIdentity.Find(azureId).UserID;
             StripeConfiguration.SetApiKey("");
 
-            Order order = new OrderRepository(_context).GetOpenOrder(userId);
+            OrderRepository repo = new OrderRepository(_context);
+            Order order = repo.GetOpenOrder(userId);
+            repo.OrderStatusPending(order.Id);
+            
             decimal orderTotal = new OrderRepository(_context).GetOrderTotal(order.Id);
 
             User user = new UserRepository(_context).Find(userId);
