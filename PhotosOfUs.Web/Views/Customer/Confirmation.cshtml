@@ -1,0 +1,41 @@
+﻿@model List<CustomerOrderViewModel>
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+<div class="confirmation" ng-controller="CheckoutCtrl" ng-init="initConfirmation()">
+    <div class="header-large">Thank You For Your Order!</div>
+    <div class="divider"></div>
+    <div class="heading">Order Information</div>
+    <div ng-cloak>
+        <div class="content">
+            <div class="content--info">Full Name</div> 
+            {{user.FirstName == null ? user.DisplayName : user.FirstName}} {{user.LastName == null ? '' : user.LastName}}
+        </div>
+        <div class="content">
+            <div class="content--info">Phone Number</div>
+            {{address.Phone}}
+        </div>
+        <div class="content">
+            <div class="content--info">Address</div>
+            {{address.Address1}}
+        </div>
+        <div class="content">
+            <div class="content--info">City & State</div>
+            {{address.City}}, {{address.State}}
+        </div>
+        <div class="content">
+            <div class="content--info">Zip</div>
+            {{address.ZipCode}}
+        </div>
+        <div class="content">
+            <div class="content--info">Email</div>
+            {{address.Email}}
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div ng-cloak>
+        <div class="content"><div class="content--info">Total Items</div>{{order.OrderDetail.length}}</div>
+        <div class="content"><div class="content--info">Shipping Time</div>Ground Shipping</div>
+        <div class="content"><div class="content--info">Total Cost</div>${{orderTotal}}</div>
+    </div>
+</div>

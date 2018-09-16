@@ -1,0 +1,227 @@
+﻿@{
+    ViewBag.Title = "Sign Up";
+    Layout = null;
+}
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.css" />
+<link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<div style="display: flex;    width: 100%; height: 100%;">
+    <div style="flex-grow: 0;width: calc(60% - 60px);padding: 30px;position: relative;">
+        <div>
+            <img style="width: 45px; margin: 20px 0px 0px 20px;    float: left;" src="https://photosofus-dev.azurewebsites.net/images/logo.png" alt="Photo Of Us" />
+        </div>
+        <div style="margin: auto;position: absolute;margin-right: auto;margin-left: auto;width: calc(100% - 60px);top: 50%;transform: translateY(-50%);">
+            <div style="width: 60%; margin: auto;">
+                <div style="text-align:center">
+                    <h3 class="login__header">Join Photos Of Us</h3>
+                    <text>Already have an account? <a href="https://photosofus-dev.azurewebsites.net/Photographer/Dashboard">Sign In</a></text>
+                    <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
+                </div>
+                <div id="api" data-name="Unified">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="flex-grow: 1;    background: #19C0DB;  height: 100%; background-image: url(https://photosofus.blob.core.windows.net/login/Sample_picture.PNG); background-size: cover;">
+    </div>
+</div>
+
+
+
+<style type="text/css">
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        margin: 0;
+        font-family: Poppins;
+    }
+
+    .intro {
+        display: none;
+    }
+
+    ul {
+        padding: 0;
+    }
+    /*.localAccount .create {
+        display: none;
+    }*/
+
+    .login__header {
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 42px;
+        color: #194952;
+        letter-spacing: 0;
+    }
+
+    #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #next {
+        background: #C0DB19;
+    }
+
+    #FacebookExchange {
+        color: white;
+        background-color: blue;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: white;
+        width: 96%;
+        margin-top: 10px;
+        margin-right: 100px;
+    }
+
+    #GoogleExchange {
+        background: #F44336;
+    }
+
+    #SignInWithLogonNameExchange, #GoogleExchange, #SignUpWithLogonEmailExchange, #next, #continue {
+        border-radius: 4px;
+        width: 100%;
+        font-family: Poppins;
+        font-size: 16px;
+        color: #FDFDFD;
+        letter-spacing: 0;
+        border: none;
+        height: 40px;
+        margin-bottom: 30px;
+        cursor: pointer;
+    }
+
+    .localAccount .entry .entry-item {
+        position: relative;
+    }
+
+    .verificarionInfoText #email_intro {
+        display: none;
+    }
+
+    .attrEntry .helpText {
+        display: none;
+    }
+
+    .attr li {
+        padding-left: -40px;
+        list-style: none;
+    }
+
+    .attrEntry label {
+        font-family: "Open Sans";
+        font-size: 10px;
+        color: #757575;
+        display: inline;
+        padding-bottom: 8px;
+    }
+
+    .attrEntry input {
+        width: 95.5%;
+        padding: 7px 10px;
+        border: 1px solid #43C6BA;
+        border-radius: 3px;
+        outline: none;
+        margin-bottom: 10px;
+    }
+
+    .helpLink .tiny {
+        display: none;
+    }
+
+    .tiny {
+        display: none;
+    }
+
+    .error.itemLevel {
+        display: none;
+    }
+    
+    .error.itemLevel p {
+        display: none;
+    }
+
+    #logonIdentifier, #password {
+        width: 95.5%;
+        padding: 7px 10px;
+        border: 1px solid #43C6BA;
+        border-radius: 3px;
+        outline: none;
+        margin-bottom: 10px;
+    }
+
+    #forgotPassword {
+        right: 15px;
+        font-size: 12px;
+        color: #C2C2C2;
+        letter-spacing: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .buttons #continue {
+        color: black;
+        background-color: yellow;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: white;
+        margin-top: 10px;
+        margin-right: 100px;
+    }
+    button#continue:disabled {
+        color: white;
+        background: grey;
+    }
+
+    .buttons #cancel {
+        display: none;
+    }
+
+    #api .entry button {
+        color: black;
+        background-color: yellow;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: white;
+        width: 96%;
+        margin-top: 10px;
+        margin-right: 100px;
+    }
+
+
+    .divider {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid #DADADA;
+        line-height: 0.1em;
+        margin: 10px 0 40px;
+    }
+
+        .divider h2 {
+            background: #fff;
+            padding: 0 10px;
+            font-size: 16px;
+            text-transform: lowercase;
+        }
+
+    .create {
+        text-align: center;
+    }
+
+        .create p {
+            font-size: 16px;
+            color: #272727;
+            letter-spacing: 0;
+            margin-bottom: 0;
+        }
+
+    #createAccount {
+        margin-left: 6px;
+    }
+
+    .divider:nth-of-type(4) {
+        display: none;
+    }
+</style>
+

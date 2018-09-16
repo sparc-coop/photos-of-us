@@ -32,18 +32,32 @@
             border: none;
             outline: none;
 
-            img {
-                padding-right: 11px;
-                vertical-align: middle;
-                margin-top: -5px;
-            }
+        &--payment {
+            position: absolute;
+            bottom: 65px;
+            width: 240px;
 
-            &--large {
-                font-size: 22px;
-                width: 330px;
-                padding: 11px 0;
-                float: right;
+            &.disabled{
+                background: $text-gray;
+                cursor: not-allowed;
             }
+        }
+    }
+
+    &--checkout--preview {
+        cursor: pointer;
+        outline: none;
+        background-color: $dark;
+        text-align: center;
+        width: 239px;
+        padding: 12px 0;
+        border-radius: 6px;
+        position: absolute;
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 22px;
+        bottom: 16px;
+        color: $red;
 
             &--payment {
                 float: right;
@@ -66,18 +80,38 @@
             bottom: 16px;
             color: $red;
 
-            img {
-                padding-right: 11px;
-                vertical-align: middle;
-                margin-top: -5px;
-            }
-        }
+    &--save-changes {
+        font-family: 'Dosis', sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        color: $yellow;
+        letter-spacing: 0;
+        background-color: transparent;
+        border: 2px solid $yellow;
+        border-radius: 8px;
+        padding: 2px 40px 3px;
+        margin: 35px 5px 2px 0;
+        position: absolute;
+        bottom: 22px;
+        right: 22px;
+        cursor: pointer;
+    }
 
-        &--upload {
-            position: absolute;
-            bottom: 40px;
-            right: 56px;
-        }
+    &--discard-changes {
+        font-family: 'Dosis', sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        color: $red;
+        letter-spacing: 0;
+        background-color: transparent;
+        border: 0;
+        padding: 5px 20px;
+        margin: 35px 0 2px 0;
+        position: absolute;
+        bottom: 22px;
+        right: 218px;
+        cursor: pointer;
+    }
 
         &--save-changes {
             font-family: 'Dosis', sans-serif;
@@ -95,20 +129,20 @@
             right: 22px;
         }
 
-        &--discard-changes {
-            font-family: 'Dosis', sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-            color: $red;
-            letter-spacing: 0;
-            background-color: transparent;
-            border: 0;
-            padding: 5px 20px;
-            margin: 35px 0 2px 0;
-            position: absolute;
-            bottom: 22px;
-            right: 218px;
-        }
+    &--go {
+        display: inline;
+        border-radius: 0 8px 8px 0;
+        background: $black;
+        color: $white;
+        padding: 11.5px;
+        cursor: pointer;
+        font-family: "Open Sans";
+        font-weight: 600;
+        font-size: 20px;
+        vertical-align: middle;
+        text-decoration: none;
+        border: none;
+    }
 
         &--back {
             height: 19px;
@@ -173,3 +207,16 @@
             }
         }
     }
+
+    &--download {
+        border: 2px solid $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        position: absolute;
+        right: 200px;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+    }
+}

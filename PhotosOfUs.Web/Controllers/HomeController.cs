@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PhotosOfUs.Web.Controllers
@@ -13,10 +14,20 @@ namespace PhotosOfUs.Web.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectToAction("Dashboard", "Photographer");
+            return View("Landing");
         }
 
         public IActionResult Homepage()
+        {
+            return View("Landing");
+        }
+
+        public IActionResult Pricing()
+        {
+            return View();
+        }
+
+        public IActionResult Landing()
         {
             return View();
         }
@@ -32,6 +43,20 @@ namespace PhotosOfUs.Web.Controllers
         {
             ViewData["Message"] = "Your contact page.";
 
+            return View();
+        }
+
+        [AllowAnonymous]
+        [EnableCors("LoginPolicy")]
+        public ActionResult AzureSignIn()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [EnableCors("LoginPolicy")]
+        public ActionResult AzureSignUp()
+        {
             return View();
         }
 

@@ -15,6 +15,7 @@
     a {
         text-decoration: none;
         color: $white;
+        vertical-align: middle;
     }
 
     .logo {
@@ -30,6 +31,11 @@
             margin: 0 26px;
             cursor: pointer;
         }
+
+        .menu-item:hover {
+            padding-bottom: 5px;
+            border-bottom: 2px solid $yellow;
+        }
     }
 
     &--right {
@@ -38,11 +44,28 @@
         margin-top: -11px;
 
         img {
-            padding: 10px;
+            padding: 5px 10px 10px 10px;
             outline: none;
             cursor: pointer;
             vertical-align: middle;
+            height: 30px;
         }
+
+        .img-cart {
+            background-color: $dark;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 7px 10px 0 0;
+            padding: 4px;
+            vertical-align: middle;
+
+            img {
+                height: 14px;
+                padding: 5px;
+                margin-top: -5px;
+            }
+        }
+
 
         .login {
             margin-top: 10px;
@@ -50,14 +73,16 @@
 
         .profileImg {
             outline: none;
+            padding: 0;
             cursor: pointer;
             vertical-align: middle;
             height: 34px;
             width: 34px;
             border-radius: 100px;
-            border: 1px solid $yellow;
+            border: 2px solid $yellow;
             background-color: $dark;
             display: inline-block;
+            margin-top: 4px;
         }
 
         .menu-item.active {
@@ -70,12 +95,12 @@
         background-color: $dark;
         z-index: 100;
         width: 212px;
-        height: 280px;
+        height: auto;
         border-radius: 6px;
         margin-top: 46px;
         position: absolute;
         right: 0;
-        padding-top: 15px;
+        padding: 15px 0 10px 0;
 
         &__list {
             padding: 10px 15px 0 15px;
@@ -84,7 +109,7 @@
             font-size: 16px;
             cursor: pointer;
             height: 30px;
-            display:block;
+            display: block;
         }
 
         &__list:hover {
@@ -99,7 +124,7 @@
             border-bottom: 10px solid $dark;
             position: absolute;
             top: -8px;
-            right: 82px;
+            right: 55px;
         }
 
         .logout {
