@@ -25,9 +25,14 @@ namespace PhotosOfUs.Model.Models
         public DateTime CreateDate { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
+        public bool? IsDeactivated { get; set; }
         public string Facebook { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
+        public string Dribbble { get; set; }
         public int TemplateSelected { get; set; }
 
+        public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }

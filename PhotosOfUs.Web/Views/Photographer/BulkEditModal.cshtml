@@ -1,31 +1,38 @@
 ﻿
 @{
     Layout = null;
-    ViewData["Title"] = "BulkEditModal";
 }
 
-<md-dialog class="edit-dialog" ng-init="load()">
-    <md-dialog-content>
-        <div class="col-md-12">
-            <div class="pull-left">
-                <h2 class="header-xs">Bulk Edit <font class="img-amount">({{num}} images selected)</font></h2>
-            </div>
-            <div class="pull-right">
-                <div class="close" aria-label="Close" ng-click="close()"><i class="material-icons">close</i></div>
-            </div>
-        </div>
-        <div class="folder-name">
-            <label>Folder Name:</label>
-        <input placeholder="Enter a name" ng-model="folderName" />
-        </div>
-        <div class="input">
-            <label>Tags:</label>
-            <tags-input ng-model="tags"></tags-input>
-            <div class="bottom">
-                <div>Delete images?</div><button class="btn-apply" ng-click="updatePhotos()">Apply</button>
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
+
+<md-dialog class="bulkedit-dialog">
+    <div class="bulkedit-container" ng-init="getTagsByPhotos(); getPhotoPrice()">
+        <i class="material-icons" ng-click="close()">close</i>
+
+        <h2 id="bulkedit-title">Edit Photos  <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
+
+        <div class="tags">
+            <div>Tags</div>
+            <div>
+                <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
+                    <auto-complete source="loadedtags"></auto-complete>
+
+                </tags-input>
             </div>
         </div>
-    </md-dialog-content>
+
+        <div ng-show="selectedPhotos.length < 2" class="price">
+            <div>Edit Price</div>
+            <input ng-model="price" />
+        </div>
+
+        <div class="clearfix"></div>
+        <button ng-click="deletePhotos(selectedPhotos)" class="btn-delete">Delete Photos</button>
+
+        <button type="submit" class="btn-apply" ng-click="editPhotos(selectedPhotos, tags, price)">
+            Apply
+        </button>
+    </div>
 </md-dialog>
-
-

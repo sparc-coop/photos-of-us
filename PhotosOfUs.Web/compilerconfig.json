@@ -2,5 +2,13 @@
   {
     "outputFile": "wwwroot/css/PoU-Site.css",
     "inputFile": "wwwroot/css/PoU-Site.scss"
+  },
+  {
+    "outputFile": "wwwroot/js/PoU-bundle.es5.js",
+    "inputFile": "wwwroot/js/PoU-bundle.js"
+  },
+  {
+    "outputFile": "wwwroot/js/PoU-bundle.min.es5.js",
+    "inputFile": "wwwroot/js/PoU-bundle.min.js"
   }
 ]

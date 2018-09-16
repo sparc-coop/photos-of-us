@@ -1,5 +1,28 @@
 ﻿@import '../variables.scss';
 
+.bulkedit-dialog {
+    width: 500px;
+}
+
+.bulkedit-container {
+    margin: 30px;
+}
+
+#photosnumber {
+    color: rgba(0,0,0,0.87);
+    font-family: Roboto,Helvetica Neue,sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#bulkedit-title {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 32px;
+    color: #194952;
+    letter-spacing: 0;
+}
+
 .photographer-profile--backdrop  {
     width: 100%;
     height: 344px;
@@ -17,6 +40,21 @@
             width: auto;
         }
     }
+}
+
+.btn-apply {
+    background-color: #FFE261;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    width: 208px;
+    padding: 5px 16px;
+    margin-bottom: 20px;
+    display: block;
+    font-family: 'Dosis';
+    font-weight: bold;
+    font-size: 18px;
+    border-width: 0px;
 }
 
 .photographer-profile--wrapper {
@@ -125,6 +163,7 @@
             padding: 0 5%;
             font-family: 'Dosis';
             font-size: 16px;
+            outline: none;
 
             &::-moz-placeholder {
                 color: $primary;
@@ -168,10 +207,21 @@
     }
 
     .photographer-gallery-container {
+
+        .contain {
+            height: 170px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
         .gallery-image {
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
+            overflow: hidden;
+            height: 170px;
+            object-fit: cover;
+            object-position: center center;
+            //background-repeat: no-repeat;
+            //background-size: cover;
+            //background-position: center;
             cursor: pointer;
             outline: none;
             border-radius: 8px;
@@ -179,7 +229,7 @@
             -webkit-box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
             -moz-box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
             box-shadow: 0px 0px 16px -4px rgba(0,0,0,0.59);
-
+            
             @media (max-width: 991px) {
                 height: 200px;
             }
