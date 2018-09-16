@@ -33,6 +33,11 @@
             position: absolute;
             bottom: 65px;
             width: 240px;
+
+            &.disabled{
+                background: $text-gray;
+                cursor: not-allowed;
+            }
         }
     }
 
@@ -116,6 +121,7 @@
         font-size: 20px;
         vertical-align: middle;
         text-decoration: none;
+        border: none;
     }
 
     &--lostcode {

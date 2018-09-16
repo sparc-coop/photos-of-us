@@ -54,17 +54,28 @@
         left: 30%;
         right: 30%;
     }
+
+    &__container{
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    &--photos{
+        margin-top: 200px;
+    }
 }
 
 .photographer-searchTerm {
-    float: left;
     width: 100%;
+    max-width: 500px;
     border: none;
     padding: 5px;
     height: 60px;
     border-radius: 5px;
     outline: none;
     color: #9DBFAF;
+    margin: 0 auto;
+    margin-top: -240px;
 }
 
 .photographer-searchTerm:focus {
@@ -85,6 +96,7 @@
     cursor: pointer;
     font-size: 20px;
     box-shadow: 5px;
+    outline: none;
 }
 
 .photographer-searchButton img {
@@ -94,18 +106,13 @@
 }
 
 /*Resize the wrap to see the search bar change!*/
-.photographer-search-wrap {
+/*.photographer-search-wrap {
     width: 40%;
     position: absolute;
     top: 10%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-
-.nav-padding {
-    background-color: $primary;
-    height: 20px;
-}
+}*/
 
 tags-input {
 
@@ -127,6 +134,13 @@ tags-input {
     .suggestion-item.selected {
         background-color: $primary !important;
         color: $white !important;
+    }
+
+    .tag-item {
+        border: 1px solid $primary !important;
+        background: none !important;
+        color: $dark !important;
+        font-size: 16px !important;
     }
 }
 
@@ -331,6 +345,48 @@ tags-input {
                     padding: 7px 8px;
                 }
             }
+        }
+    }
+}
+
+.publicCode {
+    .landing .main-landing {
+        height: 100vh;
+
+        .welcome-section {
+            padding: 195px 0 0 15%;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+    }
+
+    .button--go {
+        background-color: #f6ffff;
+        color: $dark;
+        height: 51px;
+    }
+}
+
+.search--grid {
+    margin-top: 200px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .grid-item {
+        width: 31%;
+        padding: 10px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .grid-item {
+        //float: left;
+        img {
+            display: block;
+            width: 100%;
         }
     }
 }

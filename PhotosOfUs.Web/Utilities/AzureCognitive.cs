@@ -35,10 +35,8 @@ namespace PhotosOfUs.Web.Utilities
         // Free trial subscription keys are generated in the westcentralus region.
         // If you use a free trial subscription key, you shouldn't need to change
         // this region.
-        const string uriBase =
-            //"https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
-            "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/";    
-        //old - "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr";
+        const string uriBase = "https://southcentralus.api.cognitive.microsoft.com/vision/v1.0/";    
+       
 
         //tutorial url: "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/ocr";
 

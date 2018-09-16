@@ -7,14 +7,14 @@
 
 <div class="landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
     <div class="main-landing">
-        <img src="~/images/logo.png" class="logo" />
+        <a href="~/Session/SignInPhotographer"><img src="~/images/logo.png" class="logo" /></a>
         <div class="main-landing--img-container">
             <img ng-repeat="photo in photoList" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
         <div class="welcome-section">
             <div class="welcome-text">less chat, more snaps</div>
             <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
-            <a href="~/Session/SignIn" class="button-styling start-button">Get Started</a>
+            <a href="~/Session/SignInPhotographer" class="button-styling start-button">Get Started</a>
         </div>
     </div>
     <div class="steps">
@@ -48,8 +48,8 @@
                 Our photographers often have a collection of photos available to the public,
                 take a look around, maybe you will find something you like!
             </div>
-            <div><button class="button-styling browse-button">Browse The Library</button></div>
-            <div class="subt-4">Already have a photo code?</div>
+            <a href="/Photographer/Search" class="button-styling browse-button">Browse The Library</a>
+            <a href="/Photographer/PublicCode" class="subt-4">Already have a photo code?</a>
         </div>
     </div>
 

@@ -191,12 +191,23 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
         return false;
     }
 
+    $scope.showCart = false;
+
+    $scope.cartPreview = () => {       
+        if ($scope.showCart == false) {
+            $scope.showCart = true;
+            $scope.getOpenOrder($scope.user.Id);
+            $scope.getPrintTypes();
+        }
+        else if ($scope.showCart == true) {
+            $scope.showCart = false;
+        }
+    };
+
     $scope.createOrder = (userId) => {
         console.log($scope.selectedItems);
         var photoId = $location.absUrl().split('Purchase/')[1];
-        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems).then(x => {
-            $window.location.href = '/Photo/Cart/' + userId;
-        });
+        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems);
     };
 
     function testLocalStorage () {
@@ -251,7 +262,9 @@ app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'user
     $scope.getOpenOrder = (userId) => {
         $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
             $scope.order = x.data;
-            $scope.getOrderTotal($scope.order.Id);
+            if (x.data != '') {
+                $scope.getOrderTotal($scope.order.Id);
+            }
         });
     }; 
 
@@ -645,6 +658,11 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
 
+    $scope.goToProfile = (photographerId) => {
+        $window.location.href = '/Photographer/Profile/' + photographerId;
+    };
+
+
     $scope.goToGallery = (folderId) => {
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
@@ -661,6 +679,18 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
             controller: 'UploadController',
             locals: { folder: folderId },
             clickOutsideToClose: true
+        });
+    };
+
+    $scope.openBulkEdit = (code) => {
+        $scope.getPhotosByCode(code);
+        $scope.selectedPhotos = [];
+        angular.forEach($scope.codePhotos, function (item) { $scope.selectedPhotos.push(item.Id) });
+        $mdDialog.show({
+            locals: { selectedPhotos: $scope.selectedPhotos },
+            templateUrl: '/Photographer/BulkEditModal',
+            controller: 'BulkEditModalCtrl',
+            clickOutsideToClose: true,
         });
     };
 
@@ -685,43 +715,49 @@ app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDial
         });
     };
 
+    $scope.getUser = () => {
+        userApi.getUser().then(x => {
+            $scope.user = x.data;
+        });
+    };
+
   
-        var self = this;
+        //var self = this;
 
-        self.readonly = false;
+        //self.readonly = false;
 
-        // Lists of fruit names and Vegetable objects
-        self.fruitNames = ['Apple', 'Banana', 'Orange'];
-        self.ngChangeFruitNames = angular.copy(self.fruitNames);
-        self.roFruitNames = angular.copy(self.fruitNames);
-        self.editableFruitNames = angular.copy(self.fruitNames);
+        //// Lists of fruit names and Vegetable objects
+        //self.fruitNames = ['Apple', 'Banana', 'Orange'];
+        //self.ngChangeFruitNames = angular.copy(self.fruitNames);
+        //self.roFruitNames = angular.copy(self.fruitNames);
+        //self.editableFruitNames = angular.copy(self.fruitNames);
 
-        self.tags = [];
-        self.vegObjs = [
-            {
-                'name': 'Broccoli',
-                'type': 'Brassica'
-            },
-            {
-                'name': 'Cabbage',
-                'type': 'Brassica'
-            },
-            {
-                'name': 'Carrot',
-                'type': 'Umbelliferous'
-            }
-        ];
+        //self.tags = [];
+        //self.vegObjs = [
+        //    {
+        //        'name': 'Broccoli',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Cabbage',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Carrot',
+        //        'type': 'Umbelliferous'
+        //    }
+        //];
 
-        self.newVeg = function (chip) {
-            return {
-                name: chip,
-                type: 'unknown'
-            };
-        };
+        //self.newVeg = function (chip) {
+        //    return {
+        //        name: chip,
+        //        type: 'unknown'
+        //    };
+        //};
 
-        self.onModelChange = function (newModel) {
-            alert('The model has changed');
-        };
+        //self.onModelChange = function (newModel) {
+        //    alert('The model has changed');
+        //};
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
         console.log(url);
@@ -1099,10 +1135,10 @@ app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'pho
 
     });
 }])
-app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) => {
+app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$filter', '$timeout', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, $filter, $timeout, photographerApi, userApi) => {
 
     $scope.tags = [];
-    $scope.loadedtags = [];
+    $scope.allTags = [];
     $scope.isBulkEditEnabled = false;
     $scope.selectedPhotos = [];
     $scope.profilePhotos = [];
@@ -1175,12 +1211,18 @@ app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '
     //    });
     //};
 
-    $scope.loadTags = function () {
+    $scope.getAllTags = function () {
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
-                angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
+                angular.forEach(x.data, function (f) { $scope.allTags.push(f); });
                 console.log(JSON.stringify(x.data));
             });
+    };
+
+    $scope.loadTags = function (query) {
+        return $timeout(function () {
+            return $filter('filter')($scope.allTags, query);
+        });
     };
 
     $scope.getSearchString = function (searchterms) {
@@ -1774,7 +1816,7 @@ app.controller('RandomPhotoCtrl', ['$scope', '$window', '$location', '$http', ($
                 }
             });
 
-        }, 800);
+        }, 0);
     };
 
 }]);

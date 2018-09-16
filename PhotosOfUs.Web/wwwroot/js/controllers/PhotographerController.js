@@ -1,7 +1,7 @@
-﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, photographerApi, userApi) => {
+﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$filter', '$timeout', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, $filter, $timeout, photographerApi, userApi) => {
 
     $scope.tags = [];
-    $scope.loadedtags = [];
+    $scope.allTags = [];
     $scope.isBulkEditEnabled = false;
     $scope.selectedPhotos = [];
     $scope.profilePhotos = [];
@@ -74,12 +74,18 @@
     //    });
     //};
 
-    $scope.loadTags = function () {
+    $scope.getAllTags = function () {
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
-                angular.forEach(x.data, function (f) { $scope.loadedtags.push(f); });
+                angular.forEach(x.data, function (f) { $scope.allTags.push(f); });
                 console.log(JSON.stringify(x.data));
             });
+    };
+
+    $scope.loadTags = function (query) {
+        return $timeout(function () {
+            return $filter('filter')($scope.allTags, query);
+        });
     };
 
     $scope.getSearchString = function (searchterms) {
