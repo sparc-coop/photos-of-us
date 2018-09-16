@@ -9,14 +9,9 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Rotativa.NetCore.Options;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
-using Rotativa.NetCore.Options;
 
 namespace Rotativa.NetCore
 {

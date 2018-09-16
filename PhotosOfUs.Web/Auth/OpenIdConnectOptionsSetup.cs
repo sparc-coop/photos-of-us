@@ -118,7 +118,7 @@ namespace PhotosOfUs.Web.Auth
 
                     context.HandleCodeRedemption(result.AccessToken, result.IdToken);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //TODO: Handle
                     throw;

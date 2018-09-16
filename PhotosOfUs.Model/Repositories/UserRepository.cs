@@ -45,7 +45,7 @@ namespace PhotosOfUs.Model.Repositories
             {
                 _context.SaveChanges();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
