@@ -1,43 +1,50 @@
-﻿@model SalesHistoryViewModel
+﻿@model List<OrderViewModel>
 @{
     ViewData["Title"] = "Sales History";
 }
 
-<div class="photographer-dashboard--wrapper photographer-sales-history" ng-controller="SalesHistoryCtrl">
-    <h2 class="header-large">Good morning, @Model.UserDisplayName</h2>
+<div class="photographer-dashboard--wrapper photographer-sales-history order-history" ng-controller="CheckoutCtrl">
+    <h2 class="header-large">Sales History</h2>
     <div class="yellow-background line--small"></div>
 
-    <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Sales History" ng-model="$scope.query" ng-change="querySalesHistory($scope.query)" ng-model-options='{ debounce: 500 }'/>
+    <div class="flex-box">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Photo Sold</td>
+                    <td>Quantity</td>
+                    <td>Print Type</td>
+                    <td>Print Price</td>
+                    <td>Your Earnings</td>
+                    <td>Order Status</td>
+                </tr>
+            </thead>
 
-        <div class="view-icons align-right">
-            <select>
-                <option>Sales This Month</option>
-                <option>--</option>
-            </select>
-        </div>
-
-    </div>
-    
-    <div class="sales-container">
-        <div class="overlay">
-            <div class="sk-circle">
-                <div class="sk-circle1 sk-child"></div>
-                <div class="sk-circle2 sk-child"></div>
-                <div class="sk-circle3 sk-child"></div>
-                <div class="sk-circle4 sk-child"></div>
-                <div class="sk-circle5 sk-child"></div>
-                <div class="sk-circle6 sk-child"></div>
-                <div class="sk-circle7 sk-child"></div>
-                <div class="sk-circle8 sk-child"></div>
-                <div class="sk-circle9 sk-child"></div>
-                <div class="sk-circle10 sk-child"></div>
-                <div class="sk-circle11 sk-child"></div>
-                <div class="sk-circle12 sk-child"></div>
+        </table>
+        @foreach (var order in Model)
+        {
+            <div class="sales" ng-init="getOrderDetails('@order.Id')" ng-cloak>
+                <div class="date">Order Date: @order.OrderDate.ToShortDateString()</div>
+                <div ng-repeat="order in orderDetailsList" class="sales--row" ng-if="order.OrderId == @order.Id">
+                    <div class="sales--row--name">{{order.Photo.Name}}</div>
+                    <div class="sales--row--quantity">{{order.Quantity}}</div>
+                    <div class="sales--row--type">{{order.PrintType.Type}}, {{order.PrintType.Height}} x {{order.PrintType.Length}}</div>
+                    <div class="sales--row--price">${{order.Photo.Price + order.PrintType.BaseCost | number: 2}}</div>
+                    <div class="sales--row--earning">${{order.Photo.Price}}</div>
+                    <div class="sales--row--status">@order.OrderStatus</div>
+                </div>
             </div>
-        </div>
-        <div class="sales-content">
-            @Html.Partial("Partials/_SalesHistoryPartial")
-        </div>
-    </div>
+        }
+
+    </div>   
+        <div ng-cloak class="flex-box total">
+            <div class="total-counter">
+                <h4>Total Sales</h4>
+                <h3>${{totalSales | number: 2}}</h3>
+            </div>
+            <div class="total-counter">
+                <h4>Total Earned</h4>
+                <h3>${{totalEarned | number: 2}}</h3>
+            </div>
+        </div>   
 </div>

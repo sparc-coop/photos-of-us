@@ -18,6 +18,7 @@ namespace PhotosOfUs.Web.Auth
         public string AzureAdB2CInstance { get; set; }
         public string Tenant { get; set; }
         public string SignUpSignInPolicyId { get; set; }
+        public string SignUpSignInPolicyIdPhotographer { get; set; }
         public string SignInPolicyId { get; set; }
         public string SignUpPolicyId { get; set; }
         public string ResetPasswordPolicyId { get; set; }

@@ -1,0 +1,29 @@
+﻿@model UserViewModel
+<div>
+    <h2 class="header-large">Hello, @Model.DisplayName</h2>
+    
+    <div>
+        <div ng-controller="DownloadCtrl" ng-init="getOrders(@Model.Id)">
+            @*<div ng-click="bulkDownload(@Model.Id)" id="download" class="button--download">Download all photos</div>*@
+            <div ng-repeat="order in orders">
+                <div class="divider"></div>
+                <div>
+                    <div>
+                        <div>Order Id: {{order.Id}}</div>
+                        <div>Order Date: {{order.OrderDate | date}}</div>
+                        <div>Order Status: {{order.OrderStatus}}</div>
+                    </div>
+                    <div ng-repeat="item in orderItems" class="row">
+                        <div>{{item.UnitPrice}}</div>
+                        <div>{{item.Quantity}}</div>
+                        <div ng-repeat="photo in item" ng-if="photo.OrderId == order.Id">
+                            <img class="thumbnail" ng-src="{{photo.Photo.Url}}" alt="photo" />
+                            <a ng-href="{{photo.Photo.Url}}" download="">{{photo.Photo.Name}}</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

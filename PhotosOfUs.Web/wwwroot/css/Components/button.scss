@@ -30,14 +30,20 @@
         }
 
         &--payment {
-            float: right;
-            margin-top: -100px;
+            position: absolute;
+            bottom: 65px;
             width: 240px;
+
+            &.disabled{
+                background: $text-gray;
+                cursor: not-allowed;
+            }
         }
     }
 
     &--checkout--preview {
         cursor: pointer;
+        outline: none;
         background-color: $dark;
         text-align: center;
         width: 239px;
@@ -77,6 +83,7 @@
         position: absolute;
         bottom: 22px;
         right: 22px;
+        cursor: pointer;
     }
 
     &--discard-changes {
@@ -92,6 +99,7 @@
         position: absolute;
         bottom: 22px;
         right: 218px;
+        cursor: pointer;
     }
 
     &--back {
@@ -113,6 +121,7 @@
         font-size: 20px;
         vertical-align: middle;
         text-decoration: none;
+        border: none;
     }
 
     &--lostcode {
@@ -155,5 +164,17 @@
             border-radius: 0;
             cursor: pointer;
         }
+    }
+
+    &--download {
+        border: 2px solid $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        position: absolute;
+        right: 200px;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
     }
 }

@@ -13,10 +13,7 @@
     <div class="background--yellow line--small"></div>
    
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Library" />
-
-
-
+        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library" />
         <div class="view-icons align-right">
             <div class="filter-sort">
                 <select>
@@ -31,28 +28,37 @@
         </div>
     </div>
 
-
-
     <div class="folder-card--wrapper codeView">
         @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))
         {
-            <div class="codeView__row">
-                <a class="codeView__card" href="@Url.Action("PhotoCode", "Photographer")?code=@item.Code">
-                    <div class="codeView__card--title">
-                        <div class="label">Photo Code</div>
-                        <div class="info">@item.Code</div>
-                    </div>
-                    <div class="codeView__card--date">
-                        <div class="label">Date Uploaded</div>
-                        <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
-                    </div>
-                    <div class="codeView__card--edit">Bulk Edit</div>
-                </a>
-                @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
-                {
-                    <div class="photo-card" style="background-image: url(@image.Url)" ng-click="viewPhoto(@image.Id)"></div>
-                }
-            </div>
+        <div class="codeView__row">
+            <a class="codeView__card" ng-click="" ng-if="'@item.Code' != ''" ng-cloak>
+                <div class="codeView__card--title">
+                    <div class="label">Photo Code</div>
+                    <div class="info">@item.Code</div>
+                </div>
+                <div class="codeView__card--date">
+                    <div class="label">Date Uploaded</div>
+                    <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
+                </div>
+                <div class="codeView__card--edit" ng-click="openBulkEdit(@item.Code)">Bulk Edit</div>
+            </a>
+            <a class="codeView__card" ng-if="'@item.Code' == ''" ng-cloak>
+                <div class="codeView__card--title">
+                    <div class="label">Photo Code</div>
+                    <div class="info">@item.Code</div>
+                </div>
+                <div class="codeView__card--date">
+                    <div class="label">Date Uploaded</div>
+                    <div class="info">@item.UploadDate.ToString("dd MMMM yyyy")</div>
+                </div>
+                <div class="codeView__card--edit" ng-click="openBulkEdit(@item.Code)">Bulk Edit</div>
+            </a>
+            @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
+            {
+                <div class="photo-card" style="background-image: url(@image.Url)" ng-click="viewPhoto(@image.Id)"></div>
+            }           
+        </div>
         }
     </div>
 

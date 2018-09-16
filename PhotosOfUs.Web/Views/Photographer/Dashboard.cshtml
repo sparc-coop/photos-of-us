@@ -3,54 +3,65 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="photographer-dashboard--wrapper">
+<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="initFolderCtrl()">
     <h2 class="header-large">Good morning, @Model.Name</h2>
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
     <hr />
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" placeholder="Search Library"/>
+        <input class="input--light-blue searchbox" placeholder="Search Library" ng-model="searchFolder" />
 
         <div class="view-icons align-right">
             <div class="filter-sort">
-                <select>
-                    <option>Date Created</option>
-                    <option>Name</option>
+                <select ng-model="orderByOption">
+                    <option value="CreatedDate">Date Created</option>
+                    <option value="Name">Name</option>
                 </select>
             </div>
 
-            <i class="material-icons">view_list</i>
-            <i class="material-icons selected">apps</i>
+            @*<i class="material-icons">view_list</i>
+            <i class="material-icons selected">apps</i>*@
         </div>
     </div>
 
 
-    <div class="folder-card--wrapper flex-box" ng-controller="FolderCtrl" ng-init="initFolderCtrl()" ng-cloak>
-       
-            <div class="folder-card flex-box" ng-repeat="folder in folders">
-                <a class="full-width-anchor" href="/Photographer/Photos/{{folder.Id}}"></a>
-                <div class="header flex-box">
-                    <div class="grey-ball"></div>
-                    <i class="material-icons align-right">more_vert</i>
-                </div>
-                <div class="photos">
-                    <img ng-repeat="photo in folder.Photos.slice(0,8)" class="tiny-photo" ng-src="{{photo.ThumbnailUrl}}" />
-                </div>
-                <div class="folder-info">
-                    <p class="title">
-                        {{folder.Name}}
-                    </p>
-                    <p class="created-date">
-                        Created: {{folder.CreatedDate | date: 'MMM d, yyyy'}}
-                    </p>
-                    <p class="folder-code">Folder Code: {{folder.Id}}</p>
-                </div>
-            </div>
-        
+    <div class="folder-card--wrapper flex-box" ng-cloak>
         <div class="folder-new" ng-click="newFolderModal()">
             <img src="~/images/icons/folder.png" />
             <div class="label">New Folder</div>
         </div>
+        <div class="folder-card flex-box" ng-repeat="folder in folders | orderBy: orderByOption | filter: searchFolder">
+            <a class="full-width-anchor" href="/Photographer/Photos/{{folder.Id}}"></a>
+            <div class="header flex-box">
+                <div class="grey-ball"></div>
+                @*<i class="material-icons align-right">more_vert</i>*@
+                <md-menu class="align-right">
+                    <md-button ng-click="$mdMenu.open($event)" class="md-icon-button" aria-label="Open sample menu">
+                        <md-icon md-font-icon="material-icons">more_vert</md-icon>
+                    </md-button>
+                    <md-menu-content class="teste">
+                        <md-menu-item><md-button ng-click="renameFolderModal(folder)">Rename</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id)">Delete</md-button></md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </div>
+            <div class="photos">
+                <img ng-repeat="photo in folder.Photos.slice(0,8)" class="tiny-photo" ng-src="{{photo.ThumbnailUrl}}" />
+            </div>
+            <div class="folder-info">
+               
+                <p class="title">
+                    {{folder.Name}}
+                </p>
+                <p class="created-date">
+                    Created: {{folder.CreatedDate | date: 'MMM d, yyyy'}}
+                </p>
+                <p class="folder-code">Folder Code: {{folder.Id}}</p>
+            </div>
+        </div>
+
+
     </div>
 
 </div>
+

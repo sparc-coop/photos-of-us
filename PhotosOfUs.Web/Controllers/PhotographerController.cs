@@ -15,10 +15,12 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Diagnostics;
+using System;
 
 namespace PhotosOfUs.Web.Controllers
 {
-   [Authorize]
+   
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -29,8 +31,9 @@ namespace PhotosOfUs.Web.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
-        
+
         // GET: Photographer
+        [Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Dashboard");
@@ -39,17 +42,27 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
+            
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.User.Find(userId);
 
-            PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-            model.PhotographerId = photographerId;
-            model.Name = User.Identity.Name;
+            if(photographer.IsPhotographer == true)
+            {
+                PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
+                model.PhotographerId = userId;
+                model.Name = User.Identity.Name;
 
-            return View(model);
+                return View(model);
+            }
+            else
+            {
+                return Redirect("/Photographer/Search");
+            }
         }
 
         // GET: Photographer/Details/5
+        [Authorize]
         public ActionResult Photos(int id)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -62,8 +75,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Photo(int id)
         {
-            var photo = new PhotoRepository(_context).GetPhoto(id);
+            var photo = new PhotoRepository(_context).GetPhotoAndPhotographer(id);
             return View(PhotoViewModel.ToViewModel(photo));
+        }
+
+        public ActionResult PublicCode()
+        {
+            return View();
         }
 
         public ActionResult Code(int id)
@@ -161,6 +179,7 @@ namespace PhotosOfUs.Web.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Cards()
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -170,6 +189,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Export(List<int> ids)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -205,18 +225,52 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
-        public async Task<string> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId)
+        public ActionResult BulkEditModal()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
 
+            RootObject tagsfromazure = null;
+
+            var ac = new AzureCognitive(_context);
+            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
+
             if (string.IsNullOrEmpty(photoCode))
             {
-                var ocr = new OCR(_context,_hostingEnvironment);
-                var ocrResult = ocr.GetOCRResult(file,photographerId);
-                return ocrResult.Code;
+                var codefromazure = await ac.MakeRequest(imgbytes, "ocr");
+
+                var suggestedtags = ac.ExtractTags(tagsfromazure);
+                var code = ac.ExtractCardCode(codefromazure);
+
+                return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
+            }
+
+            //if (string.IsNullOrEmpty(photoCode))
+            //{
+            //    var ocr = new OCR(_context,_hostingEnvironment);
+            //    var ocrResult = ocr.GetOCRResult(file,photographerId);
+            //    return ocrResult.Code;
+            //}
+            var listoftags = new List<TagViewModel>();
+            if (tags != null)
+            {
+                List<string> result = tags.Split(' ').ToList();
+
+                foreach (string obj in result)
+                {
+                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                }
             }
             
+
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -224,21 +278,43 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId);
+                    await new PhotoRepository(_context).UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, listoftags);
                 }
             }
 
-            return "";
+            return new AzureCognitiveViewModel();
         }
 
 
 
-
-        public async Task UploadProfilePhotoAsync(IFormFile file, string photoName, string extension)
+        [Authorize]
+        public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            
+
+            RootObject tagsfromazure = null;
+
+            var ac = new AzureCognitive(_context);
+            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
+            var suggestedtags = ac.ExtractTags(tagsfromazure);
+
+            if (string.IsNullOrEmpty(tags))
+            {
+                return AzureCognitiveViewModel.ToViewModel(suggestedtags);
+            }
+
+            double addPrice = double.Parse(price);
+
+            var listoftags = new List<TagViewModel>();
+            List<string> result = tags.Split(' ').ToList();
+
+            foreach (string obj in result)
+            {
+                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+            }
+
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -246,9 +322,11 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName,string.Empty, extension, true);
+                    await new PhotoRepository(_context).UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension, tagsfromazure, listoftags);
                 }
             }
+
+            return AzureCognitiveViewModel.ToViewModel(suggestedtags);
         }
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
@@ -256,25 +334,86 @@ namespace PhotosOfUs.Web.Controllers
             return Json( new { PhotoExisting = new PhotoRepository(_context).IsPhotoCodeAlreadyUsed(1, code) });
         }
 
-        public ActionResult Profile()
+        public ActionResult Profile(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = new PhotoRepository(_context).GetProfilePhotos(photographerId);
+            if (id == 0)
+            {
+                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                id = _context.UserIdentity.Find(azureId).UserID;
+            }
+
+            var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
+            var photos = new PhotoRepository(_context).GetProfilePhotos(photographer.Id);
             
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
-        public ActionResult SalesHistory()
+        [Authorize]
+        public ActionResult SalesHistory(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(userId);
+            var orderItems = new OrderRepository(_context).GetPhotographerOrderDetails(id);
+            List<Order> orders = new List<Order>();
+            foreach(var order in orderItems.GroupBy(x => x.OrderId))
+            {
+                orders.Add(new OrderRepository(_context).GetOrder(order.Key));
+            }
 
-            var orders = new OrderRepository(_context).GetOrders(user.Id);
+            return View(OrderViewModel.ToViewModel(orders).ToList());
+        }
 
-            return View(SalesHistoryViewModel.ToViewModel(user, orders));
+        //[Authorize]
+        //public ActionResult SalesHistory(string query = null)
+        //{
+        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
+        //    UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
+
+        //    // if the user can't be found make a safe but empty return
+        //    if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
+
+
+        //    //var photographerId = userIdentity.UserID;
+        //    var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
+
+
+        //    string queryString = HttpContext.Request.QueryString.ToString();
+        //    SalesQueryModel sqm = new SalesQueryModel(queryString);
+
+        //    var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
+        //    SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
+        //    salesHistory.UserDisplayName = User.Identity.Name;
+        //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
+        //    return View(salesHistory);
+        //}
+
+        public ActionResult Search()
+        {
+            var photos = new PhotoRepository(_context).GetPublicPhotos();
+
+            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
+            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
+            //var getalltags = new PhotoRepository(_context).GetAllTags();
+
+            return View(PhotoViewModel.ToViewModel(photos));
+        }
+
+        public ActionResult Results(string tagnames)
+        {
+            string[] tagarray = tagnames.Split(' ');
+
+            var tags = new PhotoRepository(_context).GetTags(tagarray);
+            var photos = new PhotoRepository(_context).GetPublicPhotosByTag(tags);
+
+            var searchmodel = new SearchViewModel();
+
+            searchmodel.Photos = PhotoViewModel.ToViewModel(photos);
+            searchmodel.Tags = TagViewModel.ToViewModel(tags);
+            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
+            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
+            //var getalltags = new PhotoRepository(_context).GetAllTags();
+
+            return View(searchmodel);
         }
 
         public ActionResult NewFolderModal()
@@ -287,7 +426,17 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult MooOrderModal()
+        {
+            return View();
+        }
+
         public ActionResult Account()
+        {
+            return View();
+        }
+
+        public ActionResult DeactivateModal()
         {
             return View();
         }
@@ -312,6 +461,7 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

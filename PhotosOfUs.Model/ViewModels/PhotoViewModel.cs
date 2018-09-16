@@ -20,6 +20,8 @@ namespace PhotosOfUs.Model.ViewModels
         public string Resolution { get; set; }
         public string FileSize { get; set; }
         public User Photographer { get; set; }
+        public string SuggestedTagsRaw { get; set; }
+        public RootObject SuggestedTags { get; set; }
 
         public static PhotoViewModel ToViewModel(Photo entity)
         {
@@ -40,6 +42,8 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.Name = entity.Name;
             viewModel.UploadDate = entity.UploadDate;
             viewModel.Price = entity.Price;
+            viewModel.SuggestedTags = entity.SuggestedTags;
+            viewModel.SuggestedTagsRaw = entity.SuggestedTagsRaw;
 
             return viewModel;
         }

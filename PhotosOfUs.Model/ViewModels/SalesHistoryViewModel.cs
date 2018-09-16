@@ -16,11 +16,15 @@ namespace PhotosOfUs.Model.ViewModels
     
         public List<OrderViewModel> Orders { get; set; }
 
-        public static SalesHistoryViewModel ToViewModel(User user, List<Order> orders)
+        public static SalesHistoryViewModel ToViewModel(List<Order> orders)
         {
             var viewModel = new SalesHistoryViewModel();
 
-            viewModel.UserDisplayName = user.DisplayName;
+            if (orders.Count > 0)
+            {
+                viewModel.UserDisplayName = orders.First().User.DisplayName;
+            }
+
             viewModel.Orders = new List<OrderViewModel>();
 
             foreach (var order in orders)

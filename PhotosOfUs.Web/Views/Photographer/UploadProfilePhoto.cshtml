@@ -3,7 +3,12 @@
 
     ViewData["Title"] = "Upload Photos";
 }
-
+<link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
+<style>
+    .tag-list {
+        color: black;
+    }
+</style>
 <div id="photographer-upload--wrapper">
     <div class="container-fluid">
         <!-- header -->
@@ -29,17 +34,42 @@
                 </div>
             </div>
             <div class="upload--container">
-                <div id="photo-preview" ng-if="uploader.queue.length > 0">
+                <div class="photo-preview" ng-if="uploader.queue.length > 0">
                     <div class="img-container">
                         <img id="large-photo-thumbnail" ng-src="{{ selectedItem.file.src }}" />
                     </div>
-                    <div class="col-md-8">
-                        <p class="photo-preview-title">Name</p>
-                        <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
+                    <div class="info">
+                        <div class="photo-preview__name">
+                            <p class="photo-preview-title">Name</p>
+                            <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isReady || selectedItem.isUploading || selectedItem.isSuccess"></textarea>
+                        </div>
+                        <div class="photo-preview__dimensions">
+                            <p class="photo-preview-title">Dimensions</p>
+                            <p class="dimensions">{{ selectedItem.file.dimensions }}</p>
+                        </div>
+                    </div>
+                    <div class="photo-preview__pricing">
+                        <p class="photo-preview-title">
+                            Price You Receive For This Photo
+                            <i class="material-icons" ng-mouseenter="hover = true" ng-mouseleave="hover = false">info</i>
+                            <span class="hover" ng-if="hover == true">
+                                This is the amount you will receive upon sale of this photo.
+                            </span>
+                        </p>
+                        <input placeholder="$0.00" ng-model="selectedItem.file.price" type="number" />
+                    </div>
+                    <div>
+                        <div class="col-md-4">
+                            <p class="photo-preview-title">Tags</p>
+                            <tags-input style="width: 90%; margin-left: 15px;" ng-model="selectedItem.tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
+                                <auto-complete source="loadedtags"></auto-complete>
+                            </tags-input>
+                        </div>
                     </div>
                     <div class="col-md-4">
-                        <p class="photo-preview-title">Dimensions</p>
-                        <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
+                        <p class="photo-preview-title">Suggested Tags</p>
+                        <p id="photo-preview-dimensions">{{ selectedItem.suggestedTags }}</p><br />
+                        <p id="photo-preview-dimensions">{{ selectedItem.tags }}</p><br />
                     </div>
                     <div class="clearfix"></div>
                     <div>
@@ -59,7 +89,7 @@
                                     <textarea msd-elastic class="photo-name" spellcheck="false" ng-keyup="photoNameValidation($event, item)" ng-model="item.file.name" rows="1" ng-disabled="item.isReady || item.isUploading || item.isSuccess"></textarea>
                                     <p class="photo-dimensions">{{ item.file.dimensions }}</p>
                                 </div>
-                               
+
                                 <div>
                                     <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>
                                 </div>

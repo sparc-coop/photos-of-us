@@ -1,18 +1,25 @@
-﻿app.controller('PaymentCtrl', ['$scope', '$window', ($scope, $window) => {
+﻿app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $http) => {
 
-    $scope.saveAddress = (address) => {
-        var addressInfo = {
-            FullName: address.FirstName + ' ' + address.LastName
-        };
+    $scope.orderTotal = 0;
 
-        $http.post('/api/Photo/GetPrintTypes', addressInfo).then(x => {
-            $scope.printTypes = x.data;
-            console.log($scope.printTypes);
+    $scope.getOrderDetails = (orderId) => {
+        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+            $scope.orderDetails = x.data;
+            console.log($scope.orderDetails);
+        });
+        angular.forEach($scope.orderDetails, function (value, key) {
+            $scope.orderTotal + value.UnitPrice;
+        }); 
+    };
+
+    $scope.getOrderTotal = (orderId) => {
+        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+            $scope.orderTotal = x.data;
         });
     };
 
     $scope.initStripe = () => {
-        var stripe = Stripe('pk_test_P8L41KOstSk7oCzeV7mDoRY3');
+        var stripe = Stripe('');
         var elements = stripe.elements();
 
         // Custom styling can be passed to options when creating an Element.
@@ -71,7 +78,29 @@
                 }
             });
         });
+    };
 
+
+    $scope.address = {};
+    $scope.saveAddress = (address) => {
+        var addressInfo = {
+            FullName: address.FirstName + ' ' + address.LastName,
+            Address1: address.Address1,
+            City: address.City,
+            State: address.State,
+            ZipCode: address.ZipCode,
+            Email: address.Email,
+            Phone: address.Phone
+        };
+
+        console.log(addressInfo);
+        $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
+            console.log("Address saved");
+        });
+
+        $http.post('/api/Checkout/ConfirmationEmail', addressInfo).then(x => {
+            $window.location.href = "/Customer/Confirmation";
+        });
     };
 
 }])
