@@ -5,7 +5,7 @@
     ViewData["Title"] = "Purchase";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPrintTypes(); getPwintyCatalog()">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPrintTypes()">@*getPwintyCatalog()*@
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
@@ -48,7 +48,7 @@
         <div class="purchase__options--container">
             <div class="purchase__options--row">
                 <div class="select"><md-checkbox aria-label="Select" ng-click="selectAll(printTypes)"></md-checkbox></div>
-                @*<div class="icon"></div>*@
+                <div class="icon"></div>
                 <div class="type">Type</div>
                 <div class="height">Height</div>
                 <div class="length">Length</div>
@@ -56,15 +56,15 @@
                 <div class="price">Price</div>
 
             </div>
-            <div class="purchase__options--row" ng-repeat="print in printTypes">
-            <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.Id, print.Quantity)" ng-checked="isSelected(print.Id)"></md-checkbox></div>
-            <div class="icon"><img src="~/images/icons/{{print.Icon}}.png" /></div>
-            <div class="type">{{print.Type}}</div>
-            <div class="height">{{print.Height}}in</div>
-            <div class="length">{{print.Length}}in</div>
-            <div class="quantity"><input ng-model="print.Quantity" placeholder="1"/></div>
-            <div class="price"><strong>${{print.BaseCost + @Model.Price | number: 2}}</strong></div>
-        </div>
+            <div class="purchase__options--row" ng-repeat="print in printTypes" ng-cloak>
+                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.Id, print.Quantity)" ng-checked="isSelected(print.Id)"></md-checkbox></div>
+                <div class="icon"><img src="~/images/icons/{{print.Icon}}.png" /></div>
+                <div class="type">{{print.Type}}</div>
+                <div class="height">{{print.Height}}in</div>
+                <div class="length">{{print.Length}}in</div>
+                <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
+                <div class="price"><strong>${{"@Model.Price" != null ? (print.BaseCost + @Model.Price) : print.BaseCost | number:2}}</strong></div>
+            </div>
             @*<div class="purchase__options--row" ng-repeat="print in standardProducts.items" ng-show="print.itemType == 'Print' && printQuality == 'Standard'">
                 <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.name, print.Quantity)" ng-checked="isSelected(print.name)"></md-checkbox></div>
                 <div class="type">{{print.itemType}}</div>
@@ -83,7 +83,7 @@
                 <div class="price"><strong>${{(print.price/100) + @Model.Price | number: 2}}</strong></div>
             </div>
         </div>*@
-        <div class="button--yellow button--yellow--large" ng-click="createOrder(user.Id)"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>
+        <div class="button--yellow button--yellow--large" ng-click="createOrder(user.Id)" style="margin-top: 50px"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>
     </div>   
 </div>
 

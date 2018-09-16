@@ -23,6 +23,11 @@
         $window.location.href = '/Photo/Purchase/' + photoId;
     };
 
+    $scope.goToProfile = (photographerId) => {
+        $window.location.href = '/Photographer/Profile/' + photographerId;
+    };
+
+
     $scope.goToGallery = (folderId) => {
         $window.location.href = '/Photographer/Photos/' + folderId;
     };
@@ -77,43 +82,49 @@
         });
     };
 
+    $scope.getUser = () => {
+        userApi.getUser().then(x => {
+            $scope.user = x.data;
+        });
+    };
+
   
-        var self = this;
+        //var self = this;
 
-        self.readonly = false;
+        //self.readonly = false;
 
-        // Lists of fruit names and Vegetable objects
-        self.fruitNames = ['Apple', 'Banana', 'Orange'];
-        self.ngChangeFruitNames = angular.copy(self.fruitNames);
-        self.roFruitNames = angular.copy(self.fruitNames);
-        self.editableFruitNames = angular.copy(self.fruitNames);
+        //// Lists of fruit names and Vegetable objects
+        //self.fruitNames = ['Apple', 'Banana', 'Orange'];
+        //self.ngChangeFruitNames = angular.copy(self.fruitNames);
+        //self.roFruitNames = angular.copy(self.fruitNames);
+        //self.editableFruitNames = angular.copy(self.fruitNames);
 
-        self.tags = [];
-        self.vegObjs = [
-            {
-                'name': 'Broccoli',
-                'type': 'Brassica'
-            },
-            {
-                'name': 'Cabbage',
-                'type': 'Brassica'
-            },
-            {
-                'name': 'Carrot',
-                'type': 'Umbelliferous'
-            }
-        ];
+        //self.tags = [];
+        //self.vegObjs = [
+        //    {
+        //        'name': 'Broccoli',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Cabbage',
+        //        'type': 'Brassica'
+        //    },
+        //    {
+        //        'name': 'Carrot',
+        //        'type': 'Umbelliferous'
+        //    }
+        //];
 
-        self.newVeg = function (chip) {
-            return {
-                name: chip,
-                type: 'unknown'
-            };
-        };
+        //self.newVeg = function (chip) {
+        //    return {
+        //        name: chip,
+        //        type: 'unknown'
+        //    };
+        //};
 
-        self.onModelChange = function (newModel) {
-            alert('The model has changed');
-        };
+        //self.onModelChange = function (newModel) {
+        //    alert('The model has changed');
+        //};
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
         console.log(url);
