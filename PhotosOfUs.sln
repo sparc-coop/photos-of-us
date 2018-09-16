@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web", "PhotosOfU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rotativa.NetCore", "Rotativa.NetCore\Rotativa.NetCore.csproj", "{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tesseract.NetCore", "Tesseract\Tesseract.NetCore.csproj", "{655FDBCC-8A29-4039-B686-315114310404}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +26,6 @@ Global
 		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{655FDBCC-8A29-4039-B686-315114310404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{655FDBCC-8A29-4039-B686-315114310404}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{655FDBCC-8A29-4039-B686-315114310404}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

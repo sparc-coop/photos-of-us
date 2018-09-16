@@ -52,7 +52,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
@@ -73,7 +72,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
     <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
-    <ProjectReference Include="..\Tesseract\Tesseract.NetCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>
