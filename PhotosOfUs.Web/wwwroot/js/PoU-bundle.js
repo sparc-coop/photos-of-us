@@ -526,6 +526,10 @@ app.controller('FolderRenameModalCtrl', function ($scope, $rootScope, $window, $
 app.controller('ModalController', ['$scope', '$window', '$mdDialog', ($scope, $window, $mdDialog) => {
     $scope.close = () => $mdDialog.hide();
 
+    //$scope.deactivateStatus = () => {
+    //    $scope.hidden = !$scope.hidden;
+    //    $scope.close();
+    //}
 }])
 app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $http) => {
 
@@ -1417,7 +1421,7 @@ app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploade
     };
 
 }]);
-app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
+﻿app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
     $scope.originalSettings = {};
 
     $scope.initAccountSettings = function () {
