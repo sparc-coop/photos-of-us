@@ -18,15 +18,13 @@ namespace PhotosOfUs.Web.Controllers.API
     {
         private PhotosOfUsContext _context;
         private readonly PhotoRepository _photoRepository;
-        private readonly PrintRepository _printRepository;
         private readonly OrderRepository _orderRepository;
         private readonly UserRepository _userRepository;
 
-        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, PrintRepository printRepository, OrderRepository orderRepository, UserRepository userRepository)
+        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, OrderRepository orderRepository, UserRepository userRepository)
         {
             _context = context;
             _photoRepository = photoRepository;
-            _printRepository = printRepository;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
         }
@@ -66,7 +64,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            var printType = _printRepository.GetPrintTypes();
+            var printType = _context.PrintType.ToList();
             return PrintTypeViewModel.ToViewModel(printType);
         }
 
