@@ -53,5 +53,11 @@ namespace PhotosOfUs.Model.Models
 
             return claims.ToArray();
         }
+
+        public void SetAddress(Address address)
+        {
+            address.UserId = Id;
+            Address = address;
+        }
     }
 }

@@ -18,14 +18,12 @@ namespace PhotosOfUs.Web.Controllers.API
     {
         private PhotosOfUsContext _context;
         private OrderRepository _orderRepository;
-        private AddressRepository _addressRepository;
         private PhotoRepository _photoRepository;
 
-        public CheckoutApiController(PhotosOfUsContext context, OrderRepository orderRepository, AddressRepository addressRepository, PhotoRepository photoRepository)
+        public CheckoutApiController(PhotosOfUsContext context, OrderRepository orderRepository, PhotoRepository photoRepository)
         {
             _context = context;
             _orderRepository = orderRepository;
-            _addressRepository = addressRepository;
             _photoRepository = photoRepository;
         }
 
@@ -34,16 +32,11 @@ namespace PhotosOfUs.Web.Controllers.API
         public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
+            var user = _context.UserIdentity.Find(azureId).UserID;
 
             var address = AddressViewModel.ToEntity(vm);
-
-            address.UserId = userId;
-            address = _addressRepository.Create(address);
-            if(address == null)
-            {
-                return new AddressViewModel();
-            }
+            user.SetAddress(address);
+            _context.SaveChanges();
             return AddressViewModel.ToViewModel(address);
         }
 
@@ -120,14 +113,6 @@ namespace PhotosOfUs.Web.Controllers.API
             await client.SendEmailAsync(msg);
 
             return "success";
-        }
-
-        [HttpGet]
-        [Route("GetAddress/{userId:int}")]
-        public Address GetAddress(int userId)
-        {
-            Address address = _addressRepository.FindAddress(userId);
-            return address;
         }
     }
 }
