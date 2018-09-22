@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 
 namespace PhotosOfUs.Model.Models
@@ -65,5 +66,25 @@ namespace PhotosOfUs.Model.Models
             for (var i = 0; i < quantity; i++)            
                 Card.Add(new Card(this));
         }
+
+        public Folder AddFolder(string name)
+        {
+            var folder = new Folder
+            {
+                Name = name,
+                CreatedDate = DateTime.Now,
+                PhotographerId = Id
+            };
+            Folder.Add(folder);
+            return folder;
+        }
+
+        public void RemoveFolder(int folderId)
+        {
+            var folder = Folder.FirstOrDefault(x => x.Id == folderId);
+            if (folder != null) folder.IsDeleted = true;
+        }
+
+        public Folder PublicFolder => Folder.FirstOrDefault(x => x.Name.ToLower() == "public");
     }
 }

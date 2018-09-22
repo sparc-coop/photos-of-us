@@ -295,7 +295,7 @@ namespace PhotosOfUs.Web.Controllers
         public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.UserIdentity.Find(azureId);
 
             RootObject tagsfromazure = null;
 
@@ -326,8 +326,13 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await _photoRepository.UploadProfilePhotoAsync(photographerId, stream, photoName, string.Empty, addPrice, extension, tagsfromazure, listoftags);
-                }
+                    if (photographer.PublicFolder == null)
+                    {
+                        photographer.AddFolder("Public");
+                        _context.SaveChanges();
+                    }
+                    await _photoRepository.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
+                    }
             }
 
             return AzureCognitiveViewModel.ToViewModel(suggestedtags);

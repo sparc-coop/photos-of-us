@@ -15,33 +15,35 @@ namespace PhotosOfUs.Web.Controllers.API
     public class FolderApiController : Controller
     {
         private PhotosOfUsContext _context;
-        private readonly FolderRepository _folderRepository;
 
-        public FolderApiController(PhotosOfUsContext context, FolderRepository folderRepository)
+        public FolderApiController(PhotosOfUsContext context)
         {
             _context = context;
-            _folderRepository = folderRepository;
         }
 
         [HttpPost]
         public FolderViewModel Post(string name)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.UserIdentity.Find(azureId);
 
-            var folder = _folderRepository.Add(name,photographerId);
+            photographer.AddFolder(name);
+            _context.SaveChanges();
 
             return FolderViewModel.ToViewModel(folder);
         }
 
+        // TODO: This should be a Put        
         [Route("RenameFolder")]
         [HttpPost]
         public FolderViewModel Post([FromBody]FolderRenameViewModel model)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographer = _context.UserIdentity.Find(azureId);
 
-            var folder = _folderRepository.Rename(model.Id,model.NewName, photographerId);
+            var folder = photographer.Folder.SingleOrDefault(x=> x.Id == model.Id);
+            folder.Name = model.NewName;
+            _context.SaveChanges();
 
             return FolderViewModel.ToViewModel(folder);
         }
@@ -50,7 +52,11 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("DeleteFolder/{id:int}")]
         public IActionResult DeleteFolder(int id)
         {
-            _folderRepository.Delete(id);
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var photographer = _context.UserIdentity.Find(azureId);
+            
+            photographer.RemoveFolder(id);
+            _context.SaveChanges();
 
             return Ok();
         }
