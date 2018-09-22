@@ -59,5 +59,11 @@ namespace PhotosOfUs.Model.Models
             address.UserId = Id;
             Address = address;
         }
+
+        public void AddNewCards(int quantity)
+        {
+            for (var i = 0; i < quantity; i++)            
+                Card.Add(new Card(this));
+        }
     }
 }

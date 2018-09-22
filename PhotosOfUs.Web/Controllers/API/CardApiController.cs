@@ -40,9 +40,10 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var photographer = _context.UserIdentity.Find(azureId);
-            var nCard = _cardRepository.AddMultiple(photographer.UserID, quantity);
+            photographer.AddCards(quantity);
+            _context.SaveChanges();
 
-            return nCard.Select(CardViewModel.ToViewModel).ToList();
+            return photographer.Card.Select(CardViewModel.ToViewModel).ToList();
         }
     }
 }
