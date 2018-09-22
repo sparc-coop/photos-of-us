@@ -142,14 +142,12 @@
         });
     }; 
 
-    $scope.getUserAndAddress = (userId) => {
+    $scope.getUserAndAddress = () => {
         userApi.getUser().then(function (x) {
             $scope.user = x.data;
-            $http.get('/api/Checkout/GetAddress/' + $scope.user.Id).then(x => {
-                $scope.address = x.data;
-                $scope.getOpenOrder($scope.user.Id);
-            });
-        })
+            $scope.address = x.data.Address;
+            $scope.getOpenOrder($scope.user.Id);
+        });
     }; 
 
     $scope.initConfirmation = () => {

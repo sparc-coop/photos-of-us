@@ -43,13 +43,6 @@ namespace PhotosOfUs.Model.Repositories
                 Debug.WriteLine(e);
                 return null;
             }
-            
-            
-        }
-
-        public Address FindAddress(int userId)
-        {
-            return _context.Address.Where(x => x.UserId == userId).FirstOrDefault();
         }
     }
 }

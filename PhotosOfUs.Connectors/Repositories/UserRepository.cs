@@ -32,7 +32,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public UserIdentity GetUser(string azureId)
         {
-            return _context.UserIdentity.FirstOrDefault(x => x.AzureID == azureId);
+            return _context.UserIdentity.Include(x => x.Address).FirstOrDefault(x => x.AzureID == azureId);
         }
 
         public bool UpdateAccountProfileSettings(ProfileSettingsViewModel model)

@@ -43,6 +43,7 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.JobPosition = entity.JobPosition;
             viewModel.Bio = entity.Bio;
             viewModel.ProfilePhotoUrl = entity.ProfilePhotoUrl;
+            viewModel.Address = entity.Address;
 
             return viewModel;
         }
