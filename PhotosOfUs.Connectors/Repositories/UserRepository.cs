@@ -35,31 +35,6 @@ namespace PhotosOfUs.Model.Repositories
             return _context.UserIdentity.Include(x => x.Address).FirstOrDefault(x => x.AzureID == azureId);
         }
 
-        public bool UpdateAccountProfileSettings(ProfileSettingsViewModel model)
-        {
-            var user = Find(model.UserId);
-
-            if(null != model.Email)
-                user.Email = model.Email;
-
-            user.LastName = model.LastName;
-            user.ProfilePhotoUrl = model.ProfilePhotoUrl;
-            user.FirstName = model.FirstName;
-            user.JobPosition = model.JobPosition;
-            user.Bio = model.Bio;
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public bool UpdateAccountSettings(PhotographerAccountViewModel model)
         {
             var user = Find(model.Id);
@@ -114,53 +89,6 @@ namespace PhotosOfUs.Model.Repositories
         public Address GetAddress(int userId)
         {
             return _context.Address.Where(x => x.UserId == userId).First();
-        }
-
-        private UserIdentity GetIdentity(ClaimsPrincipal principal)
-        {
-            var identity = _context.UserIdentity.Include(x => x.User).FirstOrDefault(x => x.AzureID == principal.AzureID());
-            if (identity == null)
-            {
-                var baseUser = _context.User.FirstOrDefault(x => x.Email == principal.Email());
-                if (baseUser == null)
-                {
-                    baseUser = new User
-                    {
-                        CreateDate = DateTime.UtcNow,
-                        DisplayName = principal.DisplayName(),
-                        Email = principal.Email(),
-                        IsPhotographer = principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer")
-
-                    };
-                    _context.User.Add(baseUser);
-                    _context.SaveChanges();
-                }
-
-                identity = new UserIdentity
-                {
-                    AzureID = principal.AzureID(),
-                    IdentityProvider = "Azure",
-                    CreateDate = DateTime.UtcNow,
-                    UserID = baseUser.Id
-                };
-                _context.UserIdentity.Add(identity);
-                _context.SaveChanges();
-            }
-
-            return identity;
-        }
-
-        public void Login(ClaimsPrincipal principal)
-        {
-            var identity = GetIdentity(principal);
-
-            // Logging in is simply adding claims to the existing principal
-            foreach (var claim in identity.User.GenerateClaims().Where(x => !principal.HasClaim(y => y.Type == x.Type)))
-                (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
-
-            // And setting a new login date
-            identity.LastLoginDate = DateTime.UtcNow;
-            _context.SaveChanges();
         }
     }
 }

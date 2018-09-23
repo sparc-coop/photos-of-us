@@ -23,6 +23,7 @@ using Kuvio.Kernel.Azure;
 using Kuvio.Kernel.Auth;
 using Kuvio.Kernel.Architecture;
 using PhotosOfUs.Model;
+using AutoMapper;
 
 namespace PhotosOfUs.Web
 {
@@ -92,6 +93,8 @@ namespace PhotosOfUs.Web
                  .AllowAnyHeader()
                  .AllowCredentials();
             }));
+
+            Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
 
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));

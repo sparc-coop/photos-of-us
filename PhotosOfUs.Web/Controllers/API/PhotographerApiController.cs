@@ -11,6 +11,7 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
+using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -18,18 +19,18 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Photographer")]
     public class PhotographerApiController : Controller
     {
-        private readonly PhotosOfUsContext _context;
         private readonly IViewRenderService _viewRenderService;
         private readonly PhotoRepository _photoRepository;
         private readonly UserRepository _userRepository;
 
-        public PhotographerApiController(PhotosOfUsContext context, IViewRenderService viewRenderService, PhotoRepository photoRepository, UserRepository userRepository)
+        public PhotographerApiController(IViewRenderService viewRenderService, PhotoRepository photoRepository, UserRepository userRepository)
         {
-            _context = context;
             _viewRenderService = viewRenderService;
             _photoRepository = photoRepository;
             _userRepository = userRepository;
-        }      
+        }
+
+        
 
         [HttpGet]
         [Route("GetProfilePhotos")]
@@ -131,36 +132,5 @@ namespace PhotosOfUs.Web.Controllers.API
 
         //    return Ok(result);
         //}
-
-        [HttpGet]
-        [Route("GetAccountSettings")]
-        public IActionResult GetAccountSettings()
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(userId);
-
-            PhotographerAccountViewModel model = PhotographerAccountViewModel.ToViewModel(user);
-
-            return Ok(model);
-        }
-
-        [HttpPost]
-        [Route("PostAccountSettings")]
-        public IActionResult PostAccountSettings([FromBody]PhotographerAccountViewModel model)
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-
-            if (userId != model.Id)
-                return BadRequest();
-
-            var success = _userRepository.UpdateAccountSettings(model);
-
-            if (success)
-                return Ok();
-
-            return BadRequest();
-        }
     }
 }

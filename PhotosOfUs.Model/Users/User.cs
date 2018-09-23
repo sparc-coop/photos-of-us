@@ -15,7 +15,7 @@ namespace PhotosOfUs.Model.Models
             Photo = new HashSet<Photo>();
             UserIdentities = new HashSet<UserIdentity>();
         }
-
+        
         public User(string displayName, string email, string externalUserId, bool isPhotographer)
         {
             this.DisplayName = displayName;
@@ -29,32 +29,41 @@ namespace PhotosOfUs.Model.Models
             };
         }
 
-        public int Id { get; set; }
-        public string AzureId { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string DisplayName { get; set; }
-        public string JobPosition { get; set; }
-        public string Bio { get; set; }
-        public string ProfilePhotoUrl { get; set; }
-        public DateTime CreateDate { get; set; }
-        public bool? IsPhotographer { get; set; }
-        public bool? IsDeactivated { get; set; }
-        public string Facebook { get; set; }
-        public string Twitter { get; set; }
-        public string Instagram { get; set; }
-        public string Dribbble { get; set; }
-        public int TemplateSelected { get; set; }
+        public int Id { get; private set; }
+        public string AzureId { get; private set; }
+        public string Email { get; private set; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public string DisplayName { get; private set; }
+        public string JobPosition { get; private set; }
+        public string Bio { get; private set; }
+        public string ProfilePhotoUrl { get; private set; }
 
-        public ICollection<SocialMedia> SocialMedia { get; set; }
-        public ICollection<Card> Card { get; set; }
-        public ICollection<Folder> Folder { get; set; }
-        public ICollection<Order> Order { get; set; }
-        public ICollection<Photo> Photo { get; set; }
-        public ICollection<PrintPrice> PrintPrice { get; set; }
-        public ICollection<UserIdentity> UserIdentities { get; set; }
-        public Address Address { get; set; }
+        public void UpdateSocialMedia(string facebook, string instagram, string dribbble, string twitter)
+        {
+            Facebook = facebook;
+            Instagram = instagram;
+            Dribbble = dribbble;
+            Twitter = twitter;
+        }
+
+        public DateTime CreateDate { get; private set; }
+        public bool? IsPhotographer { get; private set; }
+        public bool? IsDeactivated { get; private set; }
+        public string Facebook { get; private set; }
+        public string Twitter { get; private set; }
+        public string Instagram { get; private set; }
+        public string Dribbble { get; private set; }
+        public int TemplateSelected { get; private set; }
+
+        public ICollection<SocialMedia> SocialMedia { get; private set; }
+        public ICollection<Card> Card { get; private set; }
+        public ICollection<Folder> Folder { get; private set; }
+        public ICollection<Order> Order { get; private set; }
+        public ICollection<Photo> Photo { get; private set; }
+        public ICollection<PrintPrice> PrintPrice { get; private set; }
+        public ICollection<UserIdentity> UserIdentities { get; private set; }
+        public Address Address { get; private set; }
 
         public Claim[] GenerateClaims()
         {
@@ -95,6 +104,19 @@ namespace PhotosOfUs.Model.Models
 
             var identity = GetOrCreateIdentity(externalUserId);
             identity.LastLoginDate = DateTime.UtcNow;
+        }
+
+        public void UpdateProfile(string email, string firstName, string lastName, string displayName, string jobPosition, string profilePhotoUrl, string bio)
+        {
+            if(email != null)
+                Email = email;
+
+            LastName = lastName;
+            DisplayName = displayName;
+            ProfilePhotoUrl = profilePhotoUrl;
+            FirstName = firstName;
+            JobPosition = jobPosition;
+            Bio = bio;
         }
 
         public void SetAddress(Address address)
