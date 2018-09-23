@@ -41,6 +41,7 @@ namespace PhotosOfUs.Model.Models
 
         public DateTime CreateDate { get; private set; }
         public bool? IsPhotographer { get; private set; }
+        
         public bool? IsDeactivated { get; private set; }
         public string Facebook { get; private set; }
         public string Twitter { get; private set; }
@@ -105,10 +106,14 @@ namespace PhotosOfUs.Model.Models
 
             LastName = lastName;
             DisplayName = displayName;
-            ProfilePhotoUrl = profilePhotoUrl;
             FirstName = firstName;
             JobPosition = jobPosition;
             Bio = bio;
+        }
+
+        public void SetProfilePhoto(string absoluteUri)
+        {
+            ProfilePhotoUrl = absoluteUri;
         }
 
         public void UpdateSocialMedia(string facebook, string instagram, string dribbble, string twitter)

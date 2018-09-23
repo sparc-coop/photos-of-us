@@ -7,8 +7,9 @@ using System.Linq;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
+using PhotosOfUs.Connectors.Storage;
 
-namespace Kuvio.Kernel.Azure
+namespace PhotosOfUs.Connectors.Storage
 {
     public class StorageContext
     {
@@ -19,26 +20,8 @@ namespace Kuvio.Kernel.Azure
             _storageAccount = CloudStorageAccount.Parse(connectionString);
         }
 
-        private readonly Dictionary<string, CloudTable> TableReferences = new Dictionary<string, CloudTable>();
-
         private readonly Dictionary<string, CloudBlobContainer> BlobReferences =
             new Dictionary<string, CloudBlobContainer>();
-
-        private string _accountName;
-
-        public string AccountName
-            => _accountName ?? (_accountName = _storageAccount.BlobEndpoint.Host.Split('.').First());
-
-        public CloudTable Table(string tableName)
-        {
-            if (string.IsNullOrWhiteSpace(tableName)) return null;
-            if (TableReferences.ContainsKey(tableName)) return TableReferences[tableName];
-
-            var context = _storageAccount.CreateCloudTableClient();
-            TableReferences[tableName] = context.GetTableReference(tableName);
-
-            return TableReferences[tableName];
-        }
 
         public CloudBlobContainer Container(string containerName)
         {
@@ -48,13 +31,6 @@ namespace Kuvio.Kernel.Azure
             BlobReferences[containerName] = context.GetContainerReference(containerName);
 
             return BlobReferences[containerName];
-        }
-        
-        public static string SafeKey(string key)
-        {
-            char[] disallowedChars = { '/', '\\', '?', '#', '\t', '\n', '\r' };
-            disallowedChars.ToList().ForEach(x => key = key.Replace(x, '-').ToString());
-            return key;
         }
     }
 }

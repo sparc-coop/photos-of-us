@@ -8,24 +8,25 @@ using System.Text;
 
 namespace PhotosOfUs.Model.Services
 {
-    public static class ImageHelper
+    public class ImageService
     {
-        public static void ConvertImageToThumbnailJpg(Stream input, Stream output, string extension)
+        public Stream ConvertToThumbnail(Stream image, string extension, int thumbnailSize)
         {
-            var thumbnailsize = 300;
+            image.Position = 0;
+            var output = new MemoryStream();
             int width;
             int height;
-            var originalImage = new Bitmap(input);
+            var originalImage = new Bitmap(image);
 
             if (originalImage.Width > originalImage.Height)
             {
-                width = thumbnailsize;
-                height = thumbnailsize * originalImage.Height / originalImage.Width;
+                width = thumbnailSize;
+                height = thumbnailSize * originalImage.Height / originalImage.Width;
             }
             else
             {
-                height = thumbnailsize;
-                width = thumbnailsize * originalImage.Width / originalImage.Height;
+                height = thumbnailSize;
+                width = thumbnailSize * originalImage.Width / originalImage.Height;
             }
 
             Image thumbnailImage = null;
@@ -45,10 +46,11 @@ namespace PhotosOfUs.Model.Services
             {
                 thumbnailImage?.Dispose();
             }
+            
+            return output;
         }
 
-
-        private static ImageFormat GetImageFormatFromExtension(string extension)
+        private ImageFormat GetImageFormatFromExtension(string extension)
         {
             if (extension.ToLower() == "png")
             {
@@ -72,14 +74,16 @@ namespace PhotosOfUs.Model.Services
             }
         }
 
-        public static void AddWatermark(Stream input, Stream output, string extension)
+        public Stream AddWatermark(Stream input, Stream watermark, string extension)
         {
-            WebClient wc = new WebClient();
-            byte[] bytes = wc.DownloadData("https://photosofus-dev.azurewebsites.net/images/water_mark.png");
-            MemoryStream ms = new MemoryStream(bytes);
+            var output = new MemoryStream();
+            
+            //WebClient wc = new WebClient();
+            //byte[] bytes = wc.DownloadData("https://photosofus-dev.azurewebsites.net/images/water_mark.png");
+            //MemoryStream ms = new MemoryStream(bytes);
 
             using (Image image = Image.FromStream(input))
-            using (Image watermarkImage = Image.FromStream(ms))
+            using (Image watermarkImage = Image.FromStream(watermark))
             using (Graphics imageGraphics = Graphics.FromImage(image))
             using (TextureBrush watermarkBrush = new TextureBrush(watermarkImage))
             {
@@ -90,6 +94,8 @@ namespace PhotosOfUs.Model.Services
                 //imageGraphics.FillRectangle(watermarkBrush, new Rectangle(new Point(0, 0), image.Size));
                 image.Save(output,GetImageFormatFromExtension(extension));
             }
+
+            return output;
         }
     }
 }

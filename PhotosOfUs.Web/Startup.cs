@@ -19,11 +19,11 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using PhotosOfUs.Model.Repositories;
-using Kuvio.Kernel.Azure;
 using Kuvio.Kernel.Auth;
 using Kuvio.Kernel.Architecture;
 using PhotosOfUs.Model;
 using AutoMapper;
+using PhotosOfUs.Connectors.Storage;
 
 namespace PhotosOfUs.Web
 {
@@ -98,6 +98,8 @@ namespace PhotosOfUs.Web
 
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
+
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddScoped<IViewRenderService, ViewRenderService>();

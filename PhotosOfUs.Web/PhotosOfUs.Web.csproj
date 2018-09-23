@@ -63,7 +63,6 @@
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
     <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
-    <ProjectReference Include="..\Kuvio.Kernel\Kuvio.Kernel.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Connectors\PhotosOfUs.Connectors.csproj" />
   </ItemGroup>
 

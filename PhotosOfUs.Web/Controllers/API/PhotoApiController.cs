@@ -10,6 +10,7 @@ using PhotosOfUs.Model.Models;
 using System.Security.Claims;
 using System.Net;
 using System.IO;
+using Kuvio.Kernel.Architecture;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -19,9 +20,9 @@ namespace PhotosOfUs.Web.Controllers.API
         private PhotosOfUsContext _context;
         private readonly PhotoRepository _photoRepository;
         private readonly OrderRepository _orderRepository;
-        private readonly UserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
 
-        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, OrderRepository orderRepository, UserRepository userRepository)
+        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, OrderRepository orderRepository, IRepository<User> userRepository)
         {
             _context = context;
             _photoRepository = photoRepository;
@@ -72,7 +73,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPhotographer/{id:int}")]
         public UserViewModel GetPhotographer(int id)
         {
-            var photographer = _userRepository.Find(id);
+            var photographer = _userRepository.Find(x => x.Id == id);
             return UserViewModel.ToViewModel(photographer);
         }
 
