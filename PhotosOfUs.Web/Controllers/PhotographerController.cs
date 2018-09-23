@@ -23,17 +23,11 @@ namespace PhotosOfUs.Web.Controllers
    
     public class PhotographerController : Controller
     {
-        private PhotosOfUsContext _context;
-        private IHostingEnvironment _hostingEnvironment;
         private PhotoRepository _photoRepository;
-        private UserRepository _userRepository;
 
-        public PhotographerController(PhotosOfUsContext context, PhotoRepository photoRepository, UserRepository userRepository, IHostingEnvironment hostingEnvironment)
+        public PhotographerController(PhotoRepository photoRepository)
         {
-            _context = context;
-            _hostingEnvironment = hostingEnvironment;
             _photoRepository = photoRepository;
-            _userRepository = userRepository;
         }
 
         // GET: Photographer
@@ -255,13 +249,7 @@ namespace PhotosOfUs.Web.Controllers
 
                 return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
             }
-
-            //if (string.IsNullOrEmpty(photoCode))
-            //{
-            //    var ocr = new OCR(_context,_hostingEnvironment);
-            //    var ocrResult = ocr.GetOCRResult(file,photographerId);
-            //    return ocrResult.Code;
-            //}
+            
             var listoftags = new List<TagViewModel>();
             if (tags != null)
             {

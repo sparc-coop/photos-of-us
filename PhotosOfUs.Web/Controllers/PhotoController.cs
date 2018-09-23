@@ -12,6 +12,7 @@ using PhotosOfUs.Model.ViewModels;
 using Stripe;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -21,14 +22,12 @@ namespace PhotosOfUs.Web.Controllers
         private PhotosOfUsContext _context;
         private readonly OrderRepository _orderRepository;
         private readonly PhotoRepository _photoRepository;
-        private readonly UserRepository _userRepository;
 
-        public PhotoController(PhotosOfUsContext context, OrderRepository orderRepository, PhotoRepository photoRepository, UserRepository userRepository)
+        public PhotoController(PhotosOfUsContext context, OrderRepository orderRepository, PhotoRepository photoRepository)
         {
             _context = context;
             _orderRepository = orderRepository;
             _photoRepository = photoRepository;
-            _userRepository = userRepository;
         }
 
         public ActionResult Purchase(int id)
@@ -55,12 +54,10 @@ namespace PhotosOfUs.Web.Controllers
         [HttpPost]
         public IActionResult Charge(string stripeToken)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
             StripeConfiguration.SetApiKey("");
 
             OrderRepository repo = _orderRepository;
-            Order order = repo.GetOpenOrder(userId);
+            Order order = repo.GetOpenOrder(User.ID());
             repo.OrderStatusPending(order.Id);
             
             decimal orderTotal = _orderRepository.GetOrderTotal(order.Id);

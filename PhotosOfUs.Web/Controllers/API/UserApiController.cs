@@ -27,11 +27,12 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             _userRepository = userRepository;
         }
+        
 
         [HttpGet]
         public UserViewModel Get()
         {
-            return _userRepository.Find(User.ID()).ToViewModel<UserViewModel>();
+            return _userRepository.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
         }
 
         [HttpPut]
@@ -48,7 +49,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpDelete]
         public UserViewModel DeactivateAccount()
         {
-            User user = _userRepository.Find(User.ID());
+            User user = _userRepository.Find(x => x.Id == User.ID());
             user.Deactivate();
             _userRepository.Commit();
 
@@ -58,7 +59,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPost]
         public UserViewModel ReactivateAccount()
         {
-            User user = _userRepository.Find(User.ID());
+            User user = _userRepository.Find(x => x.Id == User.ID());
             user.Activate();
            _userRepository.Commit();
 

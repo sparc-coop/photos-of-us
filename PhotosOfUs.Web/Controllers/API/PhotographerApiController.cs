@@ -12,6 +12,7 @@ using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 using Kuvio.Kernel.Auth;
+using Kuvio.Kernel.Architecture;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -19,32 +20,13 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Photographer")]
     public class PhotographerApiController : Controller
     {
-        private readonly IViewRenderService _viewRenderService;
         private readonly PhotoRepository _photoRepository;
-        private readonly UserRepository _userRepository;
 
-        public PhotographerApiController(IViewRenderService viewRenderService, PhotoRepository photoRepository, UserRepository userRepository)
+        public PhotographerApiController(PhotoRepository photoRepository)
         {
-            _viewRenderService = viewRenderService;
             _photoRepository = photoRepository;
-            _userRepository = userRepository;
         }
-
-        
-
-        [HttpGet]
-        [Route("GetProfilePhotos")]
-        public List<PhotoViewModel> GetProfilePhotos()
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(photographerId);
-            var photos = _photoRepository.GetProfilePhotos(photographerId);
-            var model = PhotoViewModel.ToViewModel(photos);
-
-            return model;
-        }
-
+       
         [HttpPost]
         [Route("GetTagsByPhotos")]
         public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
@@ -78,18 +60,14 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("AddTags")]
         public void AddTags([FromBody]List<TagViewModel> tags)
         {
-            var repo = _photoRepository;
-
-            repo.AddTags(tags);
+            _photoRepository.AddTags(tags);
         }
 
         [HttpPost]
         [Route("EditPhotos")]
         public void EditPhotos([FromBody]PhotoTagViewModel photosviewmodel)
         {
-            var repo = _photoRepository;
-
-            repo.EditTags(photosviewmodel);
+            _photoRepository.EditTags(photosviewmodel);
         }
 
         [Route("DeletePhotos")]

@@ -7,11 +7,8 @@ using System.IO;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
 using Kuvio.Kernel.Auth;
 using Kuvio.Kernel.Architecture;
-using Microsoft.WindowsAzure.Storage.Blob;
-using PhotosOfUs.Connectors.Storage;
 
 namespace PhotosOfUs.Model.Repositories
 {
