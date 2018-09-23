@@ -20,7 +20,9 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using PhotosOfUs.Model.Repositories;
 using Kuvio.Kernel.Azure;
-using PhotosOfUs.Web.Auth;
+using Kuvio.Kernel.Auth;
+using Kuvio.Kernel.Architecture;
+using PhotosOfUs.Model;
 
 namespace PhotosOfUs.Web
 {
@@ -52,6 +54,7 @@ namespace PhotosOfUs.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.Configure<AzureAdB2COptions>(Configuration.GetSection("Authentication:AzureAdB2C"));
 
             services.AddAuthentication(sharedOptions =>
             {
@@ -60,6 +63,7 @@ namespace PhotosOfUs.Web
             })
             .AddOpenIdConnect("B2CWeb", options =>
                 {
+                    // TODO: Refactor into Kuvio Kernel
                     options.ClientId = Configuration["AzureAdB2C:ClientId"];
                     options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0/";
                     options.UseTokenLifetime = true;
@@ -92,7 +96,6 @@ namespace PhotosOfUs.Web
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-            services.Configure<AzureAdB2COptions>(Configuration.GetSection("Authentication:AzureAdB2C"));
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
         }
@@ -129,7 +132,7 @@ namespace PhotosOfUs.Web
 
         private Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context)
         {
-            context.HttpContext.RequestServices.GetRequiredService<UserRepository>().Login(context.Principal);
+            context.HttpContext.RequestServices.GetService<LoginCommand>().Execute(context.Principal);
             return Task.FromResult(0);
         }
 

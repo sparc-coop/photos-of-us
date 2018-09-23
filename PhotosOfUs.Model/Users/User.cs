@@ -13,6 +13,20 @@ namespace PhotosOfUs.Model.Models
             Folder = new HashSet<Folder>();
             Order = new HashSet<Order>();
             Photo = new HashSet<Photo>();
+            UserIdentities = new HashSet<UserIdentity>();
+        }
+
+        public User(string displayName, string email, string externalUserId, bool isPhotographer)
+        {
+            this.DisplayName = displayName;
+            this.FirstName = displayName?.Split(' ').First();
+            this.LastName = displayName?.Split(' ').Last();
+            this.IsPhotographer = isPhotographer;
+            CreateDate = DateTime.UtcNow;
+
+            this.UserIdentities = new List<UserIdentity> {
+                new UserIdentity(externalUserId, "Azure")
+            };
         }
 
         public int Id { get; set; }
@@ -25,7 +39,6 @@ namespace PhotosOfUs.Model.Models
         public string Bio { get; set; }
         public string ProfilePhotoUrl { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime? LastLoginDate { get; set; }
         public bool? IsPhotographer { get; set; }
         public bool? IsDeactivated { get; set; }
         public string Facebook { get; set; }
@@ -40,6 +53,7 @@ namespace PhotosOfUs.Model.Models
         public ICollection<Order> Order { get; set; }
         public ICollection<Photo> Photo { get; set; }
         public ICollection<PrintPrice> PrintPrice { get; set; }
+        public ICollection<UserIdentity> UserIdentities { get; set; }
         public Address Address { get; set; }
 
         public Claim[] GenerateClaims()
@@ -53,6 +67,34 @@ namespace PhotosOfUs.Model.Models
             };
 
             return claims.ToArray();
+        }
+        
+        public UserIdentity GetOrCreateIdentity(string externalUserId)
+        {
+            var identity = UserIdentities.SingleOrDefault(x => x.AzureID == externalUserId);
+            if (identity == null)
+            {
+                identity = new UserIdentity(externalUserId, "Azure");
+                UserIdentities.Add(identity);
+            }
+            return identity;
+        }
+        
+        public void Login(ClaimsPrincipal principal, string externalUserId)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer")
+            };
+
+            // Logging in is simply adding claims to the existing principal
+            foreach (var claim in claims.Where(x => !principal.HasClaim(y => y.Type == x.Type)))
+                (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
+
+            var identity = GetOrCreateIdentity(externalUserId);
+            identity.LastLoginDate = DateTime.UtcNow;
         }
 
         public void SetAddress(Address address)

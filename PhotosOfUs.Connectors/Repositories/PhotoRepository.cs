@@ -306,7 +306,7 @@ namespace PhotosOfUs.Model.Repositories
 
         public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension, Folder folder, RootObject suggestedTags, List<TagViewModel> listoftags)
         {
-                await UploadFile(photographerId, stream, photoName, string.Empty, extension, folder.Id, price, suggestedTags, listoftags, true);
+            await UploadFile(photographerId, stream, photoName, string.Empty, extension, folder.Id, price, suggestedTags, listoftags, true);
         }
     }
 

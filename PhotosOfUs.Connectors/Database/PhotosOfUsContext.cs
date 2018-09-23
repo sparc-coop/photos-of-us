@@ -61,7 +61,6 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
-                entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<UserIdentity>(entity =>

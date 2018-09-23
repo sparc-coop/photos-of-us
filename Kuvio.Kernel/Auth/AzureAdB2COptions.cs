@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhotosOfUs.Web.Auth
+namespace Kuvio.Kernel.Auth
 {
     public class AzureAdB2COptions
     {
