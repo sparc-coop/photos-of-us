@@ -65,15 +65,12 @@ namespace PhotosOfUs.Web.Controllers
             
             decimal orderTotal = _orderRepository.GetOrderTotal(order.Id);
 
-            User user = _userRepository.Find(userId);
-            Address address = _userRepository.GetAddress(userId);
-
             var customers = new StripeCustomerService();
             var charges = new StripeChargeService();
 
             var customer = customers.Create(new StripeCustomerCreateOptions
             {
-                Email = address.Email,
+                Email = order.User.Email,
                 SourceToken = stripeToken
             });
 

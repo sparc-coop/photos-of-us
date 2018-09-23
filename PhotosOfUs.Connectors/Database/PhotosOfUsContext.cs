@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -50,9 +51,7 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
                 entity.Property(x => x.SuggestedTags)
-                    //.HasConversion(x => JsonConvert.DeserializeObject<RootObject>(x),
-                    //x => JsonConvert.SerializeObject(x))
-                ;
+                    .HasConversion(x => JsonConvert.SerializeObject(x), x => JsonConvert.DeserializeObject<RootObject>(x));
             });
 
             modelBuilder.Entity<User>(entity =>

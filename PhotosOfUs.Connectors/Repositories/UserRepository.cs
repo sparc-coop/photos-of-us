@@ -30,31 +30,6 @@ namespace PhotosOfUs.Model.Repositories
             return _context.User.Find(userId);
         }
 
-        public UserIdentity GetUser(string azureId)
-        {
-            return _context.UserIdentity.Include(x => x.Address).FirstOrDefault(x => x.AzureID == azureId);
-        }
-
-        public bool UpdateAccountSettings(PhotographerAccountViewModel model)
-        {
-            var user = Find(model.Id);
-
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.DisplayName = model.DisplayName;
-            user.JobPosition = model.JobPosition;
-            user.Bio = model.Bio;
-            user.Facebook = model.Facebook;
-            user.Twitter = model.Twitter;
-            user.Instagram = model.Instagram;
-            user.Dribbble = model.Dribbble;
-
-            _context.Update(user);
-            _context.SaveChanges();
-
-            return true;
-        }
-
         public async System.Threading.Tasks.Task<string> UpdateProfileImageAsync(int photographerId, Stream stream, string photoName, string photoCode, string extension)
         {
             var urlTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmss");
@@ -84,11 +59,6 @@ namespace PhotosOfUs.Model.Repositories
             _context.SaveChanges();
 
             return containerBlob.Uri.AbsoluteUri;
-        }
-
-        public Address GetAddress(int userId)
-        {
-            return _context.Address.Where(x => x.UserId == userId).First();
         }
     }
 }
