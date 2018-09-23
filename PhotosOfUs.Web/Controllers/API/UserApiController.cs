@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
+    [Authorize]
     [Route("api/User")]
     public class UserApiController : Controller
     {
@@ -27,15 +29,12 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
-        [Route("")]
-        public IActionResult Get()
+        public UserViewModel Get()
         {
-            var user = _userRepository.Find(User.ID()).ToViewModel<UserProfileUpdateCommandModel>();
-            return Ok(user);
+            return _userRepository.Find(User.ID()).ToViewModel<UserViewModel>();
         }
 
         [HttpPut]
-        [Route("")]
         public IActionResult Put([FromBody]UserProfileUpdateCommandModel model, [FromServices]UserProfileUpdateCommand command)
         {
             if (User.ID() != model.Id)
@@ -46,41 +45,24 @@ namespace PhotosOfUs.Web.Controllers.API
             return Ok();
         }
         
-        [HttpGet]
-        [Route("GetUser")]
-        public UserViewModel GetUser()
+        [HttpDelete]
+        public UserViewModel DeactivateAccount()
         {
-            string azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            UserIdentity userIdentity = _userRepository.GetUser(azureId);
-            User user = _userRepository.Find(userIdentity.UserID);
+            User user = _userRepository.Find(User.ID());
+            user.Deactivate();
+            _userRepository.Commit();
 
-            return UserViewModel.ToViewModel(user);           
+            return user.ToViewModel<UserViewModel>();
         }
 
         [HttpPost]
-        [Route("Deactivate/{userId:int}")]
-        public UserViewModel DeactivateAccount(int userId)
+        public UserViewModel ReactivateAccount()
         {
-            User user = _userRepository.Find(userId);
-            user.IsDeactivated = true;
+            User user = _userRepository.Find(User.ID());
+            user.Activate();
+           _userRepository.Commit();
 
-            _context.Update(user);
-            _context.SaveChanges();
-
-            return UserViewModel.ToViewModel(user);
-        }
-
-        [HttpPost]
-        [Route("Reactivate/{userId:int}")]
-        public UserViewModel ReactivateAccount(int userId)
-        {
-            User user = _userRepository.Find(userId);
-            user.IsDeactivated = false;
-
-            _context.Update(user);
-            _context.SaveChanges();
-
-            return UserViewModel.ToViewModel(user);
+            return user.ToViewModel<UserViewModel>();
         }
     }
 }

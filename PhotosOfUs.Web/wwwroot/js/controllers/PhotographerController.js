@@ -1,4 +1,4 @@
-﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$filter', '$timeout', 'photographerApi', 'userApi', ($scope, $window, $location, $http, $mdDialog, $filter, $timeout, photographerApi, userApi) => {
+﻿app.controller('PhotographerCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$filter', '$timeout', 'userApi', ($scope, $window, $location, $http, $mdDialog, $filter, $timeout, userApi) => {
 
     $scope.tags = [];
     $scope.allTags = [];
@@ -45,7 +45,7 @@
     };
 
     $scope.getProfile = function () {
-        photographerApi.getAccountSettings().then(function (x) {
+        userApi.get().then(function (x) {
             $scope.photographer = x.data;
         })
     }

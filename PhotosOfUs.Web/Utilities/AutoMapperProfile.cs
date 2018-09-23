@@ -11,7 +11,7 @@ namespace PhotosOfUs.Web.Utilities
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, PhotographerProfileUpdateCommand>();
+            CreateMap<User, UserViewModel>();
         }
     }
 

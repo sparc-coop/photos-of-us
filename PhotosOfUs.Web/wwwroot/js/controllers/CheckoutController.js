@@ -142,18 +142,12 @@
         });
     }; 
 
-    $scope.getUserAndAddress = () => {
+    $scope.initConfirmation = () => {
         userApi.getUser().then(function (x) {
             $scope.user = x.data;
-            $scope.address = x.data.Address;
             $scope.getOpenOrder($scope.user.Id);
         });
-    }; 
-
-    $scope.initConfirmation = () => {
-        $scope.getUserAndAddress();
     };
-
 
     $scope.createPwintyOrder = () => {
         var data = {

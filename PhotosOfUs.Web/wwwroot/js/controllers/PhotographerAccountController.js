@@ -1,8 +1,8 @@
-﻿app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'photographerApi', ($scope, $window, $location, $http, $mdDialog, photographerApi) => {
+﻿app.controller('PhotographerAccountCtrl', ['$scope', '$window', '$http', '$mdDialog', 'userApi', ($scope, $window, $http, $mdDialog, userApi) => {
     $scope.originalSettings = {};
 
     $scope.initAccountSettings = function () {
-        photographerApi.getAccountSettings().then(function (x) {
+        userApi.get().then(function (x) {
             $scope.accountSettings = x.data;
             if ($scope.accountSettings.Facebook == null)
                 $scope.accountSettings.Facebook = 'https://www.facebook.com/';
@@ -22,7 +22,7 @@
 
     $scope.saveAccountSettings = function (accountSettings) {
         $scope.showLoader = true;
-        photographerApi.saveAccountSettings(accountSettings).then(function (x) {
+        userApi.update(accountSettings).then(function (x) {
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
@@ -68,10 +68,8 @@
     }
 
 
-    $scope.reactivateAccount = (userId) => {
-        $http.post('/api/User/Reactivate/' + userId).then(
-            $window.location.reload()
-        );
+    $scope.reactivateAccount = () => {
+        $http.post('/api/User').then(function() { $window.location.reload() });
     }
 
     $scope.selected = 'details';
@@ -82,13 +80,11 @@
 
 
 }])
-.controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', 'user', ($scope, $window, $location, $http, $mdDialog, user) => {
+.controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$http', 'user', ($scope, $window, $http, user) => {
     $scope.user = user;
 
     $scope.deactivateAccount = () => {
-        $http.post('/api/User/Deactivate/' + $scope.user.Id).then(
-            $window.location.reload()
-        );
+        $http.delete('/api/User').then(function() { $window.location.reload() });
     }
 }]);
 
