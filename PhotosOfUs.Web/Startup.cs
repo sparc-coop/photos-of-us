@@ -24,6 +24,7 @@ using Kuvio.Kernel.Architecture;
 using PhotosOfUs.Model;
 using AutoMapper;
 using PhotosOfUs.Connectors.Storage;
+using PhotosOfUs.Connectors.Database;
 
 namespace PhotosOfUs.Web
 {
@@ -98,6 +99,7 @@ namespace PhotosOfUs.Web
 
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));

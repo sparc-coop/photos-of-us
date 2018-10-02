@@ -30,7 +30,7 @@ namespace PhotosOfUs.Model.Models
 
         public void Execute(UserProfileUpdateCommandModel model)
         {
-            var user = Set.Find(model.Id);
+            var user = Set.Find(x => x.Id == model.Id);
             user.UpdateProfile(model.Email, model.FirstName, model.LastName, model.DisplayName, model.JobPosition, model.ProfilePhotoUrl, model.Bio);
             user.UpdateSocialMedia(model.Facebook, model.Instagram, model.Dribbble, model.Twitter);
             Commit();
