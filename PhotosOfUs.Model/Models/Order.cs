@@ -10,6 +10,13 @@ namespace PhotosOfUs.Model.Models
             OrderDetail = new HashSet<OrderDetail>();
         }
 
+        public Order(int userId)
+        {
+            OrderStatus = "Open";
+            UserId = userId;
+            OrderDate = DateTime.Now;
+        }
+
         public int Id { get; set; }
         public int UserId { get; set; }
         public int? ShippingAddressId { get; set; }
@@ -22,5 +29,15 @@ namespace PhotosOfUs.Model.Models
         public Address ShippingAddress { get; set; }
         public User User { get; set; }
         public ICollection<OrderDetail> OrderDetail { get; set; }
+
+        public void AddLine(Photo photo, PrintType printType, int quantity)
+        {
+            OrderDetail.Add(new OrderDetail(photo, printType, quantity));
+        }
+
+        public void SetStatusToPending()
+        {
+            OrderStatus = "Pending";
+        }
     }
 }

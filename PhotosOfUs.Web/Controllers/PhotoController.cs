@@ -58,7 +58,7 @@ namespace PhotosOfUs.Web.Controllers
 
             OrderRepository repo = _orderRepository;
             Order order = repo.GetOpenOrder(User.ID());
-            repo.OrderStatusPending(order.Id);
+            order.SetStatusToPending();
             
             decimal orderTotal = _orderRepository.GetOrderTotal(order.Id);
 

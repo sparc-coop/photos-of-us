@@ -17,65 +17,12 @@ namespace PhotosOfUs.Model.Repositories
             _context = context;
         }
 
-        public Order CreateOrder(int id)
-        {
-            Order order = new Order();
-            order.OrderStatus = "Open";
-            order.UserId = id;
-            order.OrderDate = DateTime.Now;
-
-            _context.Order.Add(order);
-            _context.SaveChanges();
-            return order;
-        }
-
-        public Order OrderStatusPending(int id)
-        {
-            Order order = _context.Order.Where(x => x.Id == id).FirstOrDefault();
-            order.OrderStatus = "Pending";
-
-            _context.Order.Update(order);
-            _context.SaveChanges();
-            return order;
-        }
-
-        public Order GetOrder(int orderId)
-        {
-            Order order = _context.Order.Where(x => x.Id == orderId).Include("OrderDetail").FirstOrDefault();
-            return order;
-        }
-
         public Order GetOpenOrder(int id)
         {
             Order order = _context.Order.Where(x => x.UserId == id && x.OrderStatus == "Open").Include("OrderDetail").FirstOrDefault();
             return order;
         }
-
-        public OrderDetail CreateOrderDetails(int orderId, int photoId, int photographerId, int itemId, int quantity)
-        {
-            OrderDetail orderItem = new OrderDetail();
-            Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
-            PrintType type = _context.PrintType.Where(x => x.Id == itemId).FirstOrDefault();
-
-            orderItem.OrderId = orderId;
-            orderItem.PhotoId = photoId;
-            orderItem.PrintTypeId = itemId;
-            orderItem.Quantity = quantity;
-            if(photo.Price != null)
-            {
-                orderItem.UnitPrice = (decimal)photo.Price + (decimal)type.BaseCost;
-            }
-            else
-            {
-                orderItem.UnitPrice = (decimal)type.BaseCost;
-            }
-            
-
-            _context.OrderDetail.Add(orderItem);
-            _context.SaveChanges();
-            return orderItem;
-        }
-
+        
         public decimal GetOrderTotal(int id)
         {
             List<OrderDetail> orderDetails = _context.OrderDetail.Where(x => x.OrderId == id).ToList();

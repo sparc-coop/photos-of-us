@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System;
+using Kuvio.Kernel.Architecture;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -24,10 +25,12 @@ namespace PhotosOfUs.Web.Controllers
     public class PhotographerController : Controller
     {
         private PhotoRepository _photoRepository;
+        private readonly IRepository<Order> _orderRepository;
 
-        public PhotographerController(PhotoRepository photoRepository)
+        public PhotographerController(PhotoRepository photoRepository, IRepository<Order> orderRepository)
         {
             _photoRepository = photoRepository;
+            _orderRepository = orderRepository;
         }
 
         // GET: Photographer
@@ -352,7 +355,7 @@ namespace PhotosOfUs.Web.Controllers
             List<Order> orders = new List<Order>();
             foreach(var order in orderItems.GroupBy(x => x.OrderId))
             {
-                orders.Add(new OrderRepository(_context).GetOrder(order.Key));
+                orders.Add(_orderRepository.Find(x => x.Id == order.Key));
             }
 
             return View(OrderViewModel.ToViewModel(orders).ToList());

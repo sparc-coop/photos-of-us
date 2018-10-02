@@ -106,18 +106,6 @@ namespace PhotosOfUs.Web.Controllers.API
                 .ToList();
         }
 
-        [HttpPost]
-        [Route("GetForDownload/{id:int}")]
-        public IActionResult GetForDownload(int id)
-        {
-            Order order = _orderRepository.GetOpenOrder(id);
-            List<OrderDetail> items = _orderRepository.GetOrderDetails(order.Id);
-
-            //DownloadPhotos(items);
-
-            return Ok();
-        }
-
         [HttpGet]
         [Route("GetAllTags")]
         public List<TagViewModel> GetAllTags()

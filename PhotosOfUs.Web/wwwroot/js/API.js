@@ -30,15 +30,6 @@ app.factory('cardApi', [
     }
 ]);
 
-app.factory('checkoutApi', [
-    '$http', '$rootScope', function ($http) {
-        var apiRoot = '/api/Checkout';
-        return {
-            createOrder: function (userId, orderItems) { return $http.get(apiRoot + '/CreateOrder/' + userId, orderItems) },
-        };
-    }
-]);
-
 app.factory('userApi', [
     '$http', '$rootScope', function ($http) {
         var apiRoot = '/api/User';

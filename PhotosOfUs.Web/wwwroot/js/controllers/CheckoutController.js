@@ -71,7 +71,7 @@
     $scope.cartPreview = () => {       
         if ($scope.showCart == false) {
             $scope.showCart = true;
-            $scope.getOpenOrder($scope.user.Id);
+            $scope.getOpenOrder();
             $scope.getPrintTypes();
         }
         else if ($scope.showCart == true) {
@@ -79,9 +79,9 @@
         }
     };
 
-    $scope.createOrder = (userId) => {
+    $scope.createOrder = () => {
         var photoId = $location.absUrl().split('Purchase/')[1];
-        $http.post('/api/Checkout/CreateOrder/' + userId + '/' + photoId, $scope.selectedItems);
+        $http.post('/api/Orders/' + photoId, $scope.selectedItems);
     };
 
     function testLocalStorage () {
@@ -133,8 +133,8 @@
         })
     };
 
-    $scope.getOpenOrder = (userId) => {
-        $http.get('/api/Checkout/GetOpenOrder/' + userId).then(x => {
+    $scope.getOpenOrder = () => {
+        $http.get('/api/Cart').then(x => {
             $scope.order = x.data;
             if (x.data != '') {
                 $scope.getOrderTotal($scope.order.Id);
@@ -145,7 +145,7 @@
     $scope.initConfirmation = () => {
         userApi.getUser().then(function (x) {
             $scope.user = x.data;
-            $scope.getOpenOrder($scope.user.Id);
+            $scope.getOpenOrder();
         });
     };
 
