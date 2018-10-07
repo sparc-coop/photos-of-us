@@ -93,7 +93,7 @@
     };
 
     $scope.getPhotographer = (id) => {
-        $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
+        $http.get('/api/User/Get/' + id).then(x => {
             $scope.photographer = x.data;
         });
     };
@@ -104,43 +104,6 @@
         });
     };
 
-  
-        //var self = this;
-
-        //self.readonly = false;
-
-        //// Lists of fruit names and Vegetable objects
-        //self.fruitNames = ['Apple', 'Banana', 'Orange'];
-        //self.ngChangeFruitNames = angular.copy(self.fruitNames);
-        //self.roFruitNames = angular.copy(self.fruitNames);
-        //self.editableFruitNames = angular.copy(self.fruitNames);
-
-        //self.tags = [];
-        //self.vegObjs = [
-        //    {
-        //        'name': 'Broccoli',
-        //        'type': 'Brassica'
-        //    },
-        //    {
-        //        'name': 'Cabbage',
-        //        'type': 'Brassica'
-        //    },
-        //    {
-        //        'name': 'Carrot',
-        //        'type': 'Umbelliferous'
-        //    }
-        //];
-
-        //self.newVeg = function (chip) {
-        //    return {
-        //        name: chip,
-        //        type: 'unknown'
-        //    };
-        //};
-
-        //self.onModelChange = function (newModel) {
-        //    alert('The model has changed');
-        //};
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];
         Socialshare.share({

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
-using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 using Kuvio.Kernel.Auth;
@@ -20,67 +12,141 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Photographer")]
     public class PhotographerApiController : Controller
     {
-        private readonly PhotoRepository _photoRepository;
+        private PhotosOfUsContext _context;
+        private IRepository<Photo> _photo;
+        private IRepository<User> _user;
+        private IRepository<Tag> _tag;
 
-        public PhotographerApiController(PhotoRepository photoRepository)
+        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository)
         {
-            _photoRepository = photoRepository;
+            _context = context;
+            _photo = photoRepository;
+            _user = userRepository;
+            _tag = tagRepository;
         }
        
         [HttpPost]
         [Route("GetTagsByPhotos")]
         public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
         {
-            var repo = _photoRepository;
+            var tags = new List<Tag>();
+            var phototags = new List<PhotoTag>();
 
-            var tags = repo.GetTagsByPhotos(photos);
+            var photoList = new List<Photo>();
+            foreach (int id in photos)
+            {
+                Photo photo = _photo.Find(x => x.Id == id);
+                photoList.Add(photo);
+            }
 
-            var tagsmodel = TagViewModel.ToViewModel(tags);
+            foreach (Photo photo in photoList)
+            {
+                var tagsfromphoto = _photo.Include(x => x.Tag).Find(x => x.Id == photo.Id).PhotoTag;
 
-            return tagsmodel;
+                foreach (PhotoTag phototag in tagsfromphoto)
+                {
+                    if (!(tags.Find(x => x.Id == phototag.PhotoId).Id == phototag.PhotoId))
+                    {
+                        phototags.Add(phototag);
+                    }
+                }
+            }
+
+            return TagViewModel.ToViewModel(phototags);
         }
 
         [HttpGet]
         [Route("GetPhotoPrice/{photoId:int}")]
         public decimal? GetPhotoPrice(int photoId)
         {
-            var photo = _photoRepository.GetPhoto(photoId);
+            var photo = _photo.Find(x => x.Id == photoId);
 
             return photo.Price;
         }
 
         [HttpPost]
         [Route("SavePhotoPrice/{photoId:int}/{newPrice:decimal}")]
-        public void GetPhotoPrice(int photoId, decimal newPrice)
+        public PhotoViewModel SavePhotoPrice(int photoId, decimal newPrice)
         {
-            _photoRepository.UpdatePrice(photoId, newPrice);
+            Photo photo = _photo.Find(x => x.Id == photoId);
+            photo.UpdatePrice(newPrice);
+            _photo.Commit();
+
+            return photo.ToViewModel<PhotoViewModel>();
         }
 
         [HttpPost]
         [Route("AddTags")]
         public void AddTags([FromBody]List<TagViewModel> tags)
         {
-            _photoRepository.AddTags(tags);
+            foreach (TagViewModel tag in tags)
+            {
+                if (_tag.Find(x => x.Name == tag.Name) == null)
+                {
+                    _tag.Add(TagViewModel.ToEntity(tag));
+                }
+            }
+            _tag.Commit();
         }
 
         [HttpPost]
         [Route("EditPhotos")]
-        public void EditPhotos([FromBody]PhotoTagViewModel photosviewmodel)
+        public void EditTags([FromBody]PhotoTagViewModel photosviewmodel)
         {
-            _photoRepository.EditTags(photosviewmodel);
+            List<PhotoTag> phototagstodelete = new List<PhotoTag>();
+            List<PhotoTag> phototagstoadd = new List<PhotoTag>();
+
+            foreach (int photoid in photosviewmodel.photos)
+            {
+
+                var phototagdelete = _photo.Find(x => x.Id == photoid).PhotoTag;
+
+                if (phototagdelete != null)
+                {
+                    foreach (PhotoTag phototag in phototagdelete)
+                    {
+                        phototagstodelete.Add(phototag);
+                    }
+
+                    
+                }
+            }
+
+            foreach (PhotoTag phototag in phototagstodelete)
+            {
+                _photo.Find(x => x.Id == phototag.PhotoId).PhotoTag.Remove(phototag);
+            }
+            _photo.Commit();
+
+/*             foreach (TagViewModel tag in photoviewmodel)
+            {
+                var tagtoid = 
+
+                foreach (int photoid in phototagviewmodel.photos)
+                {
+                    var newphototag = new PhotoTag()
+                    {
+                        PhotoId = photoid,
+                        TagId = tagtoid.Id,
+                        RegisterDate = DateTime.Now
+                    };
+                    PhotoTag.Add(newphototag);
+                }
+            }
+           _photo.Commit(); */
         }
 
         [Route("DeletePhotos")]
         [HttpPost]
         public void Post([FromBody]List<int> photos)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographerId = User.ID();
 
-
-            var repo = _photoRepository;
-
-            repo.DeletePhotos(photos);
+            foreach(int photoId in photos)
+            {
+                Photo photo =_photo.Find(x => x.Id == photoId);
+                _photo.Delete(photo);
+            }
         }
 
         // GET: api/PhotographerApi/5

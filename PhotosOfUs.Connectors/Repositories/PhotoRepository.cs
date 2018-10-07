@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿/* using Microsoft.EntityFrameworkCore;
 using PhotosOfUs.Model.Models;
 using System;
 using System.Collections.Generic;
@@ -9,8 +9,8 @@ using System.Drawing.Imaging;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
-using PhotosOfUs.Model.ViewModels;
-using Kuvio.Kernel.Azure;
+using PhotosOfUs.Connectors.Storage;
+using Kuvio.Kernel.Architecture;
 
 namespace PhotosOfUs.Model.Repositories
 {
@@ -18,61 +18,63 @@ namespace PhotosOfUs.Model.Repositories
     {
         private PhotosOfUsContext _context;
         private StorageContext _storageContext;
+        private IRepository<Folder> _folder;
 
-        public PhotoRepository(PhotosOfUsContext context, StorageContext storageContext)
+        public PhotoRepository(PhotosOfUsContext context, StorageContext storageContext, IRepository<Folder> folderRepository)
         {
             _context = context;
             _storageContext = storageContext;
+            _folder = folderRepository;
         }
 
         public List<Folder> GetFolders(int photographerId)
         {
-            return _context.Folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId && x.IsDeleted == false).ToList();
+            return _folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId && x.IsDeleted == false).ToList();
         }
 
         public Folder GetPhotos(int photographerId, int folderId)
         {
-            return _context.Folder.Include(x => x.Photo).SingleOrDefault(x => x.PhotographerId == photographerId && x.Id == folderId);
+            return _folder.Include(x => x.Photo).Where(x => x.PhotographerId == photographerId && x.Id == folderId).FirstOrDefault();
         }
 
-        public List<Photo> GetPhotosByCode(string code)
-        {
-            return _context.Photo.Where(x => x.Code.Equals(code)).ToList();
-        }
+        //public List<Photo> GetPhotosByCode(string code)
+        //{
+        //    return _context.Photo.Where(x => x.Code.Equals(code)).ToList();
+        //}
 
-        public Photo GetPhoto(int photoId)
-        {
-            return _context.Photo.Single(x => x.Id == photoId);
-        }
+        //public Photo GetPhoto(int photoId)
+        //{
+        //    return _context.Photo.Single(x => x.Id == photoId);
+        //}
 
-        public Photo GetPhotoAndPhotographer(int photoId)
-        {
-            return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
-        }
+        //public Photo GetPhotoAndPhotographer(int photoId)
+        //{
+        //    return _context.Photo.Include(x => x.Photographer).Single(x => x.Id == photoId);
+        //}
 
-        public void UpdatePrice(int photoId, decimal price)
-        {
-            Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
-            photo.Price = price;
-            _context.Photo.Update(photo);
-            _context.SaveChanges();
-        }
+        //public void UpdatePrice(int photoId, decimal price)
+        //{
+        //    Photo photo = _context.Photo.Where(x => x.Id == photoId).FirstOrDefault();
+        //    photo.Price = price;
+        //    _context.Photo.Update(photo);
+        //    _context.SaveChanges();
+        //}
 
-        public void SavePhoto(Photo photo)
-        {
-            _context.Photo.Attach(photo);
-            _context.SaveChanges();
-        }
+        //public void SavePhoto(Photo photo)
+        //{
+        //    _context.Photo.Attach(photo);
+        //    _context.SaveChanges();
+        //}
 
-        public List<Tag> GetAllTags()
-        {
-            return _context.Tag.ToList();
-        }
+        //public List<Tag> GetAllTags()
+        //{
+        //    return _context.Tag.ToList();
+        //}
 
-        public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
-        {
-            return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
-        }
+        //public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
+        //{
+        //    return _context.Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
+        //}
 
         //public async Task<Photo> Upload(int photographerId, Photo photo, Stream stream, string fileName, string photoName, string photoCode)
         //{
@@ -163,31 +165,31 @@ namespace PhotosOfUs.Model.Repositories
         }
 
         
-        public List<Photo> GetProfilePhotos(int photographerId)
-        {
-            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
-        }
+        //public List<Photo> GetProfilePhotos(int photographerId)
+        //{
+        //    return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
+        //}
 
-        public List<Photo> GetPublicPhotos()
-        {
-            return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
-        }
+        //public List<Photo> GetPublicPhotos()
+        //{
+        //    return _context.Photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
+        //}
 
-        public void AddTags(List<TagViewModel> tags)
-        {
-            foreach (TagViewModel tag in tags)
-            {
-                if (!_context.Tag.Any(o => o.Name == tag.text))
-                {
-                    Tag newTag = new Tag
-                    {
-                        Name = tag.text
-                    };
-                    _context.Tag.Add(newTag);
-                }
-            }
-            _context.SaveChanges();
-        }
+        //public void AddTags(List<TagViewModel> tags)
+        //{
+        //    foreach (TagViewModel tag in tags)
+        //    {
+        //        if (!_context.Tag.Any(o => o.Name == tag.text))
+        //        {
+        //            Tag newTag = new Tag
+        //            {
+        //                Name = tag.text
+        //            };
+        //            _context.Tag.Add(newTag);
+        //        }
+        //    }
+        //    _context.SaveChanges();
+        //}
 
         public void EditTags(PhotoTagViewModel phototagviewmodel)
         {
@@ -251,64 +253,56 @@ namespace PhotosOfUs.Model.Repositories
             return _context.Photo.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagids.Contains(y.TagId))).ToList();
         }
 
-        public List<PhotoTag> GetTagsByPhotos(List<int> photos)
-        {
-            var tags = new List<Tag>();
-            var phototags = new List<PhotoTag>();
+        //public List<PhotoTag> GetTagsByPhotos(List<int> photos)
+        //{
+        //    var tags = new List<Tag>();
+        //    var phototags = new List<PhotoTag>();
 
-            //phototags = _context.PhotoTag.ToList();
+        //    //phototags = _context.PhotoTag.ToList();
 
-            var photoList = new List<Photo>();
-            foreach(int id in photos)
-            {
-                Photo photo = _context.Photo.Where(x => x.Id == id).FirstOrDefault();
-                photoList.Add(photo);
-            }
+        //    var photoList = new List<Photo>();
+        //    foreach(int id in photos)
+        //    {
+        //        Photo photo = _context.Photo.Where(x => x.Id == id).FirstOrDefault();
+        //        photoList.Add(photo);
+        //    }
 
-            foreach (Photo photo in photoList)
-            {
-                var tagsfromphoto = _context
-                    .PhotoTag
-                    .Include(item => item.Tag)
-                    .Where(cm => cm.PhotoId == photo.Id)
-                    .ToList();
+        //    foreach (Photo photo in photoList)
+        //    {
+        //        var tagsfromphoto = _context
+        //            .PhotoTag
+        //            .Include(item => item.Tag)
+        //            .Where(cm => cm.PhotoId == photo.Id)
+        //            .ToList();
 
-                foreach (PhotoTag phototag in tagsfromphoto)
-                {
-                    if (!phototags.Any(x => x.Tag == phototag.Tag))
-                    {
-                        phototags.Add(phototag);
-                    }
-                }
-            }
+        //        foreach (PhotoTag phototag in tagsfromphoto)
+        //        {
+        //            if (!phototags.Any(x => x.Tag == phototag.Tag))
+        //            {
+        //                phototags.Add(phototag);
+        //            }
+        //        }
+        //    }
 
-            //foreach (PhotoTag phototag in phototags)
-            //{
-            //    tags = _context
-            //        .Tag
-            //        .Include(item => item.Name)
-            //        .Where(cm => cm.Id == phototag.TagId)
-            //        .ToList();
-            //}
+        //    return phototags;
+        //}
 
-            return phototags;
-        }
+        //public void DeletePhotos(List<int> photos)
+        //{
+        //    foreach (int photo in photos)
+        //    {
+        //        var photodb = _context.Photo.Where(x => x.Id == photo).FirstOrDefault();
+        //        photodb.IsDeleted = true;
+        //    }
+        //    _context.SaveChanges();
+        //}
 
-        public void DeletePhotos(List<int> photos)
-        {
-            foreach (int photo in photos)
-            {
-                var photodb = _context.Photo.Where(x => x.Id == photo).FirstOrDefault();
-                photodb.IsDeleted = true;
-            }
-            _context.SaveChanges();
-        }
-
-        public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension, Folder folder, RootObject suggestedTags, List<TagViewModel> listoftags)
-        {
-            await UploadFile(photographerId, stream, photoName, string.Empty, extension, folder.Id, price, suggestedTags, listoftags, true);
-        }
+        //public async Task UploadProfilePhotoAsync(int photographerId, FileStream stream, string photoName, string empty, double? price, string extension, Folder folder, RootObject suggestedTags, List<TagViewModel> listoftags)
+        //{
+        //    await UploadFile(photographerId, stream, photoName, string.Empty, extension, folder.Id, price, suggestedTags, listoftags, true);
+        //}
     }
 
   
 }
+ */

@@ -13,29 +13,29 @@ using System.Security.Claims;
 using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
+using PhotosOfUs.Web.Models;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Route("api/Cart")]
     public class CartApiController : Controller
     {
-        private PhotosOfUsContext _context;
-        private OrderRepository _oldOrderRepository;
-        private IRepository<Order> _orders;
-        private PhotoRepository _photoRepository;
+        private IRepository<Order> _order;
+        private IRepository<Photo> _photo;
+        private IRepository<User> _user;
 
         public Order Cart { get; set; }
 
-        public CartApiController(PhotosOfUsContext context, IRepository<Order> orderRepository, IRepository<Photo> photoRepository)
+        public CartApiController(IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
-            _context = context;
-            _orders = orderRepository;
-            _photoRepository = photoRepository;
+            _order = orderRepository;
+            _photo = photoRepository;
+            _user = userRepository;
         }
 
         public override void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
         {
-            Cart = _orders.Include(x => x.OrderDetail).Find(x => x.UserId == User.ID() && x.OrderStatus == "Open");
+            Cart = _order.Include(x => x.OrderDetail).Find(x => x.UserId == User.ID() && x.OrderStatus == "Open");
         }
 
         [HttpGet]
@@ -55,7 +55,7 @@ namespace PhotosOfUs.Web.Controllers.API
             
             foreach (var item in orderitems)
             {
-                var photo = _photoRepository.Find(x => x.Id == photoId);
+                var photo = _photo.Find(x => x.Id == photoId);
                 Cart.AddLine(photo, item.PrintType, item.Quantity);
             }
 
@@ -66,12 +66,10 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("SaveAddress")]
         public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = _context.UserIdentity.Find(azureId).UserID;
-
+            var user = _user.Find(x => x.Id == User.ID());
             var address = AddressViewModel.ToEntity(vm);
             user.SetAddress(address);
-            _context.SaveChanges();
+            _user.Commit();
             return AddressViewModel.ToViewModel(address);
         }
 
@@ -80,7 +78,14 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderTotal/{orderId:int}")]
         public decimal GetOrderTotal(int orderId)
         {
-            return _oldOrderRepository.GetOrderTotal(orderId);
+            Order order = _order.Find(x => x.Id == orderId);
+            decimal total = 0;
+            foreach (var item in order.OrderDetail)
+            {
+                total += (item.UnitPrice * item.Quantity);
+            }
+
+            return total;
         }
 
         
@@ -89,15 +94,13 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             public int PrintTypeId { get; set; }
             public int Quantity { get; set; }
+            public PrintType PrintType { get; set; }
         }
 
         [HttpPost]
         [Route("ConfirmationEmail")]
         public async Task<string> SendConfirmationEmail([FromBody]AddressViewModel address)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-
             var apiKey = "";
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("photosofus@kuviocreative.com");

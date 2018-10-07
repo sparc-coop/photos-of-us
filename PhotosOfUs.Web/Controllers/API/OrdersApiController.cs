@@ -12,6 +12,8 @@ using SendGrid.Helpers.Mail;
 using System.Security.Claims;
 using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
+using PhotosOfUs.Web.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -19,23 +21,31 @@ namespace PhotosOfUs.Web.Controllers.API
     public class OrdersApiController : Controller
     {
         private PhotosOfUsContext _context;
-        private OrderRepository _oldOrderRepository;
-        private IRepository<Order> _orderRepository;
-        private PhotoRepository _photoRepository;
+        private IRepository<Order> _order;
+        private IRepository<Photo> _photo;
+        private IRepository<User> _user;
 
-        public OrdersApiController(PhotosOfUsContext context, IRepository<Order> orderRepository, PhotoRepository photoRepository)
+        public OrdersApiController(PhotosOfUsContext context, IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
             _context = context;
-            _orderRepository = orderRepository;
-            _photoRepository = photoRepository;
+            _order = orderRepository;
+            _photo = photoRepository;
+            _user = userRepository;
+        }
+
+
+        [HttpGet]
+        [Route("GetOrderDetails/{orderId:int}")]
+        public List<Order> GetOrderDetails(int orderId)
+        {
+            return _order.Include(x => x.OrderDetail).Where(x => x.Id == orderId).ToList();
         }
 
         [HttpGet, HttpPost]
         [Route("SaveAddress")]
         public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = _context.UserIdentity.Find(azureId).UserID;
+            var user = _user.Find(x => x.Id == User.ID());
 
             var address = AddressViewModel.ToEntity(vm);
             user.SetAddress(address);
@@ -47,10 +57,23 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderTotal/{orderId:int}")]
         public decimal GetOrderTotal(int orderId)
         {
-            return _oldOrderRepository.GetOrderTotal(orderId);
+            Order order = _order.Find(x => x.Id == orderId);
+            decimal total = 0;
+            foreach (var item in order.OrderDetail)
+            {
+                total += (item.UnitPrice * item.Quantity);
+            }
+
+            return total;
         }
 
-        
+        [HttpGet]
+        [Route("GetOrders/{userId:int}")]
+        public List<CustomerOrderViewModel> GetOrders(int userId)
+        {
+            List<Order> orders = _order.Where(x => x.UserId == userId).ToList();
+            return CustomerOrderViewModel.ToViewModel(orders).ToList();
+        }
 
         public class OrderItemsViewModel
         {
@@ -62,9 +85,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("ConfirmationEmail")]
         public async Task<string> SendConfirmationEmail([FromBody]AddressViewModel address)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var order = _oldOrderRepository.GetOpenOrder(userId);
+            var order = _context.Orders.Include("OrderDetail").Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
 
             var apiKey = "";
             var client = new SendGridClient(apiKey);

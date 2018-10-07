@@ -1,11 +1,11 @@
-﻿using PhotosOfUs.Web.Auth;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PhotosOfUs.Model.Models;
 using Microsoft.AspNetCore.Cors;
+using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Web.Controllers
 {

@@ -20,7 +20,6 @@ namespace PhotosOfUs.Model.ViewModels
             viewModel.Id = entity.Id;
             viewModel.Name = entity.Name;
             viewModel.text = entity.Name;
-            //viewModel.Tags = new List<TagViewModel>();
 
             return viewModel;
         }
@@ -31,10 +30,30 @@ namespace PhotosOfUs.Model.ViewModels
 
             viewModel.Id = entity.Tag.Id;
             viewModel.Name = entity.Tag.Name;
-            viewModel.text = entity.Tag.Name;
-            //viewModel.Tags = new List<TagViewModel>();
 
             return viewModel;
+        }
+
+        public static Tag ToEntity(TagViewModel viewModel)
+        {
+            Tag entity = new Tag();
+
+            entity.Id = viewModel.Id;
+            entity.Name = viewModel.Name;
+
+            return entity;
+        }
+
+        public static List<Tag> ToEntity(List<TagViewModel> viewModels)
+        {
+            List<Tag> entity = new List<Tag>();
+
+            foreach (var item in viewModels)
+            {
+                entity.Add(ToEntity(item));
+            }
+
+            return entity;
         }
 
         public static List<TagViewModel> ToViewModel(List<Tag> entities)

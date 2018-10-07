@@ -18,19 +18,28 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System;
 using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Auth;
+using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web.Controllers
 {
    
     public class PhotographerController : Controller
     {
-        private PhotoRepository _photoRepository;
-        private readonly IRepository<Order> _orderRepository;
+        private PhotosOfUsContext _context;
+        private readonly IRepository<Photo> _photo;
+        private readonly IRepository<Order> _order;
+        private readonly IRepository<User> _user;
+        private readonly IRepository<Card> _card;
 
-        public PhotographerController(PhotoRepository photoRepository, IRepository<Order> orderRepository)
+        public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
+        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository)
         {
-            _photoRepository = photoRepository;
-            _orderRepository = orderRepository;
+            _context = context;
+            _photo = photoRepository;
+            _order = orderRepository;
+            _user = userRepository;
+            _card = cardRepository;
         }
 
         // GET: Photographer
@@ -45,13 +54,12 @@ namespace PhotosOfUs.Web.Controllers
         {
             
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            var photographer = _context.User.Find(userId);
+            var photographer = _user.Find(x => x.AzureId == azureId);
 
-            if(photographer.IsPhotographer == true)
+            if (photographer.IsPhotographer == true)
             {
                 PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-                model.PhotographerId = userId;
+                model.PhotographerId = photographer.Id;
                 model.Name = User.Identity.Name;
 
                 return View(model);
@@ -66,17 +74,13 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Photos(int id)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-
-            var folder = _photoRepository.GetPhotos(photographerId, id);
-
+            Folder folder = _photo.Find(x => x.PhotographerId == User.ID() && x.Id == id).Folder;
             return View(FolderViewModel.ToViewModel(folder));
         }
 
         public ActionResult Photo(int id)
         {
-            var photo = _photoRepository.GetPhotoAndPhotographer(id);
+            var photo = _photo.Include(x => x.Photographer).Where(x => x.Id == id).FirstOrDefault();
             return View(PhotoViewModel.ToViewModel(photo));
         }
 
@@ -107,8 +111,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult PhotoCode(string code)
         {
-            var photos = _photoRepository.GetPhotosByCode(code);
-            return View(PhotoViewModel.ToViewModel(photos));
+            return View(_photo.Where(x => x.Code == code).ToViewModel<PhotoViewModel>().ToList());
         }
 
         // GET: Photographer/Create
@@ -183,9 +186,7 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Cards()
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            List<Card> pCards = _context.Card.Where(x => x.PhotographerId == photographerId).ToList();
+            List<Card> pCards = _user.Find(x => x.Id == User.ID()).Card.Where(y => y.PhotographerId == User.ID()).ToList();
             return View(pCards);
         }
 
@@ -193,11 +194,8 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Export(List<int> ids)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var cards = _context.Card
-                .Include(x => x.Photographer)
-                .Where(x => x.PhotographerId == photographerId && ids.Contains(x.Id)).ToList();
+            var cards = _user.Find(x => x.Id == User.ID()).Card
+                .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
 
             var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
             return new ActionAsPdf("ExportPdf", new { json })
@@ -232,15 +230,13 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags)
+        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags,
+        [FromServices]UploadPhotoCommand command)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-
             RootObject tagsfromazure = null;
 
-            var ac = new AzureCognitive(_context);
-            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            var ac = new AzureCognitive();
+            byte[] imgbytes = AzureCognitive.TransformImageIntoBytes(file);
             tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
 
             if (string.IsNullOrEmpty(photoCode))
@@ -264,8 +260,6 @@ namespace PhotosOfUs.Web.Controllers
                 }
             }
             
-
-
             var filePath = Path.GetTempFileName();
 
             if (file.Length > 0)
@@ -273,7 +267,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await _photoRepository.UploadFile(photographerId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, listoftags);
+                    await command.ExecuteAsync(User.ID(), stream, photoName, photoCode, extension, folderId, price, tagsfromazure, TagViewModel.ToEntity(listoftags));
                 }
             }
 
@@ -283,14 +277,12 @@ namespace PhotosOfUs.Web.Controllers
 
 
         [Authorize]
-        public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags)
+        public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags, [FromServices]UploadPhotoCommand command)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _context.UserIdentity.Find(azureId);
-
+            User photographer = _user.Find(x => x.Id == User.ID());
             RootObject tagsfromazure = null;
 
-            var ac = new AzureCognitive(_context);
+            var ac = new AzureCognitive(_context, _card);
             var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
             tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
             var suggestedtags = ac.ExtractTags(tagsfromazure);
@@ -316,13 +308,15 @@ namespace PhotosOfUs.Web.Controllers
             {
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
+                    int folderId = photographer.PublicFolder.Id;
                     await file.CopyToAsync(stream);
                     if (photographer.PublicFolder == null)
                     {
-                        photographer.AddFolder("Public");
-                        _context.SaveChanges();
+                        folderId = photographer.AddFolder("Public").Id;
+                        _photo.Commit();
                     }
-                    await _photoRepository.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
+                    //await _user.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
+                    await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags));
                     }
             }
 
@@ -331,69 +325,41 @@ namespace PhotosOfUs.Web.Controllers
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
-            return Json(new { PhotoExisting = _photoRepository.IsPhotoCodeAlreadyUsed(1, code) });
+            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int id = _user.Find(x => x.AzureId == azureId).Id;
+            return Json(new { PhotoExisting = _photo.Find(x => x.PhotographerId == id && x.Code == code)});
         }
 
-        public ActionResult Profile(int id)
+        public ActionResult Profile(int userId)
         {
-            if (id == 0)
+            if (userId == 0)
             {
                 var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                id = _context.UserIdentity.Find(azureId).UserID;
+                userId = _user.Find(x => x.AzureId == azureId).Id;
             }
 
-            var photographer = _context.User.Where(x => x.Id == id).FirstOrDefault();
-            var photos = _photoRepository.GetProfilePhotos(photographer.Id);
-            
+            var photographer = _user.Find(x => x.Id == userId);
+            var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == userId).ToList();
+
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
         [Authorize]
         public ActionResult SalesHistory(int id)
         {
-            var orderItems = new OrderRepository(_context).GetPhotographerOrderDetails(id);
+            var orderItems =  _order.Include(x => x.OrderDetail).Where(x => x.UserId == id).ToList();
             List<Order> orders = new List<Order>();
-            foreach(var order in orderItems.GroupBy(x => x.OrderId))
+            foreach(var order in orderItems.GroupBy(x => x.Id))
             {
-                orders.Add(_orderRepository.Find(x => x.Id == order.Key));
+                orders.Add(_order.Find(x => x.Id == order.Key));
             }
 
             return View(OrderViewModel.ToViewModel(orders).ToList());
         }
 
-        //[Authorize]
-        //public ActionResult SalesHistory(string query = null)
-        //{
-        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    if (azureId == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
-
-        //    UserIdentity userIdentity = _context.UserIdentity.Find(azureId);
-
-        //    // if the user can't be found make a safe but empty return
-        //    if (userIdentity == null) return View(SalesHistoryViewModel.ToViewModel(new List<Order>()));
-
-
-        //    //var photographerId = userIdentity.UserID;
-        //    var photographerId = 1; //TODO: uncomment the above line and comment out this line when finished testing
-
-
-        //    string queryString = HttpContext.Request.QueryString.ToString();
-        //    SalesQueryModel sqm = new SalesQueryModel(queryString);
-
-        //    var orders = new OrderRepository(_context).GetOrders(photographerId, sqm);
-        //    SalesHistoryViewModel salesHistory = SalesHistoryViewModel.ToViewModel(orders);
-        //    salesHistory.UserDisplayName = User.Identity.Name;
-        //    Debug.WriteLine("Size of orders: {0}", salesHistory.Orders.Count);
-        //    return View(salesHistory);
-        //}
-
         public ActionResult Search()
         {
-            var photos = _photoRepository.GetPublicPhotos();
-
-            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
-            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
-            //var getalltags = _photoRepository.GetAllTags();
+            var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
 
             return View(PhotoViewModel.ToViewModel(photos));
         }
@@ -401,17 +367,19 @@ namespace PhotosOfUs.Web.Controllers
         public ActionResult Results(string tagnames)
         {
             string[] tagarray = tagnames.Split(' ');
+            
+            List<Tag> tags = new List<Tag>();
+            List<Photo> photos = new List<Photo>();
 
-            var tags = _photoRepository.GetTags(tagarray);
-            var photos = _photoRepository.GetPublicPhotosByTag(tags);
+            tags.Where(x => tagarray.Contains(x.Name)).ToList();
+
+            List<int> tagIds = tags.Select(x => x.Id).ToList();
+            photos.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagIds.Contains(y.TagId))).ToList();
 
             var searchmodel = new SearchViewModel();
 
             searchmodel.Photos = PhotoViewModel.ToViewModel(photos);
             searchmodel.Tags = TagViewModel.ToViewModel(tags);
-            //var test = _context.Photo.Include(x => x.PhotoTag).Where(x => x.Id == 57).First();
-            //var tags2 = _context.PhotoTag.Include(x => x.Tag).Where(x => x.PhotoId == 57).ToList();
-            //var getalltags = _photoRepository.GetAllTags();
 
             return View(searchmodel);
         }
@@ -466,10 +434,10 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension)
+        public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension, [FromServices]UploadProfileImageCommand command)
         {
             var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
+            var photographerId = _user.Find(x => x.AzureId == azureId).Id;
 
             var filePath = Path.GetTempFileName();
 
@@ -478,7 +446,7 @@ namespace PhotosOfUs.Web.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
-                    await _userRepository.UpdateProfileImageAsync(photographerId, stream, photoName, string.Empty, extension);
+                    await command.ExecuteAsync(photographerId, stream, photoName, extension);
                 }
             }
         }

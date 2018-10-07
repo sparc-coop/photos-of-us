@@ -10,6 +10,7 @@ namespace PhotosOfUs.Model.Models
     {
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)

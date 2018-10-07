@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
-using System.Security.Claims;
-using System.Net;
-using System.IO;
 using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Auth;
+using PhotosOfUs.Web.Utilities;
+using PhotosOfUs.Model.Photos.Commands;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -18,31 +18,95 @@ namespace PhotosOfUs.Web.Controllers.API
     public class PhotoApiController : Controller
     {
         private PhotosOfUsContext _context;
-        private readonly PhotoRepository _photoRepository;
-        private readonly OrderRepository _orderRepository;
-        private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Photo> _photo;
+        private readonly IRepository<User> _user;
+        private readonly IRepository<PrintType> _printType;
 
-        public PhotoApiController(PhotosOfUsContext context, PhotoRepository photoRepository, OrderRepository orderRepository, IRepository<User> userRepository)
+        public PhotoApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<PrintType> printTypeRepository)
         {
             _context = context;
-            _photoRepository = photoRepository;
-            _orderRepository = orderRepository;
-            _userRepository = userRepository;
+            _photo = photoRepository;
+            _user = userRepository;
+            _printType = printTypeRepository;
+        }
+
+        [HttpPut]
+        public async Task<AzureCognitiveViewModel> Put(int userId, string photoCode, string tags, string photoName, string extension, int folderId, int price,
+         [FromBody]IFormFile file, [FromServices]UploadPhotoCommand command)
+        {
+/*             if (User.ID() != userId)
+                return Forbid(); */
+
+            RootObject tagsfromazure = null;
+
+            var ac = new AzureCognitive();
+            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
+
+            if (string.IsNullOrEmpty(photoCode))
+            {
+                var codefromazure = await ac.MakeRequest(imgbytes, "ocr");
+
+                var suggestedtags = ac.ExtractTags(tagsfromazure);
+                var code = ac.ExtractCardCode(codefromazure);
+
+                return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
+            }
+
+            var listoftags = new List<TagViewModel>();
+            if (tags != null)
+            {
+                List<string> result = tags.Split(' ').ToList();
+
+                foreach (string obj in result)
+                {
+                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                }
+            }
+
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+            {
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                    await command.ExecuteAsync(userId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, TagViewModel.ToEntity(listoftags));
+                }
+            }
+
+            
+
+            //return Ok();
+            return new AzureCognitiveViewModel();
         }
 
         [HttpGet]
         [Route("{photoId:int}")]
         public PhotoViewModel GetPhoto(int photoId)
         {
-            var photo = _photoRepository.GetPhoto(photoId);
-            return PhotoViewModel.ToViewModel(photo);
+            return _photo.Find(x => x.Id == photoId).ToViewModel<PhotoViewModel>();
+        }
+
+        [HttpGet]
+        [Route("GetPublicPhotos")]
+        public List<Photo> GetPublicPhotos()
+        {
+            return _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
+        }
+
+        [HttpGet]
+        [Route("GetProfilePhotos")]
+        public List<Photo> GetProfilePhotos(int photographerId)
+        {
+            return _photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
         }
 
         [HttpGet]
         [Route("GetPublicIds")]
         public List<int> GetPublicIds()
         {
-            var photos = _photoRepository.GetPublicPhotos();
+            var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
 
             List<int> photoIds = new List<int>();
             foreach(var photo in photos)
@@ -57,63 +121,53 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetCodePhotos/{code}")]
         public List<PhotoViewModel> GetCodePhotos(string code)
         {
-            List<Photo> photo = _photoRepository.GetPhotosByCode(code);
-            return PhotoViewModel.ToViewModel(photo).ToList();
+            return _photo.Where(x => x.Code == code).ToViewModel<PhotoViewModel>().ToList();
         }
 
         [HttpGet]
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            var printType = _context.PrintType.ToList();
-            return PrintTypeViewModel.ToViewModel(printType);
-        }
-
-        [HttpGet]
-        [Route("GetPhotographer/{id:int}")]
-        public UserViewModel GetPhotographer(int id)
-        {
-            var photographer = _userRepository.Find(x => x.Id == id);
-            return UserViewModel.ToViewModel(photographer);
-        }
-
-        [HttpGet]
-        [Route("GetFolders")]
-        public List<FolderViewModel> GetFolders()
-        {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var folders = _photoRepository.GetFolders(photographerId);
-
-            return FolderViewModel.ToViewModel(folders);
-        }
-
-        [HttpGet]
-        [Route("GetOrderPhotos/{id:int}")]
-        public List<CustomerOrderViewModel> GetOrderPhotos(int id)
-        {
-            List<Order> orders = _orderRepository.GetUserOrders(id);
-            return CustomerOrderViewModel.ToViewModel(orders).ToList();
-        }
-
-        [HttpGet]
-        [Route("GetOrderItems/{id:int}")]
-        public List<OrderDetailViewModel> GetOrderItems(int id)
-        {
-            return _orderRepository
-                .GetOrderDetails(id)
-                .Select(x => OrderDetailViewModel.ToViewModel(x))
-                .ToList();
+            return PrintTypeViewModel.ToViewModel(new Photo().GetPrintTypes().ToList());
         }
 
         [HttpGet]
         [Route("GetAllTags")]
         public List<TagViewModel> GetAllTags()
         {
-            var tags = _photoRepository.GetAllTags();
+            return TagViewModel.ToViewModel(new Photo().GetAllTags().ToList());
+        }
 
-            return TagViewModel.ToViewModel(tags);
-            //return tags;
+        [HttpGet]
+        [Route("GetTags")]
+        public List<TagViewModel> GetTags(string tagnames)
+        {
+            return TagViewModel.ToViewModel(new Photo().GetAllTags().ToList());
+        }
+
+        public void AddTags(List<TagViewModel> tags)
+        {          
+            Photo photo = new Photo();
+            foreach (TagViewModel tag in tags)
+            {
+                var hasTags = _photo.Where(x => x.Tag.Any(o => o.Name == tag.text));
+                if (hasTags.Count() > 0)
+                {
+                    photo.NewTag(TagViewModel.ToEntity(tag));
+                }
+            }
+            _photo.Commit();
+        }
+
+        [HttpDelete]
+        public void DeletePhotos(List<int> photos)
+        {
+            foreach (int photoId in photos)
+            {
+                var photo = _photo.Find(x => x.Id == photoId);
+                photo.Delete();
+                _photo.Commit();
+            }          
         }
     }
 }

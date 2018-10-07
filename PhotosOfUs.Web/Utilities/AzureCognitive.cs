@@ -10,18 +10,25 @@ using PhotosOfUs.Model.Models;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Linq;
+using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Web.Utilities
 {
-
-
     public class AzureCognitive
     {
         private PhotosOfUsContext _context;
+        private IRepository<Card> _card;
 
-        public AzureCognitive(PhotosOfUsContext context)
+
+        public AzureCognitive()
+        {
+
+        }
+        public AzureCognitive(PhotosOfUsContext context, IRepository<Card> cardRepository)
         {
             _context = context;
+            _card = cardRepository;
         }
 
         // Replace <Subscription Key> with your valid subscription key.
@@ -120,7 +127,7 @@ namespace PhotosOfUs.Web.Utilities
                         {
                             if (l.Count() == 7)
                             {
-                                var code = _context.Card.Where(c => c.Code.ToUpper() == l.ToUpper());
+                                var code = _card.Where(c => c.Code.ToUpper() == l.ToUpper());
 
                                 if (code.Count() > 0)
                                 {

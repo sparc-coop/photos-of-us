@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Kuvio.Kernel.Auth;
+using Kuvio.Kernel.Architecture;
+using PhotosOfUs.Web.Models;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -16,34 +19,29 @@ namespace PhotosOfUs.Web.Controllers
     public class CustomerController : Controller
     {
         private PhotosOfUsContext _context;
-        private OrderRepository _orderRepository;
+        private IRepository<Order> _order;
 
-        public CustomerController(PhotosOfUsContext context, OrderRepository orderRepository)
+        public CustomerController(PhotosOfUsContext context, IRepository<Order>  orderRepository)
         {
             _context = context;
-            _orderRepository = orderRepository;
+            _order = orderRepository;
         }
 
         public ActionResult Index()
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _context.UserIdentity.Find(azureId).UserID;
-            var user = _context.User.Find(photographerId);
-
-            return View(UserViewModel.ToViewModel(user));
+            Order order = _order.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
         public ActionResult OrderHistory(int id)
         {
-            List<Order> orders = _orderRepository.OrderHistory(id);
+            List<Order> orders = _order.Where(x => x.UserId == User.ID()).ToList();
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
 
         public ActionResult Confirmation()
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userId = _context.UserIdentity.Find(azureId).UserID;
-            List<Order> orders = _orderRepository.OrderHistory(userId);
+            List<Order> orders = _order.Where(x => x.UserId == User.ID()).ToList();
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
     }

@@ -21,18 +21,18 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/User")]
     public class UserApiController : Controller
     {
-        private IRepository<User> _userRepository;
+        private IRepository<User> _user;
 
         public UserApiController(IRepository<User> userRepository)
         {
-            _userRepository = userRepository;
+            _user = userRepository;
         }
         
 
         [HttpGet]
         public UserViewModel Get()
         {
-            return _userRepository.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
+            return _user.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
         }
 
         [HttpPut]
@@ -49,9 +49,9 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpDelete]
         public UserViewModel DeactivateAccount()
         {
-            User user = _userRepository.Find(x => x.Id == User.ID());
+            User user = _user.Find(x => x.Id == User.ID());
             user.Deactivate();
-            _userRepository.Commit();
+            _user.Commit();
 
             return user.ToViewModel<UserViewModel>();
         }
@@ -59,11 +59,25 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPost]
         public UserViewModel ReactivateAccount()
         {
-            User user = _userRepository.Find(x => x.Id == User.ID());
+            User user = _user.Find(x => x.Id == User.ID());
             user.Activate();
-           _userRepository.Commit();
+           _user.Commit();
 
             return user.ToViewModel<UserViewModel>();
+        }
+
+        public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
+        {
+            return _user.Find(x => x.Id == photographerId).Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
+        }
+
+
+        [HttpGet]
+        [Route("GetFolders")]
+        public List<FolderViewModel> GetFolders()
+        {
+            var folders = _user.Find(x => x.Id == User.ID()).Folder.ToList();
+            return FolderViewModel.ToViewModel(folders).ToList();
         }
     }
 }

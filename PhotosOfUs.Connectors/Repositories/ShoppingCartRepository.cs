@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿/* using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.Models;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PhotosOfUs.Web.Repositories
+namespace PhotosOfUs.Model.Repositories
 {
     public class ShoppingCartRepository
     {
@@ -181,3 +181,4 @@ namespace PhotosOfUs.Web.Repositories
         }
     }
 }
+ */

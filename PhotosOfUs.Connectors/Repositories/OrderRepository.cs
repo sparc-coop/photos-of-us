@@ -1,4 +1,4 @@
-﻿using PhotosOfUs.Model.Models;
+﻿/* using PhotosOfUs.Model.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,29 +17,6 @@ namespace PhotosOfUs.Model.Repositories
             _context = context;
         }
 
-        public Order GetOpenOrder(int id)
-        {
-            Order order = _context.Order.Where(x => x.UserId == id && x.OrderStatus == "Open").Include("OrderDetail").FirstOrDefault();
-            return order;
-        }
-        
-        public decimal GetOrderTotal(int id)
-        {
-            List<OrderDetail> orderDetails = _context.OrderDetail.Where(x => x.OrderId == id).ToList();
-            decimal total = 0;
-            foreach (var item in orderDetails)
-            {
-                total += (item.UnitPrice * item.Quantity);
-            }
-
-            return total;
-        }
-
-        public List<Order> GetUserOrders(int userId)
-        {
-            List<Order> orders = _context.Order.Where(x => x.UserId == userId).ToList();
-            return orders;
-        }
 
         public List<OrderDetail> GetOrderDetails(int orderId)
         {
@@ -53,11 +30,6 @@ namespace PhotosOfUs.Model.Repositories
             List<OrderDetail> orderItems = _context.OrderDetail.Include("Photo").Where(x => x.Photo.PhotographerId == photographerId).ToList();
 
             return orderItems;
-        }
-
-        public List<Order> OrderHistory(int userId)
-        {
-            return _context.Order.Where(x => x.UserId == userId).ToList();
         }
 
         public List<Order> GetOrders(int userId, SalesQueryModel query = null)
@@ -150,4 +122,4 @@ namespace PhotosOfUs.Model.Repositories
         //    return result.ToList();
         //}
     }
-}
+} */

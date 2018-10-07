@@ -18,7 +18,7 @@ namespace PhotosOfUs.Model.ViewModels
         public decimal Earning { get; set; }
         public DateTime OrderDate { get; set; }
         
-        public static OrderViewModel ToViewModel(Order order)
+        public static OrderViewModel ToViewModel(Models.Order order)
         {
             var viewModel = new OrderViewModel();
 
@@ -33,7 +33,7 @@ namespace PhotosOfUs.Model.ViewModels
             return viewModel;
         }
 
-        public static List<OrderViewModel> ToViewModel(List<Order> entities)
+        public static List<OrderViewModel> ToViewModel(List<Models.Order> entities)
         {
             List<OrderViewModel> viewModels = new List<OrderViewModel>();
 

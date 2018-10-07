@@ -17,10 +17,10 @@ namespace PhotosOfUs.Web.Controllers
             return View("Landing");
         }
 
-        public IActionResult Homepage()
-        {
-            return View("Landing");
-        }
+        //public IActionResult Homepage()
+        //{
+        //    return View("Landing");
+        //}
 
         public IActionResult Pricing()
         {

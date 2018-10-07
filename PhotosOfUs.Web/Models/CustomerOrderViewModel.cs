@@ -1,7 +1,6 @@
-﻿using PhotosOfUs.Model.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.Model.ViewModels
 {
@@ -9,6 +8,7 @@ namespace PhotosOfUs.Model.ViewModels
     {
         public int Id { get; set; }
         public int UserId { get; set; }
+        public string UserName {get;set;}
         public string OrderStatus { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal? Total { get; set; }
@@ -20,6 +20,7 @@ namespace PhotosOfUs.Model.ViewModels
 
             viewModel.Id = order.Id;
             viewModel.UserId = order.UserId;
+            viewModel.UserName = order.User.DisplayName;
             viewModel.OrderStatus = order.OrderStatus;
             viewModel.OrderDate = order.OrderDate;
             viewModel.Total = order.Total;

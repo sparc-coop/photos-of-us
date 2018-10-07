@@ -13,6 +13,7 @@ using Stripe;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Kuvio.Kernel.Auth;
+using Kuvio.Kernel.Architecture;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -20,20 +21,19 @@ namespace PhotosOfUs.Web.Controllers
     public class PhotoController : Controller
     {
         private PhotosOfUsContext _context;
-        private readonly OrderRepository _orderRepository;
-        private readonly PhotoRepository _photoRepository;
+        private IRepository<Order> _order;
+        private IRepository<Photo> _photo;
 
-        public PhotoController(PhotosOfUsContext context, OrderRepository orderRepository, PhotoRepository photoRepository)
+        public PhotoController(PhotosOfUsContext context, IRepository<Order> orderRepository, IRepository<Photo> photoRepository)
         {
             _context = context;
-            _orderRepository = orderRepository;
-            _photoRepository = photoRepository;
+            _order = orderRepository;
+            _photo = photoRepository;
         }
 
         public ActionResult Purchase(int id)
         {
-            var photo = _photoRepository.GetPhoto(id);
-
+            var photo = _photo.Find(x => x.Id == id);
             var viewModel = PhotoViewModel.ToViewModel(photo);
 
             return View(viewModel);
@@ -41,13 +41,13 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Cart(int id)
         {
-            Order order = _orderRepository.GetOpenOrder(id);
+            Order order = _order.Where(x => x.UserId == id && x.OrderStatus == "Open").FirstOrDefault();
             return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
         public ActionResult Checkout(int id)
         {
-            Order order = _orderRepository.GetOpenOrder(id);
+            Order order = _order.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
             return View(CustomerOrderViewModel.ToViewModel(order));
         }
 
@@ -56,11 +56,16 @@ namespace PhotosOfUs.Web.Controllers
         {
             StripeConfiguration.SetApiKey("");
 
-            OrderRepository repo = _orderRepository;
-            Order order = repo.GetOpenOrder(User.ID());
-            order.SetStatusToPending();
+            Order userOrder = _order.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            userOrder.SetStatusToPending();
+            _order.Commit();
             
-            decimal orderTotal = _orderRepository.GetOrderTotal(order.Id);
+            Order order = _order.Find(x => x.Id == userOrder.Id);
+            decimal total = 0;
+            foreach (var item in order.OrderDetail)
+            {
+                total += (item.UnitPrice * item.Quantity);
+            }
 
             var customers = new StripeCustomerService();
             var charges = new StripeChargeService();
@@ -73,7 +78,7 @@ namespace PhotosOfUs.Web.Controllers
 
             var charge = charges.Create(new StripeChargeCreateOptions
             {
-                Amount = (int)(orderTotal * 100),
+                Amount = (int)(total * 100),
                 Description = "Photos Of Us Order",
                 Currency = "usd",
                 CustomerId = customer.Id,
