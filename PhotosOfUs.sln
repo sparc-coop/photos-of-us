@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web", "PhotosOfU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rotativa.NetCore", "Rotativa.NetCore\Rotativa.NetCore.csproj", "{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.Connectors", "PhotosOfUs.Connectors\PhotosOfUs.Connectors.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.Plugins", "PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

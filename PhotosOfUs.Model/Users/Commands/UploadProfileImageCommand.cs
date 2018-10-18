@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using PhotosOfUs.Model.Services;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Kuvio.Kernel.Auth;

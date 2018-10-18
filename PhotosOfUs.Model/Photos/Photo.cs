@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -85,6 +87,54 @@ namespace PhotosOfUs.Model.Models
             };
             Tag.Add(tag);
             return tag;
+        }
+
+        public Stream AddWatermark(Stream input, Stream watermark, string extension)
+        {
+            var output = new MemoryStream();
+            
+            //WebClient wc = new WebClient();
+            //byte[] bytes = wc.DownloadData("https://photosofus-dev.azurewebsites.net/images/water_mark.png");
+            //MemoryStream ms = new MemoryStream(bytes);
+
+            using (Image image = Image.FromStream(input))
+            using (Image watermarkImage = Image.FromStream(watermark))
+            using (Graphics imageGraphics = Graphics.FromImage(image))
+            using (TextureBrush watermarkBrush = new TextureBrush(watermarkImage))
+            {
+                int x = (image.Width / 2 - watermarkImage.Width / 2);
+                int y = (image.Height / 2 - watermarkImage.Height / 2);
+                watermarkBrush.TranslateTransform(x, y);
+                imageGraphics.FillRectangle(watermarkBrush, new Rectangle(new Point(x, y), new Size(watermarkImage.Width + 1, watermarkImage.Height)));
+                //imageGraphics.FillRectangle(watermarkBrush, new Rectangle(new Point(0, 0), image.Size));
+                image.Save(output, GetImageFormatFromExtension(extension));
+            }
+
+            return output;
+        }
+
+        public static ImageFormat GetImageFormatFromExtension(string extension)
+        {
+            if (extension.ToLower() == "png")
+            {
+                return ImageFormat.Png;
+            }
+            else if (extension.ToLower() == "tiff" || extension.ToLower() == "tif")
+            {
+                return ImageFormat.Tiff;
+            }
+            else if (extension.ToLower() == "bmp")
+            {
+                return ImageFormat.Bmp;
+            }
+            else if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg" || extension.ToLower() == "jpe")
+            {
+                return ImageFormat.Png;
+            }
+            else
+            {
+                return ImageFormat.Png;
+            }
         }
     }
 }
