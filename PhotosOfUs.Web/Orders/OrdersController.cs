@@ -20,17 +20,15 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Orders")]
     public class OrdersApiController : Controller
     {
-        private PhotosOfUsContext _context;
-        private IRepository<Order> _order;
-        private IRepository<Photo> _photo;
-        private IRepository<User> _user;
+        private IRepository<Order> _orders;
+        private IRepository<Photo> _photos;
+        private IRepository<User> _users;
 
-        public OrdersApiController(PhotosOfUsContext context, IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public OrdersApiController(IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
-            _context = context;
-            _order = orderRepository;
-            _photo = photoRepository;
-            _user = userRepository;
+            _orders = orderRepository;
+            _photos = photoRepository;
+            _users = userRepository;
         }
 
 
@@ -38,18 +36,18 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderDetails/{orderId:int}")]
         public List<Order> GetOrderDetails(int orderId)
         {
-            return _order.Include(x => x.OrderDetail).Where(x => x.Id == orderId).ToList();
+            return _orders.Include(x => x.OrderDetail).Where(x => x.Id == orderId).ToList();
         }
 
         [HttpGet, HttpPost]
         [Route("SaveAddress")]
         public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
         {
-            var user = _user.Find(x => x.Id == User.ID());
-
+            var user = _users.Find(x => x.Id == User.ID());
             var address = AddressViewModel.ToEntity(vm);
             user.SetAddress(address);
-            _context.SaveChanges();
+            _users.Commit();
+
             return AddressViewModel.ToViewModel(address);
         }
 
@@ -57,7 +55,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrderTotal/{orderId:int}")]
         public decimal GetOrderTotal(int orderId)
         {
-            Order order = _order.Find(x => x.Id == orderId);
+            Order order = _orders.Find(x => x.Id == orderId);
             decimal total = 0;
             foreach (var item in order.OrderDetail)
             {
@@ -71,7 +69,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetOrders/{userId:int}")]
         public List<CustomerOrderViewModel> GetOrders(int userId)
         {
-            List<Order> orders = _order.Where(x => x.UserId == userId).ToList();
+            List<Order> orders = _orders.Where(x => x.UserId == userId).ToList();
             return CustomerOrderViewModel.ToViewModel(orders).ToList();
         }
 
@@ -85,7 +83,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("ConfirmationEmail")]
         public async Task<string> SendConfirmationEmail([FromBody]AddressViewModel address)
         {
-            var order = _context.Orders.Include("OrderDetail").Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            var order = _orders.Include(x => x.OrderDetail).Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
 
             var apiKey = "";
             var client = new SendGridClient(apiKey);
@@ -100,6 +98,24 @@ namespace PhotosOfUs.Web.Controllers.API
             await client.SendEmailAsync(msg);
 
             return "success";
+        }
+
+        public ActionResult Index()
+        {
+            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            return View(CustomerOrderViewModel.ToViewModel(order));
+        }
+
+        public ActionResult OrderHistory(int id)
+        {
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(CustomerOrderViewModel.ToViewModel(orders));
+        }
+
+        public ActionResult Confirmation()
+        {
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(CustomerOrderViewModel.ToViewModel(orders));
         }
     }
 }
