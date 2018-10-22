@@ -25,6 +25,7 @@ using PhotosOfUs.Model;
 using AutoMapper;
 using PhotosOfUs.Connectors.Storage;
 using PhotosOfUs.Connectors.Database;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace PhotosOfUs.Web
 {
@@ -66,8 +67,8 @@ namespace PhotosOfUs.Web
             .AddOpenIdConnect("B2CWeb", options =>
                 {
                     // TODO: Refactor into Kuvio Kernel
-                    options.ClientId = Configuration["AzureAdB2C:ClientId"];
-                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["AzureAdB2C:Tenant"]}/{Configuration["AzureAdB2C:Policy"]}/v2.0/";
+                    options.ClientId = Configuration["Authentication:AzureAdB2C:ClientId"];
+                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:Policy"]}/v2.0/";
                     options.UseTokenLifetime = true;
                     options.SignInScheme = "B2C";
                     options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
@@ -78,6 +79,7 @@ namespace PhotosOfUs.Web
                     };
                 })
             .AddCookie();
+            
 
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
@@ -104,8 +106,18 @@ namespace PhotosOfUs.Web
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
+            services.Configure<RazorViewEngineOptions>(o =>
+            {
+                // {2} is area, {1} is controller,{0} is the action    
+                o.ViewLocationFormats.Clear();
+                o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add("/Home/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
+            });
+
             services.AddScoped<IViewRenderService, ViewRenderService>();
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -129,11 +141,13 @@ namespace PhotosOfUs.Web
 
             app.UseCors("LoginPolicy");
 
+            //app.UseHttpsRedirection();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Homepage}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
@@ -145,7 +159,7 @@ namespace PhotosOfUs.Web
 
         private Task OnRedirectToIdentityProviderAsync(RedirectContext context)
         {
-            var defaultPolicy = Configuration["AzureAdB2C:Policy"];
+            var defaultPolicy = Configuration["Authentication:AzureAdB2C:Policy"];
             if (context.Properties.Items.TryGetValue("Policy", out var policy) && !policy.Equals(defaultPolicy))
             {
                 context.ProtocolMessage.Scope = OpenIdConnectScope.OpenIdProfile;

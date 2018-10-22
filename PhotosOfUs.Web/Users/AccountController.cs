@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PhotosOfUs.Web.Controllers
 {
-    [Route("[controller]/[action]")]
+    //[Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         [HttpGet]
