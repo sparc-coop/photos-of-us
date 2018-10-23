@@ -23,7 +23,8 @@ using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web.Controllers
 {
-   
+    [Area("Users")]
+    //[Route("[controller]")]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -43,13 +44,13 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer
-        [Authorize]
+        //[Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Dashboard");
         }
 
-        [Authorize]
+        //[Authorize]
         public ActionResult Dashboard()
         {
             
@@ -71,7 +72,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer/Details/5
-        [Authorize]
+        //[Authorize]
         public ActionResult Photos(int id)
         {
             Folder folder = _photo.Find(x => x.PhotographerId == User.ID() && x.Id == id).Folder;

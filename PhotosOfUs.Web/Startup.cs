@@ -122,8 +122,13 @@ namespace PhotosOfUs.Web
             {
                 // {2} is area, {1} is controller,{0} is the action    
                 o.ViewLocationFormats.Clear();
+                //o.ViewLocationFormats.Add("/{2}/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Home/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
+
+                o.AreaViewLocationFormats.Clear();
+                o.AreaViewLocationFormats.Add("/{2}/Views/{0}" + RazorViewEngine.ViewExtension);
+
             });
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
@@ -157,6 +162,8 @@ namespace PhotosOfUs.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute("areaRoute", "{area:exists}/{controller=User}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
