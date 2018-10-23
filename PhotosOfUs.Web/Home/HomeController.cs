@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Kuvio.Kernel.Architecture;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.Web.Controllers
 {
     
     public class HomeController : Controller
     {
+        private IRepository<Tag> _tag;
+
+        public HomeController(IRepository<Tag> tagRepository)
+        {
+            _tag = tagRepository;
+        }
+
         public IActionResult Index()
         {
             return View("Landing");

@@ -7,8 +7,8 @@ namespace PhotosOfUs.Model.Models
     {
         public Address()
         {
-            OrderBillingAddress = new HashSet<Order>();
-            OrderShippingAddress = new HashSet<Order>();
+            //OrderBillingAddress = new HashSet<Order>();
+            //OrderShippingAddress = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -23,7 +23,7 @@ namespace PhotosOfUs.Model.Models
         public string Phone { get; set; }
         public string Email { get; set; }
 
-        public ICollection<Order> OrderBillingAddress { get; set; }
-        public ICollection<Order> OrderShippingAddress { get; set; }
+        //public ICollection<Order> OrderBillingAddress { get; set; }
+        //public ICollection<Order> OrderShippingAddress { get; set; }
     }
 }

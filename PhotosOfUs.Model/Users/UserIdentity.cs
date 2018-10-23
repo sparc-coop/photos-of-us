@@ -6,6 +6,11 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class UserIdentity
     {
+        public UserIdentity()
+        {
+
+        }
+
         public UserIdentity(string externalUserId, string identityProvider)
         {
             AzureID = externalUserId;
