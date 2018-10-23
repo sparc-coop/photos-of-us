@@ -14,11 +14,8 @@ namespace PhotosOfUs.Web.Controllers
     
     public class HomeController : Controller
     {
-        private IRepository<Tag> _tag;
-
         public HomeController(IRepository<Tag> tagRepository)
         {
-            _tag = tagRepository;
         }
 
         public IActionResult Index()

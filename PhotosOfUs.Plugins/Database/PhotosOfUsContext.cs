@@ -26,12 +26,14 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Card>(entity =>
             {
+                entity.ToTable("Card");
                 entity.HasIndex(e => e.PhotographerId);
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Folder>(entity =>
             {
+                entity.ToTable("Folder");
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
@@ -44,13 +46,16 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
+                entity.ToTable("OrderDetail");
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
             });
 
             modelBuilder.Entity<Photo>(entity =>
             {
+                entity.ToTable("Photo");
                 entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
+                entity.Ignore(x => x.FolderName);
                 entity.Ignore(x => x.Stream);
                 entity.Property(x => x.SuggestedTags)
                     .HasConversion(x => JsonConvert.SerializeObject(x), x => JsonConvert.DeserializeObject<RootObject>(x));
