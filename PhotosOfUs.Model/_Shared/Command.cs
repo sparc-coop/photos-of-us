@@ -2,7 +2,14 @@ using System;
 
 namespace Kuvio.Kernel.Architecture
 {
-    public class Command<T> : IDisposable
+    //public interface ICommand<T> : IDisposable
+    //{
+    //    //new void Dispose();
+
+    //    void Commit();
+    //}
+
+    public class Command<T> //: ICommand<T>
     {
         protected IRepository<T> Set;
         
@@ -14,5 +21,7 @@ namespace Kuvio.Kernel.Architecture
         public void Dispose() => Commit();
 
         protected void Commit() => Set.Commit();
+
+        
     }
 }

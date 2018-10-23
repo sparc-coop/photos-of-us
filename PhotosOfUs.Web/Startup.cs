@@ -64,11 +64,12 @@ namespace PhotosOfUs.Web
                 sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
-            .AddOpenIdConnect("B2CWeb", options =>
+            //.AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
+            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
                 {
                     // TODO: Refactor into Kuvio Kernel
                     options.ClientId = Configuration["Authentication:AzureAdB2C:ClientId"];
-                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:Policy"]}/v2.0/";
+                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"]}/v2.0/";
                     options.UseTokenLifetime = true;
                     options.SignInScheme = "B2C";
                     options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
@@ -78,8 +79,16 @@ namespace PhotosOfUs.Web
                         OnTokenValidated = OnTokenValidatedAsync
                     };
                 })
-            .AddCookie();
-            
+            .AddCookie("B2C");
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .AddAuthenticationSchemes("B2C", "Mobile")
+            //    .Build();
+            //});
+
 
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
@@ -153,13 +162,14 @@ namespace PhotosOfUs.Web
 
         private Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context)
         {
+            //context.HttpContext.RequestServices.GetRequiredService<LoginCommand>().Execute(context.Principal);
             context.HttpContext.RequestServices.GetService<LoginCommand>().Execute(context.Principal);
             return Task.FromResult(0);
         }
 
         private Task OnRedirectToIdentityProviderAsync(RedirectContext context)
         {
-            var defaultPolicy = Configuration["Authentication:AzureAdB2C:Policy"];
+            var defaultPolicy = Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"];
             if (context.Properties.Items.TryGetValue("Policy", out var policy) && !policy.Equals(defaultPolicy))
             {
                 context.ProtocolMessage.Scope = OpenIdConnectScope.OpenIdProfile;

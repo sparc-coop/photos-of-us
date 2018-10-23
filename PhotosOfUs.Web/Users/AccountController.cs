@@ -19,7 +19,7 @@ namespace PhotosOfUs.Web.Controllers
             var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
-                OpenIdConnectDefaults.AuthenticationScheme);
+                "B2CWeb");
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace PhotosOfUs.Web.Controllers
             return SignOut(
                 new AuthenticationProperties { RedirectUri = callbackUrl },
                 CookieAuthenticationDefaults.AuthenticationScheme,
-                OpenIdConnectDefaults.AuthenticationScheme);
+                "B2CWeb");
         }
 
         [HttpGet]

@@ -6,25 +6,25 @@ using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.Model
 {
-    public class LoginCommand
+    public class LoginCommand : Command<User>
     {
-        private IRepository<User> Users;
+        //private IRepository<User> Users;
 
-        public LoginCommand(IRepository<User> users)
+        public LoginCommand(IRepository<User> repository) : base(repository)
         {
-            Users = users;
+
         }
 
         public User Execute(ClaimsPrincipal principal) 
         {
-            var user = Users.Find(x => x.UserIdentities.Any(y => y.AzureID == principal.AzureID())); // User with identity
+            var user = Set.Find(x => x.UserIdentities.Any(y => y.AzureID == principal.AzureID())); // User with identity
             if (user == null)
             {
-                user = Users.Find(x => x.Email == principal.Email()); // User without identity
+                user = Set.Find(x => x.Email == principal.Email()); // User without identity
                 if (user == null)
                 {
                     user = new User(principal.DisplayName(), principal.Email(), principal.AzureID(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
-                    user = Users.Add(user);
+                    user = Set.Add(user);
                 }
             }
 
