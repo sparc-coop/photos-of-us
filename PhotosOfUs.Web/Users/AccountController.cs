@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PhotosOfUs.Web.Controllers
 {
     //[Route("[controller]/[action]")]
+    [Area("Users")]
     public class AccountController : Controller
     {
         [HttpGet]

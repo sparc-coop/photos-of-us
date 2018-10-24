@@ -18,31 +18,31 @@ namespace PhotosOfUs.Model.ViewModels
         public decimal Earning { get; set; }
         public DateTime OrderDate { get; set; }
         
-        public static OrderViewModel ToViewModel(Models.Order order)
-        {
-            var viewModel = new OrderViewModel();
+        //public static OrderViewModel ToViewModel(Models.Order order)
+        //{
+        //    var viewModel = new OrderViewModel();
 
-            viewModel.Id = order.Id;
-            viewModel.UserId = order.UserId;
-            viewModel.OrderStatus = order.OrderStatus;
-            viewModel.Amount = order.OrderDetail.First().Quantity;
-            viewModel.TotalPaid = order.OrderDetail.First().UnitPrice * viewModel.Amount;
-            viewModel.Earning = viewModel.TotalPaid * (decimal) 0.955;
-            viewModel.OrderDate = order.OrderDate;
+        //    viewModel.Id = order.Id;
+        //    viewModel.UserId = order.UserId;
+        //    viewModel.OrderStatus = order.OrderStatus;
+        //    viewModel.Amount = order.OrderDetail.First().Quantity;
+        //    viewModel.TotalPaid = order.OrderDetail.First().UnitPrice * viewModel.Amount;
+        //    viewModel.Earning = viewModel.TotalPaid * (decimal) 0.955;
+        //    viewModel.OrderDate = order.OrderDate;
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<OrderViewModel> ToViewModel(List<Models.Order> entities)
-        {
-            List<OrderViewModel> viewModels = new List<OrderViewModel>();
+        //public static List<OrderViewModel> ToViewModel(List<Models.Order> entities)
+        //{
+        //    List<OrderViewModel> viewModels = new List<OrderViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 }

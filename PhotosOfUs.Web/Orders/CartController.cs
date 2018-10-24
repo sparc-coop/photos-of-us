@@ -64,13 +64,13 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet, HttpPost]
         [Route("SaveAddress")]
-        public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
+        public AddressViewModel SaveAddress([FromBody]Address vm)
         {
             var user = _user.Find(x => x.Id == User.ID());
-            var address = AddressViewModel.ToEntity(vm);
-            user.SetAddress(address);
+            //var address = vm.ToViewModel<Address>();
+            user.SetAddress(vm);
             _user.Commit();
-            return AddressViewModel.ToViewModel(address);
+            return vm.ToViewModel<AddressViewModel>();
         }
 
         

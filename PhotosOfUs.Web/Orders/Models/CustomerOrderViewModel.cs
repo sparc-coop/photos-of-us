@@ -14,30 +14,30 @@ namespace PhotosOfUs.Model.ViewModels
         public decimal? Total { get; set; }
         public List<OrderDetail> OrderDetail { get; set; }
 
-        public static CustomerOrderViewModel ToViewModel(Order order)
-        {
-            CustomerOrderViewModel viewModel = new CustomerOrderViewModel();
+        //public static CustomerOrderViewModel ToViewModel(Order order)
+        //{
+        //    CustomerOrderViewModel viewModel = new CustomerOrderViewModel();
 
-            viewModel.Id = order.Id;
-            viewModel.UserId = order.UserId;
-            viewModel.UserName = order.User.DisplayName;
-            viewModel.OrderStatus = order.OrderStatus;
-            viewModel.OrderDate = order.OrderDate;
-            viewModel.Total = order.Total;
+        //    viewModel.Id = order.Id;
+        //    viewModel.UserId = order.UserId;
+        //    viewModel.UserName = order.User.DisplayName;
+        //    viewModel.OrderStatus = order.OrderStatus;
+        //    viewModel.OrderDate = order.OrderDate;
+        //    viewModel.Total = order.Total;
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<CustomerOrderViewModel> ToViewModel(List<Order> entities)
-        {
-            List<CustomerOrderViewModel> viewModels = new List<CustomerOrderViewModel>();
+        //public static List<CustomerOrderViewModel> ToViewModel(List<Order> entities)
+        //{
+        //    List<CustomerOrderViewModel> viewModels = new List<CustomerOrderViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 }

@@ -42,6 +42,9 @@ namespace PhotosOfUs.Model.Models
                 entity.ToTable("Order");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
+                entity.Ignore(x => x.Amount);
+                entity.Ignore(x => x.TotalPaid);
+                entity.Ignore(x => x.Earning);
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -57,6 +60,10 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
                 entity.Ignore(x => x.FolderName);
                 entity.Ignore(x => x.Stream);
+                entity.Ignore(x => x.FileSize);
+                entity.Ignore(x => x.Resolution);
+                entity.Ignore(x => x.ThumbnailUrl);
+                entity.Ignore(x => x.WaterMarkUrl);
                 entity.Property(x => x.SuggestedTags)
                     .HasConversion(x => JsonConvert.SerializeObject(x), x => JsonConvert.DeserializeObject<RootObject>(x));
             });

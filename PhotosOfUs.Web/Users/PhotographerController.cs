@@ -44,13 +44,13 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Dashboard");
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Dashboard()
         {
             
@@ -72,17 +72,17 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer/Details/5
-        //[Authorize]
+        [Authorize]
         public ActionResult Photos(int id)
         {
             Folder folder = _photo.Find(x => x.PhotographerId == User.ID() && x.Id == id).Folder;
-            return View(FolderViewModel.ToViewModel(folder));
+            return View(folder.ToViewModel<FolderViewModel>());
         }
 
         public ActionResult Photo(int id)
         {
             var photo = _photo.Include(x => x.Photographer).Where(x => x.Id == id).FirstOrDefault();
-            return View(PhotoViewModel.ToViewModel(photo));
+            return View(photo.ToViewModel<PhotoViewModel>());
         }
 
         public ActionResult PublicCode()
@@ -198,7 +198,7 @@ namespace PhotosOfUs.Web.Controllers
             var cards = _user.Find(x => x.Id == User.ID()).Card
                 .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
 
-            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
+            var json = JsonConvert.SerializeObject(cards.ToViewModel<List<CardViewModel>>());
             return new ActionAsPdf("ExportPdf", new { json })
             {
                 FileName = "Cards.pdf",
@@ -355,14 +355,14 @@ namespace PhotosOfUs.Web.Controllers
                 orders.Add(_order.Find(x => x.Id == order.Key));
             }
 
-            return View(OrderViewModel.ToViewModel(orders).ToList());
+            return View(orders.ToViewModel<List<OrderViewModel>>());
         }
 
         public ActionResult Search()
         {
             var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
 
-            return View(PhotoViewModel.ToViewModel(photos));
+            return View(photos.ToViewModel<List<PhotoViewModel>>());
         }
 
         public ActionResult Results(string tagnames)
@@ -379,7 +379,7 @@ namespace PhotosOfUs.Web.Controllers
 
             var searchmodel = new SearchViewModel();
 
-            searchmodel.Photos = PhotoViewModel.ToViewModel(photos);
+            searchmodel.Photos = photos.ToViewModel<List<PhotoViewModel>>();
             searchmodel.Tags = TagViewModel.ToViewModel(tags);
 
             return View(searchmodel);

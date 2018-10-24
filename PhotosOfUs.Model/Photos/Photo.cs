@@ -48,8 +48,16 @@ namespace PhotosOfUs.Model.Models
         public ICollection<Tag> Tag { get; set; }
 
         public string Filename { get; }
+
+        // Not Mapped
         public string FolderName { get; protected set; }
+        public string FileSize { get; protected set; }
+        public string Resolution { get; protected set; }
         public Stream Stream { get; protected set; }
+        public string ThumbnailUrl => Url?.Replace("/photos/", "/thumbnails/");
+        public string WaterMarkUrl => Url?.Replace("/photos/", "/watermark/");
+
+
 
         public ICollection<PrintType> GetPrintTypes()
         {

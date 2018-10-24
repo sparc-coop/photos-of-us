@@ -14,35 +14,35 @@ namespace PhotosOfUs.Model.ViewModels
 
         public List<PhotoViewModel> Photos { get; set; }
 
-        public static FolderViewModel ToViewModel(Folder entity)
-        {
-            FolderViewModel viewModel = new FolderViewModel();
+        //public static FolderViewModel ToViewModel(Folder entity)
+        //{
+        //    FolderViewModel viewModel = new FolderViewModel();
 
-            viewModel.Id = entity.Id;
-            viewModel.PhotographerId = entity.PhotographerId;
-            viewModel.Name = entity.Name;
-            viewModel.CreatedDate = entity.CreatedDate;
-            viewModel.Photos = new List<PhotoViewModel>();
+        //    viewModel.Id = entity.Id;
+        //    viewModel.PhotographerId = entity.PhotographerId;
+        //    viewModel.Name = entity.Name;
+        //    viewModel.CreatedDate = entity.CreatedDate;
+        //    viewModel.Photos = new List<PhotoViewModel>();
 
-            foreach (var item in entity.Photo)
-            {
-                viewModel.Photos.Add(PhotoViewModel.ToViewModel(item));
-            }
+        //    foreach (var item in entity.Photo)
+        //    {
+        //        viewModel.Photos.Add(PhotoViewModel.ToViewModel(item));
+        //    }
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<FolderViewModel> ToViewModel(List<Folder> entities)
-        {
-            List<FolderViewModel> viewModels = new List<FolderViewModel>();
+        //public static List<FolderViewModel> ToViewModel(List<Folder> entities)
+        //{
+        //    List<FolderViewModel> viewModels = new List<FolderViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 
     public class FolderRenameViewModel

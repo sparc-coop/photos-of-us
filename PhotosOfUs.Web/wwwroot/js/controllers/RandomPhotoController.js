@@ -12,7 +12,7 @@
         //var randomY = Math.floor(Math.random() * y);
         let coords = [getRandomInt(0, x), getRandomInt(650, 900)];
         return coords;
-    }
+    };
 
     //$scope.loadImages = (ph) => {
     //    var img = document.createElement('img');

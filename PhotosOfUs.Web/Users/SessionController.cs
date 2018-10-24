@@ -9,6 +9,7 @@ using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Web.Controllers
 {
+    [Area("Users")]
     public class SessionController : Controller
     {
         private PhotosOfUsContext _context;

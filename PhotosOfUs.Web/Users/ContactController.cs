@@ -8,12 +8,13 @@ using MailChimp.Net.Models;
 
 namespace PhotosOfUs.Web.Controllers
 {
+    [Area("Users")]
     public class ContactController : Controller
     {
         public IConfiguration Configuration { get; }
-    
 
-    [HttpPost]
+
+        [HttpPost]
         public async Task<IActionResult> SendLaunchEmail(ContactViewModel model)
         {
             //var apiKey = "";

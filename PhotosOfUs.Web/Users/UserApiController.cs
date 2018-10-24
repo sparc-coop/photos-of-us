@@ -77,7 +77,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public List<FolderViewModel> GetFolders()
         {
             var folders = _user.Find(x => x.Id == User.ID()).Folder.ToList();
-            return FolderViewModel.ToViewModel(folders).ToList();
+            return folders.ToViewModel<List<FolderViewModel>>();
         }
     }
 }
