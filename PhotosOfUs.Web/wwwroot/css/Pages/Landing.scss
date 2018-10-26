@@ -110,6 +110,7 @@
         height: 48px;
         text-decoration: none;
         padding: 10px 20px;
+        outline: none;
     }
 
     .browse-button {
@@ -314,4 +315,81 @@
             align-content: flex-end;
         }
     }
+}
+
+
+@media screen and (max-width: $mobile) {
+
+    .landing {
+        overflow-x: hidden;
+
+        .landing-subtext {
+            width: 100%;
+            max-width: 400px;
+            padding: 27px 0;
+        }
+
+        .browse--content {
+            left: 15px;
+            right: 15px;
+            margin-top: 50px;
+
+            .subt-3 {
+                width: 100%;
+            }
+        }
+
+        .browse {
+            height: 500px;
+        }
+
+        .steps {
+            height: unset;
+            padding: 20px 0;
+            max-width: 400px;
+        }
+
+        .main-landing {
+            height: unset;
+            padding-bottom: 30px;
+
+            .codePage__container__search {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .logo {
+                padding: 18px 0 0 27px;
+            }
+
+            .welcome-section {
+                padding: 28px 0 0 7%;
+
+                .welcome-text {
+                    font-size: 50px;
+                    width: 100%;
+                    max-width: 342px;
+                    height: 150px;
+                }
+
+                .tagline {
+                    width: 100%;
+                    max-width: 342px;
+                }
+            }
+
+            &-subtext {
+                max-width: 300px;
+            }
+        }
+
+        .footer {
+            flex-wrap: wrap;
+            height: unset;
+
+            .navigation {
+                padding: 50px 25px 8px 42px;
+            }
+        }
+    } 
 }

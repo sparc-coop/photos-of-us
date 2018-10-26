@@ -3,6 +3,10 @@
 .account-settings {
     .container {
         display: flex;
+
+        @media screen and (max-width: $mobile) {
+            flex-wrap: wrap;
+        }
     }
 
     .account-sidemenu {
@@ -88,6 +92,10 @@
     .form-account {
         margin-left: 40px;
 
+        @media screen and (max-width: $mobile) {
+            margin-left: 0;
+        }
+
         .img-container {
             position: relative;
             width: 100%;
@@ -139,8 +147,8 @@
             }
         }
 
-        &--social{
-            input{
+        &--social {
+            input {
                 width: 300px;
             }
         }

@@ -29,11 +29,19 @@
             display: flex;
             width: 779px;
             height: 86px;
+
+            @media screen and (max-width: $mobile) {
+                width: unset;
+            }
         }
 
         &--email {
             input {
                 width: 510px;
+
+                @media screen and (max-width: $mobile) {
+                    width: unset;
+                }
             }
         }
     }

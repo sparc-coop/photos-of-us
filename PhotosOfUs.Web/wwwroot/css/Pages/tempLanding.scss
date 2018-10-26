@@ -17,6 +17,10 @@
             top: 32px;
             left: 96px;
 
+            @media screen and (max-width: $mobile) {
+                left: 30px;
+            }
+
             &__text {
                 font-size: 15px;
                 font-weight: 600;
@@ -114,7 +118,7 @@
 
         .content {
             margin-top: 0px;
-            
+
             &__subinfo {
                 padding: 10px 0 70px 0;
                 font-family: 'Open Sans';

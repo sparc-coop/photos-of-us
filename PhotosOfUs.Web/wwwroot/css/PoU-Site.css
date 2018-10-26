@@ -153,15 +153,6 @@
   cursor: pointer;
   border: none;
   outline: none; }
-  .button--yellow img {
-    padding-right: 11px;
-    vertical-align: middle;
-    margin-top: -5px; }
-  .button--yellow--large {
-    font-size: 22px;
-    width: 330px;
-    padding: 11px 0;
-    float: right; }
   .button--yellow--payment {
     position: absolute;
     bottom: 65px;
@@ -184,103 +175,132 @@
   font-size: 22px;
   bottom: 16px;
   color: #FF6060; }
-  .button--checkout--preview img {
-    padding-right: 11px;
-    vertical-align: middle;
-    margin-top: -5px; }
+  .button--checkout--preview--payment {
+    float: right;
+    margin-top: -100px;
+    width: 240px; }
 
-.button--upload {
-  position: absolute;
-  bottom: 40px;
-  right: 56px; }
-
-.button--save-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  color: #FFE261;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 2px solid #FFE261;
-  border-radius: 8px;
-  padding: 2px 40px 3px;
-  margin: 35px 5px 2px 0;
-  position: absolute;
-  bottom: 22px;
-  right: 22px;
-  cursor: pointer; }
-
-.button--discard-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #FF6060;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 0;
-  padding: 5px 20px;
-  margin: 35px 0 2px 0;
-  position: absolute;
-  bottom: 22px;
-  right: 218px;
-  cursor: pointer; }
-
-.button--back {
-  height: 19px;
-  width: 19px;
-  margin: 30px 20px 0 -40px;
-  cursor: pointer; }
-
-.button--go {
-  display: inline;
-  border-radius: 0 8px 8px 0;
-  background: #000000;
-  color: #FFFFFF;
-  padding: 11.5px;
+.button--checkout--preview {
   cursor: pointer;
-  font-family: "Open Sans";
-  font-weight: 600;
-  font-size: 20px;
-  vertical-align: middle;
-  text-decoration: none;
-  border: none; }
-
-.button--lostcode {
-  cursor: pointer;
-  color: #FF6060;
-  padding-top: 10px;
-  height: 28px;
-  font-family: "Open Sans";
-  font-weight: 600;
-  font-size: 14px; }
-
-.button--learn {
-  border: 2px solid #43C6BA;
-  border-radius: 8px;
-  width: 209px;
-  height: 26px;
   background-color: #194952;
-  color: #43C6BA;
-  font-size: 18px;
-  font-family: "Open Sans";
   text-align: center;
-  padding: 10px 0; }
-
-.button--imageUpload {
-  background: #FFE261;
-  color: #43C6BA;
-  border-radius: 8px;
-  padding: 10px 30px;
-  display: inline;
+  width: 239px;
+  padding: 12px 0;
+  border-radius: 6px;
+  position: absolute;
   font-family: "Dosis";
   font-weight: 600;
-  cursor: pointer;
-  outline: none; }
-  .button--imageUpload .img-upload {
-    vertical-align: middle;
-    margin: -3px 10px 0 0;
-    border-radius: 0;
+  font-size: 22px;
+  bottom: 16px;
+  color: #FF6060; }
+  .button--checkout--preview--save-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFE261;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 2px solid #FFE261;
+    border-radius: 8px;
+    padding: 2px 40px 3px;
+    margin: 35px 5px 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 22px;
     cursor: pointer; }
+  .button--checkout--preview--discard-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FF6060;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 0;
+    padding: 5px 20px;
+    margin: 35px 0 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 218px;
+    cursor: pointer; }
+  .button--checkout--preview--save-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFE261;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 2px solid #FFE261;
+    border-radius: 8px;
+    padding: 2px 40px 3px;
+    margin: 35px 5px 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 22px; }
+  .button--checkout--preview--go {
+    display: inline;
+    border-radius: 0 8px 8px 0;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 11.5px;
+    cursor: pointer;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none; }
+  .button--checkout--preview--back {
+    height: 19px;
+    width: 19px;
+    margin: 30px 20px 0 -40px;
+    cursor: pointer; }
+  .button--checkout--preview--go {
+    display: inline;
+    border-radius: 0 8px 8px 0;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 11.5px;
+    cursor: pointer;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none; }
+  .button--checkout--preview--lostcode {
+    cursor: pointer;
+    color: #FF6060;
+    padding-top: 10px;
+    height: 28px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 14px; }
+  .button--checkout--preview--learn {
+    border: 2px solid #43C6BA;
+    border-radius: 8px;
+    width: 209px;
+    height: 26px;
+    background-color: #194952;
+    color: #43C6BA;
+    font-size: 18px;
+    font-family: "Open Sans";
+    text-align: center;
+    padding: 10px 0; }
+  .button--checkout--preview--imageUpload {
+    background: #FFE261;
+    color: #43C6BA;
+    border-radius: 8px;
+    padding: 10px 30px;
+    display: inline;
+    font-family: "Dosis";
+    font-weight: 600;
+    cursor: pointer;
+    outline: none; }
+    .button--checkout--preview--imageUpload .img-upload {
+      vertical-align: middle;
+      margin: -3px 10px 0 0;
+      border-radius: 0;
+      cursor: pointer; }
 
 .button--download {
   border: 2px solid #43C6BA;
@@ -428,7 +448,8 @@
     border-radius: 8px;
     margin: 24px 24px 0 0;
     max-width: 600px;
-    height: auto; }
+    height: auto;
+    width: 100%; }
   .flex-box .align-left {
     margin-right: auto; }
   .flex-box .align-right {
@@ -447,6 +468,12 @@ body {
     padding: 60px 30px; }
     body > div.container.body-content hr {
       display: none; }
+    @media screen and (max-width: 450px) {
+      body > div.container.body-content {
+        padding: 40px 20px; } }
+  @media screen and (max-width: 450px) {
+    body {
+      padding-bottom: 10px; } }
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -505,6 +532,17 @@ body {
       .filters .filter-sort select option {
         color: #43C6BA;
         border: none; }
+    @media screen and (max-width: 450px) {
+      .filters .filter-sort {
+        padding: 15px 0;
+        margin-right: 40px; } }
+
+@media screen and (max-width: 450px) {
+  html {
+    width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0; } }
 
 /**
  * Flex Grid -
@@ -995,8 +1033,14 @@ body {
       display: flex;
       width: 779px;
       height: 86px; }
+      @media screen and (max-width: 450px) {
+        .form-input textarea {
+          width: unset; } }
     .form-input--email input, .form-input--email .form-input textarea, .form-input .form-input--email textarea {
       width: 510px; }
+      @media screen and (max-width: 450px) {
+        .form-input--email input, .form-input--email .form-input textarea, .form-input .form-input--email textarea {
+          width: unset; } }
 
 #payment-form #card-element {
   padding: 7px 10px;
@@ -1120,6 +1164,12 @@ body {
       .nav .adminMenu .logout:hover {
         background-color: #194952;
         border-radius: 6px; }
+  @media screen and (max-width: 450px) {
+    .nav {
+      width: 100vw;
+      padding: 20px 0 0 0; }
+      .nav .logo {
+        margin-left: 20px; } }
 
 .paragraph {
   font-family: OpenSans;
@@ -1512,6 +1562,9 @@ td {
       position: absolute;
       top: 32px;
       left: 96px; }
+      @media screen and (max-width: 450px) {
+        .preLaunch--landing .header__logo {
+          left: 30px; } }
       .preLaunch--landing .header__logo__text {
         font-size: 15px;
         font-weight: 600;
@@ -2025,6 +2078,9 @@ canvas {
     height: 80px;
     width: 80px;
     margin-top: 20px; }
+  @media screen and (max-width: 450px) {
+    .photoPage__photographer-info {
+      margin: 0 auto; } }
 
 .photoPage .photo--info {
   max-width: 690px;
@@ -2060,11 +2116,17 @@ canvas {
     .photoPage__actions .share img {
       height: 24px;
       width: auto; }
+    @media screen and (max-width: 450px) {
+      .photoPage__actions .share {
+        right: 0; } }
 
 .photoPage .photo-main {
   max-width: 1050px;
   max-height: 683px;
   border-radius: 8px; }
+  @media screen and (max-width: 1100px) {
+    .photoPage .photo-main {
+      width: 100%; } }
 
 .photoPage__footer {
   margin-top: 32px; }
@@ -2103,6 +2165,12 @@ canvas {
       color: #757575;
       padding: 14px 0;
       text-align: center; }
+    @media screen and (max-width: 450px) {
+      .photoPage__footer--right {
+        width: 100%; }
+        .photoPage__footer--right .button--yellow {
+          margin: 0 auto;
+          margin-top: 35%; } }
 
 .photoPage__image-container {
   display: flex;
@@ -2155,6 +2223,13 @@ canvas {
         font-weight: bold;
         color: #43C6BA; }
 
+@media screen and (max-width: 450px) {
+  .photoPage .header {
+    display: flex;
+    flex-wrap: wrap; }
+    .photoPage .header-large {
+      margin: 0 auto; } }
+
 .thumbnail {
   width: 100px;
   height: auto;
@@ -2167,6 +2242,9 @@ canvas {
   width: 140px;
   height: 2px;
   margin-bottom: 22px; }
+  @media screen and (max-width: 450px) {
+    .divider {
+      width: unset; } }
 
 .photos-dashboard--wrapper .header .created-date {
   font-family: "Open Sans";
@@ -2276,6 +2354,13 @@ canvas {
     margin: 0 auto; }
   .photographer-search--photos {
     margin-top: 200px; }
+  @media screen and (max-width: 450px) {
+    .photographer-search__container {
+      margin: 0;
+      width: 86%; }
+      .photographer-search__container .tags {
+        width: 100%;
+        height: 86%; } }
 
 .photographer-searchTerm {
   width: 100%;
@@ -2307,11 +2392,19 @@ canvas {
   font-size: 20px;
   box-shadow: 5px;
   outline: none; }
+  @media screen and (max-width: 450px) {
+    .photographer-searchButton {
+      width: 62px;
+      height: 62px; } }
 
 .photographer-searchButton img {
   padding-top: 2px;
   width: 40px;
   height: 40px; }
+  @media screen and (max-width: 450px) {
+    .photographer-searchButton img {
+      width: 35px;
+      height: 35px; } }
 
 /*Resize the wrap to see the search bar change!*/
 /*.photographer-search-wrap {
@@ -2324,7 +2417,8 @@ canvas {
 tags-input .tags {
   padding: 10px !important;
   border: none !important;
-  border-radius: 4px; }
+  border-radius: 4px;
+  width: 500px; }
 
 tags-input .autocomplete {
   margin-top: 0 !important;
@@ -2355,14 +2449,6 @@ tags-input .tag-item {
   z-index: 0; }
 
 .codePage__background2 {
-  /*max-width: 30%;
-        overflow: hidden;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 0;*/
   position: relative;
   height: 100vh;
   margin-left: 70%;
@@ -2373,6 +2459,9 @@ tags-input .tag-item {
     right: 0;
     z-index: 0;
     height: 100%; }
+    @media screen and (max-width: 450px) {
+      .codePage__background2 img {
+        display: none; } }
 
 .codePage__logo {
   height: 41px;
@@ -2384,11 +2473,19 @@ tags-input .tag-item {
   padding-top: 20px;
   top: 50px;
   left: 100px; }
+  @media screen and (max-width: 450px) {
+    .codePage__logo {
+      left: 40%;
+      right: 20%; } }
 
 .codePage__pouLogo {
   position: absolute;
   bottom: 29px;
   left: 61px; }
+  @media screen and (max-width: 450px) {
+    .codePage__pouLogo {
+      left: 20%;
+      right: 20%; } }
 
 .codePage__container {
   margin: 0 auto;
@@ -2418,7 +2515,7 @@ tags-input .tag-item {
     line-height: 28px; }
   .codePage__container__search {
     border: none;
-    padding: 12px 18px;
+    padding: 11px 18px 13px 16px;
     font-family: "Open Sans";
     font-size: 20px;
     color: #194952;
@@ -2437,6 +2534,23 @@ tags-input .tag-item {
       text-align: left;
       margin: 0 auto;
       color: #000000; }
+    @media screen and (max-width: 450px) {
+      .codePage__container2 {
+        top: 0;
+        max-width: calc(100vw - 40px);
+        justify-content: center;
+        padding: 0 20px; } }
+  @media screen and (max-width: 450px) {
+    .codePage__container {
+      padding-top: 40%; } }
+  .codePage__container .button--lostcode {
+    cursor: pointer;
+    color: #FF6060;
+    padding-top: 10px;
+    height: 28px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 14px; }
 
 .codePage, .codePage body {
   padding-bottom: 0; }
@@ -2449,22 +2563,36 @@ tags-input .tag-item {
       border: 1px solid #FFE261; }
     .codePage .alt3 .codePage__container .centered .button--go {
       background: #FFE261;
-      color: #194952; }
+      color: #194952;
+      padding: 15px;
+      text-decoration: none; }
 
 .codePage .alt4 {
   background-color: #194952;
   height: 100vh; }
+  @media screen and (max-width: 450px) {
+    .codePage .alt4 {
+      height: 830px; } }
   .codePage .alt4 .logo {
     position: absolute;
     top: 33px;
     left: 84px; }
   .codePage .alt4 .divider2 {
     border: 1px solid #FFE261; }
+    @media screen and (max-width: 450px) {
+      .codePage .alt4 .divider2 {
+        width: 100%; } }
   .codePage .alt4 .codePage__container2 {
-    top: 205px; }
+    top: 293px; }
+    @media screen and (max-width: 450px) {
+      .codePage .alt4 .codePage__container2 {
+        top: -30px; } }
   .codePage .alt4 .codePage__container .centered {
     color: #FFFFFF;
     max-width: 620px; }
+    @media screen and (max-width: 450px) {
+      .codePage .alt4 .codePage__container .centered {
+        text-align: center; } }
     .codePage .alt4 .codePage__container .centered .codePage__container__info {
       padding: 20px 0 54px 0; }
     .codePage .alt4 .codePage__container .centered .button--go {
@@ -2472,6 +2600,9 @@ tags-input .tag-item {
       color: #194952; }
     .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom {
       padding-top: 140px; }
+      @media screen and (max-width: 450px) {
+        .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom {
+          padding-top: 30px; } }
       .codePage .alt4 .codePage__container .centered .codePage__container__info--bottom .heading1 {
         font-family: "Dosis";
         font-weight: 600;
@@ -2492,6 +2623,22 @@ tags-input .tag-item {
         font-size: 16px;
         padding: 7px 8px; }
 
+.codePage .button--go {
+  background-color: #f6ffff;
+  color: #194952;
+  height: 50px;
+  border: 0;
+  border-radius: 0 8px 8px 0;
+  outline: none;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 17px;
+  border: none; }
+
+@media screen and (max-width: 450px) {
+  .codePage {
+    overflow-x: hidden; } }
+
 .publicCode .landing .main-landing {
   height: 100vh; }
   .publicCode .landing .main-landing .welcome-section {
@@ -2499,12 +2646,21 @@ tags-input .tag-item {
 
 .publicCode a {
   text-decoration: none;
-  display: block; }
+  display: block;
+  padding-top: 10px;
+  color: #FFE261; }
 
 .publicCode .button--go {
   background-color: #f6ffff;
   color: #194952;
-  height: 51px; }
+  height: 50px;
+  border: 0;
+  border-radius: 0 8px 8px 0;
+  outline: none;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 17px;
+  border: none; }
 
 .search--grid {
   margin-top: 200px;
@@ -2518,6 +2674,13 @@ tags-input .tag-item {
   .search--grid .grid-item img {
     display: block;
     width: 100%; }
+  @media screen and (max-width: 450px) {
+    .search--grid .grid-item {
+      width: 44%;
+      padding: 8px; } }
+  @media screen and (max-width: 450px) {
+    .search--grid {
+      margin-top: 150px; } }
 
 .photographer-cards .btn-pou-default {
   color: #43C6BA;
@@ -2846,6 +3009,9 @@ tags-input .tag-item {
 
 .account-settings .container {
   display: flex; }
+  @media screen and (max-width: 450px) {
+    .account-settings .container {
+      flex-wrap: wrap; } }
 
 .account-settings .account-sidemenu {
   background: #F6FFFF;
@@ -2911,6 +3077,9 @@ tags-input .tag-item {
 
 .account-settings .form-account {
   margin-left: 40px; }
+  @media screen and (max-width: 450px) {
+    .account-settings .form-account {
+      margin-left: 0; } }
   .account-settings .form-account .img-container {
     position: relative;
     width: 100%;
@@ -2961,6 +3130,27 @@ tags-input .tag-item {
     left: 10px;
     top: 27px;
     padding: 9px 8px; }
+
+.account-settings--wrapper .yellow-background.line--small {
+  margin-top: 35px;
+  margin-bottom: 30px; }
+
+.account-settings--wrapper .deactivate-modal {
+  border: 2px dashed #43C6BA;
+  border-radius: 8px;
+  width: 240px;
+  height: 237px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer; }
+  .account-settings--wrapper .deactivate-modal img {
+    margin: 0 auto;
+    padding: 57px 0 20px 0; }
+  .account-settings--wrapper .deactivate-modal .label {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 26px;
+    color: #194952; }
 
 .landing .logo {
   padding: 32px 0 0 96px; }
@@ -3049,7 +3239,8 @@ tags-input .tag-item {
   width: 195px;
   height: 48px;
   text-decoration: none;
-  padding: 10px 20px; }
+  padding: 10px 20px;
+  outline: none; }
 
 .landing .browse-button {
   width: 330px;
@@ -3211,6 +3402,51 @@ tags-input .tag-item {
     display: flex;
     align-content: flex-end; }
 
+@media screen and (max-width: 450px) {
+  .landing {
+    overflow-x: hidden; }
+    .landing .landing-subtext {
+      width: 100%;
+      max-width: 400px;
+      padding: 27px 0; }
+    .landing .browse--content {
+      left: 15px;
+      right: 15px;
+      margin-top: 50px; }
+      .landing .browse--content .subt-3 {
+        width: 100%; }
+    .landing .browse {
+      height: 500px; }
+    .landing .steps {
+      height: unset;
+      padding: 20px 0;
+      max-width: 400px; }
+    .landing .main-landing {
+      height: unset;
+      padding-bottom: 30px; }
+      .landing .main-landing .codePage__container__search {
+        width: 100%;
+        max-width: 200px; }
+      .landing .main-landing .logo {
+        padding: 18px 0 0 27px; }
+      .landing .main-landing .welcome-section {
+        padding: 28px 0 0 7%; }
+        .landing .main-landing .welcome-section .welcome-text {
+          font-size: 50px;
+          width: 100%;
+          max-width: 342px;
+          height: 150px; }
+        .landing .main-landing .welcome-section .tagline {
+          width: 100%;
+          max-width: 342px; }
+      .landing .main-landing-subtext {
+        max-width: 300px; }
+    .landing .footer {
+      flex-wrap: wrap;
+      height: unset; }
+      .landing .footer .navigation {
+        padding: 50px 25px 8px 42px; } }
+
 .photo-details {
   font-family: 'Dosis'; }
   .photo-details .header {
@@ -3239,7 +3475,7 @@ tags-input .tag-item {
     background-size: 100% 100%;
     height: unset;
     padding-bottom: 90px; }
-    .pricing .section1 .header__logo__text {
+    .pricing .section1 a {
       text-decoration: none; }
     .pricing .section1 .slogan {
       font-size: 50px; }
@@ -3343,22 +3579,25 @@ tags-input .tag-item {
     height: 249px;
     width: 870px;
     display: flex; }
+    @media screen and (max-width: 450px) {
+      .pricing--team {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+        height: unset;
+        width: unset;
+        margin: 0 30px; } }
     .pricing--team img {
       width: 330px;
       height: auto; }
+      @media screen and (max-width: 450px) {
+        .pricing--team img {
+          align-self: center; } }
     .pricing--team__content {
       padding: 32px 30px 28px 30px; }
-    .pricing--team .button--quote {
-      width: 479px;
-      height: 32px;
-      background: #FFE261;
-      border-radius: 8px;
-      color: #194952;
-      font-weight: 600;
-      font-size: 22px;
-      text-align: center;
-      padding: 5px;
-      cursor: pointer; }
+      @media screen and (max-width: 450px) {
+        .pricing--team__content .pricing--title2, .pricing--team__content .pricing--subtitle {
+          padding: 12px 0px; } }
     .pricing--team .teamQuote {
       width: 479px;
       height: 42px;
@@ -3387,6 +3626,20 @@ tags-input .tag-item {
         font-weight: 600;
         outline: none;
         padding: 5px 18px; }
+  .pricing .button--quote {
+    width: 479px;
+    height: 32px;
+    background: #FFE261;
+    border-radius: 8px;
+    color: #194952;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer; }
+    @media screen and (max-width: 450px) {
+      .pricing .button--quote {
+        width: unset; } }
 
 body.swal2-toast-shown.swal2-has-input > .swal2-container > .swal2-toast {
   -webkit-box-orient: vertical;
@@ -4808,4 +5061,3 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
-

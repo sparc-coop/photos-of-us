@@ -1,6 +1,6 @@
 ﻿app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) => {
     $scope.viewPhoto = (photoId) => {
-        $window.location.href = '/Photographer/Photo/' + photoId;
+        $window.location.href = '/Users/Photographer/Photo/' + photoId;
     };
 
     $scope.checkFilter = (itemcode) => {
@@ -15,25 +15,25 @@
     }
 
     $scope.goToCode = (code) => {
-        $window.location.href = '/Photographer/PhotoCode?code=' + code;
+        $window.location.href = '/Users/Photographer/PhotoCode?code=' + code;
     }
 
     $scope.goToPurchase = (photoId) => {
-        $window.location.href = '/Photo/Purchase/' + photoId;
+        $window.location.href = '/Orders/Photo/Purchase/' + photoId;
     };
 
     $scope.goToProfile = (photographerId) => {
-        $window.location.href = '/Photographer/Profile/' + photographerId;
+        $window.location.href = '/Users/Photographer/Profile/' + photographerId;
     };
 
 
     $scope.goToGallery = (folderId) => {
-        $window.location.href = '/Photographer/Photos/' + folderId;
+        $window.location.href = '/Users/Photographer/Photos/' + folderId;
     };
 
     $scope.signInCustomer = (photoId) => {
         $http.get('/Session/SignIn/').then(
-            $window.location.href = '/Photo/Purchase/' + photoId
+            $window.location.href = '/Orders/Photo/Purchase/' + photoId
         );
     };
 

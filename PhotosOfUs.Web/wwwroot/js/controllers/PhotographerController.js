@@ -13,7 +13,7 @@
     }
 
     $scope.viewPhoto = (photoId) => {
-        $window.location.href = '/Photographer/Photo/' + photoId;
+        $window.location.href = '/Users/Photographer/Photo/' + photoId;
     };
 
     $scope.isPhotoSelected = function (photoId) {

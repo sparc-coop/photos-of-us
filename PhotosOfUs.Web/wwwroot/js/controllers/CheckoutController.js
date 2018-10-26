@@ -15,7 +15,7 @@
 
     $scope.selectedItems = [];
 
-    $scope.select = (printTypeId, quantity) => {
+    $scope.select = (printTypeId, quantity, price) => {
         var photoId = location.pathname.split("/").filter(x => !!x).pop();
 
         var object = {
@@ -47,7 +47,7 @@
         else {
             if (quantity == undefined)
                 quantity = 1;
-            $scope.selectedItems.push({ printTypeId, quantity });
+            $scope.selectedItems.push({ printTypeId, quantity, price });
         }
 
     };
@@ -150,32 +150,35 @@
     };
 
     $scope.createPwintyOrder = () => {
+        console.log($scope.selectedItems);
         var data = {
-            "merchantOrderId": "845",
-            "recipientName": "Pwinty Tester",
+            "merchantOrderId": "848",
+            "recipientName": $scope.user.DisplayName,
             "Address1": "123 Test Street",
             "Address2": "TESTING",
             "addressTownOrCity": "TESTING",
             "stateOrCounty": "TESTSHIRE",
             "postalOrZipCode": "TE5 7IN",
-            "email": "test@testing.com",
-            "countryCode": "gb",
-            "preferredShippingMethod": "CHEAPEST",
+            "email": $scope.user.Email,
+            "countryCode": "US",
+            "preferredShippingMethod": "Budget",
             "mobileTelephone": "01811 8055"
         };
         $http({
             method: 'POST',
-            url: 'https://sandbox.pwinty.com/v2.6/Orders',
+            url: 'https://sandbox.pwinty.com/v2.6/orders',
             headers: {
                 'X-Pwinty-MerchantId': '',
-                'X-Pwinty-REST-API-Key': '',
+                'X-Pwinty-REST-API-Key': 'test_',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'crossDomain': true,
+                'crossDomain': true
             },
             data: data
         }).then(x => {
-            $scope.orderId = x.data;
+            console.log(x.data);
+            $scope.order = x.data;
+            $scope.addPhotoToPwintyOrder($scope.order.id);
         });
     };
 
@@ -205,35 +208,47 @@
 
     $scope.printQuality = 'Standard';
 
+
+    //Pwinty API documentation https://www.pwinty.com/api/2.6/
     $scope.getPwintyCatalog = () => {
         $http({
             method: 'GET',
-            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Pro'
         }).then(x => {
             $scope.proProducts = x.data;
+            console.log("Catalog");
+            console.log(x);
             });
         $http({
             method: 'GET',
-            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard',
+            url: 'https://sandbox.pwinty.com/v2.6/Catalogue/US/Standard'
         }).then(x => {
             $scope.standardProducts = x.data;
         });
     };
 
-    $scope.addPhotoToPwintyOrder = (orderName, quantity) => {
-        $http({
-            method: 'POST',
-            url: 'https://sandbox.pwinty.com/v2.6/Orders/',///{orderId}/Photos
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'crossDomain': true,
-                'X-Pwinty-MerchantId': '',
-                'X-Pwinty-REST-API-Key': '',
-            },
-            data: data
-        }).then(x => {
-            $scope.orderId = x.data;
-        });
+    $scope.addPhotoToPwintyOrder = (orderId) => {
+
+        angular.forEach($scope.selectedItems, item => {
+            $http({
+                method: 'POST',
+                url: 'https://sandbox.pwinty.com/v2.6/orders/' + orderId + '/photos',
+                headers: {
+                    'X-Pwinty-MerchantId': '',
+                    'X-Pwinty-REST-API-Key': 'test_',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'crossDomain': true
+                },
+                data: {
+                    "orderId": orderId,
+                    "url": "https://photosofus.blob.core.windows.net/watermark/2/42/DSC_023820180626134405.JPG",
+                    "copies": item.quantity,
+                    "type": item.printTypeId,
+                    "sizing": "Crop",
+                    "priceToUser": item.price,
+                }
+            });
+        });     
     };
 }])

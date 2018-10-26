@@ -1,6 +1,7 @@
 ﻿@model PhotoViewModel
 @{
     ViewData["Title"] = Model.Name;
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
 <div class="photoPage" ng-controller="PhotoCtrl" ng-init="getuser()">

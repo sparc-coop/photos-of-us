@@ -10,7 +10,7 @@
         height: unset;
         padding-bottom: 90px;
 
-        .header__logo__text {
+        a {
             text-decoration: none;
         }
 
@@ -152,26 +152,32 @@
         width: 870px;
         display: flex;
 
+        @media screen and (max-width: $mobile) {
+            flex-wrap: wrap;
+            text-align: center;
+            justify-content: center;
+            height: unset;
+            width: unset;
+            margin: 0 30px;
+        }
+
         img {
             width: 330px;
             height: auto;
+
+            @media screen and (max-width: $mobile) {
+                align-self: center;
+            }
         }
 
         &__content {
             padding: 32px 30px 28px 30px;
-        }
 
-        .button--quote {
-            width: 479px;
-            height: 32px;
-            background: $yellow;
-            border-radius: 8px;
-            color: $dark;
-            font-weight: 600;
-            font-size: 22px;
-            text-align: center;
-            padding: 5px;
-            cursor: pointer;
+            @media screen and (max-width: $mobile) {
+                .pricing--title2, .pricing--subtitle {
+                    padding: 12px 0px;
+                }
+            }
         }
 
         .teamQuote {
@@ -206,6 +212,23 @@
                 outline: none;
                 padding: 5px 18px;
             }
+        }
+    }
+
+    .button--quote {
+        width: 479px;
+        height: 32px;
+        background: $yellow;
+        border-radius: 8px;
+        color: $dark;
+        font-weight: 600;
+        font-size: 22px;
+        text-align: center;
+        padding: 5px;
+        cursor: pointer;
+
+        @media screen and (max-width: $mobile) {
+            width: unset;
         }
     }
 }
