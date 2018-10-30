@@ -17,7 +17,11 @@ namespace PhotosOfUs.Model
 
         public User Execute(ClaimsPrincipal principal) 
         {
-            var user = Set.Find(x => x.UserIdentities.Any(y => y.AzureID == principal.AzureID())); // User with identity
+            var azureId = principal.AzureID();
+
+            //var user = Set.Find(x => x.UserIdentities.Any(y => y.AzureID == azureId)); // User with identity
+            var user = Set.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+
             if (user == null)
             {
                 user = Set.Find(x => x.Email == principal.Email()); // User without identity
@@ -29,6 +33,8 @@ namespace PhotosOfUs.Model
             }
 
             user.Login(principal, principal.AzureID());
+            //Set.Update(user);
+            Commit();
 
             return user;
         }

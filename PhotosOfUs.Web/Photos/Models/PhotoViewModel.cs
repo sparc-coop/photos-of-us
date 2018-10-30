@@ -14,7 +14,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string ThumbnailUrl { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
-        public string PhotographerName { get; set; }
+        //public string PhotographerName { get; set; }
         public DateTime UploadDate { get; set; }
         public decimal? Price { get; set; }
         public string Resolution { get; set; }
@@ -23,41 +23,41 @@ namespace PhotosOfUs.Model.ViewModels
         public string WaterMarkUrl { get; set; }
         public RootObject SuggestedTags { get; set; }
 
-        public static PhotoViewModel ToViewModel(Photo entity)
-        {
-            PhotoViewModel viewModel = new PhotoViewModel();
+        //public static PhotoViewModel ToViewModel(Photo entity)
+        //{
+        //    PhotoViewModel viewModel = new PhotoViewModel();
 
-            viewModel.Id = entity.Id;
-            viewModel.PhotographerId = entity.PhotographerId;
-            if (entity.Photographer != null)
-            {
-                viewModel.Photographer = entity.Photographer;
-                viewModel.PhotographerName = entity.Photographer.DisplayName;
-            }
+        //    viewModel.Id = entity.Id;
+        //    viewModel.PhotographerId = entity.PhotographerId;
+        //    if (entity.Photographer != null)
+        //    {
+        //        viewModel.Photographer = entity.Photographer;
+        //        //viewModel.PhotographerName = entity.Photographer.DisplayName;
+        //    }
             
-            viewModel.FolderId = entity.FolderId;
-            viewModel.Url = entity.Url;
-            viewModel.ThumbnailUrl = entity.Url.Replace("/photos/", "/thumbnails/");
-            viewModel.WaterMarkUrl = entity.Url.Replace("/photos/", "/watermark/");
-            viewModel.Code = entity.Code;
-            viewModel.Name = entity.Name;
-            viewModel.UploadDate = entity.UploadDate;
-            viewModel.Price = entity.Price;
-            viewModel.SuggestedTags = entity.SuggestedTags;
+        //    viewModel.FolderId = entity.FolderId;
+        //    viewModel.Url = entity.Url;
+        //    viewModel.ThumbnailUrl = entity.Url.Replace("/photos/", "/thumbnails/");
+        //    viewModel.WaterMarkUrl = entity.Url.Replace("/photos/", "/watermark/");
+        //    viewModel.Code = entity.Code;
+        //    viewModel.Name = entity.Name;
+        //    viewModel.UploadDate = entity.UploadDate;
+        //    viewModel.Price = entity.Price;
+        //    viewModel.SuggestedTags = entity.SuggestedTags;
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<PhotoViewModel> ToViewModel(List<Photo> entities)
-        {
-            List<PhotoViewModel> viewModels = new List<PhotoViewModel>();
+        //public static List<PhotoViewModel> ToViewModel(List<Photo> entities)
+        //{
+        //    List<PhotoViewModel> viewModels = new List<PhotoViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 }

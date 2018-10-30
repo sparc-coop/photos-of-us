@@ -13,6 +13,7 @@ namespace Kuvio.Kernel.Architecture
 
         // Commands
         T Add(T item);
+        //void Update(T item);
         void Delete(T item);
         IRepository<T> Include<TProperty>(Expression<Func<T, TProperty>> item);
 

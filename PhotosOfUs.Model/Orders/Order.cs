@@ -32,6 +32,11 @@ namespace PhotosOfUs.Model.Models
         public User User { get; set; }
         public ICollection<OrderDetail> OrderDetail { get; set; }
 
+        // Not Mapped
+        public int Amount => OrderDetail.First().Quantity;
+        public decimal TotalPaid => OrderDetail.First().UnitPrice * Amount;
+        public decimal Earning => TotalPaid * (decimal)0.955;
+
         public void AddLine(Photo photo, PrintType printType, int quantity)
         {
             OrderDetail.Add(new OrderDetail(photo, printType, quantity));

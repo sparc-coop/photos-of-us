@@ -21,6 +21,7 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Photos.Commands;
 
+
 namespace PhotosOfUs.Web.Controllers
 {
     [Area("Users")]
@@ -32,30 +33,32 @@ namespace PhotosOfUs.Web.Controllers
         private readonly IRepository<Order> _order;
         private readonly IRepository<User> _user;
         private readonly IRepository<Card> _card;
+        private readonly IRepository<Folder> _folder;
 
         public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
-        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository)
+        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository, IRepository<Folder> folderRepository)
         {
             _context = context;
             _photo = photoRepository;
             _order = orderRepository;
             _user = userRepository;
             _card = cardRepository;
+            _folder = folderRepository;
         }
 
         // GET: Photographer
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             return RedirectToAction("Dashboard");
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Dashboard()
         {
-            
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _user.Find(x => x.AzureId == azureId);
+            var azureId = User.AzureID();
+            var userId = User.ID();
+            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
 
             if (photographer.IsPhotographer == true)
             {
@@ -72,17 +75,18 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer/Details/5
-        //[Authorize]
+        [Authorize]
         public ActionResult Photos(int id)
         {
-            Folder folder = _photo.Find(x => x.PhotographerId == User.ID() && x.Id == id).Folder;
-            return View(FolderViewModel.ToViewModel(folder));
+            Folder folder = _photo.Include(x => x.Folder).Find(x => x.PhotographerId == User.ID() && x.FolderId == id).Folder;
+
+            return View(folder.ToViewModel<FolderViewModel>());
         }
 
         public ActionResult Photo(int id)
         {
             var photo = _photo.Include(x => x.Photographer).Where(x => x.Id == id).FirstOrDefault();
-            return View(PhotoViewModel.ToViewModel(photo));
+            return View(photo.ToViewModel<PhotoViewModel>());
         }
 
         public ActionResult PublicCode()
@@ -198,7 +202,7 @@ namespace PhotosOfUs.Web.Controllers
             var cards = _user.Find(x => x.Id == User.ID()).Card
                 .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
 
-            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
+            var json = JsonConvert.SerializeObject(cards.ToViewModel<List<CardViewModel>>());
             return new ActionAsPdf("ExportPdf", new { json })
             {
                 FileName = "Cards.pdf",
@@ -355,14 +359,14 @@ namespace PhotosOfUs.Web.Controllers
                 orders.Add(_order.Find(x => x.Id == order.Key));
             }
 
-            return View(OrderViewModel.ToViewModel(orders).ToList());
+            return View(orders.ToViewModel<List<OrderViewModel>>());
         }
 
         public ActionResult Search()
         {
             var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
 
-            return View(PhotoViewModel.ToViewModel(photos));
+            return View(photos.ToViewModel<List<PhotoViewModel>>());
         }
 
         public ActionResult Results(string tagnames)
@@ -379,7 +383,7 @@ namespace PhotosOfUs.Web.Controllers
 
             var searchmodel = new SearchViewModel();
 
-            searchmodel.Photos = PhotoViewModel.ToViewModel(photos);
+            searchmodel.Photos = photos.ToViewModel<List<PhotoViewModel>>();
             searchmodel.Tags = TagViewModel.ToViewModel(tags);
 
             return View(searchmodel);

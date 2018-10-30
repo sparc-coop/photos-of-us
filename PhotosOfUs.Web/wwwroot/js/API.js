@@ -2,7 +2,7 @@
     '$http', '$rootScope', function ($http) {
         var apiRoot = '/api/Photo';
         return {
-            getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
+            //getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
         };
     }
 ]);
@@ -35,7 +35,8 @@ app.factory('userApi', [
         var apiRoot = '/api/User';
         return {
             get: function () { return $http.get(apiRoot)}, 
-            update: function (accountSettings) { return $http.put(apiRoot, accountSettings)}
+            update: function (accountSettings) { return $http.put(apiRoot, accountSettings) },
+            getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
         };
     }
 ]);

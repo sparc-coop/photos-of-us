@@ -10,7 +10,7 @@
         <div class="photoPage__photographer-info" ng-click="goToProfile('@Model.PhotographerId')">
             <div>
                 <div class="title">Photographer</div>
-                <div class="name">@Model.PhotographerName</div>
+                <div class="name">@Model.Photographer.DisplayName</div>
             </div>
             @if (String.IsNullOrEmpty(Model.Photographer.ProfilePhotoUrl))
             {

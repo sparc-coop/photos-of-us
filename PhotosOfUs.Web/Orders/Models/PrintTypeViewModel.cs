@@ -14,30 +14,30 @@ namespace PhotosOfUs.Model.ViewModels
         public string Icon { get; set; }
         public double? BaseCost { get; set; }
 
-        public static PrintTypeViewModel ToViewModel(PrintType entity)
-        {
-            PrintTypeViewModel viewModel = new PrintTypeViewModel();
+        //public static PrintTypeViewModel ToViewModel(PrintType entity)
+        //{
+        //    PrintTypeViewModel viewModel = new PrintTypeViewModel();
 
-            viewModel.Id = entity.Id;
-            viewModel.Type = entity.Type;
-            viewModel.Height = entity.Height;
-            viewModel.Length = entity.Length;
-            viewModel.Icon = entity.Icon;
-            viewModel.BaseCost = entity.BaseCost;
+        //    viewModel.Id = entity.Id;
+        //    viewModel.Type = entity.Type;
+        //    viewModel.Height = entity.Height;
+        //    viewModel.Length = entity.Length;
+        //    viewModel.Icon = entity.Icon;
+        //    viewModel.BaseCost = entity.BaseCost;
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<PrintTypeViewModel> ToViewModel(List<PrintType> entities)
-        {
-            List<PrintTypeViewModel> viewModels = new List<PrintTypeViewModel>();
+        //public static List<PrintTypeViewModel> ToViewModel(List<PrintType> entities)
+        //{
+        //    List<PrintTypeViewModel> viewModels = new List<PrintTypeViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 }

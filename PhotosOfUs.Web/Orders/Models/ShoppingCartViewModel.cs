@@ -15,31 +15,31 @@ namespace PhotosOfUs.Model.ViewModels
         public DateTime DateCreated { get; set; }
         public virtual Photo Photo { get; set; }
 
-        public static ShoppingCartViewModel ToViewModel(ShoppingCartItem entity)
-        {
-            ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
+        //public static ShoppingCartViewModel ToViewModel(ShoppingCartItem entity)
+        //{
+        //    ShoppingCartViewModel viewModel = new ShoppingCartViewModel();
 
-            viewModel.Id = entity.Id;
-            viewModel.CartCode = entity.CartCode;
-            viewModel.UserId = entity.UserId;
-            viewModel.PhotoId = entity.PhotoId;
-            viewModel.Quantity = entity.Quantity;
-            viewModel.DateCreated = entity.DateCreated;
-            viewModel.Photo = entity.Photo;
+        //    viewModel.Id = entity.Id;
+        //    viewModel.CartCode = entity.CartCode;
+        //    viewModel.UserId = entity.UserId;
+        //    viewModel.PhotoId = entity.PhotoId;
+        //    viewModel.Quantity = entity.Quantity;
+        //    viewModel.DateCreated = entity.DateCreated;
+        //    viewModel.Photo = entity.Photo;
 
-            return viewModel;
-        }
+        //    return viewModel;
+        //}
 
-        public static List<ShoppingCartViewModel> ToViewModel(List<ShoppingCartItem> entities)
-        {
-            List<ShoppingCartViewModel> viewModels = new List<ShoppingCartViewModel>();
+        //public static List<ShoppingCartViewModel> ToViewModel(List<ShoppingCartItem> entities)
+        //{
+        //    List<ShoppingCartViewModel> viewModels = new List<ShoppingCartViewModel>();
 
-            foreach (var item in entities)
-            {
-                viewModels.Add(ToViewModel(item));
-            }
+        //    foreach (var item in entities)
+        //    {
+        //        viewModels.Add(ToViewModel(item));
+        //    }
 
-            return viewModels;
-        }
+        //    return viewModels;
+        //}
     }
 }

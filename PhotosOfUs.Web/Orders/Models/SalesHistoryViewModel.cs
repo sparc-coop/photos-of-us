@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PhotosOfUs.Model.Models;
+using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Model.ViewModels
 {
@@ -28,7 +29,7 @@ namespace PhotosOfUs.Model.ViewModels
 
             foreach (var order in orders)
             {
-                viewModel.Orders.Add(OrderViewModel.ToViewModel(order));
+                viewModel.Orders.Add(order.ToViewModel<OrderViewModel>());
             }
 
             viewModel.TotalSales = 0;

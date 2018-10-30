@@ -1,4 +1,5 @@
 ﻿using PhotosOfUs.Model.Models;
+using PhotosOfUs.Web.Utilities;
 using System;
 using System.Collections.Generic;
 
@@ -37,7 +38,7 @@ namespace PhotosOfUs.Model.ViewModels
 
             foreach (var item in photos)
             {
-                viewModel.Photos.Add(PhotoViewModel.ToViewModel(item));
+                viewModel.Photos.Add(item.ToViewModel<PhotoViewModel>());
             }
 
             return viewModel;

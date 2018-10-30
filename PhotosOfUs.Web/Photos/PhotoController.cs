@@ -34,8 +34,8 @@ namespace PhotosOfUs.Web.Controllers.API
         public async Task<AzureCognitiveViewModel> Put(int userId, string photoCode, string tags, string photoName, string extension, int folderId, int price,
          [FromBody]IFormFile file, [FromServices]UploadPhotoCommand command)
         {
-/*             if (User.ID() != userId)
-                return Forbid(); */
+            /*             if (User.ID() != userId)
+                            return Forbid(); */
 
             RootObject tagsfromazure = null;
 
@@ -75,7 +75,7 @@ namespace PhotosOfUs.Web.Controllers.API
                 }
             }
 
-            
+
 
             //return Ok();
             return new AzureCognitiveViewModel();
@@ -109,7 +109,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var photos = _photos.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
 
             List<int> photoIds = new List<int>();
-            foreach(var photo in photos)
+            foreach (var photo in photos)
             {
                 photoIds.Add(photo.Id);
             }
@@ -128,7 +128,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPrintTypes")]
         public List<PrintTypeViewModel> GetPrintTypes()
         {
-            return PrintTypeViewModel.ToViewModel(new Photo().GetPrintTypes().ToList());
+            return new Photo().GetPrintTypes().ToList().ToViewModel<List<PrintTypeViewModel>>();
         }
 
         [HttpGet]
@@ -146,7 +146,7 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         public void AddTags(List<TagViewModel> tags)
-        {          
+        {
             Photo photo = new Photo();
             foreach (TagViewModel tag in tags)
             {
@@ -167,13 +167,13 @@ namespace PhotosOfUs.Web.Controllers.API
                 var photo = _photos.Find(x => x.Id == photoId);
                 photo.Delete();
                 _photos.Commit();
-            }          
+            }
         }
 
         public ActionResult Purchase(int id)
         {
             var photo = _photos.Find(x => x.Id == id);
-            var viewModel = PhotoViewModel.ToViewModel(photo);
+            var viewModel = photo.ToViewModel<PhotoViewModel>();
 
             return View(viewModel);
         }
@@ -181,13 +181,13 @@ namespace PhotosOfUs.Web.Controllers.API
         public ActionResult Cart(int id)
         {
             Order order = _orders.Where(x => x.UserId == id && x.OrderStatus == "Open").FirstOrDefault();
-            return View(CustomerOrderViewModel.ToViewModel(order));
+            return View(order.ToViewModel<CustomerOrderViewModel>());
         }
 
         public ActionResult Checkout(int id)
         {
             Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            return View(CustomerOrderViewModel.ToViewModel(order));
+            return View(order.ToViewModel<CustomerOrderViewModel>());
         }
 
         [HttpPost]
@@ -198,7 +198,7 @@ namespace PhotosOfUs.Web.Controllers.API
             Order userOrder = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
             userOrder.SetStatusToPending();
             _orders.Commit();
-            
+
             Order order = _orders.Find(x => x.Id == userOrder.Id);
             decimal total = 0;
             foreach (var item in order.OrderDetail)

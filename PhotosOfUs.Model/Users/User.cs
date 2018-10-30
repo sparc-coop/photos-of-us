@@ -18,11 +18,13 @@ namespace PhotosOfUs.Model.Models
         
         public User(string displayName, string email, string externalUserId, bool isPhotographer)
         {
-            this.DisplayName = displayName;
-            this.FirstName = displayName?.Split(' ').First();
-            this.LastName = displayName?.Split(' ').Last();
-            this.IsPhotographer = isPhotographer;
+            DisplayName = displayName;
+            FirstName = displayName?.Split(' ').First();
+            LastName = displayName?.Split(' ').Last();
+            IsPhotographer = isPhotographer;
+            Email = email;
             CreateDate = DateTime.UtcNow;
+            AzureId = "e95fe8d9-82f4-4dfe-aa9b-0f364ccd0a90";
 
             this.UserIdentities = new List<UserIdentity> {
                 new UserIdentity(externalUserId, "Azure")
@@ -49,14 +51,14 @@ namespace PhotosOfUs.Model.Models
         public string Dribbble { get; private set; }
         public int TemplateSelected { get; private set; }
 
-        public ICollection<SocialMedia> SocialMedia { get; private set; }
-        public ICollection<Card> Card { get; private set; }
-        public ICollection<Folder> Folder { get; private set; }
-        public ICollection<Order> Order { get; private set; }
-        public ICollection<Photo> Photo { get; private set; }
-        public ICollection<PrintPrice> PrintPrice { get; private set; }
-        public ICollection<UserIdentity> UserIdentities { get; private set; }
-        public Address Address { get; private set; }
+        public ICollection<SocialMedia> SocialMedia { get; set; }
+        public ICollection<Card> Card { get; set; }
+        public ICollection<Folder> Folder { get; set; }
+        public ICollection<Order> Order { get; set; }
+        public ICollection<Photo> Photo { get; set; }
+        public ICollection<PrintPrice> PrintPrice { get; set; }
+        public ICollection<UserIdentity> UserIdentities { get; set; }
+        public Address Address { get; set; }
 
         public Claim[] GenerateClaims()
         {
@@ -74,6 +76,7 @@ namespace PhotosOfUs.Model.Models
         public UserIdentity GetOrCreateIdentity(string externalUserId)
         {
             var identity = UserIdentities.SingleOrDefault(x => x.AzureID == externalUserId);
+
             if (identity == null)
             {
                 identity = new UserIdentity(externalUserId, "Azure");
@@ -84,19 +87,26 @@ namespace PhotosOfUs.Model.Models
         
         public void Login(ClaimsPrincipal principal, string externalUserId)
         {
-            var claims = new List<Claim>
+            List<Claim> claims = GetClaims();
+
+            // Logging in is simply adding claims to the existing principal
+            foreach (var claim in claims.Where(x => !principal.HasClaim(y => y.Type == x.Type)))
+            {
+                (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
+            }
+                
+            var identity = GetOrCreateIdentity(externalUserId);
+            identity.LastLoginDate = DateTime.UtcNow;
+        }
+
+        public List<Claim> GetClaims()
+        {
+            return new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                 new Claim(ClaimTypes.Email, Email),
                 new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer")
             };
-
-            // Logging in is simply adding claims to the existing principal
-            foreach (var claim in claims.Where(x => !principal.HasClaim(y => y.Type == x.Type)))
-                (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
-
-            var identity = GetOrCreateIdentity(externalUserId);
-            identity.LastLoginDate = DateTime.UtcNow;
         }
 
         public void UpdateProfile(string email, string firstName, string lastName, string displayName, string jobPosition, string profilePhotoUrl, string bio)

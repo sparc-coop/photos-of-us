@@ -11,6 +11,7 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using Kuvio.Kernel.Auth;
+using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -33,7 +34,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public List<CardViewModel> GetCard()
         {
             List<Card> pCards = _card.Where(x => x.PhotographerId == User.ID()).Include(x => x.Photographer).ToList();
-            return pCards.Select(CardViewModel.ToViewModel).ToList();
+            return pCards.ToList().ToViewModel<List<CardViewModel>>();
         }
 
         [HttpPost]
@@ -44,7 +45,7 @@ namespace PhotosOfUs.Web.Controllers.API
             photographer.AddNewCards(quantity);
             _context.SaveChanges();
 
-            return photographer.Card.Select(CardViewModel.ToViewModel).ToList();
+            return photographer.Card.ToList().ToViewModel<List<CardViewModel>>();
         }
     }
 }

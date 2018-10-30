@@ -6,6 +6,7 @@ using PhotosOfUs.Model.Models;
 using System.Security.Claims;
 using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
+using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -29,7 +30,7 @@ namespace PhotosOfUs.Web.Controllers.API
             var folder = photographer.AddFolder(name);
             _user.Commit();
 
-            return FolderViewModel.ToViewModel(folder);
+            return folder.ToViewModel<FolderViewModel>();
         }
     
         [Route("RenameFolder")]
