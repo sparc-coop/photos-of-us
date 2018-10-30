@@ -32,6 +32,11 @@ namespace PhotosOfUs.Connectors.Database
             return item;
         }
 
+        //public void Update(T item)
+        //{
+        //    Command.Attach(item);
+        //}
+
         public void Delete(T item)
         {
             Command.Remove(item);

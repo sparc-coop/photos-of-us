@@ -21,6 +21,7 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Photos.Commands;
 
+
 namespace PhotosOfUs.Web.Controllers
 {
     [Area("Users")]
@@ -32,15 +33,17 @@ namespace PhotosOfUs.Web.Controllers
         private readonly IRepository<Order> _order;
         private readonly IRepository<User> _user;
         private readonly IRepository<Card> _card;
+        private readonly IRepository<Folder> _folder;
 
         public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
-        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository)
+        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository, IRepository<Folder> folderRepository)
         {
             _context = context;
             _photo = photoRepository;
             _order = orderRepository;
             _user = userRepository;
             _card = cardRepository;
+            _folder = folderRepository;
         }
 
         // GET: Photographer
@@ -53,9 +56,9 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
-            
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographer = _user.Find(x => x.AzureId == azureId);
+            var azureId = User.AzureID();
+            var userId = User.ID();
+            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
 
             if (photographer.IsPhotographer == true)
             {
@@ -75,7 +78,8 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Photos(int id)
         {
-            Folder folder = _photo.Find(x => x.PhotographerId == User.ID() && x.Id == id).Folder;
+            Folder folder = _photo.Include(x => x.Folder).Find(x => x.PhotographerId == User.ID() && x.FolderId == id).Folder;
+
             return View(folder.ToViewModel<FolderViewModel>());
         }
 

@@ -29,7 +29,7 @@
     </div>
 
     <div class="folder-card--wrapper codeView">
-        @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))
+        @foreach (var item in Model.Photo.GroupBy(x => x.Code).Select(y => y.First()))
         {
         <div class="codeView__row">
             <a class="codeView__card" ng-click="" ng-if="'@item.Code' != ''" ng-cloak>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="codeView__card--edit" ng-click="openPhotosEdit(@item.Code)">Bulk Edit</div>
             </a>
-            @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
+            @foreach (var image in Model.Photo.Where(x => x.Code == item.Code))
             {
                 <div class="photo-card" style="background-image: url(@image.Url)" ng-click="viewPhoto(@image.Id)"></div>
             }           

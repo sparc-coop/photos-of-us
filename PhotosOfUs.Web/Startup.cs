@@ -26,6 +26,7 @@ using AutoMapper;
 using PhotosOfUs.Connectors.Storage;
 using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
+using System.Security.Claims;
 
 namespace PhotosOfUs.Web
 {
@@ -114,7 +115,7 @@ namespace PhotosOfUs.Web
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
-            //services.AddScoped<DbContext, SchoolContext>();
+            services.AddScoped<LoginCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
@@ -123,7 +124,7 @@ namespace PhotosOfUs.Web
                 // {2} is area, {1} is controller,{0} is the action    
                 o.ViewLocationFormats.Clear();
                 //o.ViewLocationFormats.Add("/{2}/Views/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
+                o.ViewLocationFormats.Add("~/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
                 o.ViewLocationFormats.Add("/Home/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
 
                 o.AreaViewLocationFormats.Clear();
@@ -132,6 +133,10 @@ namespace PhotosOfUs.Web
             });
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
+
+            // For injecting the user data into repositories
+            // Hack: Testing. I'm not sure if this is working
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
         }
 
         
@@ -162,7 +167,9 @@ namespace PhotosOfUs.Web
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("areaRoute", "{area:exists}/{controller=User}/{action=Index}/{id?}");
+                routes.MapAreaRoute("usersRoute", "Users", "{controller}/{action=Index}/{id?}");
+
+                //routes.MapRoute("photRoute", "{controller=Photographer}/{action=Index}/{id?}");
 
                 routes.MapRoute(
                     name: "default",
@@ -172,8 +179,8 @@ namespace PhotosOfUs.Web
 
         private Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context)
         {
-            //context.HttpContext.RequestServices.GetRequiredService<LoginCommand>().Execute(context.Principal);
-            context.HttpContext.RequestServices.GetService<LoginCommand>().Execute(context.Principal);
+            context.HttpContext.RequestServices.GetRequiredService<LoginCommand>().Execute(context.Principal);
+            //context.HttpContext.RequestServices.GetService<LoginCommand>().Execute(context.Principal);
             return Task.FromResult(0);
         }
 

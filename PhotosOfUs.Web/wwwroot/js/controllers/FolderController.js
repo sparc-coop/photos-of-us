@@ -1,4 +1,4 @@
-﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi) => {
+﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'userApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, userApi, folderApi) => {
 
     $scope.close = () => $mdDialog.hide();
     $scope.folders = [];
@@ -6,7 +6,7 @@
 
     $scope.initFolderCtrl = function () {
         $scope.orderByOption = "Name";
-        photoApi.getFolders()
+        userApi.getFolders()
             .then(function (x) {
                 angular.forEach(x.data, function (f) { $scope.folders.push(f); });
             })

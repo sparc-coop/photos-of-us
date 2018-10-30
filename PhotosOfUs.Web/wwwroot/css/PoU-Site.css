@@ -153,15 +153,6 @@
   cursor: pointer;
   border: none;
   outline: none; }
-  .button--yellow img {
-    padding-right: 11px;
-    vertical-align: middle;
-    margin-top: -5px; }
-  .button--yellow--large {
-    font-size: 22px;
-    width: 330px;
-    padding: 11px 0;
-    float: right; }
   .button--yellow--payment {
     position: absolute;
     bottom: 65px;
@@ -184,103 +175,131 @@
   font-size: 22px;
   bottom: 16px;
   color: #FF6060; }
-  .button--checkout--preview img {
-    padding-right: 11px;
-    vertical-align: middle;
-    margin-top: -5px; }
+  .button--checkout--preview--payment {
+    float: right;
+    margin-top: -100px;
+    width: 240px; }
 
-.button--upload {
-  position: absolute;
-  bottom: 40px;
-  right: 56px; }
-
-.button--save-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  color: #FFE261;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 2px solid #FFE261;
-  border-radius: 8px;
-  padding: 2px 40px 3px;
-  margin: 35px 5px 2px 0;
-  position: absolute;
-  bottom: 22px;
-  right: 22px;
-  cursor: pointer; }
-
-.button--discard-changes {
-  font-family: 'Dosis', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #FF6060;
-  letter-spacing: 0;
-  background-color: transparent;
-  border: 0;
-  padding: 5px 20px;
-  margin: 35px 0 2px 0;
-  position: absolute;
-  bottom: 22px;
-  right: 218px;
-  cursor: pointer; }
-
-.button--back {
-  height: 19px;
-  width: 19px;
-  margin: 30px 20px 0 -40px;
-  cursor: pointer; }
-
-.button--go {
-  display: inline;
-  border-radius: 0 8px 8px 0;
-  background: #000000;
-  color: #FFFFFF;
-  padding: 11.5px;
+.button--checkout--preview {
   cursor: pointer;
-  font-family: "Open Sans";
-  font-weight: 600;
-  font-size: 20px;
-  vertical-align: middle;
-  text-decoration: none;
-  border: none; }
-
-.button--lostcode {
-  cursor: pointer;
-  color: #FF6060;
-  padding-top: 10px;
-  height: 28px;
-  font-family: "Open Sans";
-  font-weight: 600;
-  font-size: 14px; }
-
-.button--learn {
-  border: 2px solid #43C6BA;
-  border-radius: 8px;
-  width: 209px;
-  height: 26px;
   background-color: #194952;
-  color: #43C6BA;
-  font-size: 18px;
-  font-family: "Open Sans";
   text-align: center;
-  padding: 10px 0; }
-
-.button--imageUpload {
-  background: #FFE261;
-  color: #43C6BA;
-  border-radius: 8px;
-  padding: 10px 30px;
-  display: inline;
+  width: 239px;
+  padding: 12px 0;
+  border-radius: 6px;
+  position: absolute;
   font-family: "Dosis";
   font-weight: 600;
-  cursor: pointer;
-  outline: none; }
-  .button--imageUpload .img-upload {
-    vertical-align: middle;
-    margin: -3px 10px 0 0;
-    border-radius: 0;
+  font-size: 22px;
+  bottom: 16px;
+  color: #FF6060; }
+  .button--checkout--preview--save-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFE261;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 2px solid #FFE261;
+    border-radius: 8px;
+    padding: 2px 40px 3px;
+    margin: 35px 5px 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 22px;
     cursor: pointer; }
+  .button--checkout--preview--discard-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FF6060;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 0;
+    padding: 5px 20px;
+    margin: 35px 0 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 218px;
+    cursor: pointer; }
+  .button--checkout--preview--save-changes {
+    font-family: 'Dosis', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #FFE261;
+    letter-spacing: 0;
+    background-color: transparent;
+    border: 2px solid #FFE261;
+    border-radius: 8px;
+    padding: 2px 40px 3px;
+    margin: 35px 5px 2px 0;
+    position: absolute;
+    bottom: 22px;
+    right: 22px; }
+  .button--checkout--preview--go {
+    display: inline;
+    border-radius: 0 8px 8px 0;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 11.5px;
+    cursor: pointer;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none;
+    border: none; }
+  .button--checkout--preview--back {
+    height: 19px;
+    width: 19px;
+    margin: 30px 20px 0 -40px;
+    cursor: pointer; }
+  .button--checkout--preview--go {
+    display: inline;
+    border-radius: 0 8px 8px 0;
+    background: #000000;
+    color: #FFFFFF;
+    padding: 11.5px;
+    cursor: pointer;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+    text-decoration: none; }
+  .button--checkout--preview--lostcode {
+    cursor: pointer;
+    color: #FF6060;
+    padding-top: 10px;
+    height: 28px;
+    font-family: "Open Sans";
+    font-weight: 600;
+    font-size: 14px; }
+  .button--checkout--preview--learn {
+    border: 2px solid #43C6BA;
+    border-radius: 8px;
+    width: 209px;
+    height: 26px;
+    background-color: #194952;
+    color: #43C6BA;
+    font-size: 18px;
+    font-family: "Open Sans";
+    text-align: center;
+    padding: 10px 0; }
+  .button--checkout--preview--imageUpload {
+    background: #FFE261;
+    color: #43C6BA;
+    border-radius: 8px;
+    padding: 10px 30px;
+    display: inline;
+    font-family: "Dosis";
+    font-weight: 600;
+    cursor: pointer;
+    outline: none; }
+    .button--checkout--preview--imageUpload .img-upload {
+      vertical-align: middle;
+      margin: -3px 10px 0 0;
+      border-radius: 0;
+      cursor: pointer; }
 
 .button--download {
   border: 2px solid #43C6BA;
@@ -1812,7 +1831,9 @@ md-dialog {
   height: 580px;
   position: relative; }
   .photo-preview .img-container {
-    text-align: center; }
+    text-align: center;
+    min-height: 330px;
+    min-width: 490px; }
     .photo-preview .img-container img {
       width: auto;
       max-width: 490px;
@@ -1873,16 +1894,27 @@ md-dialog {
     font-size: 14px;
     cursor: pointer; }
   .photo-preview-title .hover {
-    color: white;
+    /*color: white;*/
     font-size: 12px;
     position: absolute;
     top: 0;
-    padding-left: 10px; }
+    /*padding-left: 10px;*/
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    margin-right: 25px;
+    margin-left: 10px;
+    padding: 6px;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75); }
 
 /* photo list */
 #photo-list {
   padding: 0 20px;
   width: 100%; }
+  #photo-list .button--upload {
+    position: absolute;
+    bottom: 40px;
+    right: 40px; }
 
 #photos {
   padding: 0;
@@ -1899,10 +1931,15 @@ md-dialog {
   #photos .code {
     width: 133px;
     margin-right: 65px; }
-  #photos .remove {
-    position: absolute;
-    top: -17px;
-    right: 10px; }
+  #photos .tags-parent {
+    box-sizing: border-box;
+    padding-right: 15px; }
+  #photos .remove-parent {
+    position: relative; }
+    #photos .remove-parent .remove {
+      position: absolute;
+      top: -15px;
+      right: 10px; }
 
 md-progress-linear .md-container {
   background-color: rgba(67, 198, 186, 0.3); }
@@ -2961,6 +2998,27 @@ tags-input .tag-item {
     left: 10px;
     top: 27px;
     padding: 9px 8px; }
+
+.account-settings--wrapper .yellow-background.line--small {
+  margin-top: 35px;
+  margin-bottom: 30px; }
+
+.account-settings--wrapper .deactivate-modal {
+  border: 2px dashed #43C6BA;
+  border-radius: 8px;
+  width: 240px;
+  height: 237px;
+  margin: 0 10px;
+  text-align: center;
+  cursor: pointer; }
+  .account-settings--wrapper .deactivate-modal img {
+    margin: 0 auto;
+    padding: 57px 0 20px 0; }
+  .account-settings--wrapper .deactivate-modal .label {
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 26px;
+    color: #194952; }
 
 .landing .logo {
   padding: 32px 0 0 96px; }
@@ -4808,4 +4866,3 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-end, body.swal2-no-backdrop .sw
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg); } }
-

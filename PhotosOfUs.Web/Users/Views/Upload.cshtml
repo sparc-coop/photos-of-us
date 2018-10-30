@@ -68,7 +68,7 @@
                         <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
                     </div>*@
                     <div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 tags-parent">
                             <p class="photo-preview-title">Tags</p>
                             <tags-input style="width: 90%; margin-left: 15px;" ng-model="selectedItem.tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
                                 <auto-complete source="loadedtags"></auto-complete>
@@ -90,9 +90,9 @@
                 <div id="photo-list">
                     <div>
                         <ul id="photos">
-                            <li class="media" ng-repeat="item in uploader.queue track by $index">
+                            <li class="media" ng-repeat="item in uploader.queue track by $index" ng-click="selectItem($event, item)" >
                                 <div class="col-md-2">
-                                    <img ng-click="selectItem($event, item)" class="photo-thumbnail" ng-src="{{ item.file.src }}" />
+                                    <img class="photo-thumbnail" ng-src="{{ item.file.src }}" />
                                 </div>
                                 <div class="col-md-4">
                                     <textarea msd-elastic class="photo-name" spellcheck="false" ng-keyup="photoNameValidation($event, item)" ng-model="item.file.name" rows="1" ng-disabled="item.isUploading || !item.isSuccess"></textarea>
@@ -104,8 +104,8 @@
                                     <div ng-if="item.code" class="code">{{item.code}}</div>
                                     <div ng-if="!item.code" class="code">XXXXXXX</div>
                                 </div>
-                                <div>
-                                    <div class="remove" ng-click="removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>
+                                <div class="remove-parent">
+                                    <div class="remove" ng-click="$event.stopPropagation(); removeItem(item)" style="cursor: pointer" ng-hide="item.isReady || item.isUploading || item.isSuccess">Remove</div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="progress" style="">

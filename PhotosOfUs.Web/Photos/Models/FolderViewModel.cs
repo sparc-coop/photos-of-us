@@ -12,7 +12,7 @@ namespace PhotosOfUs.Model.ViewModels
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public List<PhotoViewModel> Photos { get; set; }
+        public List<PhotoViewModel> Photo { get; set; }
 
         //public static FolderViewModel ToViewModel(Folder entity)
         //{

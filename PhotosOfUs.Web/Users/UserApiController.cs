@@ -22,10 +22,12 @@ namespace PhotosOfUs.Web.Controllers.API
     public class UserApiController : Controller
     {
         private IRepository<User> _user;
+        private IRepository<Folder> _folder;
 
-        public UserApiController(IRepository<User> userRepository)
+        public UserApiController(IRepository<User> userRepository, IRepository<Folder> folderRepository)
         {
             _user = userRepository;
+            _folder = folderRepository;
         }
         
 
@@ -76,7 +78,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetFolders")]
         public List<FolderViewModel> GetFolders()
         {
-            var folders = _user.Find(x => x.Id == User.ID()).Folder.ToList();
+            var folders = _folder.Where(x => x.PhotographerId == User.ID()).ToList();
             return folders.ToViewModel<List<FolderViewModel>>();
         }
     }
