@@ -82,13 +82,13 @@ namespace PhotosOfUs.Web
                 })
             .AddCookie("B2C");
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
-            //    .RequireAuthenticatedUser()
-            //    .AddAuthenticationSchemes("B2C", "Mobile")
-            //    .Build();
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .AddAuthenticationSchemes("B2C")
+                .Build();
+            });
 
 
             services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
