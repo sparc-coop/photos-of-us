@@ -6,8 +6,7 @@
         width: 265px;
         background-color: $yellow;
         border-radius: 6px;
-        margin-top: 21px;
-        margin-right: -46px;
+        margin-top: 46px;
         position: absolute;
         right: 0;
 
@@ -74,6 +73,10 @@
             position: absolute;
             top: -8px;
             right: 102px;
+
+            &--alt {
+                right: 61px;
+            }
         }
     }
 

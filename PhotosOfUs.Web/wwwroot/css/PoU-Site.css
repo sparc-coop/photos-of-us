@@ -1344,8 +1344,7 @@ td {
   width: 265px;
   background-color: #FFE261;
   border-radius: 6px;
-  margin-top: 21px;
-  margin-right: -46px;
+  margin-top: 46px;
   position: absolute;
   right: 0; }
   .cart--preview__content {
@@ -1393,6 +1392,8 @@ td {
     position: absolute;
     top: -8px;
     right: 102px; }
+    .cart--preview--arrow--alt {
+      right: 61px; }
 
 .cart .divider {
   background: #FFE261;
@@ -2294,10 +2295,12 @@ canvas {
   height: 237px;
   margin: 0 10px;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  outline: none; }
   .photographer-dashboard--wrapper .folder-new img {
     margin: 0 auto;
-    padding: 57px 0 20px 0; }
+    padding: 57px 0 20px 0;
+    width: unset !important; }
   .photographer-dashboard--wrapper .folder-new .label {
     font-family: "Dosis";
     font-weight: 600;

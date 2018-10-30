@@ -113,12 +113,12 @@
                 @*@await Html.PartialAsync("_LoginPartial")*@
                 <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
                 <!--If user is customer-->
-                <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview = !cartPreview" alt="cart" /></div>
+                <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" /></div>
             </div>
 
             <div ng-if="showCart == true" class="cart--preview" id="cart--preview">
                 <div class="cart--preview__content">
-                    <div class="cart--preview--arrow"></div>
+                    <div class="cart--preview--arrow cart--preview--arrow--alt"></div>
                     <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
                     <div class="cart-items">
                         <div class="cart--preview__items">

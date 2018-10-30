@@ -56,5 +56,13 @@ namespace PhotosOfUs.Web.Controllers.API
             List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
             return View(CustomerOrderViewModel.ToViewModel(orders));
         }
+
+        public ActionResult Cart()
+        {
+            int id = 2;
+            //Order order = new OrderRepository(_context).GetOpenOrder(id);
+            Order order = _orders.Find(x => x.Id == id);
+            return View(CustomerOrderViewModel.ToViewModel(order));
+        }
     }
 }

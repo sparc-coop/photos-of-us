@@ -327,10 +327,12 @@
         margin: 0 10px;
         text-align: center;
         cursor: pointer;
+        outline: none;
 
-        img{
+        img {
             margin: 0 auto;
             padding: 57px 0 20px 0;
+            width: unset !important;
         }
 
         .label {
