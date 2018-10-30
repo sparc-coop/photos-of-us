@@ -13,7 +13,7 @@
     }
 
     $scope.viewPhoto = (photoId) => {
-        $window.location.href = '/Users/Photographer/Photo/' + photoId;
+        $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
     $scope.isPhotoSelected = function (photoId) {
@@ -105,9 +105,9 @@
 
     $scope.getProfilePhotos = function () {
         $http.get('/api/Photographer/getProfilePhotos/')
-            .then(function (x) {
-                angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
-            });
+        .then(function (x) {
+            angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
+        });
     }
 
     $scope.arrangePhotos = function () {
@@ -125,7 +125,12 @@
     }
     
     $scope.getUser = () => {
-        userApi.getUser().then(function (x) {
+        //userApi.getUser().then(function (x) {
+        //    $scope.user = x.data;
+        //    console.log(x.data);
+        //});
+        $http.get('/api/User')
+        .then(x => {
             $scope.user = x.data;
         });
     };

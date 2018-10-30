@@ -24,8 +24,9 @@ using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web.Controllers
 {
+
+
     [Area("Users")]
-    //[Route("[controller]")]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -78,7 +79,10 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Photos(int id)
         {
-            Folder folder = _photo.Include(x => x.Folder).Find(x => x.PhotographerId == User.ID() && x.FolderId == id).Folder;
+            var azureId = User.AzureID();
+            //var userId = User.ID();
+            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            Folder folder = _photo.Include(x => x.Folder).Find(x => x.PhotographerId == photographer.Id && x.FolderId == id).Folder;
 
             return View(folder.ToViewModel<FolderViewModel>());
         }
@@ -191,7 +195,9 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Cards()
         {
-            List<Card> pCards = _user.Find(x => x.Id == User.ID()).Card.Where(y => y.PhotographerId == User.ID()).ToList();
+            var azureId = User.AzureID();
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            List<Card> pCards = _user.Find(x => x.Id == user.Id).Card.Where(y => y.PhotographerId == user.Id).ToList();
             return View(pCards);
         }
 
@@ -408,6 +414,7 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Account()
         {
             return View();

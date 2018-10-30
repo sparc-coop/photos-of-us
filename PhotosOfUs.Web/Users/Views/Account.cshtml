@@ -14,6 +14,7 @@
             <div class="account-sidemenu">
                 <div class="sidemenu-item" ng-click="setSelected('details')"><a href="#" ng-class="{'active': selected == 'details'}"><i class="material-icons">face</i> Profile Details</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
+                <div class="sidemenu-item" ng-click="setSelected('cards')"><a href="#" ng-class="{'active': selected == 'cards'}"><i class="material-icons">chrome_reader_mode</i>Coded Cards</a></div>
                 <div class="sidemenu-item" ng-click="setSelected('social')"><a href="#" ng-class="{'active': selected == 'social'}"><i class="material-icons">language</i>Social Accounts</a></div>
                 <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
                 <div class="deactivate" ng-click="deactivateModal('true', accountSettings)" ng-if="accountSettings.IsDeactivated != true" ng-cloak>Deactivate Account</div>
@@ -95,6 +96,9 @@
                 <label>Dribbble</label>
                 <input ng-model="accountSettings.Dribbble" />
             </div>
+        </div>
+        <div ng-cloak ng-if="selected == 'cards'" class="card-design">
+            @Html.Partial("/Users/Views/Partials/_CreateCards.cshtml")
         </div>
     </div>
 </div>

@@ -177,7 +177,7 @@ namespace PhotosOfUs.Web
             });
         }
 
-        private Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context)
+        private Task OnTokenValidatedAsync(TokenValidatedContext context)
         {
             context.HttpContext.RequestServices.GetRequiredService<LoginCommand>().Execute(context.Principal);
             //context.HttpContext.RequestServices.GetService<LoginCommand>().Execute(context.Principal);

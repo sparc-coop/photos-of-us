@@ -37,12 +37,8 @@
             <nav class="nav" ng-if="user.IsPhotographer == true">
                 <a href="/Users/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
                 <div class="nav--center">
-                    @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
-                    <a href="/Users/Photographer/Dashboard" class="menu-item">Home</a>
-                    <a href="/Users/Photographer/Search" class="menu-item">Search</a>
-                    <a href="/Users/Photographer/Cards" class="menu-item">Cards</a>
-                    <a href="/Users/Photographer/PublicCode" class="menu-item">Code</a>
-                    @*<a href="/" class="menu-item">Page Title</a>*@
+                    <a href="/Photographer/Dashboard" class="menu-item">Home</a>
+                    <a href="/Photographer/Cards" class="menu-item">Cards</a>
                 </div>
                 @*todo and is photographer*@
                 <div class="nav--right">
@@ -52,12 +48,12 @@
                 </div>
                 <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                     <div class="adminMenu__arrow"></div>
-                    <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
+                    <a class="adminMenu__list" href="@Url.Action(" Dashboard","Photographer")">Photo Gallery</a>
                     @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
-                    <a class="adminMenu__list" href="/Users/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
-                    <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
-                    <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
-                    <a class="adminMenu__list" href="/Users/Photographer/Profile/{{photographer.Id}}">Profile</a>
+                    <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
+                    <a class="adminMenu__list" href="/Photographer/Cards">Cards</a>
+                    <a class="adminMenu__list" href="/Photographer/Account">Account Settings</a>
+                    <a class="adminMenu__list" href="/Photographer/Profile/{{photographer.Id}}">Profile</a>
 
                     <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                 </div>
@@ -90,10 +86,8 @@
                     <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                 </div>
                 <div class="nav--center">
-                    @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
-                    <a href="/" class="menu-item">Home</a>
-                    <a href="/Users/Photographer/Search" class="menu-item">Search</a>
-                    <a href="/Users/Photographer/PublicCode" class="menu-item">Code</a>
+                    <a href="/Photographer/Search" class="menu-item">Search</a>
+                    <a href="/Photographer/PublicCode" class="menu-item">Code</a>
                 </div>
                 <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                     <div class="adminMenu__arrow"></div>

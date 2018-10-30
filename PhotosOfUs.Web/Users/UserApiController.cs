@@ -17,7 +17,7 @@ using PhotosOfUs.Web.Utilities;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/User")]
     public class UserApiController : Controller
     {
@@ -34,7 +34,12 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpGet]
         public UserViewModel Get()
         {
-            return _user.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
+            //var user =  _user.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
+
+            var azureId = User.AzureID();
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId)).ToViewModel<UserViewModel>();
+
+            return user;
         }
 
         [HttpGet]

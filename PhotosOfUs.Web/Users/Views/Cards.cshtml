@@ -1,6 +1,7 @@
 ﻿@model List<Card>
 @{
     ViewData["Title"] = "Cards";
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
 <div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="initCardCtrl()">

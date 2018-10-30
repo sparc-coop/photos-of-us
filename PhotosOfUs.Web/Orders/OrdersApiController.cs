@@ -41,14 +41,14 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet, HttpPost]
         [Route("SaveAddress")]
-        public AddressViewModel SaveAddress([FromBody]AddressViewModel vm)
+        public AddressViewModel SaveAddress([FromBody]Address vm)
         {
             var user = _users.Find(x => x.Id == User.ID());
-            var address = AddressViewModel.ToEntity(vm);
-            user.SetAddress(address);
+            //var address = AddressViewModel.ToEntity(vm);
+            user.SetAddress(vm);
             _users.Commit();
 
-            return AddressViewModel.ToViewModel(address);
+            return vm.ToViewModel<AddressViewModel>();
         }
 
         [HttpGet]
@@ -70,7 +70,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public List<CustomerOrderViewModel> GetOrders(int userId)
         {
             List<Order> orders = _orders.Where(x => x.UserId == userId).ToList();
-            return CustomerOrderViewModel.ToViewModel(orders).ToList();
+            return orders.ToViewModel<List<CustomerOrderViewModel>>();
         }
 
         public class OrderItemsViewModel
