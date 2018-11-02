@@ -6,7 +6,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); getPrintTypes()">    @*getPwintyCatalog() *@
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); getPrintTypes(); priceModal(); getPhotographer(@Model.PhotographerId)">
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
@@ -36,13 +36,13 @@
                 </div>
                 <div class="row">
                     <div class="title">Photographer</div>
-                    <div class="value">@Model.Photographer.DisplayName</div>
+                    <div class="value">{{photographer.DisplayName}}</div>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <h2 class="header-medium">Photo Options</h2>
+        <h2 class="header-medium">Photo Options <i class="material-icons" ng-click="priceModal()">info</i></h2>
         <md-switch ng-model="printQuality" ng-true-value="'Pro'" ng-false-value="'Standard'" aria-label="print quality">
             Photo Quality: {{ printQuality }}
         </md-switch>
@@ -84,7 +84,7 @@
                 <div class="price"><strong>${{'@Model.Price' ? (print.price / 100) + '@Model.Price' : (print.price / 100) | number: 2}}</strong></div>
             </div>
         </div>
-        <div class="button--yellow button--yellow--large" ng-click="createPwintyOrder()" style="margin-top: 50px"><img src="~/images/icons/cart-red.png" />Add Selected To Cart</div>
+        <div class="button--yellow button--yellow--large" ng-click="createPwintyOrder()" style="margin-top: 50px"><img src="~/images/icons/cart-red.png" /> Add Selected To Cart</div>
     </div>
 </div>
 

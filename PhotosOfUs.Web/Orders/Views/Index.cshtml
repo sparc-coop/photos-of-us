@@ -1,9 +1,9 @@
 ﻿@model CustomerOrderViewModel
-<div>
-    <h2 class="header-large">Hello, @Model.UserName</h2>
+<div ng-controller="DownloadCtrl" ng-init="getOrders(@Model.Id);">
+    <h2 class="header-large">Hello, {{user.DisplayName}}</h2>
     
     <div>
-        <div ng-controller="DownloadCtrl" ng-init="getOrders(@Model.Id)">
+        <div>
             @*<div ng-click="bulkDownload(@Model.Id)" id="download" class="button--download">Download all photos</div>*@
             <div ng-repeat="order in orders">
                 <div class="divider"></div>

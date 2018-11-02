@@ -1,4 +1,4 @@
-﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', ($scope, $window, $location, $http, userApi) => {
+﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', '$mdDialog', ($scope, $window, $location, $http, userApi, $mdDialog) => {
     $scope.goToCart = (userId) => {
         $window.location.href = '/Photo/Cart/' + userId;
     };
@@ -12,6 +12,18 @@
             $scope.printTypes = x.data;
         });
     };
+
+    $scope.priceModal = () => {
+        $mdDialog.show({
+            templateUrl: '/Photographer/PriceModal',
+            controller: 'ModalController',
+            clickOutsideToClose: true
+        });
+    };
+
+    $scope.getPhotographer = (id) => {
+        $http.get('/api/User/GetOne/' + id).then(x => $scope.photographer = x.data);
+    }
 
     $scope.selectedItems = [];
 
@@ -128,9 +140,7 @@
     };
 
     $scope.getUser = () => {
-        userApi.getUser().then(function (x) {
-            $scope.user = x.data;
-        })
+        $http.get('/api/User').then(x => $scope.user = x.data);
     };
 
     $scope.getOpenOrder = () => {
@@ -195,7 +205,7 @@
         };
         $http.post({
             method: 'moo.pack.createPack',
-            url: 'http://www.moo.com/api/service/',
+            url: 'https://www.moo.com/api/service/',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',

@@ -7,6 +7,11 @@
                 $scope.getOrderItems(key.Id);
             });           
         });
+
+        $http.get('/api/User/GetOne/' + userId).then(x => {
+            $scope.user = x.data;
+            console.log(x.data);
+        });
     };
 
     $scope.orderItems = [];
@@ -20,6 +25,5 @@
     $scope.bulkDownload = (userId) => {
         $http.post('/api/Photo/GetForDownload/' + userId);
     };
-
 
 }])

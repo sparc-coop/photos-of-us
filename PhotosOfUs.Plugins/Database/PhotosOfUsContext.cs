@@ -20,7 +20,7 @@ namespace PhotosOfUs.Model.Models
         {
             modelBuilder.Entity<SocialMedia>(entity =>
             {
-                entity.Property(e => e.Type).HasColumnName("AzureID");
+                entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.Type).HasColumnName("Type");
             });
 

@@ -1,15 +1,15 @@
-﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'userApi', 'folderApi', ($scope, $rootScope, $window, $mdDialog, userApi, folderApi) => {
+﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'userApi', 'folderApi', '$http', ($scope, $rootScope, $window, $mdDialog, userApi, folderApi, $http) => {
 
     $scope.close = () => $mdDialog.hide();
     $scope.folders = [];
 
 
-    $scope.initFolderCtrl = function () {
+    $scope.initFolderCtrl = function (id) {
         $scope.orderByOption = "Name";
-        userApi.getFolders()
-            .then(function (x) {
-                angular.forEach(x.data, function (f) { $scope.folders.push(f); });
-            })
+        $http.get('/api/User/GetFolders/' + id).then(function (x) {
+            angular.forEach(x.data, function (f) { $scope.folders.push(f); });
+        });
+        console.log($scope.folders);
     }
 
     $scope.initRenameFolderModal = function () {
@@ -84,4 +84,76 @@
         $scope.folders.splice(index,1);
 
     });
+
+    let tour = new Shepherd.Tour({
+        defaultStepOptions: {
+            classes: 'shepherd-theme-arrows'
+        }
+    });
+
+    tour.addStep('dash-center1', {
+        title: 'Getting Started',
+        text: "Photos Of Us makes it easy ",
+        buttons: [
+            {
+                text: 'Next',
+                action: tour.next,
+                classes: 'next'
+            }
+        ]
+    });
+
+    tour.addStep('dash-center2', {
+        title: 'Getting Started 2',
+        text: "Let's get started by creating an Album Folder",
+        buttons: [
+            {
+                text: 'Back',
+                action: tour.back,
+                classes: 'back'
+            },
+            {
+                text: 'Next',
+                action: tour.next,
+                classes: 'next'
+            }
+        ]
+    });
+
+    tour.addStep('dash-step1', {
+        title: 'Create A New Folder',
+        text: "Let's get started by creating an Album Folder",
+        attachTo: '#step1 right',
+        buttons: [
+            {
+                text: 'Back',
+                action: tour.back,
+                classes: 'back'
+            },
+            {
+                text: 'Next',
+                action: tour.next,
+                classes: 'next'
+            }
+        ]
+    });
+
+    //tour.addStep('dash-step2', {
+    //    title: 'Folder Name',
+    //    text: "Give the folder a name",
+    //    attachTo: '.header-large bottom',
+    //    buttons: [
+    //        {
+    //            text: 'Back',
+    //            action: tour.back,
+    //            classes: 'back'
+    //        },
+    //        {
+    //            text: 'Next',
+    //            action: tour.next
+    //        }
+    //    ]
+    //});
+
+    tour.start();
 }])

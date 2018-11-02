@@ -168,7 +168,7 @@ namespace PhotosOfUs.Web
             app.UseMvc(routes =>
             {
                 routes.MapAreaRoute("usersRoute", "Users", "{controller}/{action=Index}/{id?}");
-
+                routes.MapAreaRoute("ordersRoute", "Orders", "{controller}/{action=Index}/{id?}");
                 //routes.MapRoute("photRoute", "{controller=Photographer}/{action=Index}/{id?}");
 
                 routes.MapRoute(

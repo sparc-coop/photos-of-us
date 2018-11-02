@@ -14,6 +14,7 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -54,5 +55,22 @@ namespace PhotosOfUs.Web.Controllers.API
             Order order = _orders.Find(x => x.Id == id);
             return View(order.ToViewModel<CustomerOrderViewModel>());
         }
+
+        public ActionResult Purchase(int id)
+        {
+            var photo = _photos.Find(x => x.Id == id);
+            return View(photo.ToViewModel<PhotoViewModel>());
+        }
+
+        [Authorize]
+        public ActionResult Checkout()
+        {
+            //Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            var azureId = User.AzureID();
+            var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            Order order = _orders.Where(x => x.UserId == user.Id && x.OrderStatus == "Open").FirstOrDefault();
+            return View(order.ToViewModel<CustomerOrderViewModel>());
+        }
+
     }
 }

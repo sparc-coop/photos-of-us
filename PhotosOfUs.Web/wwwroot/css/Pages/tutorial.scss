@@ -1,0 +1,52 @@
+﻿@import '../variables.scss';
+
+.shepherd {
+    &-content {
+        background-color: $dark;
+        border-radius: 4px;
+        padding: 20px 20px 30px 20px;
+    }
+
+    &-title {
+        color: $yellow;
+        margin: 0;
+    }
+
+    &-text {
+        color: $white;
+        padding: 15px 0;
+    }
+
+    &-buttons {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+
+    &-button {
+        color: $yellow;
+        text-decoration: underline;
+
+        &.next {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        &.back {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+        }
+    }
+}
+
+.popper__arrow {
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid $dark;
+    margin: 0 auto;
+}

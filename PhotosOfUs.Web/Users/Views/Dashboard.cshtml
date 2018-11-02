@@ -4,7 +4,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="initFolderCtrl()">
+<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="initFolderCtrl(@Model.PhotographerId)">
     <h2 class="header-large">Good morning, @Model.Name</h2>
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
@@ -27,8 +27,8 @@
 
 
     <div class="folder-card--wrapper flex-box" ng-cloak>
-        <div class="folder-new" ng-click="newFolderModal()">
-            <img src="~/images/icons/folder.png"/>
+        <div class="folder-new" id="step1" ng-click="newFolderModal()">
+            <img src="~/images/icons/folder.png" id="step1"/>
             <div class="label">New Folder</div>
         </div>
         <div class="folder-card flex-box" ng-repeat="folder in folders | orderBy: orderByOption | filter: searchFolder">
@@ -60,9 +60,6 @@
                 <p class="folder-code">Folder Code: {{folder.Id}}</p>
             </div>
         </div>
-
-
     </div>
-
 </div>
 

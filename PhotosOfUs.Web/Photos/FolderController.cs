@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
+using System.Collections.Generic;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -25,7 +26,10 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPost]
         public FolderViewModel Post(string name)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
+            // var photographer = _user.Find(x => x.Id == User.ID());
+
+            var azureId = User.AzureID();
+            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
 
             var folder = photographer.AddFolder(name);
             _user.Commit();

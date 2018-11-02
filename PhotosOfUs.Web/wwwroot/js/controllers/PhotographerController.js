@@ -134,4 +134,23 @@
             $scope.user = x.data;
         });
     };
+
+    //let navTour = new Shepherd.Tour({
+    //    defaultStepOptions: {
+    //        classes: 'shepherd-theme-arrows'
+    //    }
+    //});
+
+    //navTour.addStep('nav-step1', {
+    //    title: 'Profile Page',
+    //    text: "This is where you can visit your profile page",
+    //    attachTo: '.nav--right bottom',
+    //    buttons: [
+    //        {
+    //            text: 'Next',
+    //            action: tour.next
+    //        }
+    //    ]
+    //});
+
 }])

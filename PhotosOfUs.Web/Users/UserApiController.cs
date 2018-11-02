@@ -87,10 +87,11 @@ namespace PhotosOfUs.Web.Controllers.API
 
 
         [HttpGet]
-        [Route("GetFolders")]
-        public List<FolderViewModel> GetFolders()
+        [Route("GetFolders/{id:int}")]
+        public List<FolderViewModel> GetFolders(int id)
         {
-            var folders = _folder.Where(x => x.PhotographerId == User.ID()).ToList();
+            //var folders = _folder.Where(x => x.PhotographerId == User.ID()).ToList();
+            var folders = _folder.Where(x => x.PhotographerId == id).ToList();
             return folders.ToViewModel<List<FolderViewModel>>();
         }
     }

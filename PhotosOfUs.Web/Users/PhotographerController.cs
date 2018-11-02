@@ -240,6 +240,11 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        public ActionResult PriceModal()
+        {
+            return View();
+        }
+
         [Authorize]
         public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags,
         [FromServices]UploadPhotoCommand command)

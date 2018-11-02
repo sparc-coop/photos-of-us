@@ -1,6 +1,28 @@
 ﻿app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) => {
+
+    let tour = new Shepherd.Tour({
+        defaultStepOptions: {
+            classes: 'shepherd-theme-arrows'
+        }
+    });
+
+    tour.addStep('upload-step1', {
+        title: 'Upload',
+        text: "Photos Of Us makes it easy ",
+        attachTo: '.button--imageUpload bottom',
+        buttons: [
+            {
+                text: 'Next',
+                action: tour.next,
+                classes: 'next'
+            }
+        ]
+    });
+
+    tour.start();
+
     $scope.viewPhoto = (photoId) => {
-        $window.location.href = '/Users/Photographer/Photo/' + photoId;
+        $window.location.href = '/Photographer/Photo/' + photoId;
     };
 
     $scope.checkFilter = (itemcode) => {
@@ -15,7 +37,7 @@
     }
 
     $scope.goToCode = (code) => {
-        $window.location.href = '/Users/Photographer/PhotoCode?code=' + code;
+        $window.location.href = '/Photographer/PhotoCode?code=' + code;
     }
 
     $scope.goToPurchase = (photoId) => {
@@ -23,12 +45,12 @@
     };
 
     $scope.goToProfile = (photographerId) => {
-        $window.location.href = '/Users/Photographer/Profile/' + photographerId;
+        $window.location.href = '/Photographer/Profile/' + photographerId;
     };
 
 
     $scope.goToGallery = (folderId) => {
-        $window.location.href = '/Users/Photographer/Photos/' + folderId;
+        $window.location.href = '/Photographer/Photos/' + folderId;
     };
 
     $scope.signInCustomer = (photoId) => {
