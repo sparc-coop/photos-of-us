@@ -21,11 +21,11 @@ namespace PhotosOfUs.Model.Models
         public Card(User user)
         {
             PhotographerId = user.Id;
-            CreatedDate = DateTime.Today;
+            CreatedDate = DateTime.Now;
             do
             {
                 Code = NewCode(7);
-            } while (!user.Card.Any(x => x.Code == Code));
+            } while (user.Card.Any(x => x.Code == Code));
         }
 
         private static Random random = new Random();

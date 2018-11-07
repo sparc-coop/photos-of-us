@@ -19,6 +19,7 @@
             controller: 'ModalController',
             clickOutsideToClose: true
         });
+        $http.post('/api/User/ViewedPricing/' + $scope.user.Id);
     };
 
     $scope.getPhotographer = (id) => {
@@ -140,7 +141,7 @@
     };
 
     $scope.getUser = () => {
-        $http.get('/api/User').then(x => $scope.user = x.data);
+        $http.get('/api/User').then(x => { $scope.user = x.data; console.log(x.data)});
     };
 
     $scope.getOpenOrder = () => {

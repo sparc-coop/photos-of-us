@@ -33,19 +33,29 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpGet]
         public List<CardViewModel> GetCard()
         {
-            List<Card> pCards = _card.Where(x => x.PhotographerId == User.ID()).Include(x => x.Photographer).ToList();
+            //List<Card> pCards = _card.Where(x => x.PhotographerId == User.ID()).Include(x => x.Photographer).ToList();
+            User user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            List<Card> pCards = _card.Where(x => x.PhotographerId == user.Id).Include(x => x.Photographer).ToList();
             return pCards.ToList().ToViewModel<List<CardViewModel>>();
         }
 
-        [HttpPost]
-        [Route("Create/{quantity}")]
-        public List<CardViewModel> Create(int quantity)
+        [HttpGet]
+        [Route("GetUserCard/{userId:int}")]
+        public List<Card> GetUserCard(int userId)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
-            photographer.AddNewCards(quantity);
-            _context.SaveChanges();
+            List<Card> pCards = _card.Where(x => x.PhotographerId == userId).Include(x => x.Photographer).ToList();
+            return pCards.ToList();
+        }
 
-            return photographer.Card.ToList().ToViewModel<List<CardViewModel>>();
+        [HttpPost]
+        [Route("Create/{quantity:int}/{userId:int}")]
+        public List<Card> Create(int quantity, int userId)
+        {
+            var photographer = _user.Find(x => x.Id == userId);
+            photographer.AddNewCards(quantity);
+            _user.Commit();
+
+            return photographer.Card.ToList();
         }
     }
 }

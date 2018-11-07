@@ -21,6 +21,8 @@ namespace PhotosOfUs.Web.Models
         public string Dribbble { get; set; }
         public bool? IsPhotographer { get; set; }
         public bool? IsDeactivated { get; set; }
-
+        public bool? PurchaseTour { get; set; }
+        public bool? DashboardTour { get; set; }
+        public bool? PhotoTour { get; set; }
     }
 }

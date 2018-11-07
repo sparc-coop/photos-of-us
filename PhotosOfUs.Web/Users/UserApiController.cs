@@ -35,9 +35,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public UserViewModel Get()
         {
             //var user =  _user.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
-
-            var azureId = User.AzureID();
-            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId)).ToViewModel<UserViewModel>();
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID())).ToViewModel<UserViewModel>();
 
             return user;
         }
@@ -93,6 +91,33 @@ namespace PhotosOfUs.Web.Controllers.API
             //var folders = _folder.Where(x => x.PhotographerId == User.ID()).ToList();
             var folders = _folder.Where(x => x.PhotographerId == id).ToList();
             return folders.ToViewModel<List<FolderViewModel>>();
+        }
+
+        [HttpPost]
+        [Route("ViewedPricing/{userId:int}")]
+        public void ViewedPricingInfo(int userId)
+        {
+            User user = _user.Find(x => x.Id == userId);
+            user.PurchaseTour = true;
+            _user.Commit();
+        }
+
+        [HttpPost]
+        [Route("ViewedDashboard/{userId:int}")]
+        public void ViewedDashboardTour(int userId)
+        {
+            User user = _user.Find(x => x.Id == userId);
+            user.DashboardTour = true;
+            _user.Commit();
+        }
+
+        [HttpPost]
+        [Route("ViewedPhoto/{userId:int}")]
+        public void ViewedPhotoTour(int userId)
+        {
+            User user = _user.Find(x => x.Id == userId);
+            user.PhotoTour = true;
+            _user.Commit();
         }
     }
 }

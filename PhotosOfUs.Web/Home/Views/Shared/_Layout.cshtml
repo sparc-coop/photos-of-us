@@ -31,12 +31,10 @@
 
 </head>
 <body>
-    <div ng-cloak>
-        @if (User.Identity.IsAuthenticated)
-        {
+    <div ng-cloak>        
             <div ng-controller="PhotographerCtrl" ng-init="getProfile(); getUser()">
                 <nav class="nav" ng-if="user.IsPhotographer == true">
-                    <a href="/Users/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
+                    <a href="/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
                     <div class="nav--center">
                         <a href="/Photographer/Dashboard" class="menu-item">Home</a>
                         <a href="/Photographer/Cards" class="menu-item">Cards</a>
@@ -49,7 +47,7 @@
                     </div>
                     <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                         <div class="adminMenu__arrow"></div>
-                        <a class="adminMenu__list" href="@Url.Action(" Dashboard","Photographer")">Photo Gallery</a>
+                        <a class="adminMenu__list" href="/Photographer/Dashboard">Photo Gallery</a>
                         @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
                         <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
                         <a class="adminMenu__list" href="/Photographer/Cards">Cards</a>
@@ -59,8 +57,8 @@
                         <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                     </div>
                 </nav>
-                <nav class="nav" ng-if="user.IsPhotographer != true" ng-cloak>
-                    <a href="/Users/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
+                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id != null" ng-cloak>
+                    <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
                     <div class="nav--right">
                         <div class="img-cart" ng-controller="CheckoutCtrl">
                             <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" />
@@ -92,43 +90,36 @@
                     </div>
                     <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
                         <div class="adminMenu__arrow"></div>
-                        <a class="adminMenu__list" href="/Customer/OrderHistory/{{user.Id}}">Order History</a>
+                        <a class="adminMenu__list" href="/Orders/OrderHistory/{{user.Id}}">Order History</a>
                         <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                     </div>
                 </nav>
-            </div>
+                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id == null" ng-controller="CheckoutCtrl" ng-cloak>
+                    <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
+                    <div class="nav--right">
+                        @*@await Html.PartialAsync("_LoginPartial")*@
+                        <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
+                        <!--If user is customer-->
+                        <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" /></div>
+                    </div>
 
-
-        }
-        else
-        {
-            <nav class="nav" ng-controller="CheckoutCtrl" ng-cloak>
-                <a href="/Users/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
-                <div class="nav--right">
-                    @*@await Html.PartialAsync("_LoginPartial")*@
-                    <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
-                    <!--If user is customer-->
-                    <div class="img-cart"><img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" /></div>
-                </div>
-
-                <div ng-if="showCart == true" class="cart--preview" id="cart--preview">
-                    <div class="cart--preview__content">
-                        <div class="cart--preview--arrow cart--preview--arrow--alt"></div>
-                        <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
-                        <div class="cart-items">
-                            <div class="cart--preview__items">
-                                <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
-                                    <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                    <div ng-if="showCart == true" class="cart--preview" id="cart--preview">
+                        <div class="cart--preview__content">
+                            <div class="cart--preview--arrow cart--preview--arrow--alt"></div>
+                            <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
+                            <div class="cart-items">
+                                <div class="cart--preview__items">
+                                    <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
+                                        <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                                    </div>
                                 </div>
+                                <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
+                                <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
                             </div>
-                            <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
-                            <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
                         </div>
                     </div>
-                </div>
-            </nav>
-        }
-
+                </nav>
+            </div>
     </div>
 
     @RenderSection("ProfileImageBackdrop", false)

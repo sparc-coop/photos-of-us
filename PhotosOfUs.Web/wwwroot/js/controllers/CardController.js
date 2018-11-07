@@ -1,16 +1,25 @@
-﻿app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout) => {
+﻿app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', '$http', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout, $http) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
     $scope.pageSize = 5;
     $scope.currentPage = 1;
+
+    $scope.photographer = {};
     
     $scope.initCardCtrl = function () {
-        $scope.cards = [];
+        //$scope.cards = [];
         cardApi.getAll()
             .then(function (x) {
                 $scope.cards = x.data;
+                console.log(x.data);
             });
+
+        $http.get('/api/User').then(x => {
+            $scope.photographer = x.data
+            console.log(x.data);
+        }
+        );
     };
 
     $scope.exportMultipleCardsModal = function () {
@@ -22,18 +31,16 @@
     };
 
     $scope.exportMultipleCards = function (quantity) {
-        cardApi.create(quantity).then(function(x) {
+        cardApi.create(quantity, $scope.photographer.Id).then(function (x) {
             $scope.cards = x.data.concat($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
-        });
-    };
+            
 
-    $scope.exportMultipleCards = function (quantity) {
-        cardApi.create(quantity).then(function (x) {
-            $scope.cards = x.data.concat($scope.cards);
-            $mdDialog.hide();
-            $scope.downloadCards(x.data);
+            $http.get('/api/Card/GetUserCard/' + $scope.photographer.Id).then(x => {
+                console.log("sdf");
+                console.log(x.data);
+            })
         });
     };
 

@@ -68,12 +68,6 @@
         $http.post('/api/Photographer/deletePhotos/', photos);
     }
 
-    //$scope.getPhotographer = (id) => {
-    //    $http.get('/api/Photo/GetPhotographer/' + id).then(x => {
-    //        $scope.photographer = x.data;
-    //    });
-    //};
-
     $scope.getAllTags = function () {
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {
@@ -125,32 +119,10 @@
     }
     
     $scope.getUser = () => {
-        //userApi.getUser().then(function (x) {
-        //    $scope.user = x.data;
-        //    console.log(x.data);
-        //});
         $http.get('/api/User')
         .then(x => {
             $scope.user = x.data;
         });
     };
-
-    //let navTour = new Shepherd.Tour({
-    //    defaultStepOptions: {
-    //        classes: 'shepherd-theme-arrows'
-    //    }
-    //});
-
-    //navTour.addStep('nav-step1', {
-    //    title: 'Profile Page',
-    //    text: "This is where you can visit your profile page",
-    //    attachTo: '.nav--right bottom',
-    //    buttons: [
-    //        {
-    //            text: 'Next',
-    //            action: tour.next
-    //        }
-    //    ]
-    //});
 
 }])

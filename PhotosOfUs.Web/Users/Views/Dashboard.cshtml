@@ -4,7 +4,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="initFolderCtrl(@Model.PhotographerId)">
+<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="getUser(@Model.PhotographerId); initFolderCtrl(@Model.PhotographerId)">
     <h2 class="header-large">Good morning, @Model.Name</h2>
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@

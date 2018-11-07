@@ -1,25 +1,33 @@
 ﻿app.controller('PhotoCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', '$timeout', '$q', 'Socialshare', ($scope, $window, $location, $http, $mdDialog, $timeout, $q, Socialshare) => {
 
-    let tour = new Shepherd.Tour({
-        defaultStepOptions: {
-            classes: 'shepherd-theme-arrows'
+
+    $scope.getUserTour = () => {
+        $http.get('/api/User')
+            .then(x => {
+                $scope.viewTour(x.data);
+            });
+    };
+
+    $scope.viewTour = (user) => {
+        if (user.PhotoTour == null) {
+            let tour = new Shepherd.Tour({
+                defaultStepOptions: {
+                    classes: 'shepherd-theme-arrows'
+                }
+            });
+
+            tour.addStep('upload-step1', {
+                title: 'Upload Photos',
+                text: "Photos Of Us makes it easy ",
+                attachTo: '.button--imageUpload bottom',
+                classes: 'no-next'
+            });
+
+            tour.start();
+
+            //$http.post('/api/User/ViewedPhoto/' + user.Id);
         }
-    });
-
-    tour.addStep('upload-step1', {
-        title: 'Upload',
-        text: "Photos Of Us makes it easy ",
-        attachTo: '.button--imageUpload bottom',
-        buttons: [
-            {
-                text: 'Next',
-                action: tour.next,
-                classes: 'next'
-            }
-        ]
-    });
-
-    tour.start();
+    }
 
     $scope.viewPhoto = (photoId) => {
         $window.location.href = '/Photographer/Photo/' + photoId;
@@ -41,7 +49,7 @@
     }
 
     $scope.goToPurchase = (photoId) => {
-        $window.location.href = '/Orders/Photo/Purchase/' + photoId;
+        $window.location.href = '/Photographer/Purchase/' + photoId;
     };
 
     $scope.goToProfile = (photographerId) => {
@@ -55,7 +63,7 @@
 
     $scope.signInCustomer = (photoId) => {
         $http.get('/Session/SignIn/').then(
-            $window.location.href = '/Orders/Photo/Purchase/' + photoId
+            $window.location.href = '/Orders/Purchase/' + photoId
         );
     };
 
@@ -115,7 +123,7 @@
     };
 
     $scope.getPhotographer = (id) => {
-        $http.get('/api/User/Get/' + id).then(x => {
+        $http.get('/api/User/GetOne/' + id).then(x => {
             $scope.photographer = x.data;
         });
     };

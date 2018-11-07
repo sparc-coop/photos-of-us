@@ -227,4 +227,114 @@
         
     };
 
+
+    $scope.showTour = () => {
+        $http.get('/api/User').then(x =>
+            $scope.startTour(x.data)
+        );
+    };
+
+    $scope.startTour = (user) => {
+        if (user.PhotoTour == null) {
+            let tour = new Shepherd.Tour({
+                defaultStepOptions: {
+                    classes: 'shepherd-theme-arrows'
+                }
+            });
+
+            tour.addStep('uploadmodal1', {
+                title: 'Bulk Uploading Photos',
+                text: "You can Bulk Upload Photos. They will appear in this list.",
+                attachTo: '.upload--container top',
+                classes: 'small',
+                buttons: [
+                    {
+                        text: 'Next',
+                        action: tour.next,
+                        classes: 'next'
+                    }
+                ]
+            });
+
+            tour.addStep('uploadmodal2', {
+                title: 'Photo Codes',
+                text: "You will notice each photo will recieve a code based on the last code-photo taken",
+                attachTo: '.photo-code top',
+                classes: 'arrow--bottom small',
+                buttons: [
+                    {
+                        text: 'Back',
+                        action: tour.back,
+                        classes: 'back'
+                    },
+                    {
+                        text: 'Next',
+                        action: tour.next,
+                        classes: 'next'
+                    }
+                ]
+            });
+
+            tour.addStep('uploadmodal3', {
+                title: 'Photo Codes Error',
+                text: "If for some reason the code could not be auto-applied, you can manually enter the code",
+                attachTo: '.photo-code right',
+                classes: 'arrow--bottom small',
+                buttons: [
+                    {
+                        text: 'Back',
+                        action: tour.back,
+                        classes: 'back'
+                    },
+                    {
+                        text: 'Next',
+                        action: tour.next,
+                        classes: 'next'
+                    }
+                ]
+            });
+
+            tour.addStep('uploadmodal4', {
+                title: 'Photo Settings',
+                text: "You can then give your photos a name, price, and tags so it is easier to find.",
+                attachTo: '.photo-preview__name left',
+                classes: 'arrow--bottom small',
+                buttons: [
+                    {
+                        text: 'Back',
+                        action: tour.back,
+                        classes: 'back'
+                    },
+                    {
+                        text: 'Next',
+                        action: tour.next,
+                        classes: 'next'
+                    }
+                ]
+            });
+
+            tour.addStep('uploadmodal5', {
+                title: 'Make & Save Some Changes',
+                text: "Why not give it a go. Give your photo a name and a tag, then hit save.",
+                attachTo: '.button--upload right',
+                classes: 'arrow--bottom small',
+                buttons: [
+                    {
+                        text: 'Back',
+                        action: tour.back,
+                        classes: 'back'
+                    },
+                    {
+                        text: 'Close Tip',
+                        action: tour.next,
+                        classes: 'next'
+                    }
+                ]
+            });
+
+            tour.start();
+            $http.post('/api/User/ViewedPhoto/' + user.Id);
+        }
+    };
+
 });

@@ -3,7 +3,7 @@
     ViewData["Title"] = Model.Name;
 }
 
-<div class="photos-dashboard--wrapper" ng-controller="PhotoCtrl">
+<div class="photos-dashboard--wrapper" ng-controller="PhotoCtrl" ng-init="getUserTour()">
     <div class="flex-box header">
         <a href="/Photographer/Dashboard" class="button--back"><img src="~/images/icons/ic_arrow_back_24px.png" /></a>
         <h2 class="header-large">@Model.Name</h2>

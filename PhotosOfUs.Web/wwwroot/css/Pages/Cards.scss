@@ -11,6 +11,7 @@
         float: right;
         text-decoration: none;
         margin-left: auto;
+        margin-bottom: 10px;
     }
 
     .btn-pou-default:hover {
@@ -20,10 +21,15 @@
     #card-downloader {
         display: none;
     }
+
+    input{
+        margin-bottom: 10px;
+    }
 }
 
 .card-design {
     padding: 0 30px;
+    max-width: 880px;
 
     h3 {
         font-family: 'Dosis';
@@ -54,6 +60,8 @@
         font-size: 18px;
         color: $dark;
         padding: 60px 0 12px 0;
+        display: flex;
+        flex-wrap: wrap;
 
         &--orange {
             font-family: 'Open Sans';
@@ -79,6 +87,7 @@
         &__container {
             display: flex;
             flex-wrap: wrap;
+            height: 300px;
 
             > div {
                 max-width: 250px;
@@ -86,6 +95,28 @@
                 height: 130px;
                 margin: 0 auto;
             }
+        }
+
+        img {
+            width: 240px;
+            cursor: pointer;
+
+            &.selected {
+                border: 2px solid #43C6BA;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .img--main {
+        max-width: 780px;
+        max-height: 445px;
+    }
+
+    .settings {
+
+        .img--featured {
+            max-height: 286px;
         }
     }
 
@@ -134,5 +165,11 @@
         border-radius: 3px;
         width: 100%;
         padding: 7px 16px;
+    }
+
+    .img--icon {
+        height: 24px;
+        width: 24px;
+        margin-right: 10px;
     }
 }

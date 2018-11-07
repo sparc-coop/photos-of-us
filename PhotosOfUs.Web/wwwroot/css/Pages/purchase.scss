@@ -135,6 +135,14 @@
             background: rgba(255, 226, 97, 0.16)
         }
     }
+
+    .price__info {
+        color: $primary;
+        text-decoration: underline;
+        outline: none;
+        float: right;
+        cursor: pointer;
+    }
 }
 
 .photographer-order{
@@ -177,11 +185,17 @@
         > div {
             background: $white;
             border-radius: 3px;
-            height: 280px;
-            width: 250px;
+            height: 239px;
+            width: 229px;
             margin: 0 auto;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 35px;
+            margin-bottom: 35px;
+            padding: 20px;
+
+            img {
+                margin: 25px 0;
+                max-height: 50px;
+            }
         }
 
         p {

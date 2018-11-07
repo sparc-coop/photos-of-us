@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="~/lib/ng-tags-input/ng-tags-input.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shepherd/2.0.0-beta.1/css/shepherd-theme-arrows.min.css">
 <style>
     .tag-list {
         color: black;
@@ -26,7 +27,7 @@
         <div nv-file-drop="" uploader="uploader" ng-init='load()'>
             <div class="col-md-12">
                 <div ng-show="uploader.isHTML5">
-                    <div class="drop-zone" nv-file-over="" uploader="uploader">
+                    <div class="drop-zone" nv-file-over="" uploader="uploader" ng-click="showTour()">
                         @*<img src="~/images/icons/add-photo.png" />*@
                         @*<div class="info">Click here or drag &amp; drop the photos to upload</div>*@
                         <div> <img src="~/images/icons/add-photo.png" />Select Photos</div>
@@ -60,13 +61,13 @@
                         <input placeholder="$0.00" ng-model="selectedItem.file.price" type="number" />
                     </div>
                     @*<div class="col-md-8">
-                        <p class="photo-preview-title">Name</p>
-                        <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isUploading || !selectedItem.isSuccess"></textarea>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="photo-preview-title">Dimensions</p>
-                        <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
-                    </div>*@
+                            <p class="photo-preview-title">Name</p>
+                            <textarea msd-elastic id="photo-preview-name" spellcheck="false" ng-keyup="photoNameValidation($event, selectedItem)" ng-model="selectedItem.file.name" rows="1" ng-disabled="selectedItem.isUploading || !selectedItem.isSuccess"></textarea>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="photo-preview-title">Dimensions</p>
+                            <p id="photo-preview-dimensions">{{ selectedItem.file.dimensions }}</p>
+                        </div>*@
                     <div>
                         <div class="col-md-4 tags-parent">
                             <p class="photo-preview-title">Tags</p>
@@ -82,15 +83,15 @@
                     </div>
                     <div class="clearfix"></div>
                     @*<div>
-                        <div class="button--save-changes" ng-click="upload(selectedItem)" ng-hide="selectedItem.isUploading || !selectedItem.isSuccess">Save Changes</div>
-                        <div class="button--discard-changes" ng-click="removeItem(selectedItem)" ng-hide="selectedItem.isUploading || !selectedItem.isSuccess">Discard Changes</div>
-                    </div>*@
+                            <div class="button--save-changes" ng-click="upload(selectedItem)" ng-hide="selectedItem.isUploading || !selectedItem.isSuccess">Save Changes</div>
+                            <div class="button--discard-changes" ng-click="removeItem(selectedItem)" ng-hide="selectedItem.isUploading || !selectedItem.isSuccess">Discard Changes</div>
+                        </div>*@
                     <div class="clearfix"></div>
                 </div>
                 <div id="photo-list">
                     <div>
                         <ul id="photos">
-                            <li class="media" ng-repeat="item in uploader.queue track by $index" ng-click="selectItem($event, item)" >
+                            <li class="media" ng-repeat="item in uploader.queue track by $index" ng-click="selectItem($event, item)">
                                 <div class="col-md-2">
                                     <img class="photo-thumbnail" ng-src="{{ item.file.src }}" />
                                 </div>
@@ -124,3 +125,6 @@
         </div>
     </div>
 </div>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://unpkg.com/popper.js/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shepherd/2.0.0-beta.1/js/shepherd.min.js"></script>

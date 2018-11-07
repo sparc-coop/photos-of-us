@@ -2,7 +2,7 @@
     <h3>Card Template</h3>
     <div class="template__container">
         <div>
-            <img src="" />
+            <img src="~/images/card/card 1 copy@2x.png" ng-class="{'selected': templateSelected == 1}" ng-click="selectTemplate(1)"/>
             <h5>Informational - Center</h5>
             <p>
                 A minimal, clean and de-cluttered templated that contains
@@ -10,7 +10,7 @@
             </p>
         </div>
         <div>
-            <img src="" />
+            <img src="~/images/card/card 2 copy@2x.png" ng-class="{'selected': templateSelected == 2}" ng-click="selectTemplate(2)"/>
             <h5>Informational Logo</h5>
             <p>
                 A minimal, clean and de-cluttered templated that contains
@@ -18,7 +18,7 @@
             </p>
         </div>
         <div>
-            <img src="" />
+            <img src="~/images/card/card 3 copy@2x.png" ng-class="{'selected': templateSelected == 3}" ng-click="selectTemplate(3)"/>
             <h5>Left align with picture</h5>
             <p>
                 A minimal, clean and de-cluttered templated that contains
@@ -32,35 +32,81 @@
     <h3>Business Card Settings (front)</h3>
     <div>
         <div class="title title--first">Front View</div>
-        <img src="~/images/card/front-view.PNG"/>
+        <img src="~/images/card/front example (with numbers) copy@2x.png" class="img--main" />
     </div>
     <div>
-        <div class="title">Your Personal Information</div>
+        <div class="title">
+            <div>
+                <img src="~/images/card/numbers/Number Copy@1.5x.png" class="img--icon" style="margin-right: 0" />
+                <i class="material-icons">add</i>
+                <img src="~/images/card/numbers/Number Copy 4@1.5x.png" class="img--icon" />
+            </div>
+            Your Personal Information
+        </div>
         <div class="sub-title">What you want to be called and known for!</div>
         <p>This could be your name, your company name, an existing general professional label or one that you think defines you best.</p>
         <label>Your Name</label>
-        <input placeholder="First Name Last Name" />
+        <input placeholder="First Name Last Name" ng-model="card.Name"/>
         <label>Professional Label</label>
-        <input placeholder="Event Photographer" />
+        <input placeholder="Event Photographer" ng-model="card.Label"/>
     </div>
     <div>
-        <div class="title">Your Contact Information</div>
+        <div class="title">
+            <img src="~/images/card/numbers/Number Copy 7@1.5x.png" class="img--icon" style="margin-right: 0" />
+            <i class="material-icons">add</i>
+            <img src="~/images/card/numbers/Number Copy 5@1.5x.png" class="img--icon" />
+            Your Contact Information
+        </div>
         <div class="sub-title">Your two preferred methods of contact</div>
         <p>Phone call, email, in-office visits, smoke signals, carrier pigeon, whatever you prefer!</p>
         <label>Contact Line One</label>
-        <input placeholder="123-123-1234" />
+        <input placeholder="123-123-1234" ng-model="card.Contact1"/>
         <label>Contact Line Two</label>
-        <input placeholder="hello@photography.com" />
+        <input placeholder="hello@photography.com" ng-model="card.Contact2"/>
+    </div>
+    <div>
+        <div class="title"><img src="~/images/card/numbers/Number Copy 2@1.5x.png" class="img--icon" />Featured Image</div>
+        <div class="sub-title">Upload your large, featured image or choose your own color.</div>
+        <p>
+            Upload the file you wish to use as your main image. This template requires a minimum resolution of 550 x 1040 as a Jpeg or PNG.
+        </p>
+        <div>
+            <img src="~/images/card/picture@2x.png" class="img--featured" />
+            <div>
+                <label>Overlay</label>
+                <p>
+                    Using an overlay can help brighten or darker your image. This can be helpful if your template has
+                    overlapping text, or your image has high contrast to the rest of your website.
+                </p>
+                <label>Overlay Color</label>
+                <label>Opacity</label>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="title"><img src="~/images/card/numbers/Number Copy 9@1.5x.png" class="img--icon" /> Brand Colors</div>
+        <div class="sub-title">Give your card some Colour!</div>
+        <p>
+            Pick your brand colours that will be displayed on your card.
+        </p>
+    </div>
+    <div>
+        <div class="title"><img src="~/images/card/numbers/Number Copy 13@1.5x.png" class="img--icon" />Content Separator</div>
+        <div class="sub-title">Adding a small detail</div>
+        <p>
+            A small line between your title and description. Often used to help break up text, but not always essential. 
+            The colour of the separator is determined by your “accent” colour.
+        </p>
     </div>
 </div>
 <div>
     <h3>Business Card Settings (back)</h3>
     <div>
         <div class="title title--first">Back View</div>
-        <img src="~/images/card/back-view.PNG" />
+        <img src="~/images/card/back example (with code and number)@@2x.png"  class="img--main"/>
     </div>
     <div>
-        <div class="title">Photos of Us Branding</div>
+        <div class="title"><img src="~/images/card/numbers/Number Copy@1.5x.png" class="img--icon" />Photos of Us Branding</div>
         <div class="sub-title">Use the Photos Of Us branding, or add your own!</div>
         <p>
             Using the Photos Of Us Branding allows you to use the card feature completely free,
@@ -74,13 +120,28 @@
         <p>
             Please upload your file as a Jpeg or PNG at a minimum resolution of 100 x 100
         </p>
+        <div class="upload">
+            Upload
+        </div>
     </div>
     <div>
         <div class="title">Featured Image/Color</div>
-        <div class="sub-title">Upload your large, featured image or choose your own colour.</div>
+        <div class="sub-title">Upload your large, featured image or choose your own color.</div>
         <p>
             Upload the file you wish to use as your main image. This template requires a minimum resolution of 550 x 1040 as a Jpeg or PNG.
         </p>
+        <div>
+            <img src="~/images/card/featured image@2x.png"/>
+            <div>
+                <label>Overlay</label>
+                <p>
+                    Using an overlay can help brighten or darker your image. This can be helpful if your template has 
+                    overlapping text, or your image has high contrast to the rest of your website.
+                </p>
+                <label>Overlay Color</label>
+                <label>Opacity</label>
+            </div>
+        </div>
     </div>
 </div>
 <div class="add-cart" ng-controller="PaymentCtrl"> 

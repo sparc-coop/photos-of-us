@@ -50,6 +50,9 @@ namespace PhotosOfUs.Model.Models
         public string Instagram { get; private set; }
         public string Dribbble { get; private set; }
         public int TemplateSelected { get; private set; }
+        public bool? PurchaseTour { get; set; }
+        public bool? DashboardTour { get; set; }
+        public bool? PhotoTour { get; set; }
 
         public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Card> Card { get; set; }

@@ -78,6 +78,11 @@
         $scope.selected = selected;
     };
 
+    $scope.templateSelected = '';
+
+    $scope.selectTemplate = (id) => {
+        $scope.templateSelected = id;
+    };
 
 }])
 .controller('PhotographerAccountStatusCtrl', ['$scope', '$window', '$http', 'user', ($scope, $window, $http, user) => {
