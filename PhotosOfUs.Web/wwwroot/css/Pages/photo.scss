@@ -230,6 +230,10 @@
                 }
             }
         }
+
+        .ng-hide:not(.ng-hide-animate) {
+            display: flex !important;
+        }
     }
 
     @media screen and (max-width: $mobile) {

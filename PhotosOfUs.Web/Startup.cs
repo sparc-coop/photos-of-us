@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +24,7 @@ using PhotosOfUs.Connectors.Storage;
 using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Security.Claims;
+using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web
 {
@@ -91,7 +89,7 @@ namespace PhotosOfUs.Web
             });
 
 
-            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddSession(options =>
             {
@@ -116,6 +114,7 @@ namespace PhotosOfUs.Web
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
             services.AddScoped<LoginCommand>();
+            services.AddScoped<UploadPhotoCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 

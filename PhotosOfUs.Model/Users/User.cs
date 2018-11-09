@@ -155,7 +155,7 @@ namespace PhotosOfUs.Model.Models
 
         public void AddNewCards(int quantity)
         {
-            for (var i = 0; i < quantity; i++)            
+            for (var i = 0; i < quantity; i++)
                 Card.Add(new Card(this));
         }
 

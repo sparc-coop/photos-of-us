@@ -40,6 +40,7 @@ namespace PhotosOfUs.Web.Controllers.API
             return user;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("GetOne/{id}")]
         public UserViewModel GetOne(int id)

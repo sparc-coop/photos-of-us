@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody ng-cloak>
-                <tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 5:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">
+                <tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 10:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">
                     <td class="highlight">{{card.Code}}</td>
                     <td>{{card.CreatedDate | date: 'MM/dd/yyyy'}}</td>
                     <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
@@ -41,8 +41,8 @@
             </tbody>
         </table>
     </div>
-    <div class="photoPage__image-container" ng-show="(codePhotos.length/pageSize) > 1">
-        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize"></ul>﻿
+    <div class="photoPage__image-container">
+        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize" ng-show="(codePhotos.length/photosPerPage) > 1"></ul>﻿
     </div>
     <form id="card-downloader" action="@Url.Action("Export")" method="post">
         <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.Id" />

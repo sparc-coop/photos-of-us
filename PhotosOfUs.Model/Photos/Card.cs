@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -14,7 +12,7 @@ namespace PhotosOfUs.Model.Models
         public User Photographer { get; set; }
 
         // Not Mapped
-        public string Url => "www.photosof.us/" + Photographer.DisplayName.ToLower().Replace(" ","");
+        //public string Url => "www.photosof.us/" + Photographer.DisplayName.ToLower().Replace(" ","");
 
         public Card() {}
 

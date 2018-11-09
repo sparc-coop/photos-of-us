@@ -44,11 +44,12 @@
         });
     };
 
+    $scope.photographerId = $location.absUrl().split('Profile/')[1];
+
     $scope.getProfile = function () {
-        userApi.get().then(function (x) {
-            $scope.photographer = x.data;
-        })
-    }
+        $http.get("/api/User/GetOne/" + $scope.photographerId)
+            .then(x => { $scope.photographer = x.data; console.log(x.data)});
+    };
 
     $scope.toggleSelection = function () {
         $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
@@ -98,11 +99,11 @@
     };
 
     $scope.getProfilePhotos = function () {
-        $http.get('/api/Photographer/getProfilePhotos/')
+        $http.get('/api/Photographer/getProfilePhotos/' + $scope.photographerId)
         .then(function (x) {
             angular.forEach(x.data, function (f) { $scope.profilePhotos.push(f); });
         });
-    }
+    };
 
     $scope.arrangePhotos = function () {
         var grid = document.querySelector('.grid');

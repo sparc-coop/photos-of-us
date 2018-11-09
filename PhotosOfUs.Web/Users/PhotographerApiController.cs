@@ -5,6 +5,9 @@ using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 using Kuvio.Kernel.Auth;
 using Kuvio.Kernel.Architecture;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -16,13 +19,16 @@ namespace PhotosOfUs.Web.Controllers.API
         private IRepository<Photo> _photo;
         private IRepository<User> _user;
         private IRepository<Tag> _tag;
+        private readonly IRepository<Card> _card;
 
-        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository)
+        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, 
+            IRepository<Tag> tagRepository, IRepository<Card> cardRepository)
         {
             _context = context;
             _photo = photoRepository;
             _user = userRepository;
             _tag = tagRepository;
+            _card = cardRepository;
         }
        
         [HttpPost]
@@ -176,5 +182,22 @@ namespace PhotosOfUs.Web.Controllers.API
 
         //    return Ok(result);
         //}
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetUserCard/{userId:int}")]
+        public List<Card> GetUserCard(int userId)
+        {
+            List<Card> pCards = _card.Where(x => x.PhotographerId == userId).Include(x => x.Photographer).ToList();
+            return pCards.ToList();
+        }
+
+
+        [HttpGet]
+        [Route("GetProfilePhotos/{photographerId:int}")]
+        public List<Photo> GetProfilePhotos(int photographerId)
+        {
+            return _photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
+        }
     }
 }

@@ -203,12 +203,15 @@ namespace PhotosOfUs.Web.Controllers
 
         [HttpPost]
         [Authorize]
+        [Produces("application/json")]
         public ActionResult Export(List<int> ids)
         {
-            var cards = _user.Find(x => x.Id == User.ID()).Card
-                .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
+            //var cards = _user.Find(x => x.Id == User.ID()).Card
+            //    .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            var cards = _card.Include(x => x.Photographer).Where(x => x.PhotographerId == user.Id && ids.Contains(x.Id)).ToList();
 
-            var json = JsonConvert.SerializeObject(cards.ToViewModel<List<CardViewModel>>());
+            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
             return new ActionAsPdf("ExportPdf", new { json })
             {
                 FileName = "Cards.pdf",
@@ -217,10 +220,12 @@ namespace PhotosOfUs.Web.Controllers
                 PageMargins = { Left = 0, Right = 0 },
                 Cookies = Request.Cookies.ToDictionary(x => x.Key, x => x.Value)
             };
+
         }
 
         public ActionResult ExportPdf(string json)
         {
+            var newString = json;
             var cards = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
             return View(cards);
         }
@@ -295,17 +300,24 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags, [FromServices]UploadPhotoCommand command)
         {
-            User photographer = _user.Find(x => x.Id == User.ID());
+            //User photographer = _user.Find(x => x.Id == User.ID());
+            User photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
             RootObject tagsfromazure = null;
+            List<string> suggestedtags = null;
 
             var ac = new AzureCognitive(_context, _card);
             var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
+            //tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
             tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
-            var suggestedtags = ac.ExtractTags(tagsfromazure);
 
-            if (string.IsNullOrEmpty(tags))
+            if(tagsfromazure.tags != null)
             {
-                return AzureCognitiveViewModel.ToViewModel(suggestedtags);
+                suggestedtags = ac.ExtractTags(tagsfromazure);
+
+                if (string.IsNullOrEmpty(tags))
+                {
+                    return AzureCognitiveViewModel.ToViewModel(suggestedtags);
+                }
             }
 
             double addPrice = double.Parse(price);
@@ -348,10 +360,10 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult Profile(int userId)
         {
+            var newId = userId;
             if (userId == 0)
             {
-                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-                userId = _user.Find(x => x.AzureId == azureId).Id;
+                userId = _user.Find(x => x.AzureId == User.AzureID()).Id;
             }
 
             var photographer = _user.Find(x => x.Id == userId);

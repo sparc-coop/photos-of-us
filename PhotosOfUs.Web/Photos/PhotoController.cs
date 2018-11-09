@@ -96,13 +96,6 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
-        [Route("GetProfilePhotos")]
-        public List<Photo> GetProfilePhotos(int photographerId)
-        {
-            return _photos.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
-        }
-
-        [HttpGet]
         [Route("GetPublicIds")]
         public List<int> GetPublicIds()
         {

@@ -30,7 +30,7 @@
             @foreach (var Photo in @Model)
             {
                 <div class="grid-item">
-                    <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
+                    <img src="@Photo.ThumbnailUrl" ng-click="viewPhoto(@Photo.Id)" />
                 </div>
             }
         </div>

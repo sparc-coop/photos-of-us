@@ -2296,6 +2296,8 @@ canvas {
         text-decoration: none;
         font-weight: bold;
         color: #43C6BA; }
+  .photoPage__image-container .ng-hide:not(.ng-hide-animate) {
+    display: flex !important; }
 
 @media screen and (max-width: 450px) {
   .photoPage .header {
@@ -2789,7 +2791,8 @@ tags-input .tag-item {
   float: right;
   text-decoration: none;
   margin-left: auto;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  cursor: pointer; }
 
 .photographer-cards .btn-pou-default:hover {
   color: #3ba99f; }

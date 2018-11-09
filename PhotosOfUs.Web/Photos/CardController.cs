@@ -39,14 +39,6 @@ namespace PhotosOfUs.Web.Controllers.API
             return pCards.ToList().ToViewModel<List<CardViewModel>>();
         }
 
-        [HttpGet]
-        [Route("GetUserCard/{userId:int}")]
-        public List<Card> GetUserCard(int userId)
-        {
-            List<Card> pCards = _card.Where(x => x.PhotographerId == userId).Include(x => x.Photographer).ToList();
-            return pCards.ToList();
-        }
-
         [HttpPost]
         [Route("Create/{quantity:int}/{userId:int}")]
         public List<Card> Create(int quantity, int userId)

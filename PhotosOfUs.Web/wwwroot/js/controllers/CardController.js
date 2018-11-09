@@ -2,23 +2,21 @@
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
-    $scope.pageSize = 5;
+    $scope.pageSize = 10;
     $scope.currentPage = 1;
 
     $scope.photographer = {};
     
     $scope.initCardCtrl = function () {
-        //$scope.cards = [];
-        cardApi.getAll()
-            .then(function (x) {
-                $scope.cards = x.data;
-                console.log(x.data);
-            });
-
         $http.get('/api/User').then(x => {
             $scope.photographer = x.data
             console.log(x.data);
-        }
+
+            $http.get('/api/Photographer/GetUserCard/' + x.data.Id).then(x => {
+                $scope.cards = x.data;
+                console.log(x.data);
+            });
+            }
         );
     };
 
@@ -35,12 +33,6 @@
             $scope.cards = x.data.concat($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
-            
-
-            $http.get('/api/Card/GetUserCard/' + $scope.photographer.Id).then(x => {
-                console.log("sdf");
-                console.log(x.data);
-            })
         });
     };
 
