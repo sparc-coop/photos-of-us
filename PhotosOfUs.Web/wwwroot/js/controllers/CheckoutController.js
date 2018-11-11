@@ -13,13 +13,26 @@
         });
     };
 
-    $scope.priceModal = () => {
+    $scope.priceModal = (user) => {
+        if (user.PurchaseTour == true) {
+            return null
+        }
+        else {
+            $mdDialog.show({
+                templateUrl: '/Photographer/PriceModal',
+                controller: 'ModalController',
+                clickOutsideToClose: true
+            });
+            $http.post('/api/User/ViewedPricing/' + user.Id);
+        }
+    };
+
+    $scope.showPriceModal = () => {
         $mdDialog.show({
             templateUrl: '/Photographer/PriceModal',
             controller: 'ModalController',
             clickOutsideToClose: true
         });
-        $http.post('/api/User/ViewedPricing/' + $scope.user.Id);
     };
 
     $scope.getPhotographer = (id) => {
@@ -117,18 +130,18 @@
     $scope.totalEarned = 0;
 
     $scope.getOrderDetails = (orderId) => {
-        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {           
+        $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
             $scope.orderDetails = x.data;
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
-                $scope.totalEarned += value.Photo.Price;
+                $scope.totalEarned += value.Earning;
             });
         });
         $scope.getOrderTotal(orderId);
     };
 
     $scope.getOrderTotal = (orderId) => {
-        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+        $http.get('/api/Orders/GetOrderTotal/' + orderId).then(x => {
             $scope.orderTotal = x.data;
             $scope.orderTotalList.push(
                 {
@@ -141,7 +154,7 @@
     };
 
     $scope.getUser = () => {
-        $http.get('/api/User').then(x => { $scope.user = x.data; console.log(x.data)});
+        $http.get('/api/User').then(x => { $scope.user = x.data; $scope.priceModal(x.data);});
     };
 
     $scope.getOpenOrder = () => {

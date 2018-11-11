@@ -3,7 +3,7 @@
     $scope.orderTotal = 0;
 
     $scope.getOrderDetails = (orderId) => {
-        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+        $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {
             $scope.orderDetails = x.data;
         });
         angular.forEach($scope.orderDetails, function (value, key) {

@@ -42,9 +42,9 @@ namespace PhotosOfUs.Model.Models
                 entity.ToTable("Order");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
-                entity.Ignore(x => x.Amount);
-                entity.Ignore(x => x.TotalPaid);
-                entity.Ignore(x => x.Earning);
+                //entity.Ignore(x => x.Amount);
+                //entity.Ignore(x => x.TotalPaid);
+                //entity.Ignore(x => x.Earning);
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>

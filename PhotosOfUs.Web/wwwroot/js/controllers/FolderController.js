@@ -215,11 +215,6 @@
                         text: 'Back',
                         action: tour.back,
                         classes: 'back'
-                    },
-                    {
-                        text: 'Next',
-                        action: tour.next,
-                        classes: 'next'
                     }
                 ]
             });

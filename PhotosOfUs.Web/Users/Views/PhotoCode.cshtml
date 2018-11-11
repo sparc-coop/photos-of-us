@@ -4,14 +4,15 @@
 }
 
 <div class="photoPage" ng-controller="PhotoCtrl">
-    <div class="header" ng-init="getPhotoCode(); getPhotographer(@Model.Select(x => x.PhotographerId).First())">
+    <div class="header" ng-init="getPhotoCode();">
         <h2 class="header-large">Photos With Code <span>{{code}}</span></h2>
         <div class="photoPage__photographer-info">
             <div>
                 <div class="title">Photographer</div>
-                <div class="name">{{photographer.displayName}}</div>
+                <div class="name">{{photographer.DisplayName}}</div>
             </div>
-            <img src="https://www.sonypark360.net/wp-content/uploads/2017/08/profile-pictures.png"/>
+            <div class="photographer-image" style="background-image: url(../../wwwroot/images/icons/profile-icon.png)" ng-if="photographer.ProfilePhotoUrl == null"></div>
+            <div class="photographer-image" style="background-image: url({{photographer.ProfilePhotoUrl}})" ng-if="photographer.ProfilePhotoUrl != null"></div>
         </div>
     </div>
 

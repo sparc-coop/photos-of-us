@@ -2862,7 +2862,8 @@ tags-input .tag-item {
     max-width: 780px;
     max-height: 445px; }
   .card-design .settings .img--featured {
-    max-height: 286px; }
+    max-height: 286px;
+    max-width: 329px; }
   .card-design .add-cart p {
     max-width: 330px; }
   .card-design .add-cart__container {
@@ -3876,11 +3877,13 @@ tags-input .tag-item {
   .shepherd-button.next {
     position: absolute;
     right: 20px;
-    bottom: 20px; }
+    bottom: 20px;
+    cursor: pointer; }
   .shepherd-button.back {
     position: absolute;
     left: 20px;
-    bottom: 20px; }
+    bottom: 20px;
+    cursor: pointer; }
 
 .popper__arrow {
   width: 0;

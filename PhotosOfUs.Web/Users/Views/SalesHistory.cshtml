@@ -25,11 +25,11 @@
         {
             <div class="sales" ng-init="getOrderDetails('@order.Id')" ng-cloak>
                 <div class="date">Order Date: @order.OrderDate.ToShortDateString()</div>
-                <div ng-repeat="order in orderDetailsList" class="sales--row" ng-if="order.OrderId == @order.Id">
+                <div ng-repeat="order in orderDetailsList" class="sales--row" ng-if="order.OrderId == @order.Id && orderDetailsList != null">
                     <div class="sales--row--name">{{order.Photo.Name}}</div>
                     <div class="sales--row--quantity">{{order.Quantity}}</div>
                     <div class="sales--row--type">{{order.PrintType.Type}}, {{order.PrintType.Height}} x {{order.PrintType.Length}}</div>
-                    <div class="sales--row--price">${{order.Photo.Price + order.PrintType.BaseCost | number: 2}}</div>
+                    <div class="sales--row--price">${{order.Earning}}</div>
                     <div class="sales--row--earning">${{order.Photo.Price}}</div>
                     <div class="sales--row--status">@order.OrderStatus</div>
                 </div>

@@ -57,12 +57,14 @@
             position: absolute;
             right: 20px;
             bottom: 20px;
+            cursor: pointer;
         }
 
         &.back {
             position: absolute;
             left: 20px;
             bottom: 20px;
+            cursor: pointer;
         }
     }
 }

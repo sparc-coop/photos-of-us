@@ -17,7 +17,7 @@
     $scope.orderItems = [];
 
     $scope.getOrderItems = (orderId) => {
-        $http.get('/api/Photo/GetOrderItems/' + orderId).then(x => {
+        $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {
             $scope.orderItems.push(x.data);          
         });
     };

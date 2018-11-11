@@ -120,7 +120,16 @@ namespace PhotosOfUs.Web.Controllers
 
         public ActionResult PhotoCode(string code)
         {
-            return View(_photo.Where(x => x.Code == code).ToViewModel<PhotoViewModel>().ToList());
+            var photos = _photo.Where(x => x.Code == code).ToViewModel<PhotoViewModel>().ToList();
+            if(photos != null)
+            {
+                return View();
+            }
+            else
+            {
+                return Redirect("/Photographer/Search");
+            }
+            
         }
 
         // GET: Photographer/Create

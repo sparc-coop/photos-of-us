@@ -101,6 +101,7 @@
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
             $scope.codePhotos = x.data;
+            $scope.getPhotographer(x.data[0].PhotographerId);
         });
     };
 
