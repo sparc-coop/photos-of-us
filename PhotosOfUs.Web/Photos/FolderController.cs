@@ -16,45 +16,47 @@ namespace PhotosOfUs.Web.Controllers.API
     {
         private PhotosOfUsContext _context;
         private IRepository<User> _user;
+        private readonly IRepository<Folder> _folder;
 
-        public FolderApiController(PhotosOfUsContext context, IRepository<User> userRepository)
+        public FolderApiController(PhotosOfUsContext context, IRepository<User> userRepository, IRepository<Folder> folderRepository)
         {
             _context = context;
             _user = userRepository;
+            _folder = folderRepository;
         }
 
         [HttpPost]
-        public FolderViewModel Post(string name)
+        [Route("{name}/{userId:int}")]
+        public FolderViewModel Post(string name, int userId)
         {
-            // var photographer = _user.Find(x => x.Id == User.ID());
-
-            var azureId = User.AzureID();
-            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
-
+            var newuserId = userId;
+            var photographer = _user.Find(x => x.Id == userId);
+            var newPhotographer = photographer;
             var folder = photographer.AddFolder(name);
             _user.Commit();
 
             return folder.ToViewModel<FolderViewModel>();
         }
     
+        
+        [HttpPost]
         [Route("RenameFolder")]
-        [HttpPut]
-        public IActionResult Put([FromBody]FolderRenameViewModel model)
+        public FolderViewModel Put([FromBody]FolderRenameViewModel model)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
+            var photographer = _user.Find(x => x.Id == model.UserId);
 
-            var folder = photographer.Folder.SingleOrDefault(x=> x.Id == model.Id);
+            var folder = _folder.Find(x => x.Id == model.Id);
             folder.Name = model.NewName;
             _user.Commit();
 
-            return Ok();
+            return folder.ToViewModel<FolderViewModel>();
         }
 
         [HttpPost]
-        [Route("DeleteFolder/{id:int}")]
-        public IActionResult DeleteFolder(int id)
+        [Route("DeleteFolder/{id:int}/{userId:int}")]
+        public IActionResult DeleteFolder(int id, int userId)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
+            var photographer = _user.Find(x => x.Id == userId);
 
             photographer.RemoveFolder(id);
             _user.Commit();

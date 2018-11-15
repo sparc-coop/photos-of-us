@@ -24,8 +24,6 @@ using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web.Controllers
 {
-
-
     [Area("Users")]
     public class PhotographerController : Controller
     {
@@ -73,16 +71,16 @@ namespace PhotosOfUs.Web.Controllers
             {
                 return Redirect("/Photographer/Search");
             }
+
         }
 
         // GET: Photographer/Details/5
         [Authorize]
         public ActionResult Photos(int id)
         {
-            var azureId = User.AzureID();
             //var userId = User.ID();
-            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
-            Folder folder = _photo.Include(x => x.Folder).Find(x => x.PhotographerId == photographer.Id && x.FolderId == id).Folder;
+            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            Folder folder = _folder.Include(x => x.Photo).Find(x => x.PhotographerId == photographer.Id && x.Id == id);
 
             return View(folder.ToViewModel<FolderViewModel>());
         }
@@ -156,6 +154,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
             return View();
@@ -163,6 +162,7 @@ namespace PhotosOfUs.Web.Controllers
 
         // POST: Photographer/Edit/5
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
@@ -179,6 +179,7 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         // GET: Photographer/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
             return View();

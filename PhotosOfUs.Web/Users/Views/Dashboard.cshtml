@@ -5,7 +5,7 @@
 }
 
 <div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="getUser(@Model.PhotographerId); initFolderCtrl(@Model.PhotographerId)">
-    <h2 class="header-large">Good morning, @Model.Name</h2>
+    <h2 class="header-large">Hello, @Model.Name</h2>
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
     <hr />
@@ -24,8 +24,6 @@
             <i class="material-icons selected">apps</i>*@
         </div>
     </div>
-
-
     <div class="folder-card--wrapper flex-box" ng-cloak>
         <div class="folder-new" id="step1" ng-click="newFolderModal()">
             <img src="~/images/icons/folder.png" id="step1"/>
@@ -42,7 +40,7 @@
                     </md-button>
                     <md-menu-content class="teste">
                         <md-menu-item><md-button ng-click="renameFolderModal(folder)">Rename</md-button></md-menu-item>
-                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id)">Delete</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id, user.Id)">Delete</md-button></md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </div>

@@ -8,7 +8,7 @@
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
     <div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-cloak ng-init="getProfile(); getUser();">
-        <div ng-if="photographer.IsDeactivated == true" ng-cloak>
+        <div ng-if="photographer.IsDeactivated == true" ng-cloak style="margin-top: 150px;">
             Oops! We can't find that account. <a href="/Home/Homepage">Return Home</a>
         </div>
         <div ng-if="photographer.IsDeactivated != true">

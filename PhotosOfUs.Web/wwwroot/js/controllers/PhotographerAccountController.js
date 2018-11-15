@@ -22,12 +22,13 @@
 
     $scope.saveAccountSettings = function (accountSettings) {
         $scope.showLoader = true;
+        //userApi.update(accountSettings);
         userApi.update(accountSettings).then(function (x) {
             $scope.showLoader = false;
             swal({
                 position: 'top-end',
                 type: 'success',
-                title: 'Your work has been saved',
+                title: 'Your updates has been saved',
                 showConfirmButton: false,
                 timer: 1500
             });

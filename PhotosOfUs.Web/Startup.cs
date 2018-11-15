@@ -25,6 +25,7 @@ using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Security.Claims;
 using PhotosOfUs.Model.Photos.Commands;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PhotosOfUs.Web
 {
@@ -71,14 +72,20 @@ namespace PhotosOfUs.Web
                     options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"]}/v2.0/";
                     options.UseTokenLifetime = true;
                     options.SignInScheme = "B2C";
+                    options.SignOutScheme = "B2C";
                     options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
                     options.Events = new OpenIdConnectEvents
                     {
                         OnRedirectToIdentityProvider = OnRedirectToIdentityProviderAsync,
-                        OnTokenValidated = OnTokenValidatedAsync
+                        OnTokenValidated = OnTokenValidatedAsync,
+                        OnRemoteFailure = OnRemoteFailure
                     };
                 })
-            .AddCookie("B2C");
+            .AddCookie("B2C")
+            .AddCookie(o => {
+                o.LogoutPath = "/Session/SignOut";
+                o.LoginPath = "/Session/SignIn";
+            });
 
             services.AddAuthorization(options =>
             {
@@ -115,6 +122,8 @@ namespace PhotosOfUs.Web
 
             services.AddScoped<LoginCommand>();
             services.AddScoped<UploadPhotoCommand>();
+            services.AddScoped<UploadProfileImageCommand>();
+            services.AddScoped<UserProfileUpdateCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
@@ -164,6 +173,8 @@ namespace PhotosOfUs.Web
 
             //app.UseHttpsRedirection();
 
+            app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapAreaRoute("usersRoute", "Users", "{controller}/{action=Index}/{id?}");
@@ -194,6 +205,27 @@ namespace PhotosOfUs.Web
                 context.Properties.Items.Remove("Policy");
             }
 
+            return Task.FromResult(0);
+        }
+
+        public Task OnRemoteFailure(RemoteFailureContext context)
+        {
+            context.HandleResponse();
+            // Handle the error code that Azure AD B2C throws when trying to reset a password from the login page
+            // because password reset is not supported by a "sign-up or sign-in policy"
+            if (context.Failure is OpenIdConnectProtocolException && context.Failure.Message.Contains("AADB2C90118"))
+            {
+                // If the user clicked the reset password link, redirect to the reset password route
+                context.Response.Redirect("/Session/ResetPassword");
+            }
+            else if (context.Failure is OpenIdConnectProtocolException && context.Failure.Message.Contains("access_denied"))
+            {
+                context.Response.Redirect("/");
+            }
+            else
+            {
+                context.Response.Redirect("/Home/Error?message=" + context.Failure.Message);
+            }
             return Task.FromResult(0);
         }
     }

@@ -12,9 +12,9 @@ app.factory('folderApi', [
     '$http', '$rootScope', function ($http) {
         var apiRoot = '/api/Folder';
         return {
-            add: function (foldername) { return $http.post(apiRoot + '/?name=' + foldername); },
-            rename: function (folderId, folderName) { return $http.post(apiRoot + "/RenameFolder", JSON.stringify({ Id: folderId, NewName: folderName}))},
-            delete: function (folderId) { return $http.post(apiRoot + "/DeleteFolder/" + folderId); }
+            add: function (foldername, userId) { return $http.post(apiRoot + '/' + foldername + '/' + userId); },
+            rename: function (folderId, folderName, userId) { return $http.post(apiRoot + "/RenameFolder", JSON.stringify({ Id: folderId, NewName: folderName, UserId: userId}))},
+            delete: function (folderId, userId) { return $http.post(apiRoot + "/DeleteFolder/" + folderId + '/' + userId); }
         };
     }
 ]);

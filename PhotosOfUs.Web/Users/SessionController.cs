@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PhotosOfUs.Model.Models;
-using Microsoft.AspNetCore.Cors;
 using Kuvio.Kernel.Auth;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers
 {
@@ -49,6 +49,7 @@ namespace PhotosOfUs.Web.Controllers
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult EditProfile()
         {
@@ -58,10 +59,11 @@ namespace PhotosOfUs.Web.Controllers
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult SignOut()
         {
-            var callbackUrl = Url.Action(nameof(HomeController.Landing), "Home");
+            var callbackUrl = Url.Action(nameof(SignedOut), "Session", values: null, protocol: Request.Scheme);
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                 CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
         }
@@ -72,7 +74,7 @@ namespace PhotosOfUs.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 // Redirect to home page if the user is authenticated.
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction(nameof(PhotographerController.Dashboard), "Photographer");
             }
 
             return View();

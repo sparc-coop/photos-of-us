@@ -19,7 +19,8 @@
     $scope.newFolderModal = () => {
         $mdDialog.show({
             templateUrl: '/Photographer/NewFolderModal',
-            controller: 'FolderCtrl',
+            controller: 'FolderModalCtrl',
+            locals: { folderId: null, folderName: null, user: $scope.user},
             clickOutsideToClose: true,
         })
     }
@@ -27,22 +28,13 @@
     $scope.renameFolderModal = (folder) => {
         $mdDialog.show({
             templateUrl: '/Photographer/NewFolderModal',
-            controller: 'FolderRenameModalCtrl',
-            locals: { folderId: folder.Id, folderName: folder.Name },
+            controller: 'FolderModalCtrl',
+            locals: { folderId: folder.Id, folderName: folder.Name, user: $scope.user },
             clickOutsideToClose: true,
         })
     }
 
-    $scope.addFolder = function (folderName) {
-        folderApi.add(folderName)
-            .then(function (x) {
-                //adds to list view
-                $scope.close();
-                $rootScope.$broadcast('FolderAdded', x.data);
-            })
-    }
-
-    $scope.deleteFolder = function (folderId) {
+    $scope.deleteFolder = function (folderId, userId) {
         swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -53,7 +45,7 @@
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.value) {
-                folderApi.delete(folderId)
+                folderApi.delete(folderId, userId)
                     .then(data => {
                         $rootScope.$broadcast('FolderRemoved', folderId);
                         swal(
@@ -85,7 +77,7 @@
     });
 
     $scope.getUser = (id) => {
-        $http.get("/api/User/GetOne/" + id).then(x => { $scope.startTour(x.data)});
+        $http.get("/api/User/GetOne/" + id).then(x => { $scope.user = x.data; $scope.startTour(x.data)});
     };
 
     $scope.startTour = (user) => {

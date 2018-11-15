@@ -51,7 +51,8 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPut]
         public IActionResult Put([FromBody]UserProfileUpdateCommandModel model, [FromServices]UserProfileUpdateCommand command)
         {
-            if (User.ID() != model.Id)
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            if (user.Id != model.Id)
                 return Forbid();
 
             command.Execute(model);
@@ -62,7 +63,8 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpDelete]
         public UserViewModel DeactivateAccount()
         {
-            User user = _user.Find(x => x.Id == User.ID());
+            //User user = _user.Find(x => x.Id == User.ID());
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
             user.Deactivate();
             _user.Commit();
 
@@ -72,7 +74,8 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpPost]
         public UserViewModel ReactivateAccount()
         {
-            User user = _user.Find(x => x.Id == User.ID());
+            //User user = _user.Find(x => x.Id == User.ID());
+            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
             user.Activate();
            _user.Commit();
 

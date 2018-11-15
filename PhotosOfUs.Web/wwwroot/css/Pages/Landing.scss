@@ -1,6 +1,7 @@
 ﻿@import "../variables.scss";
 
 .landing {
+    overflow-x: hidden;
 
     .logo {
         padding: 32px 0 0 96px;
@@ -54,7 +55,7 @@
 
         .welcome-section {
             background-color: $dark;
-            padding: 195px 0px 0px 188px;
+            padding: 195px 0px 0px 10%;
         }
 
         .welcome-text {
@@ -178,7 +179,7 @@
 
         .random-photo {
             max-height: 300px;
-            max-width: 300px;
+            max-width: 40%;
             border-radius: 8px;
             margin: -10px;
             box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
@@ -317,6 +318,24 @@
     }
 }
 
+@media screen and (max-width: 1230px) {
+    .landing {
+        .subt-3{
+            width: 350px;
+        }
+    }
+}
+
+
+@media screen and (max-width: 877px) {
+    .landing {
+        .random-photo {
+            display: none;
+        }
+    }
+}
+
+
 
 @media screen and (max-width: $mobile) {
 
@@ -341,6 +360,10 @@
 
         .browse {
             height: 500px;
+
+            &--img-container{
+                display: none;
+            }
         }
 
         .steps {
@@ -380,6 +403,10 @@
 
             &-subtext {
                 max-width: 300px;
+            }
+
+            &--img-container {
+                display: none;
             }
         }
 

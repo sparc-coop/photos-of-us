@@ -2873,6 +2873,8 @@ tags-input .tag-item {
       display: flex;
       flex-wrap: wrap;
       padding: 15px 0; }
+    .card-design .add-cart__container a {
+      text-decoration: none; }
   .card-design .add-cart .quantity {
     padding: 32px; }
   .card-design .add-cart .price {
@@ -3350,255 +3352,245 @@ tags-input .tag-item {
     font-size: 26px;
     color: #194952; }
 
-.landing .logo {
-  padding: 32px 0 0 96px; }
-
-.landing .yellow-text {
-  color: #FFE261; }
-
-.landing .top-photos {
-  /*margin: 0;
+.landing {
+  overflow-x: hidden; }
+  .landing .logo {
+    padding: 32px 0 0 96px; }
+  .landing .yellow-text {
+    color: #FFE261; }
+  .landing .top-photos {
+    /*margin: 0;
         padding: 0px;
         //width: 100vw;
         width: calc(100% + calc(100vw - 100%));
         right: 0px;
         overflow-x: hidden;
         max-width: 100%;*/ }
-
-.landing .bottom-photos {
-  position: absolute;
-  top: 2048px;
-  width: 100vw;
-  max-width: 100%; }
-
-.landing .img-spread {
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15); }
-
-.landing .img-round {
-  border-radius: 8px; }
-
-.landing .img-right {
-  border-radius: 8px 0px 0px 8px; }
-
-.landing .img-bottom {
-  border-radius: 8px 8px 0px 0px; }
-
-.landing .main-landing {
-  background-color: #194952;
-  width: 100%;
-  height: 1024px;
-  max-width: 100%;
-  overflow: hidden;
-  margin: 0;
-  position: relative; }
-  .landing .main-landing .welcome-section {
-    background-color: #194952;
-    padding: 195px 0px 0px 188px; }
-  .landing .main-landing .welcome-text {
-    color: #FFE261;
-    font-size: 80px;
-    font-family: 'Dosis';
-    text-transform: uppercase;
-    font-weight: 600;
-    width: 436px;
-    height: 202px;
-    padding-bottom: 38px; }
-  .landing .main-landing .tagline {
-    color: #F6FFFF;
-    font-size: 28px;
-    font-family: 'Open Sans';
-    font-weight: 500;
-    padding-bottom: 38px;
-    width: 563px; }
-  .landing .main-landing--img-container {
-    text-align: right;
-    width: 64%;
-    margin-left: 41%;
+  .landing .bottom-photos {
     position: absolute;
+    top: 2048px;
+    width: 100vw;
+    max-width: 100%; }
+  .landing .img-spread {
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15); }
+  .landing .img-round {
+    border-radius: 8px; }
+  .landing .img-right {
+    border-radius: 8px 0px 0px 8px; }
+  .landing .img-bottom {
+    border-radius: 8px 8px 0px 0px; }
+  .landing .main-landing {
+    background-color: #194952;
+    width: 100%;
+    height: 1024px;
+    max-width: 100%;
     overflow: hidden;
-    margin-top: -95px; }
-    .landing .main-landing--img-container .random-photo {
-      max-height: 300px;
-      max-width: 300px;
-      border-radius: 8px;
-      margin: 8px;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
-
-.landing .button-styling {
-  background-color: #43C6BA;
-  color: #FFE261;
-  font-size: 20px;
-  border-radius: 8px;
-  box-shadow: 0;
-  border: 0;
-  font-weight: 500; }
-
-.landing .start-button {
-  width: 195px;
-  height: 48px;
-  text-decoration: none;
-  padding: 10px 20px;
-  outline: none; }
-
-.landing .browse-button {
-  width: 330px;
-  height: 48px;
-  text-decoration: none;
-  line-height: 48px; }
-
-.landing .steps {
-  width: 100%;
-  height: 845px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  color: #194952;
-  font-family: 'Dosis';
-  font-size: 50px;
-  font-weight: 500;
-  align-items: center; }
-
-.landing .subt-1 {
-  font-size: 25px;
-  color: #43C6BA;
-  font-family: 'Dosis';
-  font-weight: 500; }
-
-.landing .browse {
-  width: 100%;
-  height: 638px;
-  background-color: rgba(255, 226, 97, 0.17);
-  position: relative;
-  overflow: hidden; }
-  .landing .browse--content {
+    margin: 0;
+    position: relative; }
+    .landing .main-landing .welcome-section {
+      background-color: #194952;
+      padding: 195px 0px 0px 10%; }
+    .landing .main-landing .welcome-text {
+      color: #FFE261;
+      font-size: 80px;
+      font-family: 'Dosis';
+      text-transform: uppercase;
+      font-weight: 600;
+      width: 436px;
+      height: 202px;
+      padding-bottom: 38px; }
+    .landing .main-landing .tagline {
+      color: #F6FFFF;
+      font-size: 28px;
+      font-family: 'Open Sans';
+      font-weight: 500;
+      padding-bottom: 38px;
+      width: 563px; }
+    .landing .main-landing--img-container {
+      text-align: right;
+      width: 64%;
+      margin-left: 41%;
+      position: absolute;
+      overflow: hidden;
+      margin-top: -95px; }
+      .landing .main-landing--img-container .random-photo {
+        max-height: 300px;
+        max-width: 300px;
+        border-radius: 8px;
+        margin: 8px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
+  .landing .button-styling {
+    background-color: #43C6BA;
+    color: #FFE261;
+    font-size: 20px;
+    border-radius: 8px;
+    box-shadow: 0;
+    border: 0;
+    font-weight: 500; }
+  .landing .start-button {
+    width: 195px;
+    height: 48px;
+    text-decoration: none;
+    padding: 10px 20px;
+    outline: none; }
+  .landing .browse-button {
+    width: 330px;
+    height: 48px;
+    text-decoration: none;
+    line-height: 48px; }
+  .landing .steps {
+    width: 100%;
+    height: 845px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    align-items: center;
-    position: absolute;
-    left: 30%;
-    right: 30%;
-    margin-top: 138px; }
-  .landing .browse--img-container {
-    height: 120%;
-    position: absolute;
-    /*display: flex;
-            flex-wrap: wrap;*/ }
-    .landing .browse--img-container.right {
-      width: 40%;
-      margin-left: 66%;
-      text-align: right; }
-    .landing .browse--img-container.left {
-      width: 40%; }
-  .landing .browse .random-photo {
-    max-height: 300px;
-    max-width: 300px;
-    border-radius: 8px;
-    margin: -10px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
-    .landing .browse .random-photo:nth-child(even) {
-      margin-bottom: 20px; }
-
-.landing .subt-2 {
-  font-family: 'Dosis';
-  font-size: 20px;
-  color: #43C6BA;
-  padding-bottom: 10px; }
-
-.landing .subt-3 {
-  font-size: 18px;
-  font-family: 'Open Sans';
-  color: #4A4A4A;
-  width: 510px;
-  padding-bottom: 60px; }
-
-.landing .subt-4 {
-  font-size: 14px;
-  font-family: 'Open Sans';
-  color: #FF6060;
-  padding-top: 10px; }
-
-.landing .landing-subtitle {
-  color: #194952;
-  font-size: 50px;
-  font-family: 'Dosis';
-  font-weight: 600;
-  text-align: center;
-  padding-bottom: 18px; }
-
-.landing .landing-subtext {
-  font-size: 20px;
-  font-family: 'Open Sans';
-  color: #4A4A4A;
-  padding: 27px;
-  text-align: center;
-  width: 570px; }
-
-.landing .footer {
-  width: 100%;
-  height: 300px;
-  margin-bottom: 0px;
-  background-color: #194952;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around; }
-  .landing .footer .links-nav {
-    display: flex;
-    flex-direction: row; }
-  .landing .footer .navigation {
-    display: flex;
-    flex-direction: column;
-    padding: 86px 50px 20px 50px; }
-  .landing .footer .navigation a {
-    font-family: 'Dosis';
-    color: #FFE261;
-    text-decoration: none;
-    line-height: 26px;
-    font-weight: 600; }
-  .landing .footer .nav-sm a {
-    color: #43C6BA; }
-  .landing .footer .footer-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; }
-  .landing .footer .code-enter {
-    color: #FFE261;
-    margin: 43px;
-    font-size: 14px;
-    line-height: 28px; }
-  .landing .footer .code-enter-sub {
-    display: flex; }
-  .landing .footer .code-input {
-    height: 40px;
-    width: 160px;
-    padding: 0 10px;
-    border: 0;
-    border-radius: 8px 0px 0px 8px;
-    font-family: 'Open Sans';
-    font-size: 20px;
-    color: #757575;
-    outline: none; }
-  .landing .footer .code-button {
-    font-family: 'Open Sans';
     color: #194952;
-    font-size: 20px;
-    background-color: #FFE261;
-    border: 0;
-    border-radius: 0px 8px 8px 0px;
-    cursor: pointer;
-    outline: none;
-    text-decoration: none;
-    padding: 6px 10px; }
-  .landing .footer .bottom-logo {
-    font-size: 20px;
-    line-height: 28px;
     font-family: 'Dosis';
-    color: #FFE261;
+    font-size: 50px;
     font-weight: 500;
+    align-items: center; }
+  .landing .subt-1 {
+    font-size: 25px;
+    color: #43C6BA;
+    font-family: 'Dosis';
+    font-weight: 500; }
+  .landing .browse {
+    width: 100%;
+    height: 638px;
+    background-color: rgba(255, 226, 97, 0.17);
+    position: relative;
+    overflow: hidden; }
+    .landing .browse--content {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      position: absolute;
+      left: 30%;
+      right: 30%;
+      margin-top: 138px; }
+    .landing .browse--img-container {
+      height: 120%;
+      position: absolute;
+      /*display: flex;
+            flex-wrap: wrap;*/ }
+      .landing .browse--img-container.right {
+        width: 40%;
+        margin-left: 66%;
+        text-align: right; }
+      .landing .browse--img-container.left {
+        width: 40%; }
+    .landing .browse .random-photo {
+      max-height: 300px;
+      max-width: 40%;
+      border-radius: 8px;
+      margin: -10px;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15); }
+      .landing .browse .random-photo:nth-child(even) {
+        margin-bottom: 20px; }
+  .landing .subt-2 {
+    font-family: 'Dosis';
+    font-size: 20px;
+    color: #43C6BA;
+    padding-bottom: 10px; }
+  .landing .subt-3 {
+    font-size: 18px;
+    font-family: 'Open Sans';
+    color: #4A4A4A;
+    width: 510px;
+    padding-bottom: 60px; }
+  .landing .subt-4 {
+    font-size: 14px;
+    font-family: 'Open Sans';
+    color: #FF6060;
+    padding-top: 10px; }
+  .landing .landing-subtitle {
+    color: #194952;
+    font-size: 50px;
+    font-family: 'Dosis';
+    font-weight: 600;
+    text-align: center;
+    padding-bottom: 18px; }
+  .landing .landing-subtext {
+    font-size: 20px;
+    font-family: 'Open Sans';
+    color: #4A4A4A;
+    padding: 27px;
+    text-align: center;
+    width: 570px; }
+  .landing .footer {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 0px;
+    background-color: #194952;
     display: flex;
-    align-content: flex-end; }
+    flex-direction: row;
+    justify-content: space-around; }
+    .landing .footer .links-nav {
+      display: flex;
+      flex-direction: row; }
+    .landing .footer .navigation {
+      display: flex;
+      flex-direction: column;
+      padding: 86px 50px 20px 50px; }
+    .landing .footer .navigation a {
+      font-family: 'Dosis';
+      color: #FFE261;
+      text-decoration: none;
+      line-height: 26px;
+      font-weight: 600; }
+    .landing .footer .nav-sm a {
+      color: #43C6BA; }
+    .landing .footer .footer-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around; }
+    .landing .footer .code-enter {
+      color: #FFE261;
+      margin: 43px;
+      font-size: 14px;
+      line-height: 28px; }
+    .landing .footer .code-enter-sub {
+      display: flex; }
+    .landing .footer .code-input {
+      height: 40px;
+      width: 160px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 8px 0px 0px 8px;
+      font-family: 'Open Sans';
+      font-size: 20px;
+      color: #757575;
+      outline: none; }
+    .landing .footer .code-button {
+      font-family: 'Open Sans';
+      color: #194952;
+      font-size: 20px;
+      background-color: #FFE261;
+      border: 0;
+      border-radius: 0px 8px 8px 0px;
+      cursor: pointer;
+      outline: none;
+      text-decoration: none;
+      padding: 6px 10px; }
+    .landing .footer .bottom-logo {
+      font-size: 20px;
+      line-height: 28px;
+      font-family: 'Dosis';
+      color: #FFE261;
+      font-weight: 500;
+      display: flex;
+      align-content: flex-end; }
+
+@media screen and (max-width: 1230px) {
+  .landing .subt-3 {
+    width: 350px; } }
+
+@media screen and (max-width: 877px) {
+  .landing .random-photo {
+    display: none; } }
 
 @media screen and (max-width: 450px) {
   .landing {
@@ -3615,6 +3607,8 @@ tags-input .tag-item {
         width: 100%; }
     .landing .browse {
       height: 500px; }
+      .landing .browse--img-container {
+        display: none; }
     .landing .steps {
       height: unset;
       padding: 20px 0;
@@ -3639,6 +3633,8 @@ tags-input .tag-item {
           max-width: 342px; }
       .landing .main-landing-subtext {
         max-width: 300px; }
+      .landing .main-landing--img-container {
+        display: none; }
     .landing .footer {
       flex-wrap: wrap;
       height: unset; }
