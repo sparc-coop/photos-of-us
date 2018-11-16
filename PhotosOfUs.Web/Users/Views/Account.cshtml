@@ -13,10 +13,10 @@
         <div>
             <div class="account-sidemenu">
                 <div class="sidemenu-item" ng-click="setSelected('details')"><a href="#" ng-class="{'active': selected == 'details'}"><i class="material-icons">face</i> Profile Details</a></div>
-                <div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>
+                @*<div class="sidemenu-item"><a href="#"><i class="material-icons">opacity</i>Brand Settings</a></div>*@
                 <div class="sidemenu-item" ng-click="setSelected('cards')"><a href="#" ng-class="{'active': selected == 'cards'}"><i class="material-icons">chrome_reader_mode</i>Coded Cards</a></div>
                 <div class="sidemenu-item" ng-click="setSelected('social')"><a href="#" ng-class="{'active': selected == 'social'}"><i class="material-icons">language</i>Social Accounts</a></div>
-                <div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>
+                @*<div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>*@
                 <div class="deactivate" ng-click="deactivateModal('true', accountSettings)" ng-if="accountSettings.IsDeactivated != true" ng-cloak>Deactivate Account</div>
                 <div class="deactivate" ng-click="deactivateModal('false', accountSettings)" ng-if="accountSettings.IsDeactivated == true" ng-cloak>Reactivate Account</div>
             </div>
@@ -81,20 +81,32 @@
         </div>
         <div class="form-account form-account--social" ng-cloak ng-if="selected == 'social'">
             <div class="form-input">
-                <label>Facebook</label>
-                <input ng-model="accountSettings.Facebook"/>
+                <img src="~/images/icons/Facebook-color.svg"/>
+                <div>
+                    <label>Facebook</label>
+                    <input ng-model="accountSettings.Facebook" />
+                </div>
             </div>
             <div class="form-input">
-                <label>Twitter</label>
-                <input ng-model="accountSettings.Twitter" />
+                <img src="~/images/icons/Twitter-color.svg" />
+                <div>
+                    <label>Twitter</label>
+                    <input ng-model="accountSettings.Twitter" />
+                </div>
             </div>
             <div class="form-input">
-                <label>Instagram</label>
-                <input ng-model="accountSettings.Instagram" />
+                <img src="~/images/icons/Instagram-color.svg" />
+                <div>
+                    <label>Instagram</label>
+                    <input ng-model="accountSettings.Instagram" />
+                </div>
             </div>
             <div class="form-input">
-                <label>Dribbble</label>
-                <input ng-model="accountSettings.Dribbble" />
+                <img src="~/images/icons/Dribbble-color.svg" />
+                <div>
+                    <label>Dribbble</label>
+                    <input ng-model="accountSettings.Dribbble" />
+                </div>
             </div>
         </div>
         <div ng-cloak ng-if="selected == 'cards'" class="card-design">

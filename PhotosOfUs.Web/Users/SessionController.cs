@@ -63,21 +63,9 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignOut()
         {
-            var callbackUrl = Url.Action(nameof(SignedOut), "Session", values: null, protocol: Request.Scheme);
+            var callbackUrl = Url.Action(nameof(HomeController.Landing), "Home");
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
-                CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
-        }
-
-        [HttpGet]
-        public IActionResult SignedOut()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return RedirectToAction(nameof(PhotographerController.Dashboard), "Photographer");
-            }
-
-            return View();
+                "B2C", OpenIdConnectDefaults.AuthenticationScheme);
         }
     }
 }

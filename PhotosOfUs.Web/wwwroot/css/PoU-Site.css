@@ -462,7 +462,6 @@
       cursor: pointer; }
 
 body {
-  padding-bottom: 60px;
   margin: 0;
   background-color: #FFFFFF;
   height: unset !important; }
@@ -2865,7 +2864,7 @@ tags-input .tag-item {
     max-height: 286px;
     max-width: 329px; }
   .card-design .add-cart p {
-    max-width: 330px; }
+    width: 330px; }
   .card-design .add-cart__container {
     display: flex;
     flex-wrap: wrap; }
@@ -3319,6 +3318,10 @@ tags-input .tag-item {
       color: white; }
   .account-settings .form-account--social input, .account-settings .form-account--social .form-input textarea, .form-input .account-settings .form-account--social textarea {
     width: 300px; }
+  .account-settings .form-account--social .form-input {
+    display: flex; }
+    .account-settings .form-account--social .form-input img {
+      padding: 22px 16px 0 0; }
 
 .account-settings .social-accounts .form-input {
   position: relative; }
@@ -3440,8 +3443,8 @@ tags-input .tag-item {
     line-height: 48px; }
   .landing .steps {
     width: 100%;
-    height: 845px;
     display: flex;
+    padding: 80px 20px;
     justify-content: center;
     flex-direction: column;
     text-align: center;
@@ -3450,6 +3453,32 @@ tags-input .tag-item {
     font-size: 50px;
     font-weight: 500;
     align-items: center; }
+    .landing .steps a {
+      color: unset; }
+    .landing .steps--container {
+      display: flex;
+      flex-wrap: wrap; }
+      .landing .steps--container > div {
+        max-height: 320px;
+        max-width: 200px;
+        padding: 40px 20px 20px 20px;
+        text-align: center;
+        border-radius: 4px;
+        border: 2px solid #FFE261;
+        background-color: #FFFFFF;
+        margin: 30px 15px; }
+        .landing .steps--container > div p {
+          font-size: 16px; }
+        .landing .steps--container > div h4 {
+          font-size: 22px; }
+        .landing .steps--container > div img {
+          height: 80px; }
+      .landing .steps--container .arrow {
+        height: 40px;
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-top: 13%;
+        z-index: 10; }
   .landing .subt-1 {
     font-size: 25px;
     color: #43C6BA;
@@ -3846,6 +3875,11 @@ tags-input .tag-item {
     z-index: 0; }
     .shepherd-step.no-next footer {
       display: none; }
+  .shepherd-step .step {
+    text-align: center;
+    margin-bottom: -43px;
+    margin-top: 45px;
+    color: #FFE261; }
 
 .shepherd-content {
   background-color: #194952;
@@ -3880,6 +3914,15 @@ tags-input .tag-item {
     left: 20px;
     bottom: 20px;
     cursor: pointer; }
+
+.tutorial--skip {
+  position: absolute;
+  bottom: 50px;
+  right: 40px;
+  width: 130px;
+  display: none; }
+  .tutorial--skip--show {
+    display: block; }
 
 .popper__arrow {
   width: 0;

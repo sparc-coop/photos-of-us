@@ -29,7 +29,7 @@
     };
 
     $scope.exportMultipleCards = function (quantity) {
-        cardApi.create(quantity, $scope.photographer.Id).then(function (x) {
+        $http.post('/api/Card/Create/' + quantity + '/' + $scope.photographer.Id).then(function (x) {
             $scope.cards = x.data.concat($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);

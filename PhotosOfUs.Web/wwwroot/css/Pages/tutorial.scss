@@ -23,6 +23,13 @@
 
             z-index: 0;
         }
+
+        .step {
+            text-align: center;
+            margin-bottom: -43px;
+            margin-top: 45px;
+            color: $yellow;
+        }
     }
 
     &-content {
@@ -66,6 +73,18 @@
             bottom: 20px;
             cursor: pointer;
         }
+    }
+}
+
+.tutorial--skip {
+    position: absolute;
+    bottom: 50px;
+    right: 40px;
+    width: 130px; 
+    display: none;
+
+    &--show {
+        display: block;
     }
 }
 

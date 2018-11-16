@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using Kuvio.Kernel.Architecture;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhotosOfUs.Model.Models;
-using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
@@ -39,15 +35,25 @@ namespace PhotosOfUs.Web.Controllers.API
             return pCards.ToList().ToViewModel<List<CardViewModel>>();
         }
 
+
+        [HttpGet]
+        public List<CardViewModel> GetSpecificCards()
+        {
+            //List<Card> pCards = _card.Where(x => x.PhotographerId == User.ID()).Include(x => x.Photographer).ToList();
+            User user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            List<Card> pCards = _card.Where(x => x.PhotographerId == user.Id).Include(x => x.Photographer).ToList();
+            return pCards.ToList().ToViewModel<List<CardViewModel>>();
+        }
+
         [HttpPost]
         [Route("Create/{quantity:int}/{userId:int}")]
-        public List<Card> Create(int quantity, int userId)
+        public List<CardViewModel> Create(int quantity, int userId)
         {
             var photographer = _user.Find(x => x.Id == userId);
             photographer.AddNewCards(quantity);
             _user.Commit();
 
-            return photographer.Card.ToList();
+            return photographer.Card.ToList().Select(CardViewModel.ToViewModel).ToList();
         }
     }
 }

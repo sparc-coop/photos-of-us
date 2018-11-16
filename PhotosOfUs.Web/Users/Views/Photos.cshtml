@@ -13,7 +13,7 @@
     <div class="background--yellow line--small"></div>
    
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library" />
+        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library by Code" />
         <div class="view-icons align-right">
             <div class="filter-sort">
                 <select>
@@ -31,7 +31,7 @@
     <div class="folder-card--wrapper codeView">
         @foreach (var item in Model.Photo.GroupBy(x => x.Code).Select(y => y.First()))
         {
-        <div class="codeView__row">
+        <div class="codeView__row" ng-if="searchCode == null || searchCode == '' || '@item.Code'.includes(searchCode)">
             <a class="codeView__card" ng-click="" ng-if="'@item.Code' != ''" ng-cloak>
                 <div class="codeView__card--title">
                     <div class="label">Photo Code</div>

@@ -1,5 +1,4 @@
-﻿@model List<Card>
-@{
+﻿@{
     ViewData["Title"] = "Cards";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
@@ -20,7 +19,7 @@
 
         <a href="" ng-click="exportMultipleCards(1)" class="btn-pou-default">Export new card</a>
         <a href="" ng-click="exportMultipleCardsModal()" class="btn-pou-default">Export multiple cards</a>
-        <a href="/Photographer/Account" class="btn-pou-default">Order Printed Cards</a>
+        @*<a href="/Photographer/Account" class="btn-pou-default">Order Printed Cards</a>*@
     </div>
 
     <div class="flex-box">

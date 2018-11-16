@@ -72,7 +72,6 @@ namespace PhotosOfUs.Web
                     options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"]}/v2.0/";
                     options.UseTokenLifetime = true;
                     options.SignInScheme = "B2C";
-                    options.SignOutScheme = "B2C";
                     options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
                     options.Events = new OpenIdConnectEvents
                     {
@@ -81,11 +80,7 @@ namespace PhotosOfUs.Web
                         OnRemoteFailure = OnRemoteFailure
                     };
                 })
-            .AddCookie("B2C")
-            .AddCookie(o => {
-                o.LogoutPath = "/Session/SignOut";
-                o.LoginPath = "/Session/SignIn";
-            });
+            .AddCookie("B2C");
 
             services.AddAuthorization(options =>
             {

@@ -151,6 +151,14 @@
             input {
                 width: 300px;
             }
+
+            .form-input {
+                display: flex;
+
+                img {
+                    padding: 22px 16px 0 0;
+                }
+            }
         }
     }
 
