@@ -16,8 +16,8 @@
             @foreach (var item in Model.Orders)
             {
                 <tr>
-                    <td>@item.PhotoName</td>
-                    <td class="highlight">@item.PrintSize</td>
+                    @*<td>@item.PhotoName</td>
+                    <td class="highlight">@item.PrintSize</td>*@
                     <td>@item.Amount</td>
                     <td>@string.Format("{0:C}", item.TotalPaid)</td>
                     <td>@string.Format("{0:C}", item.Earning)</td>

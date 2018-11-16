@@ -46,7 +46,5 @@ namespace PhotosOfUs.Model.Models
         {
             OrderStatus = "Pending";
         }
-
-
     }
 }

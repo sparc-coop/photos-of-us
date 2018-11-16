@@ -14,19 +14,23 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Route("api/Orders")]
+    [Authorize]
     public class OrdersApiController : Controller
     {
         private IRepository<Order> _orders;
+        private IRepository<OrderDetail> _orderDetail;
         private IRepository<Photo> _photos;
         private IRepository<User> _users;
 
-        public OrdersApiController(IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public OrdersApiController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
             _orders = orderRepository;
+            _orderDetail = orderDetailRepository;
             _photos = photoRepository;
             _users = userRepository;
         }
@@ -34,9 +38,30 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet]
         [Route("GetOrderDetails/{orderId:int}")]
-        public List<Order> GetOrderDetails(int orderId)
+        public Order GetOrderDetails(int orderId)
         {
-            return _orders.Include(x => x.OrderDetail).Where(x => x.Id == orderId).ToList();
+            return _orders.Include("OrderDetail.Photo").Where(x => x.Id == orderId).FirstOrDefault();
+        }
+
+        [HttpGet]
+        [Route("GetSalesHistory/")]
+        public object GetSalesHistory()
+        {
+            var photoIds = _photos.Where(x => x.PhotographerId == User.ID()).Select(x => x.Id);
+
+            var orderDetails = _orderDetail.Include(x => x.Photo).Where(x => photoIds.Contains(x.PhotoId));
+
+            var salesHistory = orderDetails.GroupBy(x => new { x.PhotoId, x.Photo.Name })
+                .Select(x => new
+                {
+                    PhotoId = x.Key.PhotoId,
+                    PhotoName = x.Key.Name,
+                    Quantity = x.Sum(y => y.Quantity),
+                    UnitPrice = x.Sum(y => y.UnitPrice),
+                    Earnings = x.Sum(y => y.Photo.Price)
+                }).ToList();
+
+            return salesHistory;
         }
 
         [HttpGet, HttpPost]
@@ -98,24 +123,6 @@ namespace PhotosOfUs.Web.Controllers.API
             await client.SendEmailAsync(msg);
 
             return "success";
-        }
-
-        public ActionResult Index()
-        {
-            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
-
-        public ActionResult OrderHistory(int id)
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
-
-        public ActionResult Confirmation()
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
         }
     }
 }

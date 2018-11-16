@@ -83,44 +83,9 @@
         }
     }
 
-    .sales {
-        width: 100%;
+    
 
-        .date{
-            padding: 15px 10px;
-        }
-    }
-
-    .sales--row {
-        display: flex;
-        padding: 15px;
-
-        &:nth-child(even) {
-            background-color: rgba(255, 226, 97, 0.16);
-        }
-
-        &--name {
-            width: 18%;
-        }
-
-        &--quantity {
-            width: 13%;
-        }
-
-        &--type{
-            width: 15%;
-            padding-right: 6px;
-        }
-
-        &--price, &--earning {
-            width: 16%;
-            padding-right: 5px;
-        }
-
-        &--status{
-            padding-left: 40px;
-        }
-    }
+    
 }
 .order-history {
     .header--row {
@@ -214,8 +179,5 @@
         }
     }
 
-    .order-info:nth-child(odd) {
-        background-color: rgba(255, 226, 97, 0.4);
-        border-radius: 4px;
-    }
+    
 }

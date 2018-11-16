@@ -41,3 +41,13 @@ app.factory('userApi', [
     }
 ]);
 
+app.factory('photographerApi', [
+    '$http', '$rootScope', function ($http) {
+        var apiRoot = '/api/Photographer';
+        return {
+            getBrandSettings: function () { return $http.get(apiRoot + '/GetBrandSettings'); },
+            saveBrandSettings: function (brandSettings) { return $http.put(apiRoot + '/SaveBrandSettings', brandSettings) }
+        };
+    }
+]);
+

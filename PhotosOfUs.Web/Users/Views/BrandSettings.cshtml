@@ -3,7 +3,7 @@
     ViewData["Title"] = "Account";
 }
 
-<div class="account-settings">
+<div class="account-settings" ng-init="initBrandSettings()" ng-controller="PhotographerAccountCtrl">
     <h2 class="header-large">Account Settings</h2>
     <div class="yellow-background line--small"></div>
 
@@ -27,10 +27,263 @@
 
         <div class="brand-settings">
             <div class="homepage-template">
-                <h2>Homepage Template</h2>
-                <img src="~/images/image_right.png" />
-                <img src="~/images/image_left.jpg" />
-                <img src="~/images/full_image.png" />
+                <h2 class="header-small">Homepage Template</h2>
+                <div class="item">
+                    <img src="~/images/image_right.png" ng-click="brandSettings.HomepageTemplate = 0" 
+                         ng-style="brandSettings.HomepageTemplate == 0 ? 'selected' : ''"/>
+                    <h3 class="header xs yellow">2/1 Split - Image Right</h3>
+                    <p>
+                        A side by side layout, with a full hieght image on the right, information and branding on the left.
+                    </p>
+                </div>
+                <div class="item">
+                    <img src="~/images/image_left.jpg" ng-click="brandSettings.HomepageTemplate = 1" 
+                         ng-style="brandSettings.HomepageTemplate == 1 ? 'selected' : ''"/>
+                    <h3 class="header xs yellow">1/2 Split - Image Left</h3>
+                    <p>
+                        A side by side layout, with a full hieght image on the right, information and branding on the left.
+                    </p>
+                </div>
+                <div class="item">
+                    <img src="~/images/full_image.png" ng-click="brandSettings.HomepageTemplate = 2" 
+                         ng-style="brandSettings.HomepageTemplate == 2 ? 'selected' : ''"/>
+                    <h3 class="header xs yellow">Full Image Background</h3>
+                    <p>
+                        A large, full screen image background, with all information centered within the page.
+                    </p>
+                </div>
+            </div>
+
+            <div class="homepage-settings">
+                <h2 class="header large light-green">Homepage Settings</h2>
+                <img src="~/images/account/homepage-settings.png" />
+
+                <div class="section">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">1</span>
+                        Personal Logo
+                    </h3>
+                    <h3 class="header xs light-green">
+                        Add your very own logo
+                    </h3>
+
+                    <p>
+                        Please upload your file as a Jpeg or PNG at a minimum resolution of 100 x 100
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">2</span>
+                        Brand Colours!
+                    </h3>
+                    <h3 class="header xs light-green">
+                        Give your website some Colour!
+                    </h3>
+
+                    <p>
+                        Pick your brand colours that will be displayed on your website. Don’t worry, you can always come back and change them later!
+                    </p>
+
+                    <div class="colors">
+                        <div class="color">
+                            <span>
+                                Background Colour
+                            </span>
+
+                            <div class="color-picker">
+                                @*<div class="color" ng-style="{ 'background-color: #' + brandSettings.BackgroundColorCode}"></div>*@
+                                <div class="text">
+                                    <input ng-model="brandSettings.BackgroundColorCode" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="color">
+                            <span>
+                                Accent Colour
+                            </span>
+
+                            <div class="color-picker">
+                                <div class="color"></div>
+                                <div class="text">
+                                    <input ng-model="brandSettings.AccentColorCode" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="color">
+                            <span>
+                                Header Colour
+                            </span>
+
+                            <div class="color-picker">
+                                <div class="color"></div>
+                                <div class="text">
+                                    <input ng-model="brandSettings.HeaderColorCode" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="color">
+                            <span>
+                                Body Colour
+                            </span>
+
+                            <div class="color-picker">
+                                <div class="color"></div>
+                                <div class="text">
+                                    <input ng-model="brandSettings.BodyColorCode" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">3</span>
+                        Featured Image
+                    </h3>
+                    <h3 class="header xs light-green">
+                        Upload your large, featured image.
+                    </h3>
+
+                    <p>
+                        Upload the file you wish to use as your main image. This template requires a minimum resolution of 550 x 1040 as a Jpeg or PNG.
+                    </p>
+
+                    <div class="featured-image">
+                        <div class="image">
+
+                        </div>
+
+                        <div class="overlay-settings">
+                            <h4>
+                                Overlay
+                            </h4>
+
+                            <p>
+                                Using an overlay can help brighten or darker your image. This can be helpful if your template has overlapping text, or your image has high contrast to the rest of your website.
+                            </p>
+
+                            <h4>
+                                Overlay Colour
+                            </h4>
+
+                            <div class="color-picker">
+                                <div class="color"></div>
+                                <div class="text">
+                                    <input />
+                                </div>
+                            </div>
+
+                            <h4>
+                                Opacity
+                            </h4>
+
+                            <div class="color-picker">
+                                <div class="color"></div>
+                                <div class="text">
+                                    <input />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section website-content">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">4</span><span style="color: #194952;">+</span><span class="bullet-number dark-green">5</span>
+                        Website Content
+                    </h3>
+                    <h3 class="header xs light-green">
+                        Add some personalisation!
+                    </h3>
+
+                    <p>This is your chance to catch your visitors attention and learn a little about yourself. A catchy header and a short but sweet description.</p>
+
+                    <h4>
+                        Page Title
+                    </h4>
+
+                    <input class="input" ng-model="brandSettings.PageTitle" />
+
+                    <h4>
+                        Description
+                    </h4>
+
+                    <textarea class="input" ng-model="brandSettings.Description"> </textarea>
+
+                </div>
+
+                <div class="section website-content">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">6</span>
+                        Content Separator
+                    </h3>
+                    <h3 class="header xs light-green">
+
+                        Adding a small detail
+                    </h3>
+
+                    <p>A small line between your title and description. Often used to help break up text, but not always essential. The colour of the separator is determined by your “accent” colour.</p>
+
+                    <div style="display: flex">
+                        <div>
+                            <h4>
+                                Separator Style
+                            </h4>
+
+                            <select ng-model="brandSettings.SeparatorStyle">
+                                <option value="0">Straight Line ----------</option>
+                                <option value="1">Dotted Line ...........</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <h4>
+                                Thickness
+                            </h4>
+
+                            <input type="number" class="input" ng-model="brandSettings.SeparatorThickness" />
+                        </div>
+
+                        <div>
+                            <h4>
+                                Width
+                            </h4>
+
+                            <input type="number" class="input" ng-model="brandSettings.SeparatorWidth" />
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="section website-content">
+                    <h3 class="header dark-green small">
+                        <span class="bullet-number dark-green">7</span><span style="color: #194952;">+</span><span class="bullet-number dark-green">8</span>
+                        Photos of Us Features
+                    </h3>
+                    <h3 class="header xs light-green">
+                        Almost done, just Two more things
+                    </h3>
+
+                    <p>
+                        The final two things to consider is the code input, this is where whomever visits your site after recieving a code on a card, can input said code to be directed to their photos. You are also able to select a light or dark version of the Photos of Us branding.
+                    </p>
+
+                    <div style="display: flex;">
+                        <img src="~/images/account/dark branding@1x.png" />
+                        <img src="~/images/account/light branding@1x.png" />
+                        <img src="~/images/account/Remove Branding@1x.png" />
+                    </div>
+
+                </div>
+
+                <button ng-click="saveBrandSettings()" class="button--green">Save</button>
+
             </div>
         </div>
     </div>

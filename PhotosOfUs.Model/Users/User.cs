@@ -60,19 +60,18 @@ namespace PhotosOfUs.Model.Models
         public ICollection<UserIdentity> UserIdentities { get; set; }
         public Address Address { get; set; }
 
-        public Claim[] GenerateClaims()
+        public List<Claim> GenerateClaims()
         {
-            var claims = new List<Claim>
+            return new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
+                new Claim("ID", Id.ToString()),
                 new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                 new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer"),
-                new Claim("userid", Id.ToString())
+                new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", AzureId)
             };
-
-            return claims.ToArray();
         }
-        
+
         public UserIdentity GetOrCreateIdentity(string externalUserId)
         {
             var identity = UserIdentities.SingleOrDefault(x => x.AzureID == externalUserId);
@@ -87,7 +86,7 @@ namespace PhotosOfUs.Model.Models
         
         public void Login(ClaimsPrincipal principal, string externalUserId)
         {
-            List<Claim> claims = GetClaims();
+            List<Claim> claims = GenerateClaims();
 
             // Logging in is simply adding claims to the existing principal
             foreach (var claim in claims.Where(x => !principal.HasClaim(y => y.Type == x.Type)))
@@ -97,16 +96,6 @@ namespace PhotosOfUs.Model.Models
                 
             var identity = GetOrCreateIdentity(externalUserId);
             identity.LastLoginDate = DateTime.UtcNow;
-        }
-
-        public List<Claim> GetClaims()
-        {
-            return new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                new Claim(ClaimTypes.Email, Email),
-                new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer")
-            };
         }
 
         public void UpdateProfile(string email, string firstName, string lastName, string displayName, string jobPosition, string profilePhotoUrl, string bio)

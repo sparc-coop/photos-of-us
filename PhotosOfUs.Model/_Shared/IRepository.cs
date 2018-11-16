@@ -17,6 +17,8 @@ namespace Kuvio.Kernel.Architecture
         void Delete(T item);
         IRepository<T> Include<TProperty>(Expression<Func<T, TProperty>> item);
 
+        IRepository<T> Include(string propertyPath);
+
         void Commit();
     }
 }

@@ -330,7 +330,7 @@ namespace PhotosOfUs.Web.Controllers
 
         public JsonResult VerifyIfCodeAlreadyUsed(string code)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var azureId = HttpContext.User.FindFirstValue("http://schemas.microsoft.com/identity/claims/objectidentifier");
             int id = _user.Find(x => x.AzureId == azureId).Id;
             return Json(new { PhotoExisting = _photo.Find(x => x.PhotographerId == id && x.Code == code)});
         }
@@ -339,7 +339,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             if (userId == 0)
             {
-                var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var azureId = HttpContext.User.FindFirstValue("http://schemas.microsoft.com/identity/claims/objectidentifier");
                 userId = _user.Find(x => x.AzureId == azureId).Id;
             }
 
@@ -349,17 +349,9 @@ namespace PhotosOfUs.Web.Controllers
             return View(ProfileViewModel.ToViewModel(photos,photographer));
         }
 
-        [Authorize]
-        public ActionResult SalesHistory(int id)
+        public ActionResult SalesHistory()
         {
-            var orderItems =  _order.Include(x => x.OrderDetail).Where(x => x.UserId == id).ToList();
-            List<Order> orders = new List<Order>();
-            foreach(var order in orderItems.GroupBy(x => x.Id))
-            {
-                orders.Add(_order.Find(x => x.Id == order.Key));
-            }
-
-            return View(orders.ToViewModel<List<OrderViewModel>>());
+            return View();
         }
 
         public ActionResult Search()
@@ -441,8 +433,8 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension, [FromServices]UploadProfileImageCommand command)
         {
-            var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var photographerId = _user.Find(x => x.AzureId == azureId).Id;
+            var azureId = HttpContext.User.FindFirstValue("http://schemas.microsoft.com/identity/claims/objectidentifier");
+            var photographerId = User.ID();
 
             var filePath = Path.GetTempFileName();
 

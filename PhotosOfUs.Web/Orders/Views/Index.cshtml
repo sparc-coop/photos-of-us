@@ -1,6 +1,6 @@
 ﻿@model CustomerOrderViewModel
 <div>
-    <h2 class="header-large">Hello, @Model.UserName</h2>
+    <h2 class="header-large">Hello, @User.DisplayName()</h2>
     
     <div>
         <div ng-controller="DownloadCtrl" ng-init="getOrders(@Model.Id)">

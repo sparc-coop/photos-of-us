@@ -63,7 +63,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             var callbackUrl = Url.Action(nameof(HomeController.Landing), "Home");
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
-                CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
+                "B2C", OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         [HttpGet]

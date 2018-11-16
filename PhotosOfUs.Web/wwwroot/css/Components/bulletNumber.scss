@@ -1,0 +1,11 @@
+﻿@import "../variables";
+
+.bullet-number {
+    font-size: 18px;
+    color: white;
+    border-radius: 50px;
+
+    &.dark-green {
+        background-color: #194952;
+    }
+}

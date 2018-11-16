@@ -32,12 +32,21 @@
                 <div>Print Type</div>
                 <div>Unit Price</div>
             </div>
-            <div ng-repeat="item in orderDetailsList" ng-if="item.OrderId == @order.Id" class="item--row">
-                <div>{{item.Photo.Name}}</div>
-                <div>{{item.Quantity}}</div>
-                <div>{{item.PrintType.Type}}</div>
-                <div>${{item.UnitPrice | number: 2}}</div>
-            </div>
+            @foreach (var item in order.OrderDetail)
+            {
+                <div class="item--row">
+                    <div>@item.Photo.Name</div>
+                    <div>@item.Quantity</div>
+                    <div>@item.PrintType.Type</div>
+                    <div>$@item.UnitPrice</div>
+                </div>
+            }
+            @*<div ng-repeat="item in orderDetailsList" ng-if="item.OrderId == @order.Id" class="item--row">
+            <div>{{item.Photo.Name}}</div>
+            <div>{{item.Quantity}}</div>
+            <div>{{item.PrintType.Type}}</div>
+            <div>${{item.UnitPrice | number: 2}}</div>
+        </div>*@
         </div>
     </div>
 

@@ -34,75 +34,82 @@
         @if (User.Identity.IsAuthenticated)
         {
         <div ng-controller="PhotographerCtrl" ng-init="getProfile(); getUser()">
-            <nav class="nav" ng-if="user.IsPhotographer == true">
-                <a href="/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
-                <div class="nav--center">
-                    @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
-                    <a href="/Photographer/Dashboard" class="menu-item">Home</a>
-                    <a href="/Photographer/Search" class="menu-item">Search</a>
-                    <a href="/Photographer/Cards" class="menu-item">Cards</a>
-                    <a href="/Photographer/PublicCode" class="menu-item">Code</a>
-                    @*<a href="/" class="menu-item">Page Title</a>*@
-                </div>
-                @*todo and is photographer*@
-                <div class="nav--right">
-                    @*<a href="/Photographer/SalesHistory/{{user.Id}}"><img src="~/images/icons/alert.png" alt="notifications" /></a>*@
-                    <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                    <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                </div>
-                <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
-                    <div class="adminMenu__arrow"></div>
-                    <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
-                    @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
-                    <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
-                    <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
-                    <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
-                    <a class="adminMenu__list" href="/Photographer/Profile/{{photographer.Id}}">Profile</a>
+            @if (User.IsInRole("Photographer"))
+            {
+                <nav class="nav">
+                    <a href="/Photographer/Dashboard" class="logo"><img src="~/images/logo.png" /></a>
+                    <div class="nav--center">
+                        @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
+                        <a href="/Photographer/Dashboard" class="menu-item">Home</a>
+                        <a href="/Photographer/Search" class="menu-item">Search</a>
+                        <a href="/Photographer/Cards" class="menu-item">Cards</a>
+                        <a href="/Photographer/PublicCode" class="menu-item">Code</a>
+                        @*<a href="/" class="menu-item">Page Title</a>*@
+                    </div>
+                    @*todo and is photographer*@
+                    <div class="nav--right">
+                        @*<a href="/Photographer/SalesHistory/{{user.Id}}"><img src="~/images/icons/alert.png" alt="notifications" /></a>*@
+                        <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                        <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                    </div>
+                    <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+                        <div class="adminMenu__arrow"></div>
+                        <a class="adminMenu__list" href="@Url.Action("Dashboard","Photographer")">Photo Gallery</a>
+                        @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
+                        <a class="adminMenu__list" href="/Photographer/SalesHistory/">Sales History</a>
+                        <a class="adminMenu__list" href="@Url.Action("Cards","Photographer")">Cards</a>
+                        <a class="adminMenu__list" href="@Url.Action("Account","Photographer")">Account Settings</a>
+                        <a class="adminMenu__list" href="/Photographer/Profile/{{photographer.Id}}">Profile</a>
 
-                    <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
-                </div>
-            </nav>
-            <nav class="nav" ng-if="user.IsPhotographer != true" ng-cloak>
-                <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
-                <div class="nav--right">
-                    <div class="img-cart" ng-controller="CheckoutCtrl">
-                        <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" />
-                        <div ng-if="showCart == true">
-                            <div class="cart--preview" id="cart--preview">
-                                <div class="cart--preview__content">
-                                    <div class="cart--preview--arrow"></div>
-                                    <div ng-if="order.OrderStatus == 'Open'">
-                                        <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
-                                        <div class="cart--preview__items">
-                                            <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
-                                                <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                        <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+                    </div>
+                </nav>
+
+            }
+            else
+            {
+                <nav class="nav" ng-if="user.IsPhotographer != true" ng-cloak>
+                    <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
+                    <div class="nav--right">
+                        <div class="img-cart" ng-controller="CheckoutCtrl">
+                            <img src="~/images/icons/cart-yellow.png" ng-click="cartPreview()" alt="cart" />
+                            <div ng-if="showCart == true">
+                                <div class="cart--preview" id="cart--preview">
+                                    <div class="cart--preview__content">
+                                        <div class="cart--preview--arrow"></div>
+                                        <div ng-if="order.OrderStatus == 'Open'">
+                                            <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
+                                            <div class="cart--preview__items">
+                                                <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
+                                                    <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                                                </div>
                                             </div>
+                                            <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
                                         </div>
-                                        <div class="total"><span class="label">Cart Total</span><span class="amount">${{orderTotal}}</span></div>
+                                        <div ng-if="order == ''" class="heading">No items in cart.</div>
+                                        <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
                                     </div>
-                                    <div ng-if="order == ''" class="heading">No items in cart.</div>
-                                    <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
                                 </div>
                             </div>
                         </div>
+                        <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+                        <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
                     </div>
-                    <img ng-show="!photographer.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                    <img ng-show="photographer.ProfilePhotoUrl" ng-src="{{photographer.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                </div>
-                <div class="nav--center">
-                    @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
-                    <a href="/" class="menu-item">Home</a>
-                    <a href="/Photographer/Search" class="menu-item">Search</a>
-                    <a href="/Photographer/PublicCode" class="menu-item">Code</a>
-                </div>
-                <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
-                    <div class="adminMenu__arrow"></div>
-                    <a class="adminMenu__list" href="/Customer/OrderHistory/{{user.Id}}">Order History</a>
-                    <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
-                </div>
-            </nav>
-        </div>
+                    <div class="nav--center">
+                        @*<a ng-click="openUpload()" class="menu-item">Upload</a>*@
+                        <a href="/" class="menu-item">Home</a>
+                        <a href="/Photographer/Search" class="menu-item">Search</a>
+                        <a href="/Photographer/PublicCode" class="menu-item">Code</a>
+                    </div>
+                    <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+                        <div class="adminMenu__arrow"></div>
+                        <a class="adminMenu__list" href="/Orders/OrderHistory/">Order History</a>
 
+                        <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+                    </div>
+                </nav>
+            }
+        </div>
 
         }
         else
