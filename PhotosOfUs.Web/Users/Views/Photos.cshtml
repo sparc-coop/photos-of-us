@@ -56,7 +56,7 @@
             </a>
             @foreach (var image in Model.Photo.Where(x => x.Code == item.Code))
             {
-                <div class="photo-card" style="background-image: url(@image.Url)" ng-click="viewPhoto(@image.Id)"></div>
+                <div class="photo-card" style="background-image: url(@image.ThumbnailUrl)" ng-click="viewPhoto(@image.Id)"></div>
             }           
         </div>
         }

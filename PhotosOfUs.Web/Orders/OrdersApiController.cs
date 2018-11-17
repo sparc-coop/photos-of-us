@@ -93,17 +93,5 @@ namespace PhotosOfUs.Web.Controllers.API
             Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
             return View(order.ToViewModel<CustomerOrderViewModel>());
         }
-
-        public ActionResult OrderHistory(int id)
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
-
-        public ActionResult Confirmation()
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -25,7 +27,6 @@ using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Security.Claims;
 using PhotosOfUs.Model.Photos.Commands;
-using Microsoft.AspNetCore.Authentication;
 
 namespace PhotosOfUs.Web
 {
@@ -66,20 +67,19 @@ namespace PhotosOfUs.Web
             })
             //.AddAzureAdB2C(options => Configuration.Bind("Authentication:AzureAdB2C", options))
             .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            {
+                // TODO: Refactor into Kuvio Kernel
+                options.ClientId = Configuration["Authentication:AzureAdB2C:ClientId"];
+                options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"]}/v2.0/";
+                options.UseTokenLifetime = true;
+                options.SignInScheme = "B2C";
+                options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
+                options.Events = new OpenIdConnectEvents
                 {
-                    // TODO: Refactor into Kuvio Kernel
-                    options.ClientId = Configuration["Authentication:AzureAdB2C:ClientId"];
-                    options.Authority = $"https://login.microsoftonline.com/tfp/{Configuration["Authentication:AzureAdB2C:Tenant"]}/{Configuration["Authentication:AzureAdB2C:SignUpSignInPolicyIdPhotographer"]}/v2.0/";
-                    options.UseTokenLifetime = true;
-                    options.SignInScheme = "B2C";
-                    options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
-                    options.Events = new OpenIdConnectEvents
-                    {
-                        OnRedirectToIdentityProvider = OnRedirectToIdentityProviderAsync,
-                        OnTokenValidated = OnTokenValidatedAsync,
-                        OnRemoteFailure = OnRemoteFailure
-                    };
-                })
+                    OnRedirectToIdentityProvider = OnRedirectToIdentityProviderAsync,
+                    OnTokenValidated = OnTokenValidatedAsync
+                };
+            })
             .AddCookie("B2C");
 
             services.AddAuthorization(options =>
@@ -91,7 +91,7 @@ namespace PhotosOfUs.Web
             });
 
 
-            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddSession(options =>
             {
@@ -142,12 +142,12 @@ namespace PhotosOfUs.Web
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
         }
 
-        
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -168,12 +168,10 @@ namespace PhotosOfUs.Web
 
             //app.UseHttpsRedirection();
 
-            app.UseSession();
-
             app.UseMvc(routes =>
             {
                 routes.MapAreaRoute("usersRoute", "Users", "{controller}/{action=Index}/{id?}");
-                routes.MapAreaRoute("ordersRoute", "Orders", "{controller}/{action=Index}/{id?}");
+
                 //routes.MapRoute("photRoute", "{controller=Photographer}/{action=Index}/{id?}");
 
                 routes.MapRoute(
@@ -200,27 +198,6 @@ namespace PhotosOfUs.Web
                 context.Properties.Items.Remove("Policy");
             }
 
-            return Task.FromResult(0);
-        }
-
-        public Task OnRemoteFailure(RemoteFailureContext context)
-        {
-            context.HandleResponse();
-            // Handle the error code that Azure AD B2C throws when trying to reset a password from the login page
-            // because password reset is not supported by a "sign-up or sign-in policy"
-            if (context.Failure is OpenIdConnectProtocolException && context.Failure.Message.Contains("AADB2C90118"))
-            {
-                // If the user clicked the reset password link, redirect to the reset password route
-                context.Response.Redirect("/Session/ResetPassword");
-            }
-            else if (context.Failure is OpenIdConnectProtocolException && context.Failure.Message.Contains("access_denied"))
-            {
-                context.Response.Redirect("/");
-            }
-            else
-            {
-                context.Response.Redirect("/Home/Error?message=" + context.Failure.Message);
-            }
             return Task.FromResult(0);
         }
     }

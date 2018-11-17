@@ -11,7 +11,7 @@
     <div class="main-landing">
         <a href="~/Session/SignInPhotographer"><img src="~/images/logo.png" class="logo" /></a>
         <div class="main-landing--img-container">
-            <img ng-repeat="photo in photoList" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
+            <img ng-repeat="photo in photoList" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
         <div class="welcome-section">
             <div class="welcome-text">less chat, more snaps</div>
@@ -68,10 +68,10 @@
 
     <div class="browse">
         <div class="browse--img-container right">
-            <img ng-repeat="photo in photoList | limitTo: 6" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
+            <img ng-repeat="photo in photoList | limitTo: 6" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
         <div class="browse--img-container left">
-            <img ng-repeat="photo in photoList | orderBy:'-' | limitTo: 6" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
+            <img ng-repeat="photo in photoList | orderBy:'-' | limitTo: 6" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
         <div class="browse--content">
             <div class="subt-2">Not a photographer?</div>

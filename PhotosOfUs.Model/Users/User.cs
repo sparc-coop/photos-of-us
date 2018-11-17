@@ -71,7 +71,7 @@ namespace PhotosOfUs.Model.Models
                 new Claim(ClaimTypes.Email, Email),
                 new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                 new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer"),
-                new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", AzureId)
+                //new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", AzureId)
             };
         }
 

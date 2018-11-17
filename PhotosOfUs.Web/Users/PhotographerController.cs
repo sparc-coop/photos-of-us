@@ -55,9 +55,7 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Dashboard()
         {
-            var azureId = User.AzureID();
-            var userId = User.ID();
-            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            var photographer = _user.Find(x => x.Id == User.ID());
 
             if (photographer.IsPhotographer == true)
             {
@@ -78,8 +76,7 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public ActionResult Photos(int id)
         {
-            //var userId = User.ID();
-            var photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            var photographer = _user.Find(x => x.Id == User.ID());
             Folder folder = _folder.Include(x => x.Photo).Find(x => x.PhotographerId == photographer.Id && x.Id == id);
 
             return View(folder.ToViewModel<FolderViewModel>());
@@ -454,6 +451,7 @@ namespace PhotosOfUs.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult BrandSettings()
         {
             return View();
