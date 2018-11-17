@@ -14,19 +14,23 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Route("api/Orders")]
+    [Authorize]
     public class OrdersApiController : Controller
     {
         private IRepository<Order> _orders;
+        private IRepository<OrderDetail> _orderDetail;
         private IRepository<Photo> _photos;
         private IRepository<User> _users;
 
-        public OrdersApiController(IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public OrdersApiController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
             _orders = orderRepository;
+            _orderDetail = orderDetailRepository;
             _photos = photoRepository;
             _users = userRepository;
         }
@@ -34,71 +38,72 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet]
         [Route("GetOrderDetails/{orderId:int}")]
-        public List<Order> GetOrderDetails(int orderId)
+        public Order GetOrderDetails(int orderId)
         {
-            return _orders.Include(x => x.OrderDetail).Where(x => x.Id == orderId).ToList();
-        }
-
-        [HttpGet, HttpPost]
-        [Route("SaveAddress")]
-        public AddressViewModel SaveAddress([FromBody]Address vm)
-        {
-            var user = _users.Find(x => x.Id == User.ID());
-            //var address = AddressViewModel.ToEntity(vm);
-            user.SetAddress(vm);
-            _users.Commit();
-
-            return vm.ToViewModel<AddressViewModel>();
+            return _orders.Include("OrderDetail.Photo").Where(x => x.Id == orderId).FirstOrDefault();
         }
 
         [HttpGet]
-        [Route("GetOrderTotal/{orderId:int}")]
-        public decimal GetOrderTotal(int orderId)
+        [Route("GetSalesHistory/")]
+        public object GetSalesHistory()
         {
-            Order order = _orders.Find(x => x.Id == orderId);
-            decimal total = 0;
-            foreach (var item in order.OrderDetail)
-            {
-                total += (item.UnitPrice * item.Quantity);
-            }
+            var photoIds = _photos.Where(x => x.PhotographerId == User.ID()).Select(x => x.Id);
 
-            return total;
+            var orderDetails = _orderDetail.Include(x => x.Photo).Where(x => photoIds.Contains(x.PhotoId));
+
+            var salesHistory = orderDetails.GroupBy(x => new { x.PhotoId, x.Photo.Name })
+                .Select(x => new
+                {
+                    PhotoId = x.Key.PhotoId,
+                    PhotoName = x.Key.Name,
+                    Quantity = x.Sum(y => y.Quantity),
+                    UnitPrice = x.Sum(y => y.UnitPrice),
+                    Earnings = x.Sum(y => y.Photo.Price)
+                }).ToList();
+
+            return salesHistory;
         }
 
-        [HttpGet]
-        [Route("GetOrders/{userId:int}")]
-        public List<CustomerOrderViewModel> GetOrders(int userId)
+        public ActionResult OrderHistory(int id)
         {
-            List<Order> orders = _orders.Where(x => x.UserId == userId).ToList();
-            return orders.ToViewModel<List<CustomerOrderViewModel>>();
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
         }
 
-        public class OrderItemsViewModel
+        public ActionResult Confirmation()
         {
-            public int PrintTypeId { get; set; }
-            public int Quantity { get; set; }
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
         }
 
-        [HttpPost]
-        [Route("ConfirmationEmail")]
-        public async Task<string> SendConfirmationEmail([FromBody]AddressViewModel address)
+        public ActionResult Cart(int id)
         {
-            var order = _orders.Include(x => x.OrderDetail).Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            Order order = _orders.Find(x => x.Id == id);
+            return View(order.ToViewModel<CustomerOrderViewModel>());
+        }
 
-            var apiKey = "";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("photosofus@kuviocreative.com");
-            var subject = $"Photos Of Us Order Confirmation";
-            var to = new EmailAddress(address.Email);
-            var plainTextContent = address.FullName + ", thank you for your order.";
-            var htmlContent = $"Hello {address.FullName}, <br/> Thank you for your order of {order.OrderDetail.Count()} photo(s).<br/>" +
-                $"Shipping Address: <br/>{address.Address1} <br/>{address.City}, {address.State} {address.ZipCode}";
-            //  $"<br/> {item.Photo.Name},{item.PrintType.Type}: {item.PrintType.Length} x {item.PrintType.Height}";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            await client.SendEmailAsync(msg);
+        public ActionResult Purchase(int id)
+        {
+            var photo = _photos.Find(x => x.Id == id);
+            return View(photo.ToViewModel<PhotoViewModel>());
+        }
 
-            return "success";
+        public ActionResult Index()
+        {
+            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            return View(order.ToViewModel<CustomerOrderViewModel>());
+        }
+
+        public ActionResult OrderHistory(int id)
+        {
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
+        }
+
+        public ActionResult Confirmation()
+        {
+            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
+            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
         }
     }
 }
-

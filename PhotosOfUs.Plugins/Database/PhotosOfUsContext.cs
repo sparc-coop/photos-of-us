@@ -12,6 +12,7 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
+        public virtual DbSet<BrandAccount> BrandAccount { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
         { }
@@ -74,6 +75,13 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<BrandAccount>(entity =>
+            {
+                entity.ToTable("BrandAccount");
+                entity.Property(e => e.BrandAccountId).HasColumnName("BrandAccountID");
+                entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
             modelBuilder.Entity<UserIdentity>(entity =>

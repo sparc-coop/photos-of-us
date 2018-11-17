@@ -67,5 +67,17 @@ namespace PhotosOfUs.Web.Controllers
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                 "B2C", OpenIdConnectDefaults.AuthenticationScheme);
         }
+
+        [HttpGet]
+        public IActionResult SignedOut()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                // Redirect to home page if the user is authenticated.
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+            return View();
+        }
     }
 }

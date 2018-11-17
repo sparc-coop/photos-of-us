@@ -17,17 +17,19 @@ namespace PhotosOfUs.Web.Controllers.API
     {
         private PhotosOfUsContext _context;
         private IRepository<Photo> _photo;
+        private IRepository<BrandAccount> _brandAccount;
         private IRepository<User> _user;
         private IRepository<Tag> _tag;
         private readonly IRepository<Card> _card;
 
-        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, 
-            IRepository<Tag> tagRepository, IRepository<Card> cardRepository)
+        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
+            ,IRepository<BrandAccount> brandAccount, IRepository<Card> cardRepository)
         {
             _context = context;
             _photo = photoRepository;
             _user = userRepository;
             _tag = tagRepository;
+            _brandAccount = brandAccount;
             _card = cardRepository;
         }
        
@@ -155,11 +157,17 @@ namespace PhotosOfUs.Web.Controllers.API
             }
         }
 
-        // GET: api/PhotographerApi/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [Route("GetBrandSettings")]
+        public BrandAccount GetBrandSettings()
         {
-            return "value";
+            var brandSettings = _brandAccount.Find(x => x.UserId == User.ID());
+
+            if (brandSettings == null)
+            {
+                brandSettings = new BrandAccount().CreateDefaultBrandAccount(User.ID());
+            }
+
+            return brandSettings;
         }
 
         //[HttpGet("{query}")]

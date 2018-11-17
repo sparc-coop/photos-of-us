@@ -50,7 +50,17 @@ namespace PhotosOfUs.Connectors.Database
         public IRepository<T> Include<TProperty>(Expression<Func<T, TProperty>> item)
         {
             Query = Query.Include(item);
+
             return this;
         }
+
+        public IRepository<T> Include(string propertyPath)
+        {
+            Query = Query.Include(propertyPath);
+
+            return this;
+        }
+
+
     }
 }

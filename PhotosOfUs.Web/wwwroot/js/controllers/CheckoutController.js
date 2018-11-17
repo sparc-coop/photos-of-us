@@ -131,17 +131,28 @@
 
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
-            $scope.orderDetails = x.data;
+            $scope.orderDetails = x.data.OrderDetail;
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
-                $scope.totalEarned += value.Earning;
+                $scope.totalEarned += value.Photo.Price;
             });
         });
         $scope.getOrderTotal(orderId);
     };
 
+    $scope.getSalesHistory = () => {
+        $http.get('/api/Orders/GetSalesHistory/').then(x => {
+            $scope.salesHistory = x.data;
+            angular.forEach($scope.salesHistory, function (value, key) {
+                $scope.totalEarned += value.Earnings;
+                $scope.totalSales += value.Quantity;
+                $scope.totalMade += value.UnitPrice * value.Quantity;
+            });
+        });
+    };
+
     $scope.getOrderTotal = (orderId) => {
-        $http.get('/api/Orders/GetOrderTotal/' + orderId).then(x => {
+        $http.get('/api/Cart/GetOrderTotal/' + orderId).then(x => {
             $scope.orderTotal = x.data;
             $scope.orderTotalList.push(
                 {

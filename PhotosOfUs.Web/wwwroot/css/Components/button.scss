@@ -226,4 +226,16 @@
         cursor: pointer;
         outline: none;
     }
+
+    &--green {
+        padding: 10px 20px;
+        background-color: $primary;
+        color: $yellow;
+        font-family: "Dosis";
+        font-size: 20px;
+        border-radius: 8px;
+        border: 0;
+        font-weight: 500;
+        text-decoration: none;
+    }
 }

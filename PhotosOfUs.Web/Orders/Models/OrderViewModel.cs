@@ -8,10 +8,9 @@ namespace PhotosOfUs.Model.ViewModels
 {
     public class OrderViewModel
     {
-        public int UserId { get; set; }
         public int Id { get; set; }
-        //public string PhotoName { get; set; }
-        //public string PrintSize { get; set; }
+        public int UserId { get; set; }
+        
         public string OrderStatus { get; set; }
         public int Amount { get; set; }
         public decimal TotalPaid { get; set; }
