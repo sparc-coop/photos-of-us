@@ -28,7 +28,7 @@ namespace PhotosOfUs.Model.ViewModels
         {
             TagViewModel viewModel = new TagViewModel();
 
-            viewModel.Id = entity.Tag.Id;
+            viewModel.Id = entity.TagId;
             viewModel.Name = entity.Tag.Name;
 
             return viewModel;

@@ -1,7 +1,7 @@
 ﻿@model List<PhotoViewModel>
 @{
     ViewData["Title"] = "Search";
-    //Layout = "_Layout";
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
@@ -16,7 +16,7 @@
     </div>
     <div class="photographer-search--backdrop"></div>
 }
-<div ng-controller="PhotographerCtrl" ng-init="getAllTags();">
+<div ng-controller="PhotographerCtrl" ng-init="getAllTags()">
     <div class="photographer-search__container">
         <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
             <auto-complete source="loadTags($query)"></auto-complete>
@@ -27,7 +27,7 @@
     </div>
     <div>
         <div class="search--grid">
-            @foreach (var Photo in @Model)
+            @foreach (var Photo in Model)
             {
                 <div class="grid-item">
                     <img src="@Photo.ThumbnailUrl" ng-click="viewPhoto(@Photo.Id)" />

@@ -399,7 +399,7 @@ namespace PhotosOfUs.Web.Controllers
             List<Photo> photos = new List<Photo>();
 
             tags.Where(x => tagarray.Contains(x.Name)).ToList();
-
+            
             List<int> tagIds = tags.Select(x => x.Id).ToList();
             photos.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagIds.Contains(y.TagId))).ToList();
 

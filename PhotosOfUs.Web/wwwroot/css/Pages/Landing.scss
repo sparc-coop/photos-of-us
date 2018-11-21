@@ -167,10 +167,14 @@
 
             .arrow {
                 height: 40px;
-                margin-left: -20px;
-                margin-right: -20px;
-                margin-top: 13%;
+                margin-left: -32px;
+                margin-right: -32px;
+                margin-top: 16%;
                 z-index: 10;
+
+                @media screen and (max-width: 1115px){
+                    display: none;
+                }
             }
         }
     }

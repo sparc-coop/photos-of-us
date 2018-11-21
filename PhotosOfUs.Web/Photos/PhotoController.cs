@@ -22,12 +22,14 @@ namespace PhotosOfUs.Web.Controllers.API
         private readonly IRepository<User> _users;
         private readonly IRepository<Order> _orders;
         private readonly IRepository<PrintType> _printType;
+        private readonly IRepository<Tag> _tag;
 
-        public PhotoApiController(IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<PrintType> printTypeRepository)
+        public PhotoApiController(IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<PrintType> printTypeRepository, IRepository<Tag> tagRepository)
         {
             _photos = photoRepository;
             _users = userRepository;
             _printType = printTypeRepository;
+            _tag = tagRepository;
         }
 
         [HttpPut]
@@ -128,7 +130,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetAllTags")]
         public List<TagViewModel> GetAllTags()
         {
-            return TagViewModel.ToViewModel(new Photo().GetAllTags().ToList());
+            return _tag.ToViewModel<List<TagViewModel>>();
         }
 
         [HttpGet]

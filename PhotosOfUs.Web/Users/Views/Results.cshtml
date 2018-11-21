@@ -1,7 +1,7 @@
 ﻿@model SearchViewModel
 @{
     ViewData["Title"] = "Search";
-    Layout = "_Layout";
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
 <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
@@ -33,10 +33,10 @@
 <div>Similar photos also found in these categories</div>
 <div>
     <div class="search--grid">
-        @foreach (var Photo in @Model.Photos)
+        @foreach (var Photo in Model.Photos)
         {
             <div class="grid-item">
-                <img src="@Photo.Url" ng-click="viewPhoto(@Photo.Id)" />
+                <img src="@Photo.ThumbnailUrl" ng-click="viewPhoto(@Photo.Id)" />
             </div>
         }
     </div>
