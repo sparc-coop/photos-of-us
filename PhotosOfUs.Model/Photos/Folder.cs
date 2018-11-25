@@ -10,6 +10,12 @@ namespace PhotosOfUs.Model.Models
             Photo = new HashSet<Photo>();
         }
 
+        public Folder(string name, int userId)
+        {
+            Name = name;
+            PhotographerId = userId;
+        }
+
         public int Id { get; set; }
         public int PhotographerId { get; set; }
         public string Name { get; set; }

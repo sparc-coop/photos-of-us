@@ -14,15 +14,11 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Folder")]
     public class FolderApiController : Controller
     {
-        private PhotosOfUsContext _context;
         private IRepository<User> _user;
-        private readonly IRepository<Folder> _folder;
 
-        public FolderApiController(PhotosOfUsContext context, IRepository<User> userRepository, IRepository<Folder> folderRepository)
+        public FolderApiController(IRepository<User> userRepository)
         {
-            _context = context;
             _user = userRepository;
-            _folder = folderRepository;
         }
 
         [HttpPost]
@@ -31,7 +27,6 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var newuserId = userId;
             var photographer = _user.Find(x => x.Id == userId);
-            var newPhotographer = photographer;
             var folder = photographer.AddFolder(name);
             _user.Commit();
 
@@ -45,7 +40,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var photographer = _user.Find(x => x.Id == model.UserId);
 
-            var folder = _folder.Find(x => x.Id == model.Id);
+            var folder = photographer.Folder.First(x => x.Id == model.Id);
             folder.Name = model.NewName;
             _user.Commit();
 
@@ -57,7 +52,6 @@ namespace PhotosOfUs.Web.Controllers.API
         public IActionResult DeleteFolder(int id, int userId)
         {
             var photographer = _user.Find(x => x.Id == userId);
-
             photographer.RemoveFolder(id);
             _user.Commit();
 

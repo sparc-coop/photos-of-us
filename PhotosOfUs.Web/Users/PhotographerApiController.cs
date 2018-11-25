@@ -16,20 +16,20 @@ namespace PhotosOfUs.Web.Controllers.API
     public class PhotographerApiController : Controller
     {
         private PhotosOfUsContext _context;
-        private IRepository<Photo> _photo;
-        private IRepository<BrandAccount> _brandAccount;
-        private IRepository<User> _user;
-        private IRepository<Tag> _tag;
+        private IRepository<Photo> _photos;
+        private IRepository<Event> _events;
+        private IRepository<User> _users;
+        private IRepository<Tag> _tags;
         private readonly IRepository<Card> _card;
 
         public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
-            ,IRepository<BrandAccount> brandAccount, IRepository<Card> cardRepository)
+            ,IRepository<Event> brandAccount, IRepository<Card> cardRepository)
         {
             _context = context;
-            _photo = photoRepository;
-            _user = userRepository;
-            _tag = tagRepository;
-            _brandAccount = brandAccount;
+            _photos = photoRepository;
+            _users = userRepository;
+            _tags = tagRepository;
+            _events = brandAccount;
             _card = cardRepository;
         }
        
@@ -43,13 +43,13 @@ namespace PhotosOfUs.Web.Controllers.API
             var photoList = new List<Photo>();
             foreach (int id in photos)
             {
-                Photo photo = _photo.Find(x => x.Id == id);
+                Photo photo = _photos.Find(x => x.Id == id);
                 photoList.Add(photo);
             }
 
             foreach (Photo photo in photoList)
             {
-                var tagsfromphoto = _photo.Include(x => x.Tag).Find(x => x.Id == photo.Id).PhotoTag;
+                var tagsfromphoto = _photos.Include(x => x.Tag).Find(x => x.Id == photo.Id).PhotoTag;
 
                 foreach (PhotoTag phototag in tagsfromphoto)
                 {
@@ -67,7 +67,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetPhotoPrice/{photoId:int}")]
         public decimal? GetPhotoPrice(int photoId)
         {
-            var photo = _photo.Find(x => x.Id == photoId);
+            var photo = _photos.Find(x => x.Id == photoId);
 
             return photo.Price;
         }
@@ -76,9 +76,9 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("SavePhotoPrice/{photoId:int}/{newPrice:decimal}")]
         public PhotoViewModel SavePhotoPrice(int photoId, decimal newPrice)
         {
-            Photo photo = _photo.Find(x => x.Id == photoId);
+            Photo photo = _photos.Find(x => x.Id == photoId);
             photo.UpdatePrice(newPrice);
-            _photo.Commit();
+            _photos.Commit();
 
             return photo.ToViewModel<PhotoViewModel>();
         }
@@ -89,12 +89,12 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             foreach (TagViewModel tag in tags)
             {
-                if (_tag.Find(x => x.Name == tag.Name) == null)
+                if (_tags.Find(x => x.Name == tag.Name) == null)
                 {
-                    _tag.Add(TagViewModel.ToEntity(tag));
+                    _tags.Add(TagViewModel.ToEntity(tag));
                 }
             }
-            _tag.Commit();
+            _tags.Commit();
         }
 
         [HttpPost]
@@ -107,7 +107,7 @@ namespace PhotosOfUs.Web.Controllers.API
             foreach (int photoid in photosviewmodel.photos)
             {
 
-                var phototagdelete = _photo.Find(x => x.Id == photoid).PhotoTag;
+                var phototagdelete = _photos.Find(x => x.Id == photoid).PhotoTag;
 
                 if (phototagdelete != null)
                 {
@@ -122,9 +122,9 @@ namespace PhotosOfUs.Web.Controllers.API
 
             foreach (PhotoTag phototag in phototagstodelete)
             {
-                _photo.Find(x => x.Id == phototag.PhotoId).PhotoTag.Remove(phototag);
+                _photos.Find(x => x.Id == phototag.PhotoId).PhotoTag.Remove(phototag);
             }
-            _photo.Commit();
+            _photos.Commit();
 
 /*             foreach (TagViewModel tag in photoviewmodel)
             {
@@ -152,19 +152,19 @@ namespace PhotosOfUs.Web.Controllers.API
 
             foreach(int photoId in photos)
             {
-                Photo photo =_photo.Find(x => x.Id == photoId);
-                _photo.Delete(photo);
+                Photo photo =_photos.Find(x => x.Id == photoId);
+                _photos.Delete(photo);
             }
         }
 
         [Route("GetBrandSettings")]
-        public BrandAccount GetBrandSettings()
+        public Event GetBrandSettings()
         {
-            var brandSettings = _brandAccount.Find(x => x.UserId == User.ID());
+            var brandSettings = _events.Find(x => x.UserId == User.ID());
 
             if (brandSettings == null)
             {
-                brandSettings = new BrandAccount().CreateDefaultBrandAccount(User.ID());
+                brandSettings = new Event().CreateDefaultBrandAccount(User.ID());
             }
 
             return brandSettings;
@@ -205,7 +205,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetProfilePhotos/{photographerId:int}")]
         public List<Photo> GetProfilePhotos(int photographerId)
         {
-            return _photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
+            return _photos.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == photographerId).ToList();
         }
     }
 }

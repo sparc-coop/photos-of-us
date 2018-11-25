@@ -150,12 +150,7 @@ namespace PhotosOfUs.Model.Models
 
         public Folder AddFolder(string name)
         {
-            var folder = new Folder
-            {
-                Name = name,
-                CreatedDate = DateTime.Now,
-                PhotographerId = Id
-            };
+            var folder = new Folder(name, Id);
             Folder.Add(folder);
             return folder;
         }

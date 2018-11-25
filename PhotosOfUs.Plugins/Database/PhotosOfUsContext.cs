@@ -76,10 +76,9 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
             });
 
-            modelBuilder.Entity<BrandAccount>(entity =>
+            modelBuilder.Entity<Event>(entity =>
             {
-                entity.ToTable("BrandAccount");
-                entity.Property(e => e.BrandAccountId).HasColumnName("BrandAccountID");
+                entity.Property(e => e.EventId).HasColumnName("EventID");
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });
 
