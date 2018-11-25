@@ -8,8 +8,6 @@ namespace PhotosOfUs.Model
 {
     public class LoginCommand : Command<User>
     {
-        //private IRepository<User> Users;
-
         public LoginCommand(IRepository<User> repository) : base(repository)
         {
 
