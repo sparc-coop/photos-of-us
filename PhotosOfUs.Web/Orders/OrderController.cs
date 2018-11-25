@@ -18,7 +18,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
-    //[Area("Orders")]
     [Authorize]
     public class OrdersController : Controller
     {

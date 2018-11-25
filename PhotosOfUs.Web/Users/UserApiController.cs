@@ -82,12 +82,6 @@ namespace PhotosOfUs.Web.Controllers.API
             return user.ToViewModel<UserViewModel>();
         }
 
-        public bool IsPhotoCodeAlreadyUsed(int photographerId, string code)
-        {
-            return _user.Find(x => x.Id == photographerId).Photo.Any(x => x.PhotographerId == photographerId && x.Code == code);
-        }
-
-
         [HttpGet]
         [Route("GetFolders/{id:int}")]
         public List<FolderViewModel> GetFolders(int id)

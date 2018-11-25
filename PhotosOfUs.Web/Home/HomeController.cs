@@ -14,7 +14,7 @@ namespace PhotosOfUs.Web.Controllers
     
     public class HomeController : Controller
     {
-        public HomeController(IRepository<Tag> tagRepository)
+        public HomeController()
         {
         }
 
@@ -22,11 +22,6 @@ namespace PhotosOfUs.Web.Controllers
         {
             return View("Landing");
         }
-
-        //public IActionResult Homepage()
-        //{
-        //    return View("Landing");
-        //}
 
         public IActionResult Pricing()
         {
