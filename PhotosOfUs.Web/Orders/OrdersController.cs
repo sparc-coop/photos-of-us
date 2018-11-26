@@ -80,7 +80,13 @@ namespace PhotosOfUs.Web.Controllers.API
                 CustomerId = customer.Id,
             });
 
-            return Redirect("/Customer/Confirmation");
+            return Redirect("/Orders/Confirmation");
+        }
+
+        public ActionResult Cart(int id)
+        {
+            Order order = _orders.Find(x => x.Id == id);
+            return View(order.ToViewModel<CustomerOrderViewModel>());
         }
     }
 }

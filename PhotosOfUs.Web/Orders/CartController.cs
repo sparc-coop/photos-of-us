@@ -44,25 +44,8 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             return Cart;
         }
-
-
+       
         [HttpPost]
-        [Route("{photoId:int}")]
-        public OrderViewModel AddToCart(int photoId, [FromBody]List<OrderItemsViewModel> orderitems)
-        {
-            if (Cart == null)
-                Cart = new Order(User.ID());
-            
-            foreach (var item in orderitems)
-            {
-                var photo = _photo.Find(x => x.Id == photoId);
-                Cart.AddLine(photo, item.PrintType, item.Quantity);
-            }
-
-            return Cart.ToViewModel<OrderViewModel>();
-        }
-
-        [HttpGet, HttpPost]
         [Route("SaveAddress")]
         public AddressViewModel SaveAddress([FromBody]Address vm)
         {

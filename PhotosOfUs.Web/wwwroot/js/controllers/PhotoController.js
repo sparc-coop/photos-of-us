@@ -63,7 +63,7 @@
 
     $scope.signInCustomer = (photoId) => {
         $http.get('/Session/SignIn/').then(
-            $window.location.href = '/Orders/Purchase/' + photoId
+            $window.location.href = '/Photographer/Purchase/' + photoId
         );
     };
 

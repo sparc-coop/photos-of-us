@@ -12,7 +12,7 @@
     };
 
     $scope.getOrderTotal = (orderId) => {
-        $http.get('/api/Checkout/GetOrderTotal/' + orderId).then(x => {
+        $http.get('/api/Cart/GetOrderTotal/' + orderId).then(x => {
             $scope.orderTotal = x.data;
         });
     };
@@ -56,9 +56,6 @@
 
             // Submit the form
             form.submit();
-
-            //var apiRoot = "/api/Payment/Charge/";
-            //$http.post(apiRoot, token.id);
         };
 
         // Create a token or display an error the form is submitted.
@@ -92,11 +89,11 @@
             Phone: address.Phone
         };
 
-        $http.post('/api/Checkout/SaveAddress', addressInfo).then(x => {
+        $http.post('/api/Cart/SaveAddress', addressInfo).then(x => {
         });
 
-        $http.post('/api/Checkout/ConfirmationEmail', addressInfo).then(x => {
-            $window.location.href = "/Customer/Confirmation";
+        $http.post('/api/Cart/ConfirmationEmail', addressInfo).then(x => {
+            $window.location.href = "/Orders/Confirmation";
         });
     };
 

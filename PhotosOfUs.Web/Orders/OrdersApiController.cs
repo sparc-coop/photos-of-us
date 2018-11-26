@@ -63,35 +63,5 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return salesHistory;
         }
-
-        public ActionResult OrderHistory(int id)
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
-
-        public ActionResult Confirmation()
-        {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
-
-        public ActionResult Cart(int id)
-        {
-            Order order = _orders.Find(x => x.Id == id);
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
-
-        public ActionResult Purchase(int id)
-        {
-            var photo = _photos.Find(x => x.Id == id);
-            return View(photo.ToViewModel<PhotoViewModel>());
-        }
-
-        public ActionResult Index()
-        {
-            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
     }
 }
