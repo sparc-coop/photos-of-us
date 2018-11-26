@@ -71,7 +71,7 @@
         <div>           
             <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
             <div>
-                <form action="/Photo/Charge" method="POST" id="payment-form">
+                <form action="/Orders/Charge" method="POST" id="payment-form">
                     <button class="button--yellow button--yellow--payment" ng-click="saveAddress(address)" 
                             ng-class="{'disabled': address.Email == null; address.ZipCode == null; address.Address1 == null}">
                         Confirm Order

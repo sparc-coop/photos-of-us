@@ -28,6 +28,15 @@ namespace PhotosOfUs.Model.Models
         public int SeparatorWidth { get; set; }
         public int BrandingStyle { get; set; }
 
+        public ICollection<Card> Cards { get; set; }
+
+        public void AddNewCards(int quantity)
+        {
+            for (var i = 0; i < quantity; i++)
+                Cards.Add(new Card(this));
+        }
+
+
         public enum HomepageTemplates
         {
             TwoOneSplit,

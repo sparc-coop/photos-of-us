@@ -1,4 +1,4 @@
-﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'userApi', 'folderApi', '$http', ($scope, $rootScope, $window, $mdDialog, userApi, folderApi, $http) => {
+﻿app.controller('FolderCtrl', ['$scope', '$rootScope', '$mdDialog', 'folderApi', '$http', ($scope, $rootScope, $mdDialog, folderApi, $http) => {
 
     $scope.close = () => $mdDialog.hide();
     $scope.folders = [];

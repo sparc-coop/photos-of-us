@@ -65,10 +65,6 @@
         }
     }
 
-    $scope.deletePhotos = function (photos) {
-        $http.post('/api/Photographer/deletePhotos/', photos);
-    }
-
     $scope.getAllTags = function () {
         $http.get('/api/Photo/GetAllTags/')
             .then(function (x) {

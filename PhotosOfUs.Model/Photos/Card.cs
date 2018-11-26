@@ -6,24 +6,23 @@ namespace PhotosOfUs.Model.Models
     public partial class Card
     {
         public int Id { get; set; }
-        public int PhotographerId { get; set; }        
+        public int EventId { get; set; }        
         public string Code { get; set; }
         public DateTime CreatedDate { get; set; }
-        public User Photographer { get; set; }
 
         // Not Mapped
         //public string Url => "www.photosof.us/" + Photographer.DisplayName.ToLower().Replace(" ","");
 
         public Card() {}
 
-        public Card(User user)
+        public Card(Event ev)
         {
-            PhotographerId = user.Id;
+            EventId = ev.EventId;
             CreatedDate = DateTime.Now;
             do
             {
                 Code = NewCode(7);
-            } while (user.Card.Any(x => x.Code == Code));
+            } while (ev.Cards.Any(x => x.Code == Code));
         }
 
         private static Random random = new Random();

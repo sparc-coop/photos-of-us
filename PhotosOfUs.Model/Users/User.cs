@@ -9,7 +9,6 @@ namespace PhotosOfUs.Model.Models
     {
         public User()
         {
-            Card = new HashSet<Card>();
             Folder = new HashSet<Folder>();
             Order = new HashSet<Order>();
             Photo = new HashSet<Photo>();
@@ -55,7 +54,6 @@ namespace PhotosOfUs.Model.Models
         public bool? PhotoTour { get; set; }
 
         public ICollection<SocialMedia> SocialMedia { get; set; }
-        public ICollection<Card> Card { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }
         public ICollection<Photo> Photo { get; set; }
@@ -140,12 +138,6 @@ namespace PhotosOfUs.Model.Models
         {
             address.UserId = Id;
             Address = address;
-        }
-
-        public void AddNewCards(int quantity)
-        {
-            for (var i = 0; i < quantity; i++)
-                Card.Add(new Card(this));
         }
 
         public Folder AddFolder(string name)

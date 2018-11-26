@@ -15,17 +15,15 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Photographer")]
     public class PhotographerApiController : Controller
     {
-        private PhotosOfUsContext _context;
         private IRepository<Photo> _photos;
         private IRepository<Event> _events;
         private IRepository<User> _users;
         private IRepository<Tag> _tags;
         private readonly IRepository<Card> _card;
 
-        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
+        public PhotographerApiController(IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
             ,IRepository<Event> brandAccount, IRepository<Card> cardRepository)
         {
-            _context = context;
             _photos = photoRepository;
             _users = userRepository;
             _tags = tagRepository;
@@ -146,7 +144,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [Route("DeletePhotos")]
         [HttpPost]
-        public void Post([FromBody]List<int> photos)
+        public void DeletePhotos([FromBody]List<int> photos)
         {
             var photographerId = User.ID();
 
@@ -169,27 +167,6 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return brandSettings;
         }
-
-        //[HttpGet("{query}")]
-        //[Route("SalesHistory")]
-        //public async Task<IActionResult> SalesHistory(string query)
-        //{
-        //    var azureId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    var userId = _context.UserIdentity.Find(azureId).UserID;
-        //    var user = _context.User.Find(userId);
-
-        //    List<Order> queriedOrders;
-        //    if(null == query || query.Equals(""))
-        //        queriedOrders = new OrderRepository(_context).GetOrders(user.Id);
-        //    else
-        //        queriedOrders = new OrderRepository(_context).SearchOrders(user.Id, query);
-
-        //    var viewModel = SalesHistoryViewModel.ToViewModel(queriedOrders);
-
-        //    var result = await _viewRenderService.RenderToStringAsync("Photographer/Partials/_SalesHistoryPartial", viewModel);
-
-        //    return Ok(result);
-        //}
 
         [Authorize]
         [HttpGet]

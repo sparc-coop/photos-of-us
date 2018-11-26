@@ -26,20 +26,16 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Card>(entity =>
             {
-                entity.ToTable("Card");
-                entity.HasIndex(e => e.PhotographerId);
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Folder>(entity =>
             {
-                entity.ToTable("Folder");
                 entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.ToTable("Order");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
                 //entity.Ignore(x => x.Amount);
@@ -49,13 +45,11 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<OrderDetail>(entity =>
             {
-                entity.ToTable("OrderDetail");
                 entity.Property(e => e.UnitPrice).HasColumnType("decimal(19, 4)");
             });
 
             modelBuilder.Entity<Photo>(entity =>
             {
-                entity.ToTable("Photo");
                 entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
                 entity.Ignore(x => x.FolderName);
@@ -70,7 +64,6 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("User");
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");

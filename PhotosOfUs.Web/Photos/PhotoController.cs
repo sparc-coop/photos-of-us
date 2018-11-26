@@ -19,16 +19,11 @@ namespace PhotosOfUs.Web.Controllers.API
     public class PhotoApiController : Controller
     {
         private readonly IRepository<Photo> _photos;
-        private readonly IRepository<User> _users;
-        private readonly IRepository<Order> _orders;
-        private readonly IRepository<PrintType> _printType;
         private readonly IRepository<Tag> _tag;
 
-        public PhotoApiController(IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<PrintType> printTypeRepository, IRepository<Tag> tagRepository)
+        public PhotoApiController(IRepository<Photo> photoRepository, IRepository<Tag> tagRepository)
         {
             _photos = photoRepository;
-            _users = userRepository;
-            _printType = printTypeRepository;
             _tag = tagRepository;
         }
 
@@ -76,8 +71,6 @@ namespace PhotosOfUs.Web.Controllers.API
                     await command.ExecuteAsync(userId, stream, photoName, photoCode, extension, folderId, price, tagsfromazure, TagViewModel.ToEntity(listoftags));
                 }
             }
-
-
 
             //return Ok();
             return new AzureCognitiveViewModel();
@@ -171,68 +164,6 @@ namespace PhotosOfUs.Web.Controllers.API
             var viewModel = photo.ToViewModel<PhotoViewModel>();
 
             return View(viewModel);
-        }
-
-        public ActionResult Cart(int id)
-        {
-            Order order = _orders.Where(x => x.UserId == id && x.OrderStatus == "Open").FirstOrDefault();
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
-
-        public ActionResult Checkout(int id)
-        {
-            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
-
-        [HttpPost]
-        public IActionResult Charge(string stripeToken)
-        {
-            StripeConfiguration.SetApiKey("");
-
-            Order userOrder = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            userOrder.SetStatusToPending();
-            _orders.Commit();
-
-            Order order = _orders.Find(x => x.Id == userOrder.Id);
-            decimal total = 0;
-            foreach (var item in order.OrderDetail)
-            {
-                total += (item.UnitPrice * item.Quantity);
-            }
-
-            var customers = new StripeCustomerService();
-            var charges = new StripeChargeService();
-
-            var customer = customers.Create(new StripeCustomerCreateOptions
-            {
-                Email = order.User.Email,
-                SourceToken = stripeToken
-            });
-
-            var charge = charges.Create(new StripeChargeCreateOptions
-            {
-                Amount = (int)(total * 100),
-                Description = "Photos Of Us Order",
-                Currency = "usd",
-                CustomerId = customer.Id,
-            });
-
-            return Redirect("/Customer/Confirmation");
-        }
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View();
-        }
-        public IActionResult SaveAddress()
-        {
-            return View();
         }
     }
 }
