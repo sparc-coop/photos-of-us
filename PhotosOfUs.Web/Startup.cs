@@ -27,6 +27,7 @@ using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Security.Claims;
 using PhotosOfUs.Model.Photos.Commands;
+using PhotosOfUs.Model.Events;
 
 namespace PhotosOfUs.Web
 {
@@ -115,10 +116,11 @@ namespace PhotosOfUs.Web
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
-            services.AddScoped<LoginCommand>();
-            services.AddScoped<UploadPhotoCommand>();
-            services.AddScoped<UploadProfileImageCommand>();
-            services.AddScoped<UserProfileUpdateCommand>();
+            services.AddScoped<LoginCommand>()
+                .AddScoped<UploadPhotoCommand>()
+                .AddScoped<UploadProfileImageCommand>()
+                .AddScoped<UserProfileUpdateCommand>()
+                .AddScoped<BulkEditCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 

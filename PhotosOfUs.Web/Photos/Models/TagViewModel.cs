@@ -36,10 +36,10 @@ namespace PhotosOfUs.Model.ViewModels
 
         public static Tag ToEntity(TagViewModel viewModel)
         {
-            Tag entity = new Tag();
-
-            entity.Id = viewModel.Id;
-            entity.Name = viewModel.Name;
+            Tag entity = new Tag(viewModel.Name)
+            {
+                Id = viewModel.Id
+            };
 
             return entity;
         }

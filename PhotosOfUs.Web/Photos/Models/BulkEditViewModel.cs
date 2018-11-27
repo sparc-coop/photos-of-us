@@ -5,9 +5,10 @@ using System.Text;
 
 namespace PhotosOfUs.Model.ViewModels
 {
-    public class PhotoTagViewModel
+    public class BulkEditViewModel
     {
-        public List<int> photos { get; set; }
+        public List<int> photoIds { get; set; }
         public List<TagViewModel> tags { get; set; }
+        public decimal? newPrice { get; set; }
     }
 }

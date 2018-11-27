@@ -74,27 +74,18 @@ namespace PhotosOfUs.Model.Models
             return Tag;
         }
 
+        public void ReplaceTags(List<string> tags)
+        {
+            foreach (var tag in PhotoTag.Where(x => !tags.Contains(x.Tag.Name)).ToList())
+                PhotoTag.Remove(tag);
+
+            foreach (var tag in tags.Where(x => !PhotoTag.Any(y => y.Tag.Name == x)))
+                PhotoTag.Add(new PhotoTag(Id, tag));
+        }
+
         public void Delete()
         {
             IsDeleted = true;
-        }
-
-/*         public PhotoTag NewPhotoTag(PhotoTag tag)
-        {
-            PhotoTag. = photoid;
-            TagId = tagtoid.Id,
-            RegisterDate = DateTime.Now
-        } */
-
-        public Tag NewTag(Tag newTag)
-        {
-            var tag = new Tag
-            {
-                Name = newTag.Name,
-                Id = newTag.Id
-            };
-            Tag.Add(tag);
-            return tag;
         }
 
         public Stream AddWatermark(Stream input, Stream watermark, string extension)

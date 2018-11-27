@@ -29,6 +29,7 @@ namespace PhotosOfUs.Model.Models
         public int BrandingStyle { get; set; }
 
         public ICollection<Card> Cards { get; set; }
+        public ICollection<Photo> Photos { get; set; }
 
         public void AddNewCards(int quantity)
         {
@@ -78,6 +79,13 @@ namespace PhotosOfUs.Model.Models
             BrandingStyle = (int)Event.FeatureTypes.Dark;
 
             return this;
+        }
+
+        public void DeletePhotos(List<int> photoIds)
+        {
+            var photos = Photos.Where(x => photoIds.Contains(x.Id)).ToList();
+            foreach (var photo in photos)
+                Photos.Remove(photo);
         }
     }
 }
