@@ -22,7 +22,7 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route("{eventId:int}/CreateCards/{quantity:int}")]
+        [Route("{eventId:int}/Cards/{quantity:int}")]
         public List<CardViewModel> Create(int eventId, int quantity)
         {
             var ev = _events.Find(x => x.EventId == eventId);
@@ -30,6 +30,29 @@ namespace PhotosOfUs.Web.Controllers.API
             _events.Commit();
 
             return ev.Cards.ToList().Select(CardViewModel.ToViewModel).ToList();
+        }
+
+        [HttpGet]
+        [Route("{eventId:int}/Cards/{code}")]
+        public List<PhotoViewModel> GetCodePhotos(int eventId, string code)
+        {
+            return _events.Find(x => x.EventId == eventId)
+            .Cards
+            .FirstOrDefault(x => x.Code == code)
+            ?.Photos.AsQueryable()
+            .ToViewModel<PhotoViewModel>();
+        }
+
+        [HttpGet]
+        [Route("{eventId:int}/Tags")]
+        public List<TagViewModel> GetAllTags(int eventId)
+        {
+            return _events.Find(x => x.EventId == eventId)
+            .Cards
+            .SelectMany(x => x.Photos)
+            .SelectMany(x => x.Tag)
+            .Distinct()
+            .ToViewModel<List<TagViewModel>>();
         }
     }
 }

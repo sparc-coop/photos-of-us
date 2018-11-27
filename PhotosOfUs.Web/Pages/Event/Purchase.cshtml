@@ -1,16 +1,17 @@
-﻿@model PhotoViewModel
+@page
+@model PhotosOfUs.Pages.Event.PurchaseModel
 
 @{
     ViewData["Title"] = "Purchase";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); getPrintTypes(); priceModal(); getPhotographer(@Model.PhotographerId)">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); getPrintTypes(); priceModal(); getPhotographer(@Model.Photo.PhotographerId)">
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
         <div class="photo">
-            <img src="@(string.IsNullOrEmpty(Model.WaterMarkUrl)? Model.Url : Model.WaterMarkUrl)" />
+            <img src="@(string.IsNullOrEmpty(Model.Photo.WaterMarkUrl) ? Model.Photo.Url : Model.Photo.WaterMarkUrl)" />
         </div>
         <div class="purchase__photo-info">
             <h3 class="header-small">
@@ -19,19 +20,19 @@
             <div class="info">
                 <div class="row">
                     <div class="title">Photo Name</div>
-                    <div class="value">@Model.Name</div>
+                    <div class="value">@Model.Photo.Name</div>
                 </div>
                 <div class="row">
                     <div class="title">Photo Code</div>
-                    <div class="value">@Model.Code</div>
+                    <div class="value">@Model.Photo.Code</div>
                 </div>
                 <div class="row">
                     <div class="title">Max Resolution</div>
-                    <div class="value">@Model.Resolution</div>
+                    <div class="value">@Model.Photo.Resolution</div>
                 </div>
                 <div class="row">
                     <div class="title">File Size</div>
-                    <div class="value">@Model.FileSize</div>
+                    <div class="value">@Model.Photo.FileSize</div>
                 </div>
                 <div class="row">
                     <div class="title">Photographer</div>
@@ -72,7 +73,7 @@
                 <div class="height">{{print.fullProductVerticalSize}}in</div>
                 <div class="length">{{print.fullProductHorizontalSize}}in</div>
                 <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
-                <div class="price"><strong>${{'@Model.Price' ? (print.price / 100) + '@Model.Price' : (print.price / 100) | number: 2}}</strong></div>
+                <div class="price"><strong>${{'@Model.Photo.Price' ? (print.price / 100) + '@Model.Photo.Price' : (print.price / 100) | number: 2}}</strong></div>
             </div>
 
             <div class="purchase__options--row" ng-repeat="print in proProducts.items" ng-show="print.itemType == 'Print' && printQuality == 'Pro'">
@@ -81,7 +82,7 @@
                 <div class="height">{{print.fullProductVerticalSize}}in</div>
                 <div class="length">{{print.fullProductHorizontalSize}}in</div>
                 <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
-                <div class="price"><strong>${{'@Model.Price' ? (print.price / 100) + '@Model.Price' : (print.price / 100) | number: 2}}</strong></div>
+                <div class="price"><strong>${{'@Model.Photo.Price' ? (print.price / 100) + '@Model.Photo.Price' : (print.price / 100) | number: 2}}</strong></div>
             </div>
         </div>
         <div class="button--yellow button--yellow--large" ng-click="createPwintyOrder()" style="margin-top: 50px"><img src="~/images/icons/cart-red.png" /> Add Selected To Cart</div>

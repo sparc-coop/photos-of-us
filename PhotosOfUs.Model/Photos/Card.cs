@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PhotosOfUs.Model.Models
@@ -9,6 +10,8 @@ namespace PhotosOfUs.Model.Models
         public int EventId { get; set; }        
         public string Code { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public List<Photo> Photos { get; set; }
 
         // Not Mapped
         //public string Url => "www.photosof.us/" + Photographer.DisplayName.ToLower().Replace(" ","");

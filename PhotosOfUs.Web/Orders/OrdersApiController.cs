@@ -63,5 +63,12 @@ namespace PhotosOfUs.Web.Controllers.API
 
             return salesHistory;
         }
+
+        [HttpGet]
+        [Route("GetPrintTypes")]
+        public List<PrintTypeViewModel> GetPrintTypes()
+        {
+            return new Photo().GetPrintTypes().ToList().ToViewModel<List<PrintTypeViewModel>>();
+        }
     }
 }
