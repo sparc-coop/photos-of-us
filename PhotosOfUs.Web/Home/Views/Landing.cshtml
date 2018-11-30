@@ -9,7 +9,7 @@
 
 <div class="landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
     <div class="main-landing">
-        <a href="~/Session/SignInPhotographer"><img src="~/images/logo.png" class="logo" /></a>
+        <a href="~/Session/SignInPhotographer"><img src="~/images/icons/logo_large.png" class="logo" /></a>
         <div class="main-landing--img-container">
             <img ng-repeat="photo in photoList" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
@@ -24,7 +24,7 @@
             Photo Taken, Now What?
         </div>
         <div class="landing-subtext">
-            The burning question people have after having their photo taken, 
+            The burning question people have after having their photo taken,
             "Where do I get that photo?!"
         </div>
         <div class="landing-subtext" style="padding-top: 0;">
@@ -46,7 +46,7 @@
                     Go out to your photoshoot location and take photos like you normally do.
                 </p>
             </div>
-            <img src="~/images/icons/arrow_up.png" class="arrow"/>
+            <img src="~/images/icons/arrow_up.png" class="arrow" />
             <div>
                 <img src="~/images/icons/give-card_icon.PNG" />
                 <h4>Give Code</h4>
@@ -54,7 +54,7 @@
                     With the perfect picture taken, take a photo of your code and hand the card over to your photo subject.
                 </p>
             </div>
-            <img src="~/images/icons/arrow_down.png" class="arrow"/>
+            <img src="~/images/icons/arrow_down.png" class="arrow" />
             <div>
                 <img src="~/images/icons/upload_icon.PNG" />
                 <h4>Upload Photos</h4>
@@ -64,6 +64,7 @@
             </div>
         </div>
         <div class="subt-1">Easy as that, <font class="yellow-text"><a href="~/Session/SignInPhotographer">get started</a></font> now.</div>
+        <a href="/Photographer/PublicCode" class="subt-4">Have a code?</a>
     </div>
 
     <div class="browse">

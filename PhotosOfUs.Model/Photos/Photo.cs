@@ -5,6 +5,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -43,7 +45,9 @@ namespace PhotosOfUs.Model.Models
         public Folder Folder { get; set; }
         public User Photographer { get; set; }
 
+
         public ICollection<PhotoTag> PhotoTag { get; set; }
+
         public ICollection<PrintType> PrintType { get; set; }
         public ICollection<Tag> Tag { get; set; }
 

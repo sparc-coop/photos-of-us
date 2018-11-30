@@ -62,7 +62,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
                 foreach (string obj in result)
                 {
-                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                    listoftags.Add(new TagViewModel() { Name = obj });//, text = obj });
                 }
             }
 
@@ -128,9 +128,11 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpGet]
         [Route("GetAllTags")]
-        public List<TagViewModel> GetAllTags()
+        public List<Tag> GetAllTags()
         {
-            return _tag.ToViewModel<List<TagViewModel>>();
+            //var tags = _tag.Where(x => x.Name != null).ToList();
+            var tags = new Photo().GetAllTags().ToList();
+            return tags;//.ToViewModel<List<TagViewM>>();
         }
 
         [HttpGet]
@@ -145,7 +147,7 @@ namespace PhotosOfUs.Web.Controllers.API
             Photo photo = new Photo();
             foreach (TagViewModel tag in tags)
             {
-                var hasTags = _photos.Where(x => x.Tag.Any(o => o.Name == tag.text));
+                var hasTags = _photos.Where(x => x.Tag.Any(o => o.Name == tag.Name));//.text));
                 if (hasTags.Count() > 0)
                 {
                     photo.NewTag(TagViewModel.ToEntity(tag));

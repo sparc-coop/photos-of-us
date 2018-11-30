@@ -148,8 +148,17 @@
         }
 
         &--social {
+
+            @media screen and (max-width: $mobile) {
+                margin-top: 20px;
+            }
+
             input {
                 width: 300px;
+
+                @media screen and (max-width: $mobile) {
+                    width: 100%;
+                }
             }
 
             .form-input {

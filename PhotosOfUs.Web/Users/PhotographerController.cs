@@ -284,7 +284,7 @@ namespace PhotosOfUs.Web.Controllers
 
                 foreach (string obj in result)
                 {
-                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                    listoftags.Add(new TagViewModel() { Name = obj });//, text = obj });
                 }
             }
             
@@ -334,7 +334,7 @@ namespace PhotosOfUs.Web.Controllers
 
             foreach (string obj in result)
             {
-                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
+                listoftags.Add(new TagViewModel() { Name = obj });//, text = obj });
             }
 
             var filePath = Path.GetTempFileName();

@@ -12,6 +12,7 @@ namespace PhotosOfUs.Model.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<BrandAccount> BrandAccount { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
@@ -98,14 +99,23 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<PrintPrice>();
 
-            modelBuilder.Entity<Tag>();
+            modelBuilder.Entity<Tag>(entity =>
+            {
+                entity.ToTable("Tag");
+
+            });
 
             modelBuilder.Entity<PhotoTag>(entity =>
             {
+                entity.ToTable("PhotoTag");
                 entity.HasKey(x => new { x.PhotoId, x.TagId });
+                entity.HasOne(x => x.Photo).WithMany(p => p.PhotoTag).HasForeignKey(pt => pt.PhotoId);
+                entity.HasOne(x => x.Tag).WithMany(t => t.PhotoTags).HasForeignKey(pt => pt.TagId);
+
                 entity.Property(e => e.RegisterDate).HasColumnType("datetime");
             });
 
+            
             modelBuilder.Ignore<RootObject>();
         }
     }

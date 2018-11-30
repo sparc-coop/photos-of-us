@@ -12,6 +12,10 @@
         height: 240px;
         width: 23%;
         margin: 0 1% 20px;
+
+        @media screen and (max-width: $mobile) {
+            width: 48%;
+        }
     }
 
     .photo-card--grid {
@@ -75,17 +79,18 @@
                 background: #DFDFDF;
                 border-radius: 50%;
             }
-            .teste{
-                border-radius:18px;
+
+            .teste {
+                border-radius: 18px;
             }
-            .md-icon-button{
-                padding-right:0px;
-                margin-right:0px;
+
+            .md-icon-button {
+                padding-right: 0px;
+                margin-right: 0px;
             }
 
             .material-icons {
                 color: #43C6BA;
-                
                 right: 8px;
                 z-index: 4;
                 cursor: pointer;
@@ -155,6 +160,11 @@
             cursor: pointer;
             outline: none;
             text-decoration: none;
+            z-index: 20;
+
+            @media screen and (max-width: $mobile) {
+                width: 28%;
+            }
 
             &--title {
                 padding-bottom: 22px;
@@ -162,6 +172,10 @@
 
             &--date {
                 padding-bottom: 64px;
+
+                @media screen and (max-width: $mobile) {
+                    padding-bottom: 30px;
+                }
             }
 
             .label {

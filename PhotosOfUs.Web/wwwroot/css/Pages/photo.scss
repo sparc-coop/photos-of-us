@@ -358,6 +358,11 @@
         cursor: pointer;
         outline: none;
 
+        @media screen and (max-width: $mobile) {
+            width: 43%;
+            margin-bottom: 20px;
+        }
+
         img {
             margin: 0 auto;
             padding: 57px 0 20px 0;

@@ -39,10 +39,16 @@
                     </div>
                         <div class="gallery-upload-container" ng-cloak ng-show="user.IsPhotographer">
                             <div ng-if="photographer.Id == user.Id" ng-cloak>
-                                <a href="#" ng-click="toggleSelection()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Select Photos</span></a><br />
-                                <a href="#" ng-click="openBulkEdit()" class="btn-upload"><img src="~/images/icons/add-photo.png" /><span class="upload-text">Edit Photos</span></a><br />
+                                <a href="#" ng-click="toggleSelection()" class="btn-upload">
+                                    <i class="material-icons">photo</i>    
+                                    <span class="upload-text">Select Photos</span>
+                                </a><br />
+                                <a href="#" ng-click="openBulkEdit()" class="btn-upload">
+                                    <i class="material-icons">edit</i> 
+                                    <span class="upload-text">Edit Photos</span>
+                                </a><br />
                                 <a href="#" ng-click="openUpload()" class="btn-upload">
-                                    <img src="~/images/icons/add-photo.png" />
+                                    <i class="material-icons">add_photo_alternate</i>
                                     <span class="upload-text">Click here to upload</span>
                                 </a>
                             </div>

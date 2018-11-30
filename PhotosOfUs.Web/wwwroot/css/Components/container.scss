@@ -1,11 +1,14 @@
-﻿.flex-box {
+﻿@import '../variables.scss';
+
+.flex-box {
     display: flex;
     flex-wrap: wrap;
-    .photo{
+
+    .photo {
         padding-right: 30px;
     }
 
-    img{
+    img {
         border-radius: 8px;
         margin: 24px 24px 0 0;
         max-width: 600px;
@@ -20,7 +23,11 @@
     .align-right {
         margin-left: auto;
 
-        i{
+        @media screen and (max-width: $mobile) {
+            margin-left: unset;
+        }
+
+        i {
             cursor: pointer;
         }
     }

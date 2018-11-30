@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -8,6 +10,6 @@ namespace PhotosOfUs.Model.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<PhotoTag> PhotoTag { get; set; }
+        public virtual ICollection<PhotoTag> PhotoTags { get; set; }
     }
 }

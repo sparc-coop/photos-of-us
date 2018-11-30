@@ -19,13 +19,19 @@
     }
 
     .logo {
-        /*position: absolute;
-        left: 80px;*/
-        margin-top: -6px;
+        margin-top: -9px;
+
+        img {
+            width: 45px;
+        }
     }
 
     &--center {
         margin: 0 auto;
+
+        @media screen and (max-width: $mobile) {
+            margin-left: 25px;
+        }
 
         .menu-item {
             margin: 0 26px;
@@ -42,6 +48,10 @@
         position: absolute;
         right: 46px;
         margin-top: -11px;
+
+        @media screen and (max-width: $mobile) {
+            right: 26px;
+        }
 
         img {
             padding: 5px 10px 10px 10px;
@@ -149,7 +159,7 @@
         width: 100vw;
         padding: 20px 0 0 0;
 
-        .logo{
+        .logo {
             margin-left: 20px;
         }
     }

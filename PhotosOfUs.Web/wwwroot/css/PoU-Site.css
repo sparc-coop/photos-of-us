@@ -339,6 +339,9 @@
     height: 240px;
     width: 23%;
     margin: 0 1% 20px; }
+    @media screen and (max-width: 450px) {
+      .folder-card--wrapper .photo-card, .folder-card--wrapper .photo-card--grid, .folder-card--wrapper .folder-card {
+        width: 48%; } }
   .folder-card--wrapper .photo-card--grid {
     background-repeat: no-repeat;
     background-size: cover;
@@ -433,11 +436,18 @@
       margin-right: 12px;
       cursor: pointer;
       outline: none;
-      text-decoration: none; }
+      text-decoration: none;
+      z-index: 20; }
+      @media screen and (max-width: 450px) {
+        .folder-card--wrapper .codeView__card {
+          width: 28%; } }
       .folder-card--wrapper .codeView__card--title {
         padding-bottom: 22px; }
       .folder-card--wrapper .codeView__card--date {
         padding-bottom: 64px; }
+        @media screen and (max-width: 450px) {
+          .folder-card--wrapper .codeView__card--date {
+            padding-bottom: 30px; } }
       .folder-card--wrapper .codeView__card .label {
         font-family: "Open Sans";
         font-weight: 600;
@@ -469,6 +479,9 @@
     margin-right: auto; }
   .flex-box .align-right {
     margin-left: auto; }
+    @media screen and (max-width: 450px) {
+      .flex-box .align-right {
+        margin-left: unset; } }
     .flex-box .align-right i {
       cursor: pointer; }
 
@@ -558,7 +571,9 @@ body {
     color: #43C6BA; }
   .filters .filter-sort {
     margin-right: 60px;
-    display: inline-block; }
+    display: inline-block;
+    border: 1px solid #43C6BA;
+    border-radius: 8px; }
     .filters .filter-sort select {
       outline: none;
       color: #43C6BA;
@@ -568,8 +583,12 @@ body {
         border: none; }
     @media screen and (max-width: 450px) {
       .filters .filter-sort {
-        padding: 15px 0;
-        margin-right: 40px; } }
+        margin-top: 15px;
+        margin-right: 10px; } }
+    .filters .filter-sort .sort-box {
+      padding: 5px;
+      background: #FFFFFF;
+      border-radius: 8px; }
 
 @media screen and (max-width: 450px) {
   html {
@@ -1145,11 +1164,14 @@ body {
     color: #FFFFFF;
     vertical-align: middle; }
   .nav .logo {
-    /*position: absolute;
-        left: 80px;*/
-    margin-top: -6px; }
+    margin-top: -9px; }
+    .nav .logo img {
+      width: 45px; }
   .nav--center {
     margin: 0 auto; }
+    @media screen and (max-width: 450px) {
+      .nav--center {
+        margin-left: 25px; } }
     .nav--center .menu-item {
       margin: 0 26px;
       cursor: pointer; }
@@ -1160,6 +1182,9 @@ body {
     position: absolute;
     right: 46px;
     margin-top: -11px; }
+    @media screen and (max-width: 450px) {
+      .nav--right {
+        right: 26px; } }
     .nav--right img {
       padding: 5px 10px 10px 10px;
       outline: none;
@@ -1916,6 +1941,12 @@ md-dialog {
     position: absolute;
     top: 16px;
     right: 18px; }
+  @media screen and (max-width: 450px) {
+    #photographer-upload--wrapper {
+      height: 245px; }
+      #photographer-upload--wrapper .drop-zone {
+        left: unset;
+        top: unset; } }
 
 #photographer-upload--wrapper textarea {
   resize: none; }
@@ -2457,6 +2488,10 @@ canvas {
   text-align: center;
   cursor: pointer;
   outline: none; }
+  @media screen and (max-width: 450px) {
+    .photographer-dashboard--wrapper .folder-new {
+      width: 43%;
+      margin-bottom: 20px; } }
   .photographer-dashboard--wrapper .folder-new img {
     margin: 0 auto;
     padding: 57px 0 20px 0;
@@ -3011,8 +3046,8 @@ tags-input .tag-item {
   border-width: 0px; }
 
 .photographer-profile--wrapper {
-  transform: translateY(-150px);
-  -webkit-transform: translateY(-150px); }
+  transform: translateY(-134px);
+  -webkit-transform: translateY(-134px); }
   .photographer-profile--wrapper .g-no-padding {
     padding-left: 0;
     padding-right: 0; }
@@ -3020,13 +3055,14 @@ tags-input .tag-item {
     .photographer-profile--wrapper .g-no-padding-xs {
       padding: 0; } }
   .photographer-profile--wrapper .gallery-image-pad {
-    padding: 10px; }
+    padding: 10px 16px 20px 16px; }
   .photographer-profile--wrapper .photographer-info .photographer-image {
     height: 120px;
     width: 120px;
     background-size: cover;
     background-position: center;
-    border-radius: 50%; }
+    border-radius: 50%;
+    margin-top: 10px; }
   .photographer-profile--wrapper .photographer-info h2 {
     margin-bottom: 5px;
     font-size: 28px;
@@ -3093,16 +3129,17 @@ tags-input .tag-item {
     .photographer-profile--wrapper .gallery-upload-container .btn-upload {
       display: block;
       text-align: center;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
       border-radius: 15px;
       border: 1px solid #43C6BA;
-      padding: 10px 15px;
+      padding: 7px 15px;
       text-decoration: none;
       color: #43C6BA;
       transition: transform .2s; }
-      .photographer-profile--wrapper .gallery-upload-container .btn-upload img {
-        margin-right: 5px;
-        vertical-align: middle; }
+      .photographer-profile--wrapper .gallery-upload-container .btn-upload i {
+        font-size: 20px;
+        vertical-align: middle;
+        margin-top: -5px;
+        margin-right: 11px; }
     .photographer-profile--wrapper .gallery-upload-container .btn-upload:hover {
       transform: scale(1.1);
       -ms-transform: scale(1.1);
@@ -3356,8 +3393,14 @@ tags-input .tag-item {
     opacity: 1; }
     .account-settings .form-account .img-container:hover .overlay .material-icons {
       color: white; }
+  @media screen and (max-width: 450px) {
+    .account-settings .form-account--social {
+      margin-top: 20px; } }
   .account-settings .form-account--social input, .account-settings .form-account--social .form-input textarea, .form-input .account-settings .form-account--social textarea {
     width: 300px; }
+    @media screen and (max-width: 450px) {
+      .account-settings .form-account--social input, .account-settings .form-account--social .form-input textarea, .form-input .account-settings .form-account--social textarea {
+        width: 100%; } }
   .account-settings .form-account--social .form-input {
     display: flex; }
     .account-settings .form-account--social .form-input img {
@@ -3443,7 +3486,8 @@ tags-input .tag-item {
 .landing {
   overflow-x: hidden; }
   .landing .logo {
-    padding: 32px 0 0 96px; }
+    padding: 32px 0 0 96px;
+    width: 55px; }
   .landing .yellow-text {
     color: #FFE261; }
   .landing .top-photos {

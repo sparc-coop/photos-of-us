@@ -100,6 +100,8 @@ body {
     .filter-sort {
         margin-right: 60px;
         display: inline-block;
+        border: 1px solid $primary;
+        border-radius: 8px;
 
         select {
             outline: none;
@@ -113,8 +115,14 @@ body {
         }
 
         @media screen and (max-width: $mobile) {
-            padding: 15px 0;
-            margin-right: 40px;
+            margin-top: 15px;
+            margin-right: 10px;
+        }
+
+        .sort-box {
+            padding: 5px;
+            background: $white;
+            border-radius: 8px;
         }
     }
 }
