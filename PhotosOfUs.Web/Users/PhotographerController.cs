@@ -343,16 +343,18 @@ namespace PhotosOfUs.Web.Controllers
             {
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    int folderId = photographer.PublicFolder.Id;
-                    await file.CopyToAsync(stream);
+
+                    int folderId;
                     if (photographer.PublicFolder == null)
                     {
                         folderId = photographer.AddFolder("Public").Id;
                         _photo.Commit();
                     }
+                    folderId = photographer.PublicFolder.Id;
+                    await file.CopyToAsync(stream);
                     //await _user.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
                     await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags));
-                    }
+                }
             }
 
             return AzureCognitiveViewModel.ToViewModel(suggestedtags);

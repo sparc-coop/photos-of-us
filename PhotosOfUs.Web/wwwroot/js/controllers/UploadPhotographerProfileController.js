@@ -55,6 +55,8 @@
                 item.formData[0].tags += " " + tag.text;
             })
 
+            item.formData[0].price = item.file.price;
+
             item.upload();
         });
         $scope.saveAllUpload = true;
