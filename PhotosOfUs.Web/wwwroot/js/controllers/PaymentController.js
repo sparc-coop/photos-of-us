@@ -1,7 +1,5 @@
 ﻿app.controller('PaymentCtrl', ['$scope', '$window', '$http', ($scope, $window, $http) => {
 
-    $scope.orderTotal = 0;
-
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {
             $scope.orderDetails = x.data;
@@ -81,10 +79,6 @@
         };
 
         $http.post('/api/Cart/SaveAddress', addressInfo).then(x => {
-        });
-
-        $http.post('/api/Cart/ConfirmationEmail', addressInfo).then(x => {
-            $window.location.href = "/Orders/Confirmation";
         });
     };
 

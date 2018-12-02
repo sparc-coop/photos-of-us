@@ -21,15 +21,13 @@ namespace PhotosOfUs.Web.Controllers.API
     public class CartApiController : Controller
     {
         private IRepository<Order> _order;
-        private IRepository<Photo> _photo;
         private IRepository<User> _user;
 
         public Order Cart { get; set; }
 
-        public CartApiController(IRepository<Order> orderRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public CartApiController(IRepository<Order> orderRepository, IRepository<User> userRepository)
         {
             _order = orderRepository;
-            _photo = photoRepository;
             _user = userRepository;
         }
 
@@ -54,25 +52,6 @@ namespace PhotosOfUs.Web.Controllers.API
             public int PrintTypeId { get; set; }
             public int Quantity { get; set; }
             public PrintType PrintType { get; set; }
-        }
-
-        [HttpPost]
-        [Route("ConfirmationEmail")]
-        public async Task<string> SendConfirmationEmail([FromBody]AddressViewModel address)
-        {
-            var apiKey = "";
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("photosofus@kuviocreative.com");
-            var subject = $"Photos Of Us Order Confirmation";
-            var to = new EmailAddress(address.Email);
-            var plainTextContent = address.FullName + ", thank you for your order.";
-            var htmlContent = $"Hello {address.FullName}, <br/> Thank you for your order of {Cart.OrderDetail.Count()} photo(s).<br/>" +
-                $"Shipping Address: <br/>{address.Address1} <br/>{address.City}, {address.State} {address.ZipCode}";
-            //  $"<br/> {item.Photo.Name},{item.PrintType.Type}: {item.PrintType.Length} x {item.PrintType.Height}";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            await client.SendEmailAsync(msg);
-
-            return "success";
         }
     }
 }

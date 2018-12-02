@@ -22,7 +22,7 @@
                 <div>@order.Id</div>
                 <div>@order.OrderDate.ToShortDateString()</div>
                 <div>@order.OrderStatus</div>
-                <div ng-repeat="order in orderTotalList" ng-if="order.id == @order.Id" ng-cloak>${{order.total}}</div>
+                <div>@string.Format("{0:C}", order.CalculatedTotal)</div>
                 <i class="material-icons arrow" ng-class="{'arrow-clicked': showDetails}">chevron_right</i>
             </div>
             <div ng-show="showDetails" class="order-details">

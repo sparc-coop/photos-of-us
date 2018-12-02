@@ -123,14 +123,12 @@
     }
 
     $scope.orderDetailsList = [];
-    $scope.orderTotalList = [];
     $scope.totalSales = 0;
     $scope.totalEarned = 0;
 
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
             $scope.orderDetails = x.data.OrderDetail;
-            $scope.orderTotal = x.data.CalculatedTotal;
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
                 $scope.totalEarned += value.Photo.Price;
@@ -146,19 +144,6 @@
                 $scope.totalSales += value.Quantity;
                 $scope.totalMade += value.UnitPrice * value.Quantity;
             });
-        });
-    };
-
-    $scope.getOrderTotal = (orderId) => {
-        $http.get('/api/Cart/GetOrderTotal/' + orderId).then(x => {
-            $scope.orderTotal = x.data;
-            $scope.orderTotalList.push(
-                {
-                    id: orderId,
-                    total: $scope.orderTotal
-                }
-            );
-            $scope.totalSales += x.data;
         });
     };
 
