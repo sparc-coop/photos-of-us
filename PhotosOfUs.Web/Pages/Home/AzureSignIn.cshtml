@@ -1,31 +1,28 @@
-﻿@{
-    ViewBag.Title = "Sign Up";
+﻿@page
+@{
+    ViewBag.Title = "Login";
     Layout = null;
 }
+
 <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.8/angular-material.min.css" />
 <link href="https://fonts.googleapis.com/css?family=Dosis:400,600|Open+Sans:400,600,700" rel="stylesheet">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
-<div style="display: flex;    width: 100%; height: 100%;">
-    <div style="flex-grow: 0;width: calc(60% - 60px);padding: 30px;position: relative;">
-        <div>
-            <img style="width: 45px; margin: 20px 0px 0px 20px;    float: left;" src="https://photosofus-dev.azurewebsites.net/images/logo.png" alt="Photo Of Us" />
-        </div>
-        <div style="margin: auto;position: absolute;margin-right: auto;margin-left: auto;width: calc(100% - 60px);top: 50%;transform: translateY(-50%);">
+<div style="display: flex; flex-wrap: wrap; width: 100%; height: 100%; position: relative;">
+    <img style="width: 45px; margin: 20px 0px 0px 20px;    float: left;" src="https://photosofus-dev.azurewebsites.net/images/logo.png" alt="Photo Of Us" class="mobile--logo" />
+    <div style="flex-grow: 0;width: calc(60% - 60px);padding: 30px;position: relative;" class="mobile">
+        <div style="margin: auto;position: absolute;margin-right: auto;margin-left: auto;width: calc(100% - 60px);top: 50%;transform: translateY(-50%);" class="mobile--login">
             <div style="width: 60%; margin: auto;">
-                <div style="text-align:center">
-                    <h3 class="login__header">Join Photos Of Us</h3>
-                    <text>Already have an account? <a href="https://photosofus-dev.azurewebsites.net/Photographer/Dashboard">Sign In</a></text>
-                    <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
-                </div>
+                <h3 class="login__header" style="text-align:center">Welcome Back!</h3>
+                <hr style="border-color: red; width: 30%; margin-bottom: 30px" />
                 <div id="api" data-name="Unified">
                 </div>
             </div>
         </div>
     </div>
-    <div style="flex-grow: 1;    background: #19C0DB;  height: 100%; background-image: url(https://photosofus.blob.core.windows.net/login/Sample_picture.PNG); background-size: cover;">
+    <div style="flex-grow: 1;    background: #19C0DB;  height: 100%; background-image: url(https://photosofus.blob.core.windows.net/login/Sample_picture.PNG); background-size: cover;" class="mobile--img">
     </div>
 </div>
 
@@ -45,9 +42,6 @@
         display: none;
     }
 
-    ul {
-        padding: 0;
-    }
     /*.localAccount .create {
         display: none;
     }*/
@@ -60,11 +54,18 @@
         letter-spacing: 0;
     }
 
+    #api {
+    }
+
     #SignInWithLogonNameExchange, #SignUpWithLogonEmailExchange, #next {
         background: #C0DB19;
     }
 
-    #FacebookExchange {
+    #GoogleExchange {
+        background: #F44336;
+    }
+
+    /*#FacebookExchange {
         color: white;
         background-color: blue;
         border-radius: 6px;
@@ -73,13 +74,47 @@
         width: 96%;
         margin-top: 10px;
         margin-right: 100px;
+    }*/
+
+    #FacebookExchange {
+        box-sizing: border-box;
+        position: relative;
+        /* width: 13em;  - apply for fixed size */
+        margin: 0.2em;
+        width: 100%;
+        border: none;
+        line-height: 34px;
+        white-space: nowrap;
+        border-radius: 0.2em;
+        font-size: 16px;
+        color: #FFF;
+        background-color: #4C69BA;
+        background-image: linear-gradient(#4C69BA, #3B55A0);
+        /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+        text-shadow: 0 -1px 0 #354C8C;
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 
-    #GoogleExchange {
-        background: #F44336;
-    }
+        #FacebookExchange:before {
+            border-right: #364e92 1px solid;
+            background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 34px;
+            height: 100%;
+        }
 
-    #SignInWithLogonNameExchange, #GoogleExchange, #SignUpWithLogonEmailExchange, #next, #continue {
+        #FacebookExchange:hover,
+        #FacebookExchange:focus {
+            background-color: #5B7BD5;
+            background-image: linear-gradient(#5B7BD5, #4864B1);
+        }
+
+    #SignInWithLogonNameExchange, #GoogleExchange, #SignUpWithLogonEmailExchange, #next {
         border-radius: 4px;
         width: 100%;
         font-family: Poppins;
@@ -96,50 +131,12 @@
         position: relative;
     }
 
-    .verificarionInfoText #email_intro {
-        display: none;
-    }
-
-    .attrEntry .helpText {
-        display: none;
-    }
-
-    .attr li {
-        padding-left: -40px;
-        list-style: none;
-    }
-
-    .attrEntry label {
+    .localAccount label[for=logonIdentifier], .localAccount label[for=password] {
         font-family: "Open Sans";
         font-size: 10px;
         color: #757575;
         display: inline;
         padding-bottom: 8px;
-    }
-
-    .attrEntry input {
-        width: 95.5%;
-        padding: 7px 10px;
-        border: 1px solid #43C6BA;
-        border-radius: 3px;
-        outline: none;
-        margin-bottom: 10px;
-    }
-
-    .helpLink .tiny {
-        display: none;
-    }
-
-    .tiny {
-        display: none;
-    }
-
-    .error.itemLevel {
-        display: none;
-    }
-    
-    .error.itemLevel p {
-        display: none;
     }
 
     #logonIdentifier, #password {
@@ -160,33 +157,13 @@
         transform: translateY(-50%);
     }
 
-    .buttons #continue {
-        color: black;
-        background-color: yellow;
-        border-radius: 6px;
-        border-style: solid;
-        border-color: white;
-        margin-top: 10px;
-        margin-right: 100px;
-    }
-    button#continue:disabled {
-        color: white;
-        background: grey;
-    }
-
-    .buttons #cancel {
-        display: none;
-    }
-
     #api .entry button {
         color: black;
         background-color: yellow;
         border-radius: 6px;
         border-style: solid;
-        border-color: white;
-        width: 96%;
+        border-color: yellow;
         margin-top: 10px;
-        margin-right: 100px;
     }
 
 
@@ -205,6 +182,9 @@
             text-transform: lowercase;
         }
 
+
+
+
     .create {
         text-align: center;
     }
@@ -220,8 +200,31 @@
         margin-left: 6px;
     }
 
+
+
     .divider:nth-of-type(4) {
         display: none;
     }
-</style>
 
+    @@media screen and (max-width: 450px) {
+        .mobile{
+            width: 100%;
+            margin: 100px 0;
+        }
+
+        .mobile--logo {
+            position: absolute;
+            top: -177px;
+            left: 30px;
+        }
+
+        .mobile--login {
+            width: 80%;
+        }
+
+        .mobile--img {
+            height: 65%;
+            width:unset;
+        }
+    }
+</style>
