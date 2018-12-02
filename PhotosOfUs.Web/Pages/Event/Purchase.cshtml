@@ -6,7 +6,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); getPrintTypes(); priceModal(); getPhotographer(@Model.Photo.PhotographerId)">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); priceModal(); getPhotographer(@Model.Photo.PhotographerId)">
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
@@ -49,24 +49,14 @@
         <div ng-click="showPriceModal()" class="price__info">Price Breakdown</div>
         <div class="purchase__options--container">
             <div class="purchase__options--row">
-                <div class="select"><md-checkbox aria-label="Select" ng-click="selectAll(printTypes)"></md-checkbox></div>
+                <div class="select"><md-checkbox aria-label="Select" ng-click="selectAllPrintTypes()"></md-checkbox></div>
                 @*<div class="icon"></div>*@
                 <div class="type">Type</div>
                 <div class="height">Height</div>
                 <div class="length">Length</div>
                 <div class="quantity">QTY</div>
                 <div class="price">Price</div>
-
             </div>
-            @*<div class="purchase__options--row" ng-repeat="print in printTypes" ng-cloak>
-                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.Id, print.Quantity)" ng-checked="isSelected(print.Id)"></md-checkbox></div>
-                <div class="icon"><img src="~/images/icons/{{print.Icon}}.png" /></div>
-                <div class="type">{{print.Type}}</div>
-                <div class="height">{{print.Height}}in</div>
-                <div class="length">{{print.Length}}in</div>
-                <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
-                <div class="price"><strong>${{"@Model.Price" != null ? (print.BaseCost + @Model.Price) : print.BaseCost | number:2}}</strong></div>
-            </div>*@
             <div class="purchase__options--row" ng-repeat="print in standardProducts.items" ng-show="print.itemType == 'Print' && printQuality == 'Standard'">
                 <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.name, print.Quantity, print.price)" ng-checked="isSelected(print.name)"></md-checkbox></div>
                 <div class="type">{{print.itemType}}</div>

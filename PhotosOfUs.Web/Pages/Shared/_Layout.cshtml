@@ -70,7 +70,15 @@
                                             <div class="heading"><span class="item">Items</span><span class="price">Price</span></div>
                                             <div class="cart--preview__items">
                                                 <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
-                                                    <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                                                    <div class="type">
+                                                        {{item.PrintType.Name}}
+                                                    </div>
+                                                    <div class="quantity">
+                                                        x{{item.Quantity}}
+                                                    </div>
+                                                    <div class="price">
+                                                        ${{item.UnitPrice | number:2}}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="total"><span class="label">Cart Total</span><span class="amount">${{order.CalculatedTotal}}</span></div>
@@ -109,7 +117,15 @@
                             <div class="cart-items">
                                 <div class="cart--preview__items">
                                     <div ng-repeat="item in order.OrderDetail" class="cart--preview__item">
-                                        <div class="type" ng-repeat="print in printTypes" ng-if="print.Id == item.PrintTypeId">{{print.Type}}</div><div class="quantity">x{{item.Quantity}}</div><div class="price">${{item.UnitPrice | number:2}}</div>
+                                        <div class="type">
+                                            {{item.PrintType.Name}}
+                                        </div>
+                                        <div class="quantity">
+                                            x{{item.Quantity}}
+                                        </div>
+                                        <div class="price">
+                                            ${{item.UnitPrice | number:2}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="total"><span class="label">Cart Total</span><span class="amount">${{order.CalculatedTotal}}</span></div>

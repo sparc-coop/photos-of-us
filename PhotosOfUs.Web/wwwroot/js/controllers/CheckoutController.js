@@ -1,14 +1,8 @@
-﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', 'userApi', '$mdDialog', ($scope, $window, $location, $http, userApi, $mdDialog) => {
+﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
     $scope.goToCart = (userId) => {
         $window.location.href = '/Photo/Cart/' + userId;
     };
-
-    $scope.getPrintTypes = () => {
-        $http.get('/api/Photo/GetPrintTypes').then(x => {
-            $scope.printTypes = x.data;
-        });
-    };
-
+    
     $scope.priceModal = (user) => {
         if (user.PurchaseTour == true) {
             return null
@@ -74,11 +68,11 @@
 
     };
 
-    $scope.selectAll = function (printTypes) {
-        for (var i = 0; i < printTypes.length; i++) {
-            $scope.select(printTypes[i].Id);
+    $scope.selectAllPrintTypes = function () {
+        for (var i = 0; i < $scope.standardProducts.items.length; i++) {
+            var print = $scope.standardProducts.items[i];
+            $scope.select(print.name, print.Quantity, print.price);
         }
-        
     }
 
     $scope.isSelected = function (printId) {
@@ -92,11 +86,10 @@
 
     $scope.cartPreview = () => {       
         if ($scope.showCart == false) {
-            $scope.showCart = true;
             $http.get('/api/Cart').then(x => {
                 $scope.order = x.data;
+                $scope.showCart = true;
             });
-            $scope.getPrintTypes();
         }
         else if ($scope.showCart == true) {
             $scope.showCart = false;

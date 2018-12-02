@@ -26,14 +26,12 @@ namespace PhotosOfUs.Web.Controllers.API
         private IRepository<OrderDetail> _orderDetail;
         private IRepository<Photo> _photos;
 
-        public OrdersController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public OrdersController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository)
         {
             _orders = orderRepository;
             _orderDetail = orderDetailRepository;
             _photos = photoRepository;
-            _users = userRepository;
         }
-
 
         [HttpGet]
         [Route("GetOrderDetails/{orderId:int}")]
@@ -61,13 +59,6 @@ namespace PhotosOfUs.Web.Controllers.API
                 }).ToList();
 
             return salesHistory;
-        }
-
-        [HttpGet]
-        [Route("GetPrintTypes")]
-        public List<PrintTypeViewModel> GetPrintTypes()
-        {
-            return new Photo().GetPrintTypes().ToList().ToViewModel<List<PrintTypeViewModel>>();
         }
     }
 }

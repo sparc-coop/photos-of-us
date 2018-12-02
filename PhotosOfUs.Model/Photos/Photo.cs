@@ -57,13 +57,6 @@ namespace PhotosOfUs.Model.Models
         public string ThumbnailUrl => Url?.Replace("/photos/", "/thumbnails/");
         public string WaterMarkUrl => Url?.Replace("/photos/", "/watermark/");
 
-
-
-        public ICollection<PrintType> GetPrintTypes()
-        {
-            return PrintType;
-        }
-
         public void UpdatePrice(decimal newPrice)
         {
             Price = newPrice;
