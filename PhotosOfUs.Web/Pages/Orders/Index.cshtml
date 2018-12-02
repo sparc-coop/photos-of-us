@@ -1,31 +1,48 @@
 ﻿@page
 @model IndexModel
+@{
+    ViewData["Title"] = "My Orders";
+}
 
-<div>
-    <h2 class="header-large">Hello, @Model.UserName</h2>
-    
-    <div>
-        <div ng-controller="DownloadCtrl" ng-init="getOrders(@Model.OrderId)">
-            @*<div ng-click="bulkDownload(@Model.OrderId)" id="download" class="button--download">Download all photos</div>*@
-            <div ng-repeat="order in orders">
-                <div class="divider"></div>
-                <div>
-                    <div>
-                        <div>Order Id: {{order.Id}}</div>
-                        <div>Order Date: {{order.OrderDate | date}}</div>
-                        <div>Order Status: {{order.OrderStatus}}</div>
-                    </div>
-                    <div ng-repeat="item in orderItems" class="row">
-                        <div>{{item.UnitPrice}}</div>
-                        <div>{{item.Quantity}}</div>
-                        <div ng-repeat="photo in item" ng-if="photo.OrderId == order.Id">
-                            <img class="thumbnail" ng-src="{{photo.Photo.Url}}" alt="photo" />
-                            <a ng-href="{{photo.Photo.Url}}" download="">{{photo.Photo.Name}}</a>
-                        </div>
+<div class="order-history" ng-controller="CheckoutCtrl">
+    <h1 class="header-large">Order History</h1>
+    <div class="divider"></div>
 
-                    </div>
+    <input placeholder="Search order history by order id" ng-model="search" class="search"/>
+    <div class="header--row">
+        <div>ID</div>
+        <div>Date</div>
+        <div>Status</div>
+        <div>Total</div>
+    </div>
+    @foreach (var order in Model.Orders)
+    {
+        <div ng-if="'@order.Id'.includes(search)|| (search == null || search == '')" class="order-info" ng-cloak>
+            <div class="order--row" ng-click="showDetails = !showDetails">
+                <div>@order.Id</div>
+                <div>@order.OrderDate.ToShortDateString()</div>
+                <div>@order.OrderStatus</div>
+                <div>@string.Format("{0:C}", order.CalculatedTotal)</div>
+                <i class="material-icons arrow" ng-class="{'arrow-clicked': showDetails}">chevron_right</i>
+            </div>
+            <div ng-show="showDetails" class="order-details">
+                <div class="detail-divider"></div>
+                <div class="detail-header">
+                    <div>Image Name</div>
+                    <div>Quantity</div>
+                    <div>Print Type</div>
+                    <div>Unit Price</div>
                 </div>
+                @foreach (var item in order.OrderDetail)
+                {
+                    <div class="item--row">
+                        <div>@item.Photo.Name</div>
+                        <div>@item.Quantity</div>
+                        <div>@item.PrintType.Type</div>
+                        <div>$@item.UnitPrice</div>
+                    </div>
+                }
             </div>
         </div>
-    </div>
+    }
 </div>

@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace PhotosOfUs.Pages.Orders
 {
     public class IndexModel : PageModel
     {
         private IRepository<Order> _orders;
-        public string UserName { get; set; }
-        public int? OrderId { get; set; }
+        public List<Order> Orders { get; private set; }
 
         public IndexModel(IRepository<Order> orders)
         {
@@ -19,8 +19,7 @@ namespace PhotosOfUs.Pages.Orders
 
         public void OnGet()
         {
-            OrderId = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").Select(x => x.Id).FirstOrDefault();
-            UserName = User.DisplayName();
+            Orders = _orders.Include("OrderDetail.Photo").Where(x => x.UserId == User.ID()).ToList();
         }
     }
 }

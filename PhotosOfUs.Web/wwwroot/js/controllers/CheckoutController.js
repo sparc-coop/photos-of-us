@@ -1,4 +1,4 @@
-﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
+﻿app.controller('CheckoutCtrl', ['$scope', '$location', '$http', '$mdDialog', ($scope, $location, $http, $mdDialog) => {
     $scope.priceModal = (user) => {
         if (user.PurchaseTour == true) {
             return null
