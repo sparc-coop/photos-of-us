@@ -80,8 +80,8 @@
                     We know not everyone goes solo. For those of you who need a plan that suits your team of snappers, we’ve got you! Request a quote to get your own personalized plan.
                 </div>
                 <div ng-click="showForm = true" class="button--quote" ng-show="showForm != true">Request A Quote!</div>
-                <form class="teamQuote" method="post" action="/Contact/SendQuoteEmail" ng-show="showForm == true">
-                    <input placeholder="Your email address" name="FromEmail" />
+                <form class="teamQuote" method="post" ng-show="showForm == true">
+                    <input placeholder="Your email address" name="fromEmail" />
                     <button type="submit">Submit Email</button>
                 </form>
             </div>
