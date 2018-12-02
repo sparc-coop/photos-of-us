@@ -37,13 +37,6 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             Cart = _order.Include(x => x.OrderDetail).Find(x => x.UserId == User.ID() && x.OrderStatus == "Open");
         }
-
-        [HttpGet]
-        [Route("")]
-        public Order GetOpenOrder(int userId)
-        {
-            return Cart;
-        }
        
         [HttpPost]
         [Route("SaveAddress")]
@@ -55,23 +48,6 @@ namespace PhotosOfUs.Web.Controllers.API
             _user.Commit();
             return vm.ToViewModel<AddressViewModel>();
         }
-
-        
-        [HttpGet]
-        [Route("GetOrderTotal/{orderId:int}")]
-        public decimal GetOrderTotal(int orderId)
-        {
-            Order order = _order.Find(x => x.Id == orderId);
-            decimal total = 0;
-            foreach (var item in order.OrderDetail)
-            {
-                total += (item.UnitPrice * item.Quantity);
-            }
-
-            return total;
-        }
-
-        
 
         public class OrderItemsViewModel
         {

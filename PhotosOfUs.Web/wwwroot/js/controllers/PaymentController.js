@@ -6,15 +6,6 @@
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {
             $scope.orderDetails = x.data;
         });
-        angular.forEach($scope.orderDetails, function (value, key) {
-            $scope.orderTotal + value.UnitPrice;
-        }); 
-    };
-
-    $scope.getOrderTotal = (orderId) => {
-        $http.get('/api/Cart/GetOrderTotal/' + orderId).then(x => {
-            $scope.orderTotal = x.data;
-        });
     };
 
     $scope.initStripe = () => {

@@ -36,11 +36,14 @@ namespace PhotosOfUs.Model.Models
         public int Amount => OrderDetail.First().Quantity;
         public decimal TotalPaid => OrderDetail.First().UnitPrice * Amount;
         public decimal Earning => TotalPaid * (decimal)0.955;
+        
 
         public void AddLine(Photo photo, PrintType printType, int quantity)
         {
             OrderDetail.Add(new OrderDetail(photo, printType, quantity));
         }
+        
+        public decimal? CalculatedTotal => OrderDetail?.Sum(x => x.UnitPrice * x.Quantity);
 
         public void SetStatusToPending()
         {

@@ -1,42 +1,43 @@
 ﻿@page
+@model ConfirmationModel
 @{
     ViewData["Title"] = "Order Confirmation";
 }
 
-<div class="confirmation" ng-controller="CheckoutCtrl" ng-init="initConfirmation()">
+<div class="confirmation">
     <div class="header-large">Thank You For Your Order!</div>
     <div class="divider"></div>
     <div class="heading">Order Information</div>
     <div ng-cloak>
         <div class="content">
             <div class="content--info">Full Name</div> 
-            {{user.FirstName == null ? user.DisplayName : user.FirstName}} {{user.LastName == null ? '' : user.LastName}}
+            @Model.CurrentUser.DisplayName
         </div>
         <div class="content">
             <div class="content--info">Phone Number</div>
-            {{user.Address.Phone}}
+            @Model.CurrentUser.Address.Phone
         </div>
         <div class="content">
             <div class="content--info">Address</div>
-            {{user.Address.Address1}}
+            @Model.CurrentUser.Address.Address1
         </div>
         <div class="content">
             <div class="content--info">City & State</div>
-            {{user.Address.City}}, {{user.Address.State}}
+            @Model.CurrentUser.Address.City, @Model.CurrentUser.Address.State
         </div>
         <div class="content">
             <div class="content--info">Zip</div>
-            {{user.Address.ZipCode}}
+            @Model.CurrentUser.Address.ZipCode
         </div>
         <div class="content">
             <div class="content--info">Email</div>
-            {{user.Address.Email}}
+            @Model.CurrentUser.Address.Email
         </div>
     </div>
     <div class="divider"></div>
     <div ng-cloak>
-        <div class="content"><div class="content--info">Total Items</div>{{order.OrderDetail.length}}</div>
+        <div class="content"><div class="content--info">Total Items</div>@Model.TotalItems</div>
         <div class="content"><div class="content--info">Shipping Time</div>Ground Shipping</div>
-        <div class="content"><div class="content--info">Total Cost</div>${{orderTotal}}</div>
+        <div class="content"><div class="content--info">Total Cost</div>@string.Format("{0:C}", Model.TotalAmount)</div>
     </div>
 </div>

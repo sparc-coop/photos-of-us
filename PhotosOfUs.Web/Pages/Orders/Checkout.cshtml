@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = "Cart";
 }
-<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.OrderId); getOrderTotal(@Model.OrderId)">
+<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.OrderId);">
     <h1 class="header-large">Checkout</h1>
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
@@ -64,7 +64,7 @@
                     <div class="divider"></div>
                     <div class="total">
                         <div class="heading">Order Total</div>
-                        <div class="total-price">${{orderTotal}}</div>
+                        <div class="total-price">${{orderDetails.CalculatedTotal}}</div>
                     </div>
                 </div>
             </div>

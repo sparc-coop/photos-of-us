@@ -53,6 +53,8 @@ namespace PhotosOfUs.Model.Models
         public bool? DashboardTour { get; set; }
         public bool? PhotoTour { get; set; }
 
+        public string FullName => $"{(FirstName == null ? DisplayName : FirstName)}{(LastName == null ? "" : (" " + LastName))}";
+
         public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }

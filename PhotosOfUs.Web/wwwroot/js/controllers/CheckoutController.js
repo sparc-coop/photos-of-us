@@ -93,7 +93,9 @@
     $scope.cartPreview = () => {       
         if ($scope.showCart == false) {
             $scope.showCart = true;
-            $scope.getOpenOrder();
+            $http.get('/api/Cart').then(x => {
+                $scope.order = x.data;
+            });
             $scope.getPrintTypes();
         }
         else if ($scope.showCart == true) {
@@ -128,12 +130,12 @@
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
             $scope.orderDetails = x.data.OrderDetail;
+            $scope.orderTotal = x.data.CalculatedTotal;
             angular.forEach($scope.orderDetails, function (value, key) {
                 $scope.orderDetailsList.push(value);
                 $scope.totalEarned += value.Photo.Price;
             });
         });
-        $scope.getOrderTotal(orderId);
     };
 
     $scope.getSalesHistory = () => {
@@ -162,22 +164,6 @@
 
     $scope.getUser = () => {
         $http.get('/api/User').then(x => { $scope.user = x.data; $scope.priceModal(x.data);});
-    };
-
-    $scope.getOpenOrder = () => {
-        $http.get('/api/Cart').then(x => {
-            $scope.order = x.data;
-            if (x.data != '') {
-                $scope.getOrderTotal($scope.order.Id);
-            }
-        });
-    }; 
-
-    $scope.initConfirmation = () => {
-        userApi.getUser().then(function (x) {
-            $scope.user = x.data;
-            $scope.getOpenOrder();
-        });
     };
 
     $scope.createPwintyOrder = () => {
