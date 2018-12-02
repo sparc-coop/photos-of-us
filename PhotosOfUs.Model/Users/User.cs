@@ -11,7 +11,7 @@ namespace PhotosOfUs.Model.Models
         {
             Folder = new HashSet<Folder>();
             Order = new HashSet<Order>();
-            Photo = new HashSet<Photo>();
+            Photos = new HashSet<Photo>();
             UserIdentities = new HashSet<UserIdentity>();
         }
         
@@ -56,7 +56,7 @@ namespace PhotosOfUs.Model.Models
         public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Folder> Folder { get; set; }
         public ICollection<Order> Order { get; set; }
-        public ICollection<Photo> Photo { get; set; }
+        public ICollection<Photo> Photos { get; set; }
         public ICollection<PrintPrice> PrintPrice { get; set; }
         public ICollection<UserIdentity> UserIdentities { get; set; }
         public Address Address { get; set; }

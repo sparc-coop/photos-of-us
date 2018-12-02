@@ -29,50 +29,26 @@ namespace PhotosOfUs.Web.Controllers
     {
         private PhotosOfUsContext _context;
         private readonly IRepository<Photo> _photo;
-        private readonly IRepository<Order> _order;
         private readonly IRepository<User> _user;
         private readonly IRepository<Card> _card;
         private readonly IRepository<Folder> _folder;
 
         public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
-        IRepository<Order> orderRepository, IRepository<User> userRepository, IRepository<Card> cardRepository, IRepository<Folder> folderRepository)
+        IRepository<User> userRepository, IRepository<Card> cardRepository, IRepository<Folder> folderRepository)
         {
             _context = context;
             _photo = photoRepository;
-            _order = orderRepository;
             _user = userRepository;
             _card = cardRepository;
             _folder = folderRepository;
         }
 
-        // GET: Photographer
         [Authorize]
         public ActionResult Index()
         {
-            return RedirectToAction("Dashboard");
+            return RedirectToPage("Photographer/Dashboard");
         }
-
-        [Authorize]
-        public ActionResult Dashboard()
-        {
-            var photographer = _user.Find(x => x.Id == User.ID());
-
-            if (photographer.IsPhotographer == true)
-            {
-                PhotographerDashboardViewModel model = new PhotographerDashboardViewModel();
-                model.PhotographerId = photographer.Id;
-                model.Name = User.Identity.Name;
-
-                return View(model);
-            }
-            else
-            {
-                return Redirect("/Photographer/Search");
-            }
-
-        }
-
-        // GET: Photographer/Details/5
+       
         [Authorize]
         public ActionResult Photos(int id)
         {

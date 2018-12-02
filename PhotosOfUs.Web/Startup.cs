@@ -113,6 +113,8 @@ namespace PhotosOfUs.Web
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            services.AddScoped<StorageContext>();
+
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
