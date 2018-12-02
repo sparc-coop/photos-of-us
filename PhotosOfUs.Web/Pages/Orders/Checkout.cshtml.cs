@@ -17,7 +17,7 @@ namespace PhotosOfUs.Pages.Orders
         private IRepository<Order> _orders;
         private readonly IRepository<User> _users;
 
-        public int OrderId { get; private set; }
+        public Order Order { get; private set; }
 
         public CheckoutModel(IRepository<Order> orders, IRepository<User> users)
         {
@@ -27,15 +27,23 @@ namespace PhotosOfUs.Pages.Orders
 
         public void OnGet()
         {
-            OrderId = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").Select(x => x.Id).FirstOrDefault();
+            Order = _orders.Include("OrderDetail.Photo").Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
         }
 
-        public async Task<IActionResult> OnPostAsync(string stripeToken)
+        public async Task<IActionResult> OnPostAsync(Address address, string stripeToken)
         {
+            SaveAddress(address);
             ChargePayment(stripeToken);
             await SendConfirmationEmail();
 
             return RedirectToPage("Confirmation");
+        }
+
+        public void SaveAddress(Address address)
+        {
+            var user = _users.Find(x => x.Id == User.ID());
+            user.SetAddress(address);
+            _users.Commit();
         }
 
         private void ChargePayment(string stripeToken)

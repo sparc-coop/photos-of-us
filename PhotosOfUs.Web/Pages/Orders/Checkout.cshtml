@@ -1,79 +1,77 @@
 ﻿@page
-@using Microsoft.Extensions.Options
-@inject IOptions<PhotosOfUs.Web.Extensions.StripeSettings> Stripe
 @model CheckoutModel
 
 @{
     ViewData["Title"] = "Cart";
 }
-<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.OrderId);">
+<div class="cart" ng-controller="PaymentCtrl">
     <h1 class="header-large">Checkout</h1>
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
 
-    <div class="checkout">
-        <div style="display: flex; max-width: 600px">
-            <div>
-                <div class="info-title">Delivery Information</div>
-                <form action="/Cart/SaveAddress" method="POST" class="form">
-                    <div class="form-input">
-                        <label>First Name</label>
-                        <input ng-model="address.FirstName" />
-                    </div>
-                    <div class="form-input">
-                        <label>Last Name</label>
-                        <input ng-model="address.LastName" />
-                    </div>
-                    <div class="form-input">
-                        <label>Phone Number</label>
-                        <input ng-model="address.Phone" />
-                    </div>
-                    <div class="form-input">
-                        <label>Street Address</label>
-                        <input ng-model="address.Address1" />
-                    </div>
-                    <div class="form-input">
-                        <label>City</label>
-                        <input ng-model="address.City" />
-                    </div>
-                    <div class="form-input">
-                        <label>State</label>
-                        <input ng-model="address.State" />
-                    </div>
-                    <div class="form-input">
-                        <label>Zip</label>
-                        <input ng-model="address.ZipCode" />
-                    </div>
-                    <div class="form-input form-input--email">
-                        <label>Email</label>
-                        <input ng-model="address.Email" />
-                    </div>
-                </form>
-
-            </div>
-            <div class="summary">
-                <div style="position: relative;">
-                    <div class="title">Order Summary</div>
-                    <div class="cart-items">
-                        <div ng-repeat="item in orderDetails" class="cart-item">
-                            <div class="name">{{item.Photo.Name}}</div>
-                            <div class="amount">${{item.UnitPrice | number: 2}}</div>
+    <form method="POST" id="payment-form">
+        <div class="checkout">
+            <div style="display: flex; max-width: 600px">
+                <div>
+                    <div class="info-title">Delivery Information</div>
+                        <div class="form-input">
+                            <label>First Name</label>
+                            <input name="FirstName" ng-model="address.FirstName" />
+                        </div>
+                        <div class="form-input">
+                            <label>Last Name</label>
+                            <input name="LastName" ng-model="address.LastName" />
+                        </div>
+                        <div class="form-input">
+                            <label>Phone Number</label>
+                            <input name="Phone" ng-model="address.Phone" />
+                        </div>
+                        <div class="form-input">
+                            <label>Street Address</label>
+                            <input name="Address1" ng-model="address.Address1" />
+                        </div>
+                        <div class="form-input">
+                            <label>City</label>
+                            <input name="City" ng-model="address.City" />
+                        </div>
+                        <div class="form-input">
+                            <label>State</label>
+                            <input name="State" ng-model="address.State" />
+                        </div>
+                        <div class="form-input">
+                            <label>Zip</label>
+                            <input name="ZipCode" ng-model="address.ZipCode" />
+                        </div>
+                        <div class="form-input form-input--email">
+                            <label>Email</label>
+                            <input name="Email" ng-model="address.Email" />
                         </div>
                     </div>
-                    @*<div class="shipping"><div></div>Standard Shipping</div>*@
-                    <div class="divider"></div>
-                    <div class="total">
-                        <div class="heading">Order Total</div>
-                        <div class="total-price">{{orderDetails.CalculatedTotal | number:2 }}</div>
+                <div class="summary">
+                    <div style="position: relative;">
+                        <div class="title">Order Summary</div>
+                        <div class="cart-items">
+                            @foreach (var item in Model.Order.OrderDetail)
+                            {
+                                <div class="cart-item">
+                                    <div class="name">@item.Photo.Name</div>
+                                    <div class="amount">@string.Format("{0:C}", item.UnitPrice)</div>
+                                </div>
+                            }
+                        </div>
+                        @*<div class="shipping"><div></div>Standard Shipping</div>*@
+                        <div class="divider"></div>
+                        <div class="total">
+                            <div class="heading">Order Total</div>
+                            <div class="total-price">@string.Format("{0:C}", Model.Order.CalculatedTotal)</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div>           
-            <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
-            <div>
-                <form method="POST" id="payment-form">
-                    <button class="button--yellow button--yellow--payment" ng-click="saveAddress(address)" 
+            <div>           
+                <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
+                <div>
+                    <button type="submit" class="button--yellow button--yellow--payment" 
                             ng-class="{'disabled': address.Email == null; address.ZipCode == null; address.Address1 == null}">
                         Confirm Order
                     </button>
@@ -81,8 +79,8 @@
                         <div id="card-element"></div>
                         <div id="card-errors" role="alert"></div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>  
+    </form>  
 </div>

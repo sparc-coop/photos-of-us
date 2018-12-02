@@ -20,14 +20,13 @@ namespace PhotosOfUs.Web.Controllers.API
 {
     [Route("api/Orders")]
     [Authorize]
-    public class OrdersApiController : Controller
+    public class OrdersController : Controller
     {
         private IRepository<Order> _orders;
         private IRepository<OrderDetail> _orderDetail;
         private IRepository<Photo> _photos;
-        private IRepository<User> _users;
 
-        public OrdersApiController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
+        public OrdersController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository, IRepository<User> userRepository)
         {
             _orders = orderRepository;
             _orderDetail = orderDetailRepository;
