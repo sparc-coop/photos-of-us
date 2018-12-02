@@ -10,7 +10,7 @@ namespace PhotosOfUs.Pages.Orders
     public class CartModel : PageModel
     {
         private IRepository<Order> _orders;
-        public int OrderId { get; set; }
+        public Order Order { get; set; }
         public int UserId { get; set; }
 
         public CartModel(IRepository<Order> orders)
@@ -20,7 +20,7 @@ namespace PhotosOfUs.Pages.Orders
 
         public void OnGet(int id)
         {
-            OrderId = id;
+            Order = _orders.Find(x => x.Id == id && x.UserId == User.ID());
             UserId = User.ID();
         }
     }

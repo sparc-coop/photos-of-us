@@ -1,8 +1,4 @@
 ﻿app.controller('CheckoutCtrl', ['$scope', '$window', '$location', '$http', '$mdDialog', ($scope, $window, $location, $http, $mdDialog) => {
-    $scope.goToCart = (userId) => {
-        $window.location.href = '/Photo/Cart/' + userId;
-    };
-    
     $scope.priceModal = (user) => {
         if (user.PurchaseTour == true) {
             return null

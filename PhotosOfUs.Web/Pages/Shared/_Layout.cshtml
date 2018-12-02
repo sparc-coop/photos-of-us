@@ -84,7 +84,7 @@
                                             <div class="total"><span class="label">Cart Total</span><span class="amount">${{order.CalculatedTotal}}</span></div>
                                         </div>
                                         <div ng-if="order == ''" class="heading">No items in cart.</div>
-                                        <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
+                                        <a class="button--checkout--preview" asp-page="/Orders/Cart"><img src="~/images/icons/cart-red.png" />Checkout</a>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                                     </div>
                                 </div>
                                 <div class="total"><span class="label">Cart Total</span><span class="amount">${{order.CalculatedTotal}}</span></div>
-                                <div class="button--checkout--preview" ng-click="goToCart(user.Id)"><img src="~/images/icons/cart-red.png" />Checkout</div>
+                                <a class="button--checkout--preview" asp-page="/Orders/Cart"><img src="~/images/icons/cart-red.png" />Checkout</a>
                             </div>
                         </div>
                     </div>

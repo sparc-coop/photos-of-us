@@ -23,21 +23,20 @@ namespace PhotosOfUs.Web.Controllers.API
     public class OrdersController : Controller
     {
         private IRepository<Order> _orders;
-        private IRepository<OrderDetail> _orderDetail;
-        private IRepository<Photo> _photos;
 
-        public OrdersController(IRepository<Order> orderRepository, IRepository<OrderDetail> orderDetailRepository, IRepository<Photo> photoRepository)
+        public OrdersController(IRepository<Order> orderRepository)
         {
             _orders = orderRepository;
-            _orderDetail = orderDetailRepository;
-            _photos = photoRepository;
         }
 
         [HttpGet]
-        [Route("GetOrderDetails/{orderId:int}")]
-        public Order GetOrderDetails(int orderId)
+        [Route("{orderId:int}")]
+        public Order Get(int orderId)
         {
-            return _orders.Include("OrderDetail.Photo").Where(x => x.Id == orderId).FirstOrDefault();
+            var order = _orders.Include("OrderDetail.Photo.PrintType").Find(x => x.Id == orderId);
+            if (order.UserId != User.ID()) return null;
+            
+            return order;
         }
     }
 }

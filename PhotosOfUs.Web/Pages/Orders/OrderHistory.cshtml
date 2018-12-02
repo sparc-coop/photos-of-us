@@ -18,7 +18,7 @@
     @foreach (var order in Model.Orders)
     {
         <div ng-if="'@order.Id'.includes(search)|| (search == null || search == '')" class="order-info" ng-cloak>
-            <div ng-init="getOrderDetails(@order.Id)" class="order--row" ng-click="showDetails = !showDetails">
+            <div class="order--row" ng-click="showDetails = !showDetails">
                 <div>@order.Id</div>
                 <div>@order.OrderDate.ToShortDateString()</div>
                 <div>@order.OrderStatus</div>
@@ -42,12 +42,6 @@
                         <div>$@item.UnitPrice</div>
                     </div>
                 }
-                @*<div ng-repeat="item in orderDetailsList" ng-if="item.OrderId == @order.Id" class="item--row">
-                <div>{{item.Photo.Name}}</div>
-                <div>{{item.Quantity}}</div>
-                <div>{{item.PrintType.Type}}</div>
-                <div>${{item.UnitPrice | number: 2}}</div>
-            </div>*@
             </div>
         </div>
     }
