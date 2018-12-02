@@ -1,11 +1,12 @@
-﻿@using Microsoft.Extensions.Options
+﻿@page
+@using Microsoft.Extensions.Options
 @inject IOptions<PhotosOfUs.Web.Extensions.StripeSettings> Stripe
-@model CustomerOrderViewModel
+@model CheckoutModel
 
 @{
     ViewData["Title"] = "Cart";
 }
-<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.Id); getOrderTotal(@Model.Id)">
+<div class="cart" ng-controller="PaymentCtrl" data-ng-init="initStripe(); getOrderDetails(@Model.OrderId); getOrderTotal(@Model.OrderId)">
     <h1 class="header-large">Checkout</h1>
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
@@ -71,7 +72,7 @@
         <div>           
             <div class="info-title">Payment Details <img src="~/images/icons/payment_options.PNG" /></div>
             <div>
-                <form action="/Orders/Charge" method="POST" id="payment-form">
+                <form method="POST" id="payment-form">
                     <button class="button--yellow button--yellow--payment" ng-click="saveAddress(address)" 
                             ng-class="{'disabled': address.Email == null; address.ZipCode == null; address.Address1 == null}">
                         Confirm Order

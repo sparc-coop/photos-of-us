@@ -1,5 +1,5 @@
 ﻿@page
-@model List<Order>
+@model OrderHistoryModel
 @{
     ViewData["Title"] = "Order History";
 }
@@ -15,7 +15,7 @@
         <div>Status</div>
         <div>Total</div>
     </div>
-    @foreach (var order in Model)
+    @foreach (var order in Model.Orders)
     {
         <div ng-if="'@order.Id'.includes(search)|| (search == null || search == '')" class="order-info" ng-cloak>
             <div ng-init="getOrderDetails(@order.Id)" class="order--row" ng-click="showDetails = !showDetails">

@@ -3,10 +3,6 @@
         $window.location.href = '/Photo/Cart/' + userId;
     };
 
-    $scope.goToCheckout = (userId) => {
-        $window.location.href = '/Photo/Checkout/' + userId;
-    };
-
     $scope.getPrintTypes = () => {
         $http.get('/api/Photo/GetPrintTypes').then(x => {
             $scope.printTypes = x.data;

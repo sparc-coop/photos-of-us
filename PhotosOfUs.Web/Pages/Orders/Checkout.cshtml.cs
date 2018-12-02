@@ -1,42 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using PhotosOfUs.Model.Repositories;
-using PhotosOfUs.Model.ViewModels;
-using PhotosOfUs.Model.Models;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System.Security.Claims;
 using Kuvio.Kernel.Architecture;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Kuvio.Kernel.Auth;
-using PhotosOfUs.Web.Utilities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+using PhotosOfUs.Model.Models;
+using System.Linq;
+using System.Collections.Generic;
 using Stripe;
+using Microsoft.AspNetCore.Mvc;
 
-namespace PhotosOfUs.Web.Controllers.API
+namespace PhotosOfUs.Pages.Orders
 {
-    [Authorize]
-    public class OrdersController : Controller
+    public class CheckoutModel : PageModel
     {
         private IRepository<Order> _orders;
+        public int OrderId { get; private set; }
 
-        public OrdersController(IRepository<Order> orderRepository)
+        public CheckoutModel(IRepository<Order> orders)
         {
-            _orders = orderRepository;
+            _orders = orders;
         }
 
-        public ActionResult Confirmation()
+        public void OnGet()
         {
-            List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
+            OrderId = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").Select(x => x.Id).FirstOrDefault();
         }
 
-        [HttpPost]
-        public IActionResult Charge(string stripeToken)
+        public IActionResult OnPost(string stripeToken)
         {
             StripeConfiguration.SetApiKey("");
 
@@ -68,13 +56,7 @@ namespace PhotosOfUs.Web.Controllers.API
                 CustomerId = customer.Id,
             });
 
-            return Redirect("/Orders/Confirmation");
-        }
-
-        public ActionResult Cart(int id)
-        {
-            Order order = _orders.Find(x => x.Id == id);
-            return View(order.ToViewModel<CustomerOrderViewModel>());
+            return RedirectToPage("Confirmation");
         }
     }
 }

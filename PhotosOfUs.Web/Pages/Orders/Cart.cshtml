@@ -1,12 +1,10 @@
-﻿@page
-
-@model CustomerOrderViewModel
-
+﻿@page "{id:int}"
+@model CartModel
 @{
     ViewData["Title"] = "Cart";
 }
 
-<div class="cart" ng-controller="CheckoutCtrl" ng-init="getOrderDetails(@Model.Id)">
+<div class="cart" ng-controller="CheckoutCtrl" ng-init="getOrderDetails(@Model.OrderId)">
     <h1 class="header-large">Shopping Cart</h1>
     @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
     <div class="divider"></div>
@@ -23,5 +21,8 @@
             </div>
         </div>
     </div>
-    <div class="button--yellow button--yellow--large" ng-click="goToCheckout(@Model.UserId)"><img src="~/images/icons/cart-red.png" />Continue To Checkout</div>
+    <a class="button--yellow button--yellow--large" asp-page="./Checkout">
+        <img src="~/images/icons/cart-red.png" />
+        Continue To Checkout
+    </a>
 </div>
