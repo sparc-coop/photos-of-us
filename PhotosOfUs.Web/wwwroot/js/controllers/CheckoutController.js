@@ -115,28 +115,11 @@
         }
     }
 
-    $scope.orderDetailsList = [];
-    $scope.totalSales = 0;
     $scope.totalEarned = 0;
 
     $scope.getOrderDetails = (orderId) => {
         $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
             $scope.orderDetails = x.data.OrderDetail;
-            angular.forEach($scope.orderDetails, function (value, key) {
-                $scope.orderDetailsList.push(value);
-                $scope.totalEarned += value.Photo.Price;
-            });
-        });
-    };
-
-    $scope.getSalesHistory = () => {
-        $http.get('/api/Orders/GetSalesHistory/').then(x => {
-            $scope.salesHistory = x.data;
-            angular.forEach($scope.salesHistory, function (value, key) {
-                $scope.totalEarned += value.Earnings;
-                $scope.totalSales += value.Quantity;
-                $scope.totalMade += value.UnitPrice * value.Quantity;
-            });
         });
     };
 

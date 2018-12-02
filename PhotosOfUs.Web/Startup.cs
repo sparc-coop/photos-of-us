@@ -113,7 +113,6 @@ namespace PhotosOfUs.Web
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
             services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
-            services.AddScoped<StorageContext>();
 
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
@@ -125,19 +124,6 @@ namespace PhotosOfUs.Web
                 .AddScoped<BulkEditCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-
-            services.Configure<RazorViewEngineOptions>(o =>
-            {
-                // {2} is area, {1} is controller,{0} is the action    
-                o.ViewLocationFormats.Clear();
-                //o.ViewLocationFormats.Add("/{2}/Views/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("~/{1}/Views/{0}" + RazorViewEngine.ViewExtension);
-                o.ViewLocationFormats.Add("/Home/Views/Shared/{0}" + RazorViewEngine.ViewExtension);
-
-                o.AreaViewLocationFormats.Clear();
-                o.AreaViewLocationFormats.Add("/{2}/Views/{0}" + RazorViewEngine.ViewExtension);
-
-            });
 
             services.AddScoped<IViewRenderService, ViewRenderService>();
 

@@ -1,0 +1,69 @@
+﻿@page
+@model SalesHistoryModel
+@{
+    ViewData["Title"] = "Sales History";
+}
+
+<div class="photographer-dashboard--wrapper photographer-sales-history order-history">
+    <h2 class="header-large">Sales History</h2>
+    <div class="yellow-background line--small"></div>
+
+    <div class="flex-box">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Photo Sold</td>
+                    <td>Amount</td>
+                    <td>Print Type</td>
+                    <td>Print Price</td>
+                    <td>Your Earnings</td>
+                    <td>Order Status</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.SalesHistory)
+                {
+                    <tr>
+                        <td>@detail.PhotoName</td>
+                        <td>@detail.Quantity</td>
+                        <td>@string.Format("{0:C}", detail.Total)</td>
+                        <td style="font-weight: 600;">@string.Format("{0:C}", detail.Earnings)</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+        <div class="sales">
+            @foreach (var order in Model.Orders)
+            {
+                <div class="date">Order Date: @order.OrderDate.ToShortDateString()</div>
+                foreach (var detail in order.OrderDetail)
+                {
+                    <div class="sales--row">
+                        <div class="sales--row--name">@detail.Photo.Name</div>
+                        <div class="sales--row--quantity">@detail.Quantity</div>
+                        <div class="sales--row--type">@detail.PrintType.Type, @detail.PrintType.Height x @detail.PrintType.Length</div>
+                        <div class="sales--row--price">@string.Format("{0:C}", detail.UnitPrice * detail.Quantity)</div>
+                        <div class="sales--row--earning">@string.Format("{0:C}", detail.Photo.Price)</div>
+                        <div class="sales--row--status">@order.OrderStatus</div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div ng-cloak class="flex-box total">
+        <div class="total-counter">
+            <h4>Total Sales</h4>
+            <h3>@Model.TotalSales</h3>
+        </div>
+        <div class="total-counter">
+            <h4>Total Made</h4>
+            <h3>@Model.TotalMade</h3>
+        </div>
+        <div class="total-counter">
+            <h4>Total Earned</h4>
+            <h3>@Model.TotalEarned</h3>
+        </div>
+    </div>
+</div>

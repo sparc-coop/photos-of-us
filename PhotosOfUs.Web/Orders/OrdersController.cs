@@ -39,26 +39,5 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             return _orders.Include("OrderDetail.Photo").Where(x => x.Id == orderId).FirstOrDefault();
         }
-
-        [HttpGet]
-        [Route("GetSalesHistory/")]
-        public object GetSalesHistory()
-        {
-            var photoIds = _photos.Where(x => x.PhotographerId == User.ID()).Select(x => x.Id);
-
-            var orderDetails = _orderDetail.Include(x => x.Photo).Where(x => photoIds.Contains(x.PhotoId));
-
-            var salesHistory = orderDetails.GroupBy(x => new { x.PhotoId, x.Photo.Name })
-                .Select(x => new
-                {
-                    PhotoId = x.Key.PhotoId,
-                    PhotoName = x.Key.Name,
-                    Quantity = x.Sum(y => y.Quantity),
-                    UnitPrice = x.Sum(y => y.UnitPrice),
-                    Earnings = x.Sum(y => y.Photo.Price)
-                }).ToList();
-
-            return salesHistory;
-        }
     }
 }
