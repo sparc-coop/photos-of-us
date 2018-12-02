@@ -92,7 +92,9 @@ namespace PhotosOfUs.Web
             });
 
 
-            services.AddMvc().AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
+            services.AddMvc()
+                .WithRazorPagesRoot("/App")
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddSession(options =>
             {
