@@ -29,18 +29,6 @@ namespace PhotosOfUs.Web.Controllers.API
             _orders = orderRepository;
         }
 
-        public ActionResult Index()
-        {
-            Order order = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            return View(order.ToViewModel<CustomerOrderViewModel>());
-        }
-
-        public ActionResult OrderHistory()
-        {
-            List<Order> orders = _orders.Include("OrderDetail.Photo").Where(x => x.UserId == User.ID()).ToList();
-            return View(orders.ToViewModel<List<CustomerOrderViewModel>>());
-        }
-
         public ActionResult Confirmation()
         {
             List<Order> orders = _orders.Where(x => x.UserId == User.ID()).ToList();
