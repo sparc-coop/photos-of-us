@@ -112,13 +112,7 @@
     }
 
     $scope.totalEarned = 0;
-
-    $scope.getOrderDetails = (orderId) => {
-        $http.get('/api/Orders/GetOrderDetails/' + orderId).then(x => {           
-            $scope.orderDetails = x.data.OrderDetail;
-        });
-    };
-
+    
     $scope.getUser = () => {
         $http.get('/api/User').then(x => { $scope.user = x.data; $scope.priceModal(x.data);});
     };
