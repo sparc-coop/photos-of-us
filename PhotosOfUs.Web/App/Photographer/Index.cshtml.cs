@@ -8,14 +8,14 @@ using Microsoft.AspNetCore.Authorization;
 namespace PhotosOfUs.Pages.Photographer
 {
     [Authorize]
-    public class DashboardModel : PageModel
+    public class IndexModel : PageModel
     {
         private IRepository<User> _users;
 
         public string Name { get; set; }
         public int PhotographerId { get; set; }
 
-        public DashboardModel(IRepository<User> users)
+        public IndexModel(IRepository<User> users)
         {
             _users = users;
         }

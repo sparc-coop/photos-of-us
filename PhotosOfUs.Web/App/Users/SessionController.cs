@@ -25,7 +25,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
-            var redirectUrl = Url.Action(nameof(PhotographerController.Dashboard), "Photographer");
+            var redirectUrl = Url.Page("Photographer/Index");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);     
@@ -34,7 +34,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignInPhotographer()
         {
-            var redirectUrl = Url.Action(nameof(PhotographerController.Dashboard), "Photographer");
+            var redirectUrl = Url.Page("Photographer/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.SignUpSignInPolicyIdPhotographer;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -43,7 +43,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult ResetPassword()
         {
-            var redirectUrl = Url.Action(nameof(PhotographerController.Dashboard), "Photographer");
+            var redirectUrl = Url.Page("Photographer/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.ResetPasswordPolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -53,7 +53,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var redirectUrl = Url.Action(nameof(PhotographerController.Dashboard), "Photographer");
+            var redirectUrl = Url.Page("Photographer/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.EditProfilePolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -63,7 +63,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult SignOut()
         {
-            var callbackUrl = Url.Action(nameof(HomeController.Landing), "Home");
+            var callbackUrl = Url.Page("Home/Index");
             return SignOut(new AuthenticationProperties { RedirectUri = callbackUrl },
                 "B2C", OpenIdConnectDefaults.AuthenticationScheme);
         }
@@ -74,7 +74,7 @@ namespace PhotosOfUs.Web.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 // Redirect to home page if the user is authenticated.
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToPage("Home/Index");
             }
 
             return View();

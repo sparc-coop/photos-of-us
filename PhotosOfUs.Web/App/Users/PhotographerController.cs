@@ -44,12 +44,6 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult Index()
-        {
-            return RedirectToPage("Photographer/Dashboard");
-        }
-       
-        [Authorize]
         public ActionResult Photos(int id)
         {
             var photographer = _user.Find(x => x.Id == User.ID());

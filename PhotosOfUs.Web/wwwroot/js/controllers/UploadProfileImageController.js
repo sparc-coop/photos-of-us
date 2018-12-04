@@ -129,7 +129,7 @@
     };
 
     uploader.onCompleteAll = () => {
-        $window.location.reload(); //.location.href = '/Photographer/Dashboard'
+        $window.location.reload();
     };
 
 }]);
