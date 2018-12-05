@@ -28,7 +28,16 @@ namespace PhotosOfUs.Connectors.Database
         public T Add(T item)
         {
             Command.Add(item);
-            Commit(); // In order to populate any DB-generated IDs
+            try
+            {
+                Commit(); // In order to populate any DB-generated IDs
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
             return item;
         }
 

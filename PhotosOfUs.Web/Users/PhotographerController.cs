@@ -353,6 +353,7 @@ namespace PhotosOfUs.Web.Controllers
                     folderId = photographer.PublicFolder.Id;
                     await file.CopyToAsync(stream);
                     //await _user.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
+
                     await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags));
                 }
             }

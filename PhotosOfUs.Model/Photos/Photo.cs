@@ -19,8 +19,9 @@ namespace PhotosOfUs.Model.Models
             PhotoTag = new HashSet<PhotoTag>();
         }
 
-        public Photo(int userId, string photoName, string extension, Stream stream, string photoCode, int folderId, double? price)
+        public Photo(int userId, string photoName, string extension, Stream stream, string photoCode, int folderId, double? price, string url)
         {
+            Name = photoName;
             var urlTimeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
             Filename = $"{userId}/profile/{photoName.Split('.')[0] + urlTimeStamp + extension}";
             FolderName = "photos";
@@ -28,6 +29,9 @@ namespace PhotosOfUs.Model.Models
             Code = photoCode;
             FolderId = folderId;
             Price = (decimal)price;
+            UploadDate = DateTime.Now;
+            Url = url;
+            PhotographerId = userId;
         }
 
         public int Id { get; set; }
