@@ -332,7 +332,7 @@ namespace PhotosOfUs.Web.Controllers
             var listoftags = new List<TagViewModel>();
             List<string> result = tags.Split(' ').ToList();
 
-            foreach (string obj in result)
+            foreach (string obj in result.Skip(1))
             {
                 listoftags.Add(new TagViewModel() { Name = obj });//, text = obj });
             }

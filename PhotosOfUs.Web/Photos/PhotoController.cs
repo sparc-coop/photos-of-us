@@ -131,7 +131,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public List<Tag> GetAllTags()
         {
             //var tags = _tag.Where(x => x.Name != null).ToList();
-            var tags = new Photo().GetAllTags().ToList();
+            var tags = _tag.GetAll().ToList();
             return tags;//.ToViewModel<List<TagViewM>>();
         }
 
@@ -139,21 +139,9 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetTags")]
         public List<TagViewModel> GetTags(string tagnames)
         {
-            return TagViewModel.ToViewModel(new Photo().GetAllTags().ToList());
-        }
+            var taglist = new List<Tag>();
 
-        public void AddTags(List<TagViewModel> tags)
-        {
-            Photo photo = new Photo();
-            foreach (TagViewModel tag in tags)
-            {
-                var hasTags = _photos.Where(x => x.Tag.Any(o => o.Name == tag.Name));//.text));
-                if (hasTags.Count() > 0)
-                {
-                    photo.NewTag(TagViewModel.ToEntity(tag));
-                }
-            }
-            _photos.Commit();
+            return TagViewModel.ToViewModel(_tag.Where(x => taglist.Select(y => y.Name).Contains(x.Name)).ToList());
         }
 
         [HttpDelete]

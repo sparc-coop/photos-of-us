@@ -6,7 +6,7 @@
     $scope.selectedPhotos = [];
     $scope.profilePhotos = [];
     $scope.isNotHighlighted = {
-        //"border": "3px solid #43c6ba"
+        "border": "3px solid #7f7f7f"
     }
     $scope.isHighlighted = {
         "border": "3px solid #FF6060"

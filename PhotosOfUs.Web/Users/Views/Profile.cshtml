@@ -58,8 +58,8 @@
                     <div class="photographer-gallery-container" ng-init="getProfilePhotos()">
                         <div class="g-row">
                             <div ng-repeat="photo in profilePhotos track by $index" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="photo.Code.includes(search) || search == null || search == ''"> 
-                                <img class="gallery-image" src="{{photo.ThumbnailUrl}}" ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" 
-                                     ng-style="isBulkEditEnabled ? (isPhotoSelected(photo) ? isHighlighted : isNotHighlighted) : {}" />
+                                <img class="gallery-image" src="{{photo.ThumbnailUrl}}" ng-click="isBulkEditEnabled ? selectPhoto(photo.Id) : viewPhoto(photo.Id)" 
+                                     ng-style="isBulkEditEnabled ? (isPhotoSelected(photo.Id) ? isHighlighted : isNotHighlighted) : {}" />
                             </div>
                         </div>
                     </div>

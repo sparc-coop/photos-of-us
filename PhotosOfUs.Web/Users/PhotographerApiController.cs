@@ -17,13 +17,14 @@ namespace PhotosOfUs.Web.Controllers.API
     {
         private PhotosOfUsContext _context;
         private IRepository<Photo> _photo;
+        private IRepository<PhotoTag> _photoTag;
         private IRepository<BrandAccount> _brandAccount;
         private IRepository<User> _user;
         private IRepository<Tag> _tag;
         private readonly IRepository<Card> _card;
 
         public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
-            ,IRepository<BrandAccount> brandAccount, IRepository<Card> cardRepository)
+            ,IRepository<BrandAccount> brandAccount, IRepository<Card> cardRepository, IRepository<PhotoTag> photoTagRepository)
         {
             _context = context;
             _photo = photoRepository;
@@ -31,36 +32,16 @@ namespace PhotosOfUs.Web.Controllers.API
             _tag = tagRepository;
             _brandAccount = brandAccount;
             _card = cardRepository;
+            _photoTag = photoTagRepository;
         }
        
         [HttpPost]
         [Route("GetTagsByPhotos")]
         public List<TagViewModel> GetTagsByPhotos([FromBody]List<int> photos)
         {
-            var tags = new List<Tag>();
-            var phototags = new List<PhotoTag>();
-
-            var photoList = new List<Photo>();
-            foreach (int id in photos)
-            {
-                Photo photo = _photo.Find(x => x.Id == id);
-                photoList.Add(photo);
-            }
-
-            foreach (Photo photo in photoList)
-            {
-                var tagsfromphoto = _photo.Include(x => x.Tag).Find(x => x.Id == photo.Id).PhotoTag;
-
-                foreach (PhotoTag phototag in tagsfromphoto)
-                {
-                    if (!(tags.Find(x => x.Id == phototag.PhotoId).Id == phototag.PhotoId))
-                    {
-                        phototags.Add(phototag);
-                    }
-                }
-            }
-
-            return TagViewModel.ToViewModel(phototags);
+            var tagList = _photoTag.Include(y => y.Tag).Where(x => photos.Contains(x.PhotoId)).Select(x => x.Tag).Distinct().ToList();
+            
+            return TagViewModel.ToViewModel(tagList);
         }
 
         [HttpGet]
@@ -84,64 +65,59 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route("AddTags")]
-        public void AddTags([FromBody]List<TagViewModel> tags)
+        [Route("EditPhotos")]
+        public void EditTags([FromBody]PhotoTagViewModel photoTagViewModel)
         {
-            foreach (TagViewModel tag in tags)
+            _photoTag.Delete(_photoTag.Where(x => photoTagViewModel.photos.Contains(x.PhotoId)).ToList());
+
+            foreach (var photo in photoTagViewModel.photos)
             {
-                if (_tag.Find(x => x.Name == tag.Name) == null)
+                foreach (var tag in photoTagViewModel.tags)
                 {
-                    _tag.Add(TagViewModel.ToEntity(tag));
+                    var newTag = AddTags(tag);
+                    _photoTag.Add(new PhotoTag { PhotoId = photo, TagId = newTag.Id });
+                }
+            }
+
+            _photoTag.Commit();
+        }
+
+        public List<Tag> AddTags(List<TagViewModel> tags)
+        {
+            tags.ForEach(x => x.Name = x.Name.Trim());
+            tags = tags.Distinct().ToList();
+
+            List<Tag> resultTags = new List<Tag>();
+
+            var existingTags = _tag.Where(x => tags.Select(y => y.Name).Contains(x.Name)).ToList();
+
+            foreach (TagViewModel item in tags)
+            {
+                if (!existingTags.Select(y => y.Name).Contains(item.Name))
+                {
+                    var newTag = TagViewModel.ToEntity(item);
+                    _tag.Add(newTag);
+                    resultTags.Add(newTag);
                 }
             }
             _tag.Commit();
+            return resultTags;
+
         }
 
-        [HttpPost]
-        [Route("EditPhotos")]
-        public void EditTags([FromBody]PhotoTagViewModel photosviewmodel)
+        public Tag AddTags(TagViewModel tag)
         {
-            List<PhotoTag> phototagstodelete = new List<PhotoTag>();
-            List<PhotoTag> phototagstoadd = new List<PhotoTag>();
+            tag.Name = tag.text.Trim();
 
-            foreach (int photoid in photosviewmodel.photos)
+            var newTag = _tag.Find(x => x.Name == tag.Name);
+
+            if (newTag == null)
             {
-
-                var phototagdelete = _photo.Find(x => x.Id == photoid).PhotoTag;
-
-                if (phototagdelete != null)
-                {
-                    foreach (PhotoTag phototag in phototagdelete)
-                    {
-                        phototagstodelete.Add(phototag);
-                    }
-
-                    
-                }
+                newTag = TagViewModel.ToEntity(tag);
+                _tag.Add(newTag);
             }
 
-            foreach (PhotoTag phototag in phototagstodelete)
-            {
-                _photo.Find(x => x.Id == phototag.PhotoId).PhotoTag.Remove(phototag);
-            }
-            _photo.Commit();
-
-/*             foreach (TagViewModel tag in photoviewmodel)
-            {
-                var tagtoid = 
-
-                foreach (int photoid in phototagviewmodel.photos)
-                {
-                    var newphototag = new PhotoTag()
-                    {
-                        PhotoId = photoid,
-                        TagId = tagtoid.Id,
-                        RegisterDate = DateTime.Now
-                    };
-                    PhotoTag.Add(newphototag);
-                }
-            }
-           _photo.Commit(); */
+            return newTag;
         }
 
         [Route("DeletePhotos")]

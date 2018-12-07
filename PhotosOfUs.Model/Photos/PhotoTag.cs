@@ -9,12 +9,10 @@ namespace PhotosOfUs.Model.Models
     public partial class PhotoTag
     {
         public int PhotoId { get; set; }
-        public virtual Photo Photo { get; set; }
-
         public int TagId { get; set; }
-        public virtual Tag Tag { get; set; }
+        public DateTime? RegisterDate { get; set; }
 
-        public DateTime RegisterDate { get; set; }
-
+        public Photo Photo { get; set; }
+        public Tag Tag { get; set; }
     }
 }

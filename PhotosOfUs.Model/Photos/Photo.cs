@@ -14,7 +14,6 @@ namespace PhotosOfUs.Model.Models
     {
         public Photo()
         {
-            Tag = new HashSet<Tag>();
             PrintType = new HashSet<PrintType>();
             PhotoTag = new HashSet<PhotoTag>();
         }
@@ -53,11 +52,9 @@ namespace PhotosOfUs.Model.Models
         public ICollection<PhotoTag> PhotoTag { get; set; }
 
         public ICollection<PrintType> PrintType { get; set; }
-        public ICollection<Tag> Tag { get; set; }
 
         public string Filename { get; }
 
-        // Not Mapped
         public string FolderName { get; protected set; }
         public string FileSize { get; protected set; }
         public string Resolution { get; protected set; }
@@ -77,10 +74,10 @@ namespace PhotosOfUs.Model.Models
             Price = newPrice;
         }
 
-        public ICollection<Tag> GetAllTags()
-        {
-            return Tag;
-        }
+        //public ICollection<Tag> GetAllTags()
+        //{
+        //    return Tag;
+        //}
 
         public void Delete()
         {
@@ -94,16 +91,16 @@ namespace PhotosOfUs.Model.Models
             RegisterDate = DateTime.Now
         } */
 
-        public Tag NewTag(Tag newTag)
-        {
-            var tag = new Tag
-            {
-                Name = newTag.Name,
-                Id = newTag.Id
-            };
-            Tag.Add(tag);
-            return tag;
-        }
+        //public Tag NewTag(Tag newTag)
+        //{
+        //    var tag = new Tag
+        //    {
+        //        Name = newTag.Name,
+        //        Id = newTag.Id
+        //    };
+        //    Tag.Add(tag);
+        //    return tag;
+        //}
 
         public Stream AddWatermark(Stream input, Stream watermark, string extension)
         {

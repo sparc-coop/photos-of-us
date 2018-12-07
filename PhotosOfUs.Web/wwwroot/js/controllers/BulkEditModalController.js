@@ -36,15 +36,14 @@
             $http.post('/api/Photographer/SavePhotoPrice/' + photos + '/' + price + '/');
         }
 
-        $http.post('/api/Photographer/AddTags/', tags)
-            .then(function () {
+
                 $http.post('/api/Photographer/EditPhotos/', $scope.photosviewmodel)
                     .then(function (x) {
                         $scope.tags = x.data;
 
                         $window.location.reload();
                     });
-                });
+                
     };
 
 }])

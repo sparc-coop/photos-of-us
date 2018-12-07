@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using PhotosOfUs.Model.Models;
@@ -10,14 +11,19 @@ namespace Kuvio.Kernel.Architecture
         // Queries
         T Find(Func<T, bool> query);
         IQueryable<T> Where(Func<T, bool> query);
+        IQueryable<T> GetAll();
 
         // Commands
         T Add(T item);
         //void Update(T item);
         void Delete(T item);
+        void Delete(List<T> item);
+
         IRepository<T> Include<TProperty>(Expression<Func<T, TProperty>> item);
 
         IRepository<T> Include(string propertyPath);
+
+
 
         void Commit();
     }

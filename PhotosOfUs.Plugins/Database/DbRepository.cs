@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Kuvio.Kernel.Architecture;
@@ -28,18 +29,13 @@ namespace PhotosOfUs.Connectors.Database
         public T Add(T item)
         {
             Command.Add(item);
-            try
-            {
-                Commit(); // In order to populate any DB-generated IDs
-            }
-            catch (Exception ex)
-            {
 
-                throw;
-            }
+            Commit(); // In order to populate any DB-generated IDs
             
             return item;
         }
+
+        public IQueryable<T> GetAll() => Query.AsQueryable();
 
         //public void Update(T item)
         //{
@@ -49,6 +45,11 @@ namespace PhotosOfUs.Connectors.Database
         public void Delete(T item)
         {
             Command.Remove(item);
+        }
+
+        public void Delete(List<T> item)
+        {
+            Command.RemoveRange(item);
         }
 
         public void Commit()
