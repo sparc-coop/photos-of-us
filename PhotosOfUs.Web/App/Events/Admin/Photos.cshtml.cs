@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PhotosOfUs.Pages.Photographer
+namespace PhotosOfUs.Pages.Events
 {
-    public class PhotosModel : PageModel
+    public class PhotosAdminModel : PageModel
     {
         private readonly IRepository<Event> _events;
 
@@ -18,7 +18,7 @@ namespace PhotosOfUs.Pages.Photographer
 
         public List<Photo> Photos { get; set; }
 
-        public PhotosModel(IRepository<Event> events)
+        public PhotosAdminModel(IRepository<Event> events)
         {
             _events = events;
         }

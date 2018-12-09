@@ -41,11 +41,6 @@ namespace PhotosOfUs.Web.Controllers
             _card = cardRepository;
         }
 
-        public ActionResult Upload()
-        {
-            return View();
-        }
-
         public ActionResult UploadProfilePhoto()
         {
             return View();

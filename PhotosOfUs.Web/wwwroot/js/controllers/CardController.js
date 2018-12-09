@@ -14,7 +14,7 @@
 
     $scope.exportMultipleCardsModal = function () {
         $mdDialog.show({
-            templateUrl: '/Events/Admin/MultipleCardsModal',
+            templateUrl: '/Events/Admin/Modals/UploadModal',
             scope: $scope,
             clickOutsideToClose: true
         })
@@ -30,7 +30,7 @@
 
     $scope.MooModal = () => {
         $mdDialog.show({
-            templateUrl: '/Events/Admin/MooOrderModal',
+            templateUrl: '/Events/Admin/Modals/MooOrderModal',
             scope: $scope,
             clickOutsideToClose: true
         })

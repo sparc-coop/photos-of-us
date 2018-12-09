@@ -1,6 +1,6 @@
-﻿angular.module('app').controller('UploadController', function ($scope, $http, FileUploader, $window, $mdDialog, $filter, folder) {
+﻿angular.module('app').controller('UploadController', function ($scope, $http, FileUploader, $window, $mdDialog, eventId) {
 
-    $scope.folderId = folder;
+    $scope.eventId = eventId;
     $scope.close = () => $mdDialog.hide();
 
     var uploader = $scope.uploader = new FileUploader({
@@ -175,7 +175,7 @@
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, folderId: $scope.folderId, tags: "" });
+            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, eventId: $scope.eventId, tags: "" });
         }
         
     };

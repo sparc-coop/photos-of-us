@@ -63,11 +63,11 @@
         );
     };
 
-    $scope.openUpload = (folderId) => {
+    $scope.openUpload = (eventId) => {
         $mdDialog.show({
-            templateUrl: '/Photographer/Upload',
+            templateUrl: '/Events/Admin/Modals/UploadModal',
             controller: 'UploadController',
-            locals: { folder: folderId },
+            locals: { eventId: eventId },
             clickOutsideToClose: true
         });
     };

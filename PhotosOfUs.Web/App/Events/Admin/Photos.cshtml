@@ -1,5 +1,5 @@
 ﻿@page "{eventId:int}"
-@model PhotosModel
+@model PhotosAdminModel
 @{
     ViewData["Title"] = Model.Name;
 }
@@ -24,7 +24,7 @@
             </div>
 
             @*<i class="material-icons" ng-click="listView = !listView">view_list</i>
-        <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
+            <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
             <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak><img src="~/images/icons/add-photo.png" class="img-upload" />Upload Images</div>
         </div>
     </div>
