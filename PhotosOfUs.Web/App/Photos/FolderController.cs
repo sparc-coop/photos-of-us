@@ -40,7 +40,7 @@ namespace PhotosOfUs.Web.Controllers.API
         {
             var photographer = _user.Find(x => x.Id == model.UserId);
 
-            var folder = photographer.Folder.First(x => x.Id == model.Id);
+            var folder = photographer.Folders.First(x => x.Id == model.Id);
             folder.Name = model.NewName;
             _user.Commit();
 

@@ -34,23 +34,14 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpGet]
         public UserViewModel Get()
         {
-            var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID())).ToViewModel<UserViewModel>();
-
-            return user;
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("GetOne/{id}")]
-        public UserViewModel GetOne(int id)
-        {
-            return _users.Find(x => x.Id == id).ToViewModel<UserViewModel>();
+            var user = _users.Find(x => x.Id == User.ID());
+            return user.ToViewModel<UserViewModel>();
         }
 
         [HttpPut]
         public IActionResult Put([FromBody]UserProfileUpdateCommandModel model, [FromServices]UserProfileUpdateCommand command)
         {
-            var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            var user = _users.Find(x => x.Id == User.ID());
             if (user.Id != model.Id)
                 return Forbid();
 
@@ -60,33 +51,27 @@ namespace PhotosOfUs.Web.Controllers.API
         }
         
         [HttpDelete]
-        public UserViewModel DeactivateAccount()
+        public void DeactivateAccount()
         {
-            //User user = _user.Find(x => x.Id == User.ID());
-            var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            var user = _users.Find(x => x.Id == User.ID());
             user.Deactivate();
             _users.Commit();
-
-            return user.ToViewModel<UserViewModel>();
         }
 
         [HttpPost]
-        public UserViewModel ReactivateAccount()
+        public void ReactivateAccount()
         {
-            //User user = _user.Find(x => x.Id == User.ID());
-            var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
+            var user = _users.Find(x => x.Id == User.ID());
             user.Activate();
            _users.Commit();
-
-            return user.ToViewModel<UserViewModel>();
         }
 
         [HttpGet]
-        [Route("GetFolders/{id:int}")]
+        [Route("Folders")]
         public List<FolderViewModel> GetFolders(int id)
         {
-            var folders = _folders.Where(x => x.PhotographerId == id).ToList();
-            return folders.ToViewModel<List<FolderViewModel>>();
+            var user = _users.Find(x => x.Id == User.ID());
+            return user.Folders.ToViewModel<List<FolderViewModel>>();
         }
 
         [HttpGet]

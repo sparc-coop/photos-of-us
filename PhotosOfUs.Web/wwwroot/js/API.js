@@ -1,14 +1,4 @@
-﻿app.factory('photoApi', [
-    '$http', '$rootScope', function ($http) {
-        var apiRoot = '/api/Photo';
-        return {
-            //getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
-        };
-    }
-]);
-
-
-app.factory('folderApi', [
+﻿app.factory('folderApi', [
     '$http', '$rootScope', function ($http) {
         var apiRoot = '/api/Folder';
         return {
@@ -36,7 +26,7 @@ app.factory('userApi', [
         return {
             get: function () { return $http.get(apiRoot)}, 
             update: function (accountSettings) { return $http.put(apiRoot, accountSettings) },
-            getFolders: function () { return $http.get(apiRoot + '/GetFolders'); }
+            getFolders: function () { return $http.get(apiRoot + '/Folders'); }
         };
     }
 ]);

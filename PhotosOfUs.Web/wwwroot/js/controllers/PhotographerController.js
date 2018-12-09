@@ -46,11 +46,6 @@
 
     $scope.photographerId = $location.absUrl().split('Profile/')[1];
 
-    $scope.getProfile = function () {
-        $http.get("/api/User/GetOne/" + $scope.photographerId)
-            .then(x => { $scope.photographer = x.data; console.log(x.data)});
-    };
-
     $scope.toggleSelection = function () {
         $scope.isBulkEditEnabled = !$scope.isBulkEditEnabled;
     }

@@ -1,4 +1,4 @@
-﻿app.controller('FolderModalCtrl', function ($scope, $rootScope, $window, $mdDialog, photoApi, folderApi, folderId, folderName, user) {
+﻿app.controller('FolderModalCtrl', function ($scope, $rootScope, $mdDialog, folderApi, folderId, folderName, user) {
 
     $scope.close = () => $mdDialog.hide();
     $scope.folderId = folderId;

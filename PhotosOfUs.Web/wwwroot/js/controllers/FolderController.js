@@ -7,7 +7,7 @@
     $scope.initFolderCtrl = function (id) {
         $scope.orderByOption = "Name";
         $scope.userid = id;
-        $http.get('/api/User/GetFolders/' + id).then(function (x) {
+        $http.get('/api/User/Folders').then(function (x) {
             angular.forEach(x.data, function (f) { $scope.folders.push(f); });
         });
     }

@@ -7,7 +7,7 @@
 
     $scope.load = () => {
  
-        $http.get('/api/Photo/GetFolders').then(x => {
+        $http.get('/api/User/Folders').then(x => {
             //photo filter by folder or code?
             $scope.folder = x.data.filter(fold => fold.Id === $scope.folderID)[0];
             $scope.folderName = $scope.folder.Name;

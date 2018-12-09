@@ -54,11 +54,11 @@
                                 }
                             </ul>
                         </div>
-                        <div class="gallery-search-container">
-                            <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
-                        </div>
                         @if (Model.IsAdmin)
                         {
+                            <div class="gallery-search-container">
+                                <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
+                            </div>
                             <div class="gallery-upload-container">
                                 <div>
                                     <a href="#" ng-click="toggleSelection()" class="btn-upload">

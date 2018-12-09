@@ -9,7 +9,7 @@ namespace PhotosOfUs.Model.Models
     {
         public User()
         {
-            Folder = new HashSet<Folder>();
+            Folders = new HashSet<Folder>();
             Order = new HashSet<Order>();
             Photos = new HashSet<Photo>();
             UserIdentities = new HashSet<UserIdentity>();
@@ -56,7 +56,7 @@ namespace PhotosOfUs.Model.Models
         public string FullName => $"{(FirstName == null ? DisplayName : FirstName)}{(LastName == null ? "" : (" " + LastName))}";
 
         public ICollection<SocialMedia> SocialMedia { get; set; }
-        public ICollection<Folder> Folder { get; set; }
+        public ICollection<Folder> Folders { get; set; }
         public ICollection<Order> Order { get; set; }
         public ICollection<Photo> Photos { get; set; }
         public ICollection<PrintPrice> PrintPrice { get; set; }
@@ -145,16 +145,16 @@ namespace PhotosOfUs.Model.Models
         public Folder AddFolder(string name)
         {
             var folder = new Folder(name, Id);
-            Folder.Add(folder);
+            Folders.Add(folder);
             return folder;
         }
 
         public void RemoveFolder(int folderId)
         {
-            var folder = Folder.FirstOrDefault(x => x.Id == folderId);
+            var folder = Folders.FirstOrDefault(x => x.Id == folderId);
             if (folder != null) folder.IsDeleted = true;
         }
 
-        public Folder PublicFolder => Folder.FirstOrDefault(x => x.Name.ToLower() == "public");
+        public Folder PublicFolder => Folders.FirstOrDefault(x => x.Name.ToLower() == "public");
     }
 }
