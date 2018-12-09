@@ -26,6 +26,27 @@
             </button>
         </tags-input>
     </div>
+
+    @if (Model.Tags != null)
+    {
+        <div class="photographer-search__title">
+            @Model.Photos.Count
+            @foreach (var tag in Model.Tags)
+            {
+                if (Model.Tags.IndexOf(tag) == Model.Tags.Count - 1)
+                {
+                    <span>&quot;@tag.Name&quot</span>
+                }
+                else
+                {
+                    <span>&quot;@tag.Name&quot, </span>
+                }
+            } photos
+        </div>
+        <br /><br />
+        <div>Similar photos also found in these categories</div>
+    }
+
     <div>
         <div class="search--grid">
             @foreach (var Photo in Model.Photos)

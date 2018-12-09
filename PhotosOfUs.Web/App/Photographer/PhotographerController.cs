@@ -34,27 +34,7 @@ namespace PhotosOfUs.Web.Controllers
         {
             return await command.ExecuteAsync(User.ID(), file.FileName, file.OpenReadStream());
         }
-
-        public ActionResult Results(string tagnames)
-        {
-            string[] tagarray = tagnames.Split(' ');
-            
-            List<Tag> tags = new List<Tag>();
-            List<Photo> photos = new List<Photo>();
-
-            tags.Where(x => tagarray.Contains(x.Name)).ToList();
-            
-            List<int> tagIds = tags.Select(x => x.Id).ToList();
-            photos.Where(x => x.PublicProfile && x.PhotoTag.Any(y => tagIds.Contains(y.TagId))).ToList();
-
-            var searchmodel = new SearchViewModel();
-
-            searchmodel.Photos = photos.ToViewModel<List<PhotoViewModel>>();
-            searchmodel.Tags = TagViewModel.ToViewModel(tags);
-
-            return View(searchmodel);
-        }
-
+       
         public ActionResult NewFolderModal()
         {
             return View();
