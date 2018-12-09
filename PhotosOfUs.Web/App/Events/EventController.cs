@@ -68,14 +68,9 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpPost]
         [Route("{eventId:int}/Photos")]
-        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(int eventId, string photoCode, IFormFile file, [FromServices]UploadPhotoCommand command)
+        public async Task<UploadPhotoCommand.UploadPhotoCommandResult> UploadPhotoAsync(int eventId, string photoCode, IFormFile file, [FromServices]UploadPhotoCommand command)
         {
-            if (file.Length > 0)
-            {
-                await command.ExecuteAsync(eventId, User.ID(), file.FileName, file.OpenReadStream(), photoCode);
-            }
-
-            return new AzureCognitiveViewModel();
+            return await command.ExecuteAsync(eventId, User.ID(), file.FileName, file.OpenReadStream(), photoCode);
         }
 
         [HttpGet]
