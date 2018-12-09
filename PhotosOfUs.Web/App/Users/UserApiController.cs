@@ -34,7 +34,6 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpGet]
         public UserViewModel Get()
         {
-            //var user =  _user.Find(x => x.Id == User.ID()).ToViewModel<UserViewModel>();
             var user = _users.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID())).ToViewModel<UserViewModel>();
 
             return user;

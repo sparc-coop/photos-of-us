@@ -12,8 +12,8 @@ namespace PhotosOfUs.Pages.Events
     {
         private IRepository<Photo> _photos;
 
-        [BindProperty]
-        public PhotoViewModel Photo { get; set; }
+        public Photo Photo { get; set; }
+        public User Photographer { get; set; }
 
         public PurchaseModel(IRepository<Photo> photos)
         {
@@ -22,8 +22,8 @@ namespace PhotosOfUs.Pages.Events
 
         public void OnGet(int id)
         {
-            var photo = _photos.Find(x => x.Id == id);
-            Photo = photo.ToViewModel<PhotoViewModel>();
+            Photo = _photos.Include(x => x.Photographer).Find(x => x.Id == id);
+            Photographer = Photo.Photographer;
         }
 
     }

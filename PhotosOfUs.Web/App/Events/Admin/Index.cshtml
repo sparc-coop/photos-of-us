@@ -5,7 +5,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="getUser(@Model.PhotographerId); initFolderCtrl(@Model.PhotographerId)">
+<div class="photographer-dashboard--wrapper" ng-controller="FolderCtrl" ng-init="initFolderCtrl(@Model.PhotographerId)">
     <h2 class="header-large">Hello, @Model.Name</h2>
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
@@ -41,7 +41,7 @@
                     </md-button>
                     <md-menu-content class="teste">
                         <md-menu-item><md-button ng-click="renameFolderModal(folder)">Rename</md-button></md-menu-item>
-                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id, user.Id)">Delete</md-button></md-menu-item>
+                        <md-menu-item><md-button ng-click="deleteFolder(folder.Id, userid)">Delete</md-button></md-menu-item>
                     </md-menu-content>
                 </md-menu>
             </div>

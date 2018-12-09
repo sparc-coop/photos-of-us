@@ -6,6 +6,7 @@
 
     $scope.initFolderCtrl = function (id) {
         $scope.orderByOption = "Name";
+        $scope.userid = id;
         $http.get('/api/User/GetFolders/' + id).then(function (x) {
             angular.forEach(x.data, function (f) { $scope.folders.push(f); });
         });
@@ -75,11 +76,6 @@
         $scope.folders.splice(index,1);
 
     });
-
-    $scope.getUser = (id) => {
-        $http.get("/api/User/GetOne/" + id).then(x => { $scope.user = x.data; $scope.startTour(x.data)});
-    };
-
 
     $scope.startTour = (user) => {
         if (user.DashboardTour == null) {

@@ -6,7 +6,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getUser(); getPwintyCatalog(); priceModal(); getPhotographer(@Model.Photo.PhotographerId)">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getPwintyCatalog(); priceModal();">
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
@@ -23,10 +23,6 @@
                     <div class="value">@Model.Photo.Name</div>
                 </div>
                 <div class="row">
-                    <div class="title">Photo Code</div>
-                    <div class="value">@Model.Photo.Code</div>
-                </div>
-                <div class="row">
                     <div class="title">Max Resolution</div>
                     <div class="value">@Model.Photo.Resolution</div>
                 </div>
@@ -36,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="title">Photographer</div>
-                    <div class="value">{{photographer.DisplayName}}</div>
+                    <div class="value">@Model.Photographer.DisplayName</div>
                 </div>
             </div>
         </div>

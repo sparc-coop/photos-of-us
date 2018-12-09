@@ -24,8 +24,6 @@
             });
 
             tour.start();
-
-            //$http.post('/api/User/ViewedPhoto/' + user.Id);
         }
     }
 
@@ -89,7 +87,6 @@
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
             $scope.codePhotos = x.data;
-            $scope.getPhotographer(x.data[0].PhotographerId);
         });
     };
 
@@ -110,18 +107,7 @@
             clickOutsideToClose: true
         });
     };
-
-    $scope.getPhotographer = (id) => {
-        $http.get('/api/User/GetOne/' + id).then(x => {
-            $scope.photographer = x.data;
-        });
-    };
-
-    $scope.getUser = () => {
-        userApi.getUser().then(x => {
-            $scope.user = x.data;
-        });
-    };
+    
 
     $scope.shareFacebook = function (photoId) {
         var url = $location.absUrl().split('?')[0];

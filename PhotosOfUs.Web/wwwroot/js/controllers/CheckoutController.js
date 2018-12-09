@@ -21,10 +21,6 @@
         });
     };
 
-    $scope.getPhotographer = (id) => {
-        $http.get('/api/User/GetOne/' + id).then(x => $scope.photographer = x.data);
-    }
-
     $scope.selectedItems = [];
 
     $scope.select = (printTypeId, quantity, price) => {
@@ -112,10 +108,6 @@
     }
 
     $scope.totalEarned = 0;
-    
-    $scope.getUser = () => {
-        $http.get('/api/User').then(x => { $scope.user = x.data; $scope.priceModal(x.data);});
-    };
 
     $scope.createPwintyOrder = () => {
         console.log($scope.selectedItems);
