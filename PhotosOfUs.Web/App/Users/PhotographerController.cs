@@ -51,13 +51,7 @@ namespace PhotosOfUs.Web.Controllers
 
             return View(folder.ToViewModel<FolderViewModel>());
         }
-
-        public ActionResult Photo(int id)
-        {
-            var photo = _photo.Include(x => x.Photographer).Where(x => x.Id == id).FirstOrDefault();
-            return View(photo.ToViewModel<PhotoViewModel>());
-        }
-
+        
         public ActionResult PublicCode()
         {
             return View();

@@ -6,7 +6,7 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
 
-namespace PhotosOfUs.Pages.Event
+namespace PhotosOfUs.Pages.Events
 {
     public class PurchaseModel : PageModel
     {

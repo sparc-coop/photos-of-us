@@ -1,0 +1,77 @@
+﻿@model PhotoModel
+@{
+    ViewData["Title"] = Model.Photo.Name;
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
+}
+
+<div class="photoPage" ng-controller="PhotoCtrl" ng-init="getuser()">
+    <div class="header">
+        <h2 class="header-large">@Model.Photo.Name</h2>
+        <div class="photoPage__photographer-info" ng-click="goToProfile('@Model.Photo.PhotographerId')">
+            <div>
+                <div class="title">Photographer</div>
+                <div class="name">@Model.Photo.Photographer.DisplayName</div>
+            </div>
+            @if (String.IsNullOrEmpty(Model.Photo.Photographer.ProfilePhotoUrl))
+            {
+                <img src="/images/icons/profile-icon.png" class="placeholder-img" />
+
+            }
+            else
+            {
+                <img src="@Model.Photo.Photographer.ProfilePhotoUrl" />
+            }
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="photoPage__actions">
+        <div ng-if="@Model.Photo.PhotographerId == user.Id">
+            <div class="back" ng-click="goToGallery('@Model.Photo.FolderId')"><img src="~/images/icons/ic_arrow_back_24px.png" />Back To Gallery</div>
+        </div>
+        <div ng-if="@Model.Photo.PhotographerId != user.Id">
+            <div class="back" ng-click="goToProfile('@Model.Photo.PhotographerId')"><img src="~/images/icons/ic_arrow_back_24px.png" />Back To Gallery</div>
+        </div>
+        <div class="share">
+            @*Share Photo <img src="~/images/icons/share-arrow.png" />*@
+            <img src="~/images/icons/share/share_googleplus.png" ng-click="shareGooglePlus(@Model.Photo.Id)" />
+            <img src="~/images/icons/share/share_facebook.png" ng-click="shareFacebook(@Model.Photo.Id)" />
+            <img src="~/images/icons/share/share_twitter.png" ng-click="shareTwitter(@Model.Photo.Id)" />
+            <img src="~/images/icons/share/share_pinterest.png" ng-click="sharePinterest(@Model.Photo.Id,'@Model.Url')" />
+            <img src="~/images/icons/share/share_tumblr.png" ng-click="shareTumblr(@Model.Photo.Id,'@Model.Url')" />
+        </div>
+
+    </div>
+
+    <img src="@(string.IsNullOrEmpty(Model.Photo.WaterMarkUrl)? Model.Photo.Url : Model.Photo.WaterMarkUrl)" class="photo-main" />
+
+    <div class="photoPage__footer">
+        <div class="header">Like This Photo?</div>
+        <div class="container">
+            <div class="purchase--info">
+                Why not purchase a print and get it shipped right to your door?
+                We offer many different sizes and stock. Or alternatively, you can purchase a digital version.
+            </div>
+            <div class="photoPage__footer--right">
+                <div class="title">@*Starting At Just $5 Per Photo*@</div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                 <div class="button--yellow button--yellow--large" ng-click="goToPurchase('@Model.Photo.Id')">
+                    <img src="~/images/icons/cart-red.png" />
+                    Buy It Now
+                 </div>
+                }
+                else
+                {
+                <div class="button--yellow button--yellow--large" ng-click="signInCustomer(@Model.Photo.Id)">
+                    <img src="~/images/icons/cart-red.png" />
+                    Login and Buy It Now
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

@@ -1,4 +1,5 @@
-﻿@model FolderViewModel
+﻿@page "{eventId:int}"
+@model PhotosModel
 @{
     ViewData["Title"] = Model.Name;
 }
@@ -29,7 +30,7 @@
     </div>
 
     <div class="folder-card--wrapper codeView">
-        @foreach (var item in Model.Photo.GroupBy(x => x.Code).Select(y => y.First()))
+        @foreach (var item in Model.Photos.GroupBy(x => x.Code).Select(y => y.First()))
         {
         <div class="codeView__row" ng-if="searchCode == null || searchCode == '' || '@item.Code'.includes(searchCode)">
             <a class="codeView__card" ng-click="" ng-if="'@item.Code' != ''" ng-cloak>
@@ -54,7 +55,7 @@
                 </div>
                 <div class="codeView__card--edit" ng-click="openPhotosEdit(@item.Code)">Bulk Edit</div>
             </a>
-            @foreach (var image in Model.Photo.Where(x => x.Code == item.Code))
+            @foreach (var image in Model.Photos.Where(x => x.Code == item.Code))
             {
                 <div class="photo-card" style="background-image: url(@image.ThumbnailUrl)" ng-click="viewPhoto(@image.Id)"></div>
             }           
