@@ -34,46 +34,6 @@ namespace PhotosOfUs.Web.Controllers
         {
             return await command.ExecuteAsync(User.ID(), file.FileName, file.OpenReadStream());
         }
-       
-        public ActionResult NewFolderModal()
-        {
-            return View();
-        }
-
-        public ActionResult MultipleCardsModal()
-        {
-            return View();
-        }
-
-        public ActionResult PhotoEditModal()
-        {
-            return View();
-        }
-        public ActionResult MooOrderModal()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Account()
-        {
-            return View();
-        }
-
-        public ActionResult DeactivateModal()
-        {
-            return View();
-        }
-
-        public ActionResult PhotoDetails()
-        {
-            return View();
-        }
-
-        public ActionResult SocialAccounts()
-        {
-            return View();
-        }
 
         [Authorize]
         public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension, [FromServices]UploadProfileImageCommand command)

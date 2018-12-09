@@ -104,7 +104,7 @@
 
     $scope.openPhotoEdit = (folder) => {
         $mdDialog.show({
-            templateUrl: '/Photographer/PhotoEditModal',
+            templateUrl: '/Events/Admin/Modals/PhotoEditModal',
             controller: 'BulkEditController',
             locals: { folder },
             clickOutsideToClose: true

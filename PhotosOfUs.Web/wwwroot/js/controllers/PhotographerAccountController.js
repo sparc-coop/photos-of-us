@@ -69,7 +69,7 @@
         $scope.deactivateModal = (option, user) => {
             if (option == 'true') {
                 $mdDialog.show({
-                    templateUrl: '/Photographer/DeactivateModal',
+                    templateUrl: '/Photographer/Modals/DeactivateModal',
                     controller: 'PhotographerAccountStatusCtrl',
                     user: user,
                     clickOutsideToClose: true,

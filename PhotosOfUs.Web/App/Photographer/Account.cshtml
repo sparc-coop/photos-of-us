@@ -1,4 +1,4 @@
-﻿
+﻿@page
 @{
     ViewData["Title"] = "Account";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
@@ -109,7 +109,7 @@
             </div>
         </div>
         <div ng-cloak ng-if="selected == 'cards'" class="card-design">
-            @Html.Partial("/Users/Views/Partials/_CreateCards.cshtml")
+            <partial name="/Events/Admin/CreateCards" />
         </div>
     </div>
 </div>
