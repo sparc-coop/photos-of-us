@@ -44,10 +44,6 @@
         }
     }
 
-    $scope.goToCode = (code) => {
-        $window.location.href = '/Photographer/PhotoCode?code=' + code;
-    }
-
     $scope.goToPurchase = (photoId) => {
         $window.location.href = '/Photographer/Purchase/' + photoId;
     };

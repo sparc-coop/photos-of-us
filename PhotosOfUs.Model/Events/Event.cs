@@ -30,6 +30,7 @@ namespace PhotosOfUs.Model.Models
 
         public ICollection<Card> Cards { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public User User { get; set; }
 
         public void AddNewCards(int quantity)
         {

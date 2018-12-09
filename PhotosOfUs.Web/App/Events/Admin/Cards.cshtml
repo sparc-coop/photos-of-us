@@ -1,9 +1,11 @@
-﻿@{
+﻿@page "{eventId:int}"
+@model CardsModel
+@{
     ViewData["Title"] = "Cards";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="initCardCtrl()">
+<div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardCtrl" ng-init="getCards(@Model.EventId)">
     <h2 class="header-large">Your Codes</h2>
     <div class="yellow-background line--small"></div>
     
@@ -41,10 +43,10 @@
         </table>
     </div>
     <div class="photoPage__image-container">
-        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize" ng-show="(codePhotos.length/photosPerPage) > 1"></ul>﻿
+        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize" ng-show="(codePhotos.length/photosPerPage) > 1"></ul>
     </div>
-    <form id="card-downloader" action="@Url.Action("Export")" method="post">
-        <input type="hidden" ng-repeat="card in cardsToExport" name="ids[{{$index}}]" ng-value="card.Id" />
+    <form id="card-downloader" method="post">
+        <input type="hidden" ng-repeat="card in cardsToExport" name="cardIds[{{$index}}]" ng-value="card.Id" />
     </form>
 </div>
 

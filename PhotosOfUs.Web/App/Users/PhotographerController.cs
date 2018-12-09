@@ -31,63 +31,14 @@ namespace PhotosOfUs.Web.Controllers
         private readonly IRepository<Photo> _photo;
         private readonly IRepository<User> _user;
         private readonly IRepository<Card> _card;
-        private readonly IRepository<Folder> _folder;
 
         public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
-        IRepository<User> userRepository, IRepository<Card> cardRepository, IRepository<Folder> folderRepository)
+        IRepository<User> userRepository, IRepository<Card> cardRepository)
         {
             _context = context;
             _photo = photoRepository;
             _user = userRepository;
             _card = cardRepository;
-            _folder = folderRepository;
-        }
-
-        [Authorize]
-        public ActionResult Photos(int id)
-        {
-            var photographer = _user.Find(x => x.Id == User.ID());
-            Folder folder = _folder.Include(x => x.Photo).Find(x => x.PhotographerId == photographer.Id && x.Id == id);
-
-            return View(folder.ToViewModel<FolderViewModel>());
-        }
-        
-        [Authorize]
-        public ActionResult Cards()
-        {
-            var azureId = User.AzureID();
-            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
-            List<Card> pCards = _user.Find(x => x.Id == user.Id).Card.Where(y => y.PhotographerId == user.Id).ToList();
-            return View(pCards);
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Produces("application/json")]
-        public ActionResult Export(List<int> ids)
-        {
-            //var cards = _user.Find(x => x.Id == User.ID()).Card
-            //    .Where(x => x.PhotographerId == User.ID() && ids.Contains(x.Id)).ToList();
-            var user = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
-            var cards = _card.Include(x => x.Photographer).Where(x => x.PhotographerId == user.Id && ids.Contains(x.Id)).ToList();
-
-            var json = JsonConvert.SerializeObject(cards.Select(CardViewModel.ToViewModel).ToList());
-            return new ActionAsPdf("ExportPdf", new { json })
-            {
-                FileName = "Cards.pdf",
-                PageSize = Size.Letter,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = { Left = 0, Right = 0 },
-                Cookies = Request.Cookies.ToDictionary(x => x.Key, x => x.Value)
-            };
-
-        }
-
-        public ActionResult ExportPdf(string json)
-        {
-            var newString = json;
-            var cards = JsonConvert.DeserializeObject<List<CardViewModel>>(json);
-            return View(cards);
         }
 
         public ActionResult Upload()

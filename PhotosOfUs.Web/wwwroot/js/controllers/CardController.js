@@ -1,35 +1,27 @@
-﻿app.controller('CardCtrl', ['$scope', '$rootScope', '$window', '$mdDialog', 'photoApi', 'cardApi', '$timeout', '$http', ($scope, $rootScope, $window, $mdDialog, photoApi, cardApi, $timeout, $http) => {
+﻿app.controller('CardCtrl', ['$scope', '$rootScope', '$mdDialog', '$timeout', '$http', ($scope, $rootScope, $mdDialog, $timeout, $http) => {
     $scope.close = () => $mdDialog.hide();
     $scope.cards = [];
     $scope.cardsToExport = [];
     $scope.pageSize = 10;
     $scope.currentPage = 1;
 
-    $scope.photographer = {};
-    
-    $scope.initCardCtrl = function () {
-        $http.get('/api/User').then(x => {
-            $scope.photographer = x.data
-            console.log(x.data);
-
-            $http.get('/api/Photographer/GetUserCard/' + x.data.Id).then(x => {
-                $scope.cards = x.data;
-                console.log(x.data);
-            });
-            }
-        );
+    $scope.getCards = function (eventId) {
+        $scope.eventId = eventId;
+        $http.get('/api/Events/' + eventId + '/Cards').then(x => {
+            $scope.cards = x.data;
+        });
     };
 
     $scope.exportMultipleCardsModal = function () {
         $mdDialog.show({
-            templateUrl: '/Photographer/MultipleCardsModal',
+            templateUrl: '/Events/Admin/MultipleCardsModal',
             scope: $scope,
             clickOutsideToClose: true
         })
     };
 
     $scope.exportMultipleCards = function (quantity) {
-        $http.post('/api/Events/Create/' + quantity + '/' + $scope.photographer.Id).then(function (x) {
+        $http.post('/api/Events/' + $scope.eventId + '/Cards', quantity).then(function (x) {
             $scope.cards = x.data.concat($scope.cards);
             $mdDialog.hide();
             $scope.downloadCards(x.data);
@@ -38,7 +30,7 @@
 
     $scope.MooModal = () => {
         $mdDialog.show({
-            templateUrl: '/Photographer/MooOrderModal',
+            templateUrl: '/Events/Admin/MooOrderModal',
             scope: $scope,
             clickOutsideToClose: true
         })

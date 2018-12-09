@@ -10,6 +10,8 @@ using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using PhotosOfUs.Model.Events;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
+using PhotosOfUs.Pages.Events;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -102,6 +104,14 @@ namespace PhotosOfUs.Web.Controllers.API
             var ev = _events.Include(x => x.Photos).Find(x => x.EventId == eventId);
             ev.DeletePhotos(photoIds);
             _events.Commit();
+        }
+
+        [Route("CardsPdf")]
+        public ActionResult CardsPdf(string json)
+        {
+            var newString = json;
+            var cards = JsonConvert.DeserializeObject<List<CardsPdfModel>>(json);
+            return View(cards);
         }
     }
 }
