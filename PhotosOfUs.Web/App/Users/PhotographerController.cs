@@ -52,45 +52,6 @@ namespace PhotosOfUs.Web.Controllers
             return View(folder.ToViewModel<FolderViewModel>());
         }
         
-        public ActionResult PublicCode()
-        {
-            return View();
-        }
-
-        public ActionResult Code(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Code2(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Code3(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Code4(int id)
-        {
-            return View();
-        }
-
-        public ActionResult PhotoCode(string code)
-        {
-            var photos = _photo.Where(x => x.Code == code).ToViewModel<PhotoViewModel>().ToList();
-            if(photos != null)
-            {
-                return View();
-            }
-            else
-            {
-                return Redirect("/Photographer/Search");
-            }
-            
-        }
-
         [Authorize]
         public ActionResult Cards()
         {

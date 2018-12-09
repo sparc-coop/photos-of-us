@@ -89,15 +89,7 @@
             });
         });
     };
-
-    $scope.getPhotoCode = () => {
-        $scope.code = $location.absUrl().split('=')[1];
-        $scope.getPhotosByCode($scope.code);
-    };
-
-    $scope.currentPage = 1;
-    $scope.photosPerPage = 8;
-
+    
     $scope.getPhotosByCode = (code) => {
         $http.get('/api/Photo/GetCodePhotos/' + code).then(x => {
             $scope.codePhotos = x.data;

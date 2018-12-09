@@ -1,7 +1,4 @@
-﻿@{
-    Layout = "~/Home/Views/Shared/_Layout_Code_Enter.cshtml";
-}
-<div ng-controller="PhotoCtrl">
+﻿<form method="POST">
     <div class="codePage__background2">
         <img src="~/images/photo/abstract-background.jpeg" />
     </div>
@@ -16,10 +13,10 @@
                 natoque penatibus et magnis dis parturient montes, nascetur
                 ridiculus mus. Donec
             </div>
-            <input ng-model="code" placeholder="Enter Your Code" class="codePage__container__search" />
-            <a data-ng-href="@Url.Action("PhotoCode", "Photographer")?code={{code}}" class="button--go">Go!</a>
+            <input name="code" placeholder="Enter Your Code" class="codePage__container__search"/>
+            <button type="submit" class="button--go">Go!</button>
             <div class="button--lostcode">Lost your code?</div>
         </div>
     </div>
     <img src="~/images/tag.png" class="codePage__pouLogo" />
-</div>
+</form>

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PhotosOfUs.Pages.Events
 {
@@ -11,26 +12,27 @@ namespace PhotosOfUs.Pages.Events
     {
         private readonly IRepository<Event> _events;
 
-        public int Id { get; set; }
-        public int PhotographerId { get; set; }
-        public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
-
+        public string Code { get; private set; }
+        public int EventId { get; set; }
         public List<Photo> Photos { get; set; }
+        public User Photographer { get; set; }
 
         public PhotosModel(IRepository<Event> events)
         {
             _events = events;
         }
 
-        public void OnGet(int eventId)
+        public IActionResult OnGet(int eventId, string code, int? page = 1, int? photosPerPage = 8)
         {
-            var ev = _events.Include(x => x.Photos).Find(x => x.EventId == eventId);
-            Id = ev.EventId;
-            PhotographerId = ev.UserId;
-            Name = ev.Name;
-            CreatedDate = ev.CreatedDate;
-            Photos = ev.Photos.ToList();
+            var ev = _events.Include("Photos.Photographer").Find(x => x.EventId == eventId);
+            Code = code;
+            EventId = eventId;
+            Photos = ev.Photos.Where(x => x.Code == code).ToList();
+            if (!Photos.Any()) return RedirectToPage("/Events/Search");
+
+            Photographer = Photos.First().Photographer;
+
+            return Page();
         }
     }
 }
