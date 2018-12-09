@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Model", "PhotosO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web", "PhotosOfUs.Web\PhotosOfUs.Web.csproj", "{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rotativa.NetCore", "Rotativa.NetCore\Rotativa.NetCore.csproj", "{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Plugins", "PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
 EndProject
 Global
@@ -25,9 +23,6 @@ Global
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57BD7DDE-BBE3-4B73-ABE1-E0816B0B5ECF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Release|Any CPU.ActiveCfg = Release|Any CPU

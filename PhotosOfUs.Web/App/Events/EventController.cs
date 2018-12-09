@@ -41,18 +41,18 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("{eventId:int}/Cards")]
         public List<Card> GetEventCards(int eventId)
         {
-            return _events.Find(x => x.EventId == eventId).Cards.ToList();
+            return _events.Include(x => x.Cards).Find(x => x.EventId == eventId).Cards.ToList();
         }
 
         [HttpPost]
         [Route("{eventId:int}/Cards")]
-        public List<CardViewModel> CreateEventCards(int eventId, [FromBody]int quantity)
+        public List<Card> CreateEventCards(int eventId, [FromBody]int quantity)
         {
-            var ev = _events.Find(x => x.EventId == eventId);
+            var ev = _events.Include(x => x.Cards).Find(x => x.EventId == eventId);
             ev.AddNewCards(quantity);
             _events.Commit();
 
-            return ev.Cards.ToList().Select(CardViewModel.ToViewModel).ToList();
+            return ev.Cards.ToList();
         }
 
         [HttpGet]
