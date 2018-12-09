@@ -28,52 +28,11 @@ namespace PhotosOfUs.Web.Controllers
     [Route("/api/Photographer")]
     public class PhotographerController : Controller
     {
-        private PhotosOfUsContext _context;
-        private readonly IRepository<Photo> _photo;
-        private readonly IRepository<User> _user;
-        private readonly IRepository<Card> _card;
-
-        public PhotographerController(PhotosOfUsContext context, IRepository<Photo> photoRepository, 
-        IRepository<User> userRepository, IRepository<Card> cardRepository)
-        {
-            _context = context;
-            _photo = photoRepository;
-            _user = userRepository;
-            _card = cardRepository;
-        }
-
-        [Authorize]
         [HttpPost]
         [Route("ProfilePhoto")]
         public async Task<UploadPhotoCommand.UploadPhotoCommandResult> UploadProfilePhotoAsync(IFormFile file, [FromServices]UploadPhotoCommand command)
         {
             return await command.ExecuteAsync(User.ID(), file.FileName, file.OpenReadStream());
-        }
-
-        public ActionResult Profile(int userId)
-        {
-            var newId = userId;
-            if (userId == 0)
-            {
-                userId = _user.Find(x => x.AzureId == User.AzureID()).Id;
-            }
-
-            var photographer = _user.Find(x => x.Id == userId);
-            var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted && x.PhotographerId == userId).ToList();
-
-            return View(ProfileViewModel.ToViewModel(photos,photographer));
-        }
-
-        public ActionResult SalesHistory()
-        {
-            return View();
-        }
-
-        public ActionResult Search()
-        {
-            var photos = _photo.Where(x => x.PublicProfile && !x.IsDeleted).ToList();
-
-            return View(photos.ToViewModel<List<PhotoViewModel>>());
         }
 
         public ActionResult Results(string tagnames)
@@ -132,17 +91,6 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         public ActionResult SocialAccounts()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult BrandSettings()
-        {
-            return View();
-        }
-
-        public ActionResult UploadProfileImage()
         {
             return View();
         }

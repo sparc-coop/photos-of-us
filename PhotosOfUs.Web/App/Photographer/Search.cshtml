@@ -1,4 +1,5 @@
-﻿@model List<PhotoViewModel>
+﻿@page
+@model SearchModel
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
@@ -27,7 +28,7 @@
     </div>
     <div>
         <div class="search--grid">
-            @foreach (var Photo in Model)
+            @foreach (var Photo in Model.Photos)
             {
                 <div class="grid-item">
                     <img src="@Photo.ThumbnailUrl" ng-click="viewPhoto(@Photo.Id)" />
