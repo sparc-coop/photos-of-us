@@ -101,7 +101,7 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpPut]
         [Route("{eventId:int}/BulkEdit")]
-        public void BulkEditSave(int eventId, List<int> photoIds, [FromBody]BulkEditViewModel model, [FromServices]BulkEditCommand command)
+        public void BulkEditSave(int eventId, List<int> photoIds, [FromBody]BulkEditModel model, [FromServices]BulkEditCommand command)
         {
             var tags = model.tags.Select(x => x.Name).ToList();
             command.Execute(eventId, photoIds, tags, model.newPrice);
