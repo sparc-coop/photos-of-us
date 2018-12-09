@@ -79,7 +79,7 @@
             angular.forEach($scope.codePhotos, function (item) { $scope.selectedPhotos.push(item.Id) });
             $mdDialog.show({
                 locals: { selectedPhotos: $scope.selectedPhotos },
-                templateUrl: '/Photographer/BulkEditModal',
+                templateUrl: '/Events/Admin/Modals/BulkEditModal',
                 controller: 'BulkEditModalCtrl',
                 clickOutsideToClose: true,
             });
@@ -95,7 +95,7 @@
 
     $scope.openBulkEdit = (folder) => {
         $mdDialog.show({
-            templateUrl: '/Photographer/BulkEditModal',
+            templateUrl: '/Events/Admin/Modals/BulkEditModal',
             controller: 'BulkEditController',
             locals: { folder },
             clickOutsideToClose: true

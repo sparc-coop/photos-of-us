@@ -38,7 +38,7 @@
     $scope.openBulkEdit = () => {
         $mdDialog.show({
             locals: { selectedPhotos: $scope.selectedPhotos },
-            templateUrl: '/Photographer/BulkEditModal',
+            templateUrl: '/Events/Admin/Modals/BulkEditModal',
             controller: 'BulkEditModalCtrl',
             clickOutsideToClose: true,
         });

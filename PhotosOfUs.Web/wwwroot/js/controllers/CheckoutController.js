@@ -5,7 +5,7 @@
         }
         else {
             $mdDialog.show({
-                templateUrl: '/Photographer/PriceModal',
+                templateUrl: '/Events/Admin/Modals/PriceModal',
                 controller: 'ModalController',
                 clickOutsideToClose: true
             });
@@ -15,7 +15,7 @@
 
     $scope.showPriceModal = () => {
         $mdDialog.show({
-            templateUrl: '/Photographer/PriceModal',
+            templateUrl: '/Events/Admin/Modals/PriceModal',
             controller: 'ModalController',
             clickOutsideToClose: true
         });

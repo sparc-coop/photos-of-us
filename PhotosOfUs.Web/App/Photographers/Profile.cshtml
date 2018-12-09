@@ -1,0 +1,97 @@
+﻿@page "{userId?:int}"
+@model ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Home/Views/Shared/_Layout.cshtml";
+}
+
+@section ProfileImageBackdrop {
+    <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
+}
+    <div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-cloak>
+        @if (Model.Photographer.IsDeactivated)
+        {
+            <div style="margin-top: 150px;">
+                Oops! We can't find that account.
+                <a href="/">Return Home</a>
+            </div>
+        }
+        else
+        {
+            <div>
+                <div class="g-row">
+                    <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
+                        <div class="photographer-info">
+                            @if (Model.Photographer.ProfilePhotoUrl == null)
+                            {
+                                <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
+                            }
+                            else
+                            {
+                                <div class="photographer-image" style="background-image: url('@Model.Photographer.ProfilePhotoUrl')"></div>
+                            }
+                            <h2>@Model.Photographer.DisplayName</h2>
+                            <p class="photographer-title">@Model.Photographer.JobPosition</p>
+                            <p class="photographer-bio">@Model.Photographer.Bio</p>
+                        </div>
+                        <div class="photographer-social">
+                            <ul>
+                                @if (Model.Photographer.Facebook)
+                                {
+                                    <li><a class="facebook" href="@Model.Photographer.Facebook" target="_blank">Facebook</a></li>
+                                }
+                                @if (Model.Photographer.Twitter)
+                                {
+                                    <li><a class="twitter" href="@Model.Photographer.Twitter" target="_blank">Twitter</a></li>
+                                }
+                                @if (Model.Photographer.Instagram)
+                                {
+                                    <li><a class="instagram" href="@Model.Photographer.Instagram" target="_blank">Instagram</a></li>
+                                }
+                                @if (Model.Photographer.Dribbble)
+                                {
+                                    <li><a class="dribbl" href="@Model.Photographer.Dribbble" target="_blank">Dribbble</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="gallery-search-container">
+                            <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
+                        </div>
+                        @if (Model.IsAdmin)
+                        {
+                            <div class="gallery-upload-container">
+                                <div>
+                                    <a href="#" ng-click="toggleSelection()" class="btn-upload">
+                                        <img src="~/images/icons/add-photo.png" />
+                                        <span class="upload-text">Select Photos</span>
+                                    </a>
+                                    <br />
+                                    <a href="#" ng-click="openBulkEdit()" class="btn-upload">
+                                        <img src="~/images/icons/add-photo.png" />
+                                        <span class="upload-text">Edit Photos</span>
+                                    </a>
+                                    <br />
+                                    <a href="#" ng-click="openUpload()" class="btn-upload">
+                                        <img src="~/images/icons/add-photo.png" />
+                                        <span class="upload-text">Click here to upload</span>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
+                        <div class="photographer-gallery-container" ng-init="getProfilePhotos()">
+                            <div class="g-row">
+                                <div ng-repeat="photo in profilePhotos track by $index" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="photo.Code.includes(search) || search == null || search == ''"> 
+                                    <img class="gallery-image" src="{{photo.ThumbnailUrl}}" ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" 
+                                        ng-style="isBulkEditEnabled ? (isPhotoSelected(photo) ? isHighlighted : isNotHighlighted) : {}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
