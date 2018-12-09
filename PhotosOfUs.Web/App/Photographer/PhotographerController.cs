@@ -24,7 +24,8 @@ using PhotosOfUs.Model.Photos.Commands;
 
 namespace PhotosOfUs.Web.Controllers
 {
-    [Area("Users")]
+    [Authorize]
+    [Route("/api/Photographer")]
     public class PhotographerController : Controller
     {
         private PhotosOfUsContext _context;
@@ -42,111 +43,11 @@ namespace PhotosOfUs.Web.Controllers
         }
 
         [Authorize]
-        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(IFormFile file, string photoName, string photoCode, string extension, int folderId, int price, string tags,
-        [FromServices]UploadPhotoCommand command)
+        [HttpPost]
+        [Route("ProfilePhoto")]
+        public async Task<UploadPhotoCommand.UploadPhotoCommandResult> UploadProfilePhotoAsync(IFormFile file, [FromServices]UploadPhotoCommand command)
         {
-            RootObject tagsfromazure = null;
-
-            var ac = new AzureCognitive();
-            byte[] imgbytes = AzureCognitive.TransformImageIntoBytes(file);
-            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
-
-            if (string.IsNullOrEmpty(photoCode))
-            {
-                var codefromazure = await ac.MakeRequest(imgbytes, "ocr");
-
-                var suggestedtags = ac.ExtractTags(tagsfromazure);
-                var code = ac.ExtractCardCode(codefromazure);
-
-                return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
-            }
-            
-            var listoftags = new List<TagViewModel>();
-            if (tags != null)
-            {
-                List<string> result = tags.Split(' ').ToList();
-
-                foreach (string obj in result)
-                {
-                    listoftags.Add(new TagViewModel() { Name = obj, text = obj });
-                }
-            }
-            
-            var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
-            {
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                    await command.ExecuteAsync(User.ID(), stream, photoName, photoCode, extension, folderId, price, tagsfromazure, TagViewModel.ToEntity(listoftags));
-                }
-            }
-
-            return new AzureCognitiveViewModel();
-        }
-
-
-
-        [Authorize]
-        public async Task<AzureCognitiveViewModel> UploadProfilePhotoAsync(IFormFile file, string photoName, string price, string extension, string tags, [FromServices]UploadPhotoCommand command)
-        {
-            //User photographer = _user.Find(x => x.Id == User.ID());
-            User photographer = _user.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == User.AzureID()));
-            RootObject tagsfromazure = null;
-            List<string> suggestedtags = null;
-
-            var ac = new AzureCognitive(_context, _card);
-            var imgbytes = AzureCognitive.TransformImageIntoBytes(file);
-            //tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
-            tagsfromazure = await ac.MakeRequest(imgbytes, "tags");
-
-            if(tagsfromazure.tags != null)
-            {
-                suggestedtags = ac.ExtractTags(tagsfromazure);
-
-                if (string.IsNullOrEmpty(tags))
-                {
-                    return AzureCognitiveViewModel.ToViewModel(suggestedtags);
-                }
-            }
-
-            double addPrice = double.Parse(price);
-
-            var listoftags = new List<TagViewModel>();
-            List<string> result = tags.Split(' ').ToList();
-
-            foreach (string obj in result)
-            {
-                listoftags.Add(new TagViewModel() { Name = obj, text = obj });
-            }
-
-            var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
-            {
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    int folderId = photographer.PublicFolder.Id;
-                    await file.CopyToAsync(stream);
-                    if (photographer.PublicFolder == null)
-                    {
-                        folderId = photographer.AddFolder("Public").Id;
-                        _photo.Commit();
-                    }
-                    //await _user.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
-                    await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags));
-                    }
-            }
-
-            return AzureCognitiveViewModel.ToViewModel(suggestedtags);
-        }
-
-        public JsonResult VerifyIfCodeAlreadyUsed(string code)
-        {
-            var azureId = HttpContext.User.FindFirstValue("http://schemas.microsoft.com/identity/claims/objectidentifier");
-            int id = _user.Find(x => x.AzureId == azureId).Id;
-            return Json(new { PhotoExisting = _photo.Find(x => x.PhotographerId == id && x.Code == code)});
+            return await command.ExecuteAsync(User.ID(), file.FileName, file.OpenReadStream());
         }
 
         public ActionResult Profile(int userId)

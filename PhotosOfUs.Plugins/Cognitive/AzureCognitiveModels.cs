@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Connectors.Cognitive
 {
     public class AzureTag
     {
@@ -36,7 +36,7 @@ namespace PhotosOfUs.Model.Models
         public List<Line> lines { get; set; }
     }
 
-    public class RootObject
+    public class CognitiveResponse
     {
         public string language { get; set; }
         public string orientation { get; set; }

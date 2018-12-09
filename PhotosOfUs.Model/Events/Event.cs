@@ -38,6 +38,10 @@ namespace PhotosOfUs.Model.Models
                 Cards.Add(new Card(this));
         }
 
+        public void AddPhoto(Photo photo)
+        {
+            Photos.Add(photo);
+        }
 
         public enum HomepageTemplates
         {

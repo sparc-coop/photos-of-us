@@ -12,6 +12,9 @@ using PhotosOfUs.Model.Events;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
 using PhotosOfUs.Pages.Events;
+using Microsoft.AspNetCore.Http;
+using PhotosOfUs.Model.Photos.Commands;
+using System.Threading.Tasks;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
@@ -63,6 +66,18 @@ namespace PhotosOfUs.Web.Controllers.API
             .ToViewModel<PhotoViewModel>();
         }
 
+        [HttpPost]
+        [Route("{eventId:int}/Photos")]
+        public async Task<AzureCognitiveViewModel> UploadPhotoAsync(int eventId, string photoCode, IFormFile file, [FromServices]UploadPhotoCommand command)
+        {
+            if (file.Length > 0)
+            {
+                await command.ExecuteAsync(eventId, User.ID(), file.FileName, file.OpenReadStream(), photoCode);
+            }
+
+            return new AzureCognitiveViewModel();
+        }
+
         [HttpGet]
         [Route("{eventId:int}/Tags")]
         public List<TagViewModel> GetAllTags(int eventId)
@@ -70,7 +85,7 @@ namespace PhotosOfUs.Web.Controllers.API
             return _events.Find(x => x.EventId == eventId)
             .Cards
             .SelectMany(x => x.Photos)
-            .SelectMany(x => x.Tag)
+            .SelectMany(x => x.PhotoTag.Select(y => y.Tag))
             .Distinct()
             .AsQueryable()
             .ToViewModel<TagViewModel>();
@@ -83,7 +98,7 @@ namespace PhotosOfUs.Web.Controllers.API
              return _events.Find(x => x.EventId == eventId)
             .Photos
             .Where(y => photoIds.Contains(y.Id))
-            .SelectMany(x => x.Tag)
+            .SelectMany(x => x.PhotoTag.Select(y => y.Tag))
             .Distinct()
             .AsQueryable()
             .ToViewModel<TagViewModel>();

@@ -1,7 +1,7 @@
-﻿app.controller('UploadPhotographerProfileCtrl', ['$scope', '$http', 'FileUploader', '$window', '$mdDialog', function ($scope, $http, FileUploader, $window, $mdDialog) {
+﻿app.controller('UploadPhotographerProfileCtrl', ['$scope', 'FileUploader', '$window', function ($scope, FileUploader, $window) {
 
     var uploader = $scope.uploader = new FileUploader({
-        url: '/Photographer/UploadProfilePhotoAsync'
+        url: '/Photographer/ProfilePhoto'
     });
 
     $scope.$watch(function () {

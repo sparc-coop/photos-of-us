@@ -4,7 +4,7 @@
     $scope.close = () => $mdDialog.hide();
 
     var uploader = $scope.uploader = new FileUploader({
-        url: '/Photographer/UploadPhotoAsync'
+        url: '/api/Events/' + eventId + '/Photos'
     });
 
     $scope.$watch(function () {
@@ -49,22 +49,11 @@
         }
     };
 
-    $scope.photoCodeValidation = function (e, selectedItem) {
+    $scope.photoCodeValidation = function (e) {
         var regex = new RegExp("^[A-Za-z0-9_-]+$");
         if (!regex.test(e.key)) {
             e.preventDefault();
-        } else {
-            $http.get('VerifyIfCodeAlreadyUsed').
-                then(function (response) {
-                    if (response.data.photoExisting === true) {
-                        angular.element(e.target).addClass('error');
-                        angular.element(e.target).prop('title', 'Photo code already used, choose another');
-                    } else {
-                        angular.element(e.target).removeClass('error');
-                        angular.element(e.target).prop('title', '');
-                    }
-                });
-        }
+        } 
     };
 
     // FILTERS
@@ -175,7 +164,7 @@
         if (item.formData.length > 0) {
             item.formData[0].photoCode = photoCode;
         } else {
-            item.formData.push({ photoName: item.file.name, photoCode: photoCode, extension: '.' + item.file.fileExtension, eventId: $scope.eventId, tags: "" });
+            item.formData.push({ photoCode: photoCode, eventId: $scope.eventId });
         }
         
     };

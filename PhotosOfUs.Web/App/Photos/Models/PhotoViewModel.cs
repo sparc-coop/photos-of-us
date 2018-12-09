@@ -21,6 +21,5 @@ namespace PhotosOfUs.Model.ViewModels
         public string FileSize { get; set; }
         public User Photographer { get; set; }
         public string WaterMarkUrl { get; set; }
-        public RootObject SuggestedTags { get; set; }
     }
 }

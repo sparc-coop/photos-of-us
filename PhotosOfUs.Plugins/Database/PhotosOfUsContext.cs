@@ -58,8 +58,6 @@ namespace PhotosOfUs.Model.Models
                 entity.Ignore(x => x.Resolution);
                 entity.Ignore(x => x.ThumbnailUrl);
                 entity.Ignore(x => x.WaterMarkUrl);
-                entity.Property(x => x.SuggestedTags)
-                    .HasConversion(x => JsonConvert.SerializeObject(x), x => JsonConvert.DeserializeObject<RootObject>(x));
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -96,8 +94,6 @@ namespace PhotosOfUs.Model.Models
                 entity.HasKey(x => new { x.PhotoId, x.TagId });
                 entity.Property(e => e.RegisterDate).HasColumnType("datetime");
             });
-
-            modelBuilder.Ignore<RootObject>();
         }
     }
 }

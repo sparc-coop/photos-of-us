@@ -12,45 +12,44 @@ namespace PhotosOfUs.Model.Models
     {
         public Photo()
         {
-            Tag = new HashSet<Tag>();
             PrintType = new HashSet<PrintType>();
             PhotoTag = new HashSet<PhotoTag>();
         }
 
-        public Photo(int userId, string photoName, string extension, Stream stream, string photoCode, int folderId, double? price)
+        public Photo(int userId, string filename, int eventId, int? cardId) : this(userId, filename)
+        {
+            EventId = eventId;
+            CardId = cardId;
+            Filename = Filename.Replace($"{userId}/", $"{userId}/{eventId}/");
+        }
+
+        public Photo(int userId, string filename)
         {
             var urlTimeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
-            Filename = $"{userId}/profile/{photoName.Split('.')[0] + urlTimeStamp + extension}";
-            FolderName = "photos";
-            Stream = stream;
-            Code = photoCode;
-            FolderId = folderId;
-            Price = (decimal)price;
+            var extension = filename.Contains('.') ? filename.Split('.').Last() : ".jpg";
+            Filename = $"{userId}/{filename.Split('.')[0] + urlTimeStamp + extension}";
         }
 
         public int Id { get; set; }
         public int PhotographerId { get; set; }
-        public int FolderId { get; set; }
         public string Url { get; set; }
-        public string Code { get; set; }
         public decimal? Price { get; set; }
         public string Name { get; set; }
         public DateTime UploadDate { get; set; }
         public bool PublicProfile { get; set; }
         public bool IsDeleted { get; set; }
-        public RootObject SuggestedTags { get; set; }
+        public int? EventId { get; set; }
+        public int? CardId { get; set; }
 
-        public Folder Folder { get; set; }
         public User Photographer { get; set; }
 
         public ICollection<PhotoTag> PhotoTag { get; set; }
         public ICollection<PrintType> PrintType { get; set; }
-        public ICollection<Tag> Tag { get; set; }
 
         public string Filename { get; }
 
         // Not Mapped
-        public string FolderName { get; protected set; }
+        public string FolderName { get; protected set; } = "photos";
         public string FileSize { get; protected set; }
         public string Resolution { get; protected set; }
         public Stream Stream { get; protected set; }
@@ -62,9 +61,9 @@ namespace PhotosOfUs.Model.Models
             Price = newPrice;
         }
 
-        public ICollection<Tag> GetAllTags()
+        public IEnumerable<Tag> GetAllTags()
         {
-            return Tag;
+            return PhotoTag.Select(x => x.Tag);
         }
 
         public void ReplaceTags(List<string> tags)
