@@ -276,7 +276,12 @@ namespace PhotosOfUs.Web.Controllers
 
                 return AzureCognitiveViewModel.ToViewModel(code, suggestedtags);
             }
-            
+
+            if (price == 0)
+            {
+                price = 1;
+            }
+
             var listoftags = new List<TagViewModel>();
             if (tags != null)
             {
@@ -327,6 +332,11 @@ namespace PhotosOfUs.Web.Controllers
                 }
             }
 
+            if (price == null)
+            {
+                price = "1";
+            }
+
             double addPrice = double.Parse(price);
 
             var listoftags = new List<TagViewModel>();
@@ -354,7 +364,7 @@ namespace PhotosOfUs.Web.Controllers
                     await file.CopyToAsync(stream);
                     //await _user.UploadProfilePhotoAsync(photographer.Id, stream, photoName, string.Empty, addPrice, photographer.PublicFolder, extension, tagsfromazure, listoftags);
 
-                    await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags));
+                    await command.ExecuteAsync(User.ID(), stream, photoName, string.Empty, extension, folderId, addPrice, tagsfromazure, TagViewModel.ToEntity(listoftags), true);
                 }
             }
 

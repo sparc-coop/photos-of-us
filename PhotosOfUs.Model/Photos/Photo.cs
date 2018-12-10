@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -18,7 +19,7 @@ namespace PhotosOfUs.Model.Models
             PhotoTag = new HashSet<PhotoTag>();
         }
 
-        public Photo(int userId, string photoName, string extension, Stream stream, string photoCode, int folderId, double? price, string url)
+        public Photo(int userId, string photoName, string extension, Stream stream, string photoCode, int folderId, double? price, string url, bool publicProfile = false)
         {
             Name = photoName;
             var urlTimeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
@@ -31,6 +32,7 @@ namespace PhotosOfUs.Model.Models
             UploadDate = DateTime.Now;
             Url = url;
             PhotographerId = userId;
+            PublicProfile = publicProfile;
         }
 
         public int Id { get; set; }
@@ -53,13 +55,19 @@ namespace PhotosOfUs.Model.Models
 
         public ICollection<PrintType> PrintType { get; set; }
 
-        public string Filename { get; }
-
-        public string FolderName { get; protected set; }
+        [NotMapped]
+        public string Filename { get; set; }
+        [NotMapped]
+        public string FolderName { get; set; }
+        [NotMapped]
         public string FileSize { get; protected set; }
+        [NotMapped]
         public string Resolution { get; protected set; }
-        public Stream Stream { get; protected set; }
+        [NotMapped]
+        public Stream Stream { get; set; }
+        [NotMapped]
         public string ThumbnailUrl => Url?.Replace("/photos/", "/thumbnails/");
+        [NotMapped]
         public string WaterMarkUrl => Url?.Replace("/photos/", "/watermark/");
 
 
@@ -102,16 +110,16 @@ namespace PhotosOfUs.Model.Models
         //    return tag;
         //}
 
-        public Stream AddWatermark(Stream input, Stream watermark, string extension)
+        public Stream AddWatermark(Stream input, string extension)
         {
             var output = new MemoryStream();
             
-            //WebClient wc = new WebClient();
-            //byte[] bytes = wc.DownloadData("https://photosofus-dev.azurewebsites.net/images/water_mark.png");
-            //MemoryStream ms = new MemoryStream(bytes);
+            WebClient wc = new WebClient();
+            byte[] bytes = wc.DownloadData("https://photosofus-dev.azurewebsites.net/images/water_mark.png");
+            MemoryStream ms = new MemoryStream(bytes);
 
             using (Image image = Image.FromStream(input))
-            using (Image watermarkImage = Image.FromStream(watermark))
+            using (Image watermarkImage = Image.FromStream(ms))
             using (Graphics imageGraphics = Graphics.FromImage(image))
             using (TextureBrush watermarkBrush = new TextureBrush(watermarkImage))
             {
@@ -148,6 +156,46 @@ namespace PhotosOfUs.Model.Models
             {
                 return ImageFormat.Png;
             }
+        }
+
+        public Stream ConvertToThumbnail(Stream image, string extension, int thumbnailSize)
+        {
+            image.Position = 0;
+            var output = new MemoryStream();
+            int width;
+            int height;
+            var originalImage = new Bitmap(image);
+
+            if (originalImage.Width > originalImage.Height)
+            {
+                width = thumbnailSize;
+                height = thumbnailSize * originalImage.Height / originalImage.Width;
+            }
+            else
+            {
+                height = thumbnailSize;
+                width = thumbnailSize * originalImage.Width / originalImage.Height;
+            }
+
+            Image thumbnailImage = null;
+            try
+            {
+                if (height > originalImage.Height || width > originalImage.Width)
+                {
+                    originalImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                }
+                else
+                {
+                    thumbnailImage = originalImage.GetThumbnailImage(width, height, () => true, IntPtr.Zero);
+                    thumbnailImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                }
+            }
+            finally
+            {
+                thumbnailImage?.Dispose();
+            }
+
+            return output;
         }
     }
 }

@@ -24,20 +24,27 @@ namespace PhotosOfUs.Model.Photos.Commands
             _photoRepository = photoRepository;
             _tags = tagRepository;
             _photoTags = photoTagRepository;
-
     }
 
         public async Task<Photo> ExecuteAsync(int userId, Stream stream, string photoName, string photoCode, string extension, int folderId, double? price, RootObject suggestedTags, List<Tag> listoftags, bool publicProfile = false)
         {
-            var photo = new Photo(userId, photoName, extension, stream, photoCode, folderId, price, "empty");
+            var photo = new Photo(userId, photoName, extension, stream, photoCode, folderId, price, "empty", publicProfile);
             var uri = await _photos.UploadAsync(photo);
-
             photo.Url = uri.AbsoluteUri;
+            
 
-            // 
-            //photo.SuggestedTags = "";0
+            var photothumbnail = new Photo(userId, photoName, extension, stream, photoCode, folderId, price, "empty", publicProfile);
+            photothumbnail.FolderName = "thumbnails";
+            photothumbnail.Filename = photo.Filename;
+            photothumbnail.Stream = photothumbnail.ConvertToThumbnail(photo.Stream, extension, 300);
+            await _photos.UploadAsync(photothumbnail);
 
-            //var test = photo.GetAllTags();
+            var photowatermark = new Photo(userId, photoName, extension, stream, photoCode, folderId, price, "empty", publicProfile);
+            photowatermark.FolderName = "watermark";
+            photowatermark.Filename = photo.Filename;
+            photowatermark.Stream = photowatermark.AddWatermark(photo.Stream, extension);
+            await _photos.UploadAsync(photowatermark);
+
             _photoRepository.Add(photo);
 
             foreach (var tag in listoftags)
@@ -51,7 +58,6 @@ namespace PhotosOfUs.Model.Photos.Commands
                 }
                 _photoTags.Add(new PhotoTag { PhotoId = photo.Id, TagId = newTag.Id });
             }
-
 
             return photo;
         }
