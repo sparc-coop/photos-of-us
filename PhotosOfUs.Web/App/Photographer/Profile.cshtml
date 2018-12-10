@@ -9,7 +9,7 @@
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
     <div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-cloak>
-        @if (Model.Photographer.IsDeactivated)
+        @if (Model.Photographer.IsDeactivated == true)
         {
             <div style="margin-top: 150px;">
                 Oops! We can't find that account.
@@ -36,19 +36,19 @@
                         </div>
                         <div class="photographer-social">
                             <ul>
-                                @if (Model.Photographer.Facebook)
+                                @if (Model.Photographer.Facebook != null)
                                 {
                                     <li><a class="facebook" href="@Model.Photographer.Facebook" target="_blank">Facebook</a></li>
                                 }
-                                @if (Model.Photographer.Twitter)
+                                @if (Model.Photographer.Twitter != null)
                                 {
                                     <li><a class="twitter" href="@Model.Photographer.Twitter" target="_blank">Twitter</a></li>
                                 }
-                                @if (Model.Photographer.Instagram)
+                                @if (Model.Photographer.Instagram != null)
                                 {
                                     <li><a class="instagram" href="@Model.Photographer.Instagram" target="_blank">Instagram</a></li>
                                 }
-                                @if (Model.Photographer.Dribbble)
+                                @if (Model.Photographer.Dribbble != null)
                                 {
                                     <li><a class="dribbl" href="@Model.Photographer.Dribbble" target="_blank">Dribbble</a></li>
                                 }

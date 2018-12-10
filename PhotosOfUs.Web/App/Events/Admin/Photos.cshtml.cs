@@ -16,7 +16,7 @@ namespace PhotosOfUs.Pages.Events
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public List<Photo> Photos { get; set; }
+        public List<Card> Cards { get; set; }
 
         public PhotosAdminModel(IRepository<Event> events)
         {
@@ -25,12 +25,12 @@ namespace PhotosOfUs.Pages.Events
 
         public void OnGet(int eventId)
         {
-            var ev = _events.Include(x => x.Photos).Find(x => x.EventId == eventId);
+            var ev = _events.Include("Cards.Photos").Find(x => x.EventId == eventId);
             Id = ev.EventId;
             PhotographerId = ev.UserId;
             Name = ev.Name;
             CreatedDate = ev.CreatedDate;
-            Photos = ev.Photos.ToList();
+            Cards = ev.Cards.ToList();
         }
     }
 }
