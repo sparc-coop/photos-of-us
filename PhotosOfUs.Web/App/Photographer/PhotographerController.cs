@@ -9,8 +9,6 @@ using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model.Repositories;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Utilities;
-using Rotativa.NetCore;
-using Rotativa.NetCore.Options;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;

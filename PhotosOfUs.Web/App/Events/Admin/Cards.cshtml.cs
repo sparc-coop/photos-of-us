@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Rotativa.NetCore;
 using Newtonsoft.Json;
-using Rotativa.NetCore.Options;
+using Rotativa.AspNetCore;
+using Rotativa.AspNetCore.Options;
 
 namespace PhotosOfUs.Pages.Events
 {
@@ -42,7 +42,7 @@ namespace PhotosOfUs.Pages.Events
                 .Select(x => new CardsPdfModel(x, ev.Url, ev.User));
 
             var json = JsonConvert.SerializeObject(cards);
-            return new ActionAsPdf("CardsPdf", new { json })
+            return new ViewAsPdf("CardsPdf", new { json })
             {
                 FileName = "Cards.pdf",
                 PageSize = Size.Letter,

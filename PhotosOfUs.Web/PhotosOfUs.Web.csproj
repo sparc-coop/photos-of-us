@@ -64,7 +64,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
-    <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
   </ItemGroup>
 
