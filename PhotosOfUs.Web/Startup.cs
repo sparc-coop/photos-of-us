@@ -100,6 +100,8 @@ namespace PhotosOfUs.Web
                 })
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
+            services.AddSwaggerDocument();
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromHours(1);
