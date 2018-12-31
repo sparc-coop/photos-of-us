@@ -37,7 +37,7 @@
   {
     "outputFileName": "wwwroot/js/PoU-bundle.js",
     "inputFiles": [
-      "wwwroot/js/PoU.js",
+      "wwwroot/js/Startup.js",
       "wwwroot/js/API.js",
       "wwwroot/js/controllers/BulkEditModalController.js",
       "wwwroot/js/controllers/CheckoutController.js",
