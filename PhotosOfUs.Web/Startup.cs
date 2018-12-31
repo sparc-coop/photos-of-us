@@ -95,6 +95,9 @@ namespace PhotosOfUs.Web
 
             services.AddMvc()
                 .WithRazorPagesRoot("/App")
+                .AddRazorPagesOptions(options => {
+                    options.Conventions.AddPageRoute("/Home/Index", "");
+                })
                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver()); ;
 
             services.AddSession(options =>
@@ -163,10 +166,6 @@ namespace PhotosOfUs.Web
 
             app.UseMvc(routes =>
             {
-                routes.MapAreaRoute("usersRoute", "Users", "{controller}/{action=Index}/{id?}");
-
-                //routes.MapRoute("photRoute", "{controller=Photographer}/{action=Index}/{id?}");
-
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

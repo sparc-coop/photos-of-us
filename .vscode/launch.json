@@ -4,13 +4,14 @@
    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
    "version": "0.2.0",
    "configurations": [
+
         {
             "name": ".NET Core Launch (web)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/PhotosOfUs.Web/bin/Debug/netcoreapp2.0/PhotosOfUs.Web.dll",
+            "program": "${workspaceFolder}/PhotosOfUs.Web/bin/Debug/netcoreapp2.1/PhotosOfUs.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PhotosOfUs.Web",
             "stopAtEntry": false,
