@@ -1,105 +1,116 @@
 ﻿@page
 
 @{
-Layout = "_LayoutLanding";
+//ViewData["Title"] = "Welcome";
+}
+@{
+    Layout = "_LayoutLanding";
 }
 
-
-<div class="preLaunch--landing">
-    <div class="section1">
-        <div class="header">
-            <div class="header__logo">
-                <img src="~/images/logo.png" />
-                <div class="header__logo__text">Photos of Us</div>
-            </div>
-            <div class="header__social">
-                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
-                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
-                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
-            </div>
+<div class="landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
+    <div class="main-landing">
+        <a href="~/Session/SignInPhotographer"><img src="~/images/logo.png" class="logo" /></a>
+        <div class="main-landing--img-container">
+            <img ng-repeat="photo in photoList" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
         </div>
-
-        <div class="content">
-            <div class="slogan">Less chat, more snaps.</div>
-            <div class="content__subinfo">
-                Storing, sharing, and selling photos should be the easy part.
-                Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
-            </div>
-            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
-            {
-                <div class="content__subinfo"><b>Now that was a snap! We'll keep you in the loop!</b></div>
-            }
-            else
-            {
-                <form class="invite" method="post">
-                    <button type="submit" class="button--invite">Sign Up Free</button>
-                </form>
-            }
+        <div class="welcome-section">
+            <div class="welcome-text">less chat, more snaps</div>
+            <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
+            <a href="~/Session/SignInPhotographer" class="button-styling start-button">Get Started</a>
         </div>
     </div>
-    <div class="section2">
-        <img src="~/images/Screens-Web-Showcase.png" class="img--showcase" />
-        <div class="content">
-            <div class="slogan">Your one-stop shop.</div>
-            <div class="content__subinfo">
-                Avoid the hassle of going back and forth between multiple photo sharing sites. 
-                Simply take a snap, then store it, share it, and sell it all on Photos of Us.
+    <div class="steps">
+        <div class="landing-subtitle">
+            Photo Taken, Now What?
+        </div>
+        <div class="landing-subtext">
+            The burning question people have after having their photo taken, 
+            "Where do I get that photo?!"
+        </div>
+        <div class="landing-subtext" style="padding-top: 0;">
+            Well, we have the answer, for you, <i>and</i> them.
+        </div>
+        <div class="steps--container">
+            <div>
+                <img src="~/images/icons/card_icon.PNG" />
+                <h4>Print Codes</h4>
+                <p>
+                    Generate your unique POU Coded cards, print them out and take them with you on your next photoshoot.
+                </p>
             </div>
-            <div class="content__text">
-                <div class="content__container">
-                    <img src="~/images/Connect.png" />
-                    <div class="title">Share</div>
-                    <div class="copy">
-                        Snapping a photo of the unique code connects to your customer’s specific face, 
-                        which automatically gets tagged and can be searched in seconds!
-                    </div>
-                </div>
-                <div class="content__container">
-                    <img src="~/images/Store.png" />
-                    <div class="title">Store</div>
-                    <div class="copy">
-                        We know photographers take a LOT of photos. 
-                        Now you can store thousands of your favorite snaps in the same place you sell them.
-                    </div>
-                </div>
-                <div class="content__container">
-                    <img src="~/images/Sell.png" />
-                    <div class="title">Sell</div>
-                    <div class="copy">
-                        Make some cash! Upload your photos, and with just a click of a button, they can be 
-                        added to your customer’s cart and purchased at checkout.
-                    </div>
-                </div>
+            <img src="~/images/icons/arrow_down.png" class="arrow" />
+            <div>
+                <img src="~/images/icons/camera2_icon.PNG" />
+                <h4>Take Photos</h4>
+                <p>
+                    Go out to your photoshoot location and take photos like you normally do.
+                </p>
             </div>
+            <img src="~/images/icons/arrow_up.png" class="arrow"/>
+            <div>
+                <img src="~/images/icons/give-card_icon.PNG" />
+                <h4>Give Code</h4>
+                <p>
+                    With the perfect picture taken, take a photo of your code and hand the card over to your photo subject.
+                </p>
+            </div>
+            <img src="~/images/icons/arrow_down.png" class="arrow"/>
+            <div>
+                <img src="~/images/icons/upload_icon.PNG" />
+                <h4>Upload Photos</h4>
+                <p>
+                    Upload your photos to POU. Our system will attach the photos of the codes to the photos before it.
+                </p>
+            </div>
+        </div>
+        <div class="subt-1">Easy as that, <font class="yellow-text"><a href="~/Session/SignInPhotographer">get started</a></font> now.</div>
+    </div>
+
+    <div class="browse">
+        <div class="browse--img-container right">
+            <img ng-repeat="photo in photoList | limitTo: 6" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
+        </div>
+        <div class="browse--img-container left">
+            <img ng-repeat="photo in photoList | orderBy:'-' | limitTo: 6" ng-src="{{photo.ThumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
+        </div>
+        <div class="browse--content">
+            <div class="subt-2">Not a photographer?</div>
+            <div class="landing-subtitle">Browse The Public Library</div>
+            <div class="subt-3">
+                Our photographers often have a collection of photos available to the public,
+                take a look around, maybe you will find something you like!
+            </div>
+            <a href="/Photographer/Search" class="button-styling browse-button">Browse The Library</a>
+            <a href="/Photographer/PublicCode" class="subt-4">Already have a photo code?</a>
         </div>
     </div>
 
-    <div class="section3">
-        <img src="~/images/PoU_DeviceMockup.png" class="img--showcase" />
-        <div class="content">
-            <div class="slogan">Stay in the know!</div>
-            <div class="content__subinfo">
-                Keep your eyes peeled! We’re launching soon.
+    <div class="footer">
+        <div class="links-nav">
+            <div class="navigation">
+                <a href="/">Library</a>
+                <a href="/">About</a>
+                <a href="/Home/Pricing">Pricing</a>
+                <a href="/">FAQ</a>
+                <a href="/">Contact</a>
             </div>
-            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
-            {
-                <div class="content__subinfo"><b>Now that was a snap!<br />We'll keep you in the loop!</b></div>
-            }
-            else
-            {
-                <form class="invite" method="post">
-                    <input placeholder="Your email address" name="fromEmail" />
-                    <button type="submit" class="button--invite">Send me an invite</button>
-                </form>
-
-            }
-            <div class="social">
-                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
-                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>
-                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/instagram-dark.png" /></a>
-                @*<a><img src="~/images/icons/dribbl-dark.png" /></a>*@
+            <div class="navigation">
+                <a href="~/Session/SignIn">Sign Up / Sign In</a>
+                <a href="/">Shipping</a>
+                <a href="/">Help</a>
+            </div>
+            <div class="navigation nav-sm">
+                <a href="https://twitter.com/Photos_Of_Us">Twitter</a>
+                <a href="https://www.facebook.com/photosofusapp/">Facebook</a>
+                <a href="https://www.instagram.com/photos_of_us/">Instagram</a>
             </div>
         </div>
-        <img src="~/images/Footer bg.png" class="img--footer" />
+        <div class="footer-right">
+            <div class="code-enter">
+                Have a photo code? Enter it here!
+                <div class="code-enter-sub"><input class="code-input" placeholder="ABC123" ng-model="searchCode"/><a href="/Photographer/PhotoCode?code={{searchCode}}" class="code-button">Go!</a></div>
+            </div>
+            <div class="bottom-logo"></div>
+        </div>
     </div>
 </div>

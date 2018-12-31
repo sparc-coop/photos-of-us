@@ -1,0 +1,105 @@
+﻿@page
+
+@{
+Layout = "_LayoutLanding";
+}
+
+
+<div class="preLaunch--landing">
+    <div class="section1">
+        <div class="header">
+            <div class="header__logo">
+                <img src="~/images/logo.png" />
+                <div class="header__logo__text">Photos of Us</div>
+            </div>
+            <div class="header__social">
+                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-white.png" /></a>
+                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/fb-white.png" /></a>
+                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/ig-white.png" /></a>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="slogan">Less chat, more snaps.</div>
+            <div class="content__subinfo">
+                Storing, sharing, and selling photos should be the easy part.
+                Now with Photos of Us you can avoid chit-chat with customers and manage all your snaps in one area.
+            </div>
+            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
+            {
+                <div class="content__subinfo"><b>Now that was a snap! We'll keep you in the loop!</b></div>
+            }
+            else
+            {
+                <form class="invite" method="post">
+                    <button type="submit" class="button--invite">Sign Up Free</button>
+                </form>
+            }
+        </div>
+    </div>
+    <div class="section2">
+        <img src="~/images/Screens-Web-Showcase.png" class="img--showcase" />
+        <div class="content">
+            <div class="slogan">Your one-stop shop.</div>
+            <div class="content__subinfo">
+                Avoid the hassle of going back and forth between multiple photo sharing sites. 
+                Simply take a snap, then store it, share it, and sell it all on Photos of Us.
+            </div>
+            <div class="content__text">
+                <div class="content__container">
+                    <img src="~/images/Connect.png" />
+                    <div class="title">Share</div>
+                    <div class="copy">
+                        Snapping a photo of the unique code connects to your customer’s specific face, 
+                        which automatically gets tagged and can be searched in seconds!
+                    </div>
+                </div>
+                <div class="content__container">
+                    <img src="~/images/Store.png" />
+                    <div class="title">Store</div>
+                    <div class="copy">
+                        We know photographers take a LOT of photos. 
+                        Now you can store thousands of your favorite snaps in the same place you sell them.
+                    </div>
+                </div>
+                <div class="content__container">
+                    <img src="~/images/Sell.png" />
+                    <div class="title">Sell</div>
+                    <div class="copy">
+                        Make some cash! Upload your photos, and with just a click of a button, they can be 
+                        added to your customer’s cart and purchased at checkout.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section3">
+        <img src="~/images/PoU_DeviceMockup.png" class="img--showcase" />
+        <div class="content">
+            <div class="slogan">Stay in the know!</div>
+            <div class="content__subinfo">
+                Keep your eyes peeled! We’re launching soon.
+            </div>
+            @if (TempData["IsEmailSent"] != null && (bool)TempData["IsEmailSent"] == true)
+            {
+                <div class="content__subinfo"><b>Now that was a snap!<br />We'll keep you in the loop!</b></div>
+            }
+            else
+            {
+                <form class="invite" method="post">
+                    <input placeholder="Your email address" name="fromEmail" />
+                    <button type="submit" class="button--invite">Send me an invite</button>
+                </form>
+
+            }
+            <div class="social">
+                <a href="https://twitter.com/Photos_Of_Us"><img src="~/images/icons/twitter-dark.png" /></a>
+                <a href="https://www.facebook.com/photosofusapp/"><img src="~/images/icons/facebook-dark.png" /></a>
+                <a href="https://www.instagram.com/photos_of_us/"><img src="~/images/icons/instagram-dark.png" /></a>
+                @*<a><img src="~/images/icons/dribbl-dark.png" /></a>*@
+            </div>
+        </div>
+        <img src="~/images/Footer bg.png" class="img--footer" />
+    </div>
+</div>
