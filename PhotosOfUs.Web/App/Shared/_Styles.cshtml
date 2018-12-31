@@ -1,0 +1,20 @@
+<link href="https://fonts.googleapis.com/css?family=Dosis:400,600,800|Open+Sans:400,600,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="~/css/PhotosOfUs.Lib.css" />
+
+<environment include="Development">
+    <link rel="stylesheet" href="~/css/PhotosOfUs.App.css" />
+</environment>
+<environment exclude="Development">
+    <link rel="stylesheet" href="~/css/PhotosOfUs.App.min.css" asp-append-version="true" />
+</environment>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-69755150-3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-69755150-3');
+</script>

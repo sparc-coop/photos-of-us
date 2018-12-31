@@ -1,13 +1,38 @@
 [
   {
-    "outputFileName": "wwwroot/js/PoU.min.js",
+    "outputFileName": "wwwroot/js/PhotosOfUs.Lib.js",
     "inputFiles": [
-      "wwwroot/js/PoU.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-    }
+      "node_modules/jquery/dist/jquery.js",
+      "node_modules/sweetalert2/dist/sweetalert2.js",
+      "node_modules/angular/angular.js",
+      "node_modules/angular-material/angular-material.js",
+      "node_modules/angular-resource/angular-resource.js",
+      "node_modules/angular-animate/angular-animate.js",
+      "node_modules/angular-aria/angular-aria.js",
+      "node_modules/angular-touch/angular-touch.js",
+      "node_modules/angular-filter/dist/angular-filter.js",
+      "node_modules/core-js/client/core.js",
+      "node_modules/ng-tags-input/build/ng-tags-input.js",
+      "node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
+      "node_modules/tippy.js/dist/tippy.all.js",
+      "node_modules/shepherd.js/dist/js/popper.js",
+      "node_modules/shepherd.js/dist/js/shepherd.js",
+      "node_modules/angular-socialshare/dist/angular-socialshare.js",
+      "node_modules/angular-file-upload/dist/angular-file-upload.js",
+      "node_modules/angular-elastic/elastic.js",
+      "node_modules/bootstrap/dist/js/bootstrap.js",
+      "node_modules/imagesloaded/imagesloaded.pkgd.js",
+      "node_modules/masonry-layout/dist/masonry.pkgd.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/PhotosOfUs.Lib.css",
+    "inputFiles": [
+      "node_modules/angular-material/angular-material.min.css",
+      "node_modules/shepherd.js/dist/css/shepherd-theme-arrows.css",
+      "node_modules/ng-tags-input/build/ng-tags-input.min.css",
+      "node_modules/sweetalert2/dist/sweetalert2.min.css"
+    ]
   },
   {
     "outputFileName": "wwwroot/js/PoU-bundle.js",

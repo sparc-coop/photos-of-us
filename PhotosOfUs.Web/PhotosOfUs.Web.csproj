@@ -15,24 +15,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\JeffsDog.jpeg" />
-    <Content Remove="wwwroot\js\API.js.map" />
-    <Content Remove="wwwroot\js\PoU-bundle.es5.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Views\Photographer\Upload.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\js\PoU-bundle.es5.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="node_modules\angular-socialshare\package.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
@@ -56,20 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="node_modules\angular-socialshare\dist\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\angular-socialshare.js" />
-    <None Include="wwwroot\js\angular-socialshare.js.map" />
-    <None Include="wwwroot\js\angular-socialshare.min.js" />
-    <None Include="node_modules\angular-socialshare\index.js" />
-    <None Include="node_modules\angular-socialshare\Readme.md" />
-    <None Include="wwwroot\js\PoU-bundle.es5.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
   </ItemGroup>
@@ -80,12 +48,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Update="Views\Photographer\Results.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
