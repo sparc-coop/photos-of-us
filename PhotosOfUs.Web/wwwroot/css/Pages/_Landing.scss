@@ -1,4 +1,4 @@
-﻿@import "../variables.scss";
+﻿@import "../variables";
 
 .landing {
     overflow-x: hidden;
@@ -16,7 +16,7 @@
         padding: 0px;
         //width: 100vw;
         width: calc(100% + calc(100vw - 100%));
-        right: 0px;
+        right: 0px; 
         overflow-x: hidden;
         max-width: 100%;*/
     }
