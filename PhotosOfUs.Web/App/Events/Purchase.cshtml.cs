@@ -20,9 +20,9 @@ namespace PhotosOfUs.Pages.Events
             _photos = photos;
         }
 
-        public void OnGet(int id)
+        public void OnGet(int eventId, int photoId)
         {
-            Photo = _photos.Include(x => x.Photographer).Find(x => x.Id == id);
+            Photo = _photos.Include(x => x.Photographer).Find(x => x.EventId == eventId && x.Id == photoId);
             Photographer = Photo.Photographer;
         }
 

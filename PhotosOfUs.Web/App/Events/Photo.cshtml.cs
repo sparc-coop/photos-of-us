@@ -13,6 +13,7 @@ namespace PhotosOfUs.Pages.Events
         private readonly IRepository<Event> _events;
 
         public Photo Photo { get; set; }
+        public string PurchasePageUrl { get; set; }
 
         public PhotoModel(IRepository<Event> events)
         {
@@ -25,6 +26,7 @@ namespace PhotosOfUs.Pages.Events
             Photo = ev.Cards.FirstOrDefault(x => x.Code == photoCode)?.Photos.FirstOrDefault(x => x.Id == photoId);
             if (Photo == null) return NotFound();
 
+            PurchasePageUrl = Url.Page("Purchase", new { eventId, photoId });
             return Page();
         }
     }

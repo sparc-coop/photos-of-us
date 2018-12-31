@@ -55,7 +55,7 @@
   "codeGenerators": {
     "swaggerToTypeScriptClient": {
       "className": "{controller}Client",
-      "moduleName": "PhotosOfUs.API",
+      "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 2.7,
       "template": "AngularJS",
@@ -104,7 +104,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "Services/Swagger.ts"
+      "output": "/Services/PhotosOfUs.API.ts"
     }
   }
 }

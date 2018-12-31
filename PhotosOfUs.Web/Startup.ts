@@ -1,4 +1,4 @@
-﻿import angular from 'angular';
+﻿import * as angular from 'angular';
 
 angular.module('app', [
     'ngMaterial',
@@ -7,7 +7,8 @@ angular.module('app', [
     '720kb.socialshare',
     'ui.bootstrap',
     'ngTagsInput',
-    'angular.filter'
+    'angular.filter',
+    'PhotosOfUs.API'
 ]);
 
 angular.module('app').filter('startFrom', () => {

@@ -23,9 +23,10 @@ namespace PhotosOfUs.Web.Controllers
         public AzureAdB2COptions AzureAdB2COptions { get; set; }
 
         [HttpGet]
-        public IActionResult SignIn()
+        public IActionResult SignIn(string redirectUrl = null)
         {
-            var redirectUrl = Url.Page("Photographer/Index");
+            if (redirectUrl == null) redirectUrl = Url.Page("Photographer/Index");
+            
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);     
