@@ -1,21 +1,7 @@
 ﻿namespace PhotosOfUs {
     angular.module('app').controller('AccountCtrl',
-        ['$scope', '$window', '$mdDialog', 'UserApiClient', 'PhotographerApiClient',
-        ($scope, $window, $mdDialog, UserApiClient: UserApiClient, PhotographerClient: PhotographerClient) => {
-            $scope.originalSettings = {};
-
-            $scope.initBrandSettings = function () {
-                photographerApi.getBrandSettings().then(function (x) {
-                    $scope.brandSettings = x.data;
-                });
-            };
-
-            $scope.saveBrandSettings = function () {
-                photographerApi.saveBrandSettings($scope.brandSettings).then(function (x) {
-                    $scope.brandSettings = x.data;
-                });
-            };
-
+        ['$scope', '$window', '$mdDialog', 'UserApiClient',
+        ($scope, $window, $mdDialog, UserApiClient: UserApiClient) => {
             $scope.discardChanges = () => window.location.reload();
 
             $scope.saveAccountSettings = (ev) => ev.closest('form').submit();

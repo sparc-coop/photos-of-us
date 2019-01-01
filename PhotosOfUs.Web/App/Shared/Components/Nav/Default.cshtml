@@ -1,0 +1,69 @@
+@model PhotosOfUs.Model.Models.User
+
+@if (Model == null)
+{
+    <nav class="nav" ng-cloak>
+        <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
+        <div class="nav--right">
+            <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
+            <!--If user is customer-->
+            <cart-mini>
+        </div>
+    </nav>
+}
+else if (Model.IsPhotographer == true)
+{
+    <nav class="nav">
+        <a href="/Photographer" class="logo"><img src="~/images/logo.png" /></a>
+        <div class="nav--center">
+            <a href="/Photographer" class="menu-item">Dashboard</a>
+            <a href="/Photographer/Cards" class="menu-item">Cards</a>
+        </div>
+        <div class="nav--right">
+            <a href="/Photographer/SalesHistory"><img src="~/images/icons/alert.png" alt="notifications" /></a>
+            @if (Model.ProfilePhotoUrl == null)
+            {
+                <img src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+            }
+            else
+            {
+                <img src="@Model.ProfilePhotoUrl" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+            }
+        </div>
+        <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+            <div class="adminMenu__arrow"></div>
+            <a class="adminMenu__list" href="/Photographer">Photo Gallery</a>
+            <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
+            <a class="adminMenu__list" href="/Photographer/Cards">Cards</a>
+            <a class="adminMenu__list" href="/Photographer/Account">Account Settings</a>
+            <a class="adminMenu__list" href="/Photographer/Profile/{{user.Id}}">Profile</a>
+            <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+        </div>
+    </nav>
+}
+else
+{
+    <nav class="nav" ng-cloak>
+        <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
+        <div class="nav--right">
+            <cart-mini></cart-mini>
+            @if (Model.ProfilePhotoUrl == null)
+            {
+                <img src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+            }
+            else
+            {
+                <img src="@Model.ProfilePhotoUrl" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
+            }
+        </div>
+        <div class="nav--center">
+            <a href="/Photographer/Search" class="menu-item">Search</a>
+            <a href="/Photographer/PublicCode" class="menu-item">Code</a>
+        </div>
+        <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
+            <div class="adminMenu__arrow"></div>
+            <a class="adminMenu__list" href="/Orders/OrderHistory">Order History</a>
+            <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+        </div>
+    </nav>
+}

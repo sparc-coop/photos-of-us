@@ -8,57 +8,7 @@
 </head>
 <body>
     <div ng-cloak>        
-            <div ng-controller="PhotographerCtrl" ng-init="getUser()">
-                <nav class="nav" ng-if="user.IsPhotographer == true">
-                    <a href="/Photographer" class="logo"><img src="~/images/logo.png" /></a>
-                    <div class="nav--center">
-                        <a href="/Photographer" class="menu-item">Dashboard</a>
-                        <a href="/Photographer/Cards" class="menu-item">Cards</a>
-                    </div>
-                    @*todo and is photographer*@
-                    <div class="nav--right">
-                        @*<a href="/Photographer/SalesHistory/{{user.Id}}"><img src="~/images/icons/alert.png" alt="notifications" /></a>*@
-                        <img ng-show="!user.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                        <img ng-show="user.ProfilePhotoUrl" ng-src="{{user.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                    </div>
-                    <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
-                        <div class="adminMenu__arrow"></div>
-                        <a class="adminMenu__list" href="/Photographer">Photo Gallery</a>
-                        @*<a class="adminMenu__list" href="#">Personal Brand Settings</a>*@
-                        <a class="adminMenu__list" href="/Photographer/SalesHistory/{{user.Id}}">Sales History</a>
-                        <a class="adminMenu__list" href="/Photographer/Cards">Cards</a>
-                        <a class="adminMenu__list" href="/Photographer/Account">Account Settings</a>
-                        <a class="adminMenu__list" href="/Photographer/Profile/{{user.Id}}">Profile</a>
-
-                        <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
-                    </div>
-                </nav>
-                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id != null" ng-cloak>
-                    <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
-                    <div class="nav--right">
-                        <cart-mini></cart-mini>
-                        <img ng-show="!user.ProfilePhotoUrl" src="~/images/avatar_512.png" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                        <img ng-show="user.ProfilePhotoUrl" ng-src="{{user.ProfilePhotoUrl}}" ng-click="viewDropdown  = !viewDropdown" class="profileImg" />
-                    </div>
-                    <div class="nav--center">
-                        <a href="/Photographer/Search" class="menu-item">Search</a>
-                        <a href="/Photographer/PublicCode" class="menu-item">Code</a>
-                    </div>
-                    <div ng-if="viewDropdown" class="adminMenu" ng-cloak>
-                        <div class="adminMenu__arrow"></div>
-                        <a class="adminMenu__list" href="/Orders/OrderHistory">Order History</a>
-                        <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
-                    </div>
-                </nav>
-                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id == null" ng-cloak>
-                    <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
-                    <div class="nav--right">
-                        <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>
-                        <!--If user is customer-->
-                        <cart-mini>
-                    </div>
-                </nav>
-            </div>
+        <vc:nav></vc:nav>
     </div>
 
     @RenderSection("ProfileImageBackdrop", false)
