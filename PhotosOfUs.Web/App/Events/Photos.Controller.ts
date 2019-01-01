@@ -1,6 +1,6 @@
 ﻿﻿declare var Shepherd;
 namespace PhotosOfUs {
-    angular.module('app').controller('EventCtrl',
+    angular.module('app').controller('PhotosCtrl',
         ['$scope', '$location', '$mdDialog', 'Socialshare', 'UserApiClient', 'EventApiClient',
         ($scope, $location, $mdDialog, Socialshare, UserApiClient: UserApiClient, EventApiClient: EventApiClient) => {
 

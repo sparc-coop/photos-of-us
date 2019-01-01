@@ -60,36 +60,6 @@
         }
     }
 
-    $scope.getAllTags = function () {
-        $http.get('/api/Photo/GetAllTags/')
-            .then(function (x) {
-                angular.forEach(x.data, function (f) { $scope.allTags.push(f); });
-                console.log(x.data);
-                console.log(JSON.stringify(x.data));
-            });
-    };
-
-    $scope.loadTags = function (query) {
-        return $timeout(function () {
-            return $filter('filter')($scope.allTags, query);
-        });
-    };
-
-    $scope.getSearchString = function (searchterms) {
-
-        var string = "";
-
-        searchterms.forEach(function (element, index) {
-            string += "+" + element.text;
-        });
-
-        return string;
-    };
-
-    $scope.searchPhotos = (searchterms) => {
-        $window.location.href = '/Photographer/Results?tagnames=Image' + $scope.getSearchString(searchterms);
-    };
-
     $scope.getProfilePhotos = function () {
         $http.get('/api/Photographer/getProfilePhotos/' + $scope.photographerId)
         .then(function (x) {

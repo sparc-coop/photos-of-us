@@ -11,7 +11,7 @@
     </div>
     <div class="photographer-search--backdrop"></div>
 }
-<div ng-controller="PhotographerCtrl" ng-init="getAllTags()">
+<div ng-controller="SearchCtrl">
     <div class="photographer-search__container">
         <tags-input ng-model="tags" add-on-paste="true" type="text" class="photographer-searchTerm" placeholder="What are you looking for?">
             <auto-complete source="loadTags($query)"></auto-complete>
