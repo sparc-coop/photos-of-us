@@ -35,8 +35,7 @@ namespace PhotosOfUs.Web.Controllers.API
         }
     
         
-        [HttpPost]
-        [Route("RenameFolder")]
+        [HttpPut]
         public FolderViewModel Put(int id, string newName)
         {
             var photographer = _user.Find(x => x.Id == User.ID());
@@ -48,11 +47,10 @@ namespace PhotosOfUs.Web.Controllers.API
             return folder.ToViewModel<FolderViewModel>();
         }
 
-        [HttpPost]
-        [Route("DeleteFolder/{id:int}/{userId:int}")]
-        public IActionResult DeleteFolder(int id, int userId)
+        [HttpDelete]
+        public IActionResult DeleteFolder(int id)
         {
-            var photographer = _user.Find(x => x.Id == userId);
+            var photographer = _user.Find(x => x.Id == User.ID());
             photographer.RemoveFolder(id);
             _user.Commit();
 

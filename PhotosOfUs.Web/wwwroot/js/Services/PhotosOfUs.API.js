@@ -554,14 +554,11 @@ var PhotosOfUs;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        post(name, userId) {
-            let url_ = this.baseUrl + "/api/Folder/{name}/{userId}";
+        post(name) {
+            let url_ = this.baseUrl + "/api/Folder/{name}";
             if (name === undefined || name === null)
                 throw new Error("The parameter 'name' must be defined.");
             url_ = url_.replace("{name}", encodeURIComponent("" + name));
-            if (userId === undefined || userId === null)
-                throw new Error("The parameter 'userId' must be defined.");
-            url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -595,17 +592,20 @@ var PhotosOfUs;
             }
             return this.q.resolve(null);
         }
-        put(model) {
-            let url_ = this.baseUrl + "/api/Folder/RenameFolder";
+        put(id, newName) {
+            let url_ = this.baseUrl + "/api/Folder/RenameFolder?";
+            if (id === null)
+                throw new Error("The parameter 'id' cannot be null.");
+            else if (id !== undefined)
+                url_ += "id=" + encodeURIComponent("" + id) + "&";
+            if (newName !== undefined)
+                url_ += "newName=" + encodeURIComponent("" + newName) + "&";
             url_ = url_.replace(/[?&]$/, "");
-            const content_ = JSON.stringify(model);
             var options_ = {
                 url: url_,
                 method: "POST",
-                data: content_,
                 transformResponse: [],
                 headers: {
-                    "Content-Type": "application/json",
                     "Accept": "application/json"
                 }
             };
@@ -2133,37 +2133,6 @@ var PhotosOfUs;
         }
     }
     PhotosOfUs.FolderViewModel = FolderViewModel;
-    class FolderRenameViewModel {
-        constructor(data) {
-            if (data) {
-                for (var property in data) {
-                    if (data.hasOwnProperty(property))
-                        this[property] = data[property];
-                }
-            }
-        }
-        init(data) {
-            if (data) {
-                this.id = data["Id"] !== undefined ? data["Id"] : null;
-                this.newName = data["NewName"] !== undefined ? data["NewName"] : null;
-                this.userId = data["UserId"] !== undefined ? data["UserId"] : null;
-            }
-        }
-        static fromJS(data) {
-            data = typeof data === 'object' ? data : {};
-            let result = new FolderRenameViewModel();
-            result.init(data);
-            return result;
-        }
-        toJSON(data) {
-            data = typeof data === 'object' ? data : {};
-            data["Id"] = this.id !== undefined ? this.id : null;
-            data["NewName"] = this.newName !== undefined ? this.newName : null;
-            data["UserId"] = this.userId !== undefined ? this.userId : null;
-            return data;
-        }
-    }
-    PhotosOfUs.FolderRenameViewModel = FolderRenameViewModel;
     class UserViewModel {
         constructor(data) {
             if (data) {

@@ -660,7 +660,7 @@ export class FolderApiClient {
     }
 
     put(id: number | undefined, newName: string | null | undefined): ng.IPromise<FolderViewModel | null> {
-        let url_ = this.baseUrl + "/api/Folder/RenameFolder?";
+        let url_ = this.baseUrl + "/api/Folder?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -671,7 +671,7 @@ export class FolderApiClient {
 
         var options_ = <ng.IRequestConfig>{
             url: url_,
-            method: "POST",
+            method: "PUT",
             transformResponse: [], 
             headers: {
                 "Accept": "application/json"
@@ -704,19 +704,17 @@ export class FolderApiClient {
         return this.q.resolve<FolderViewModel | null>(<any>null);
     }
 
-    deleteFolder(id: number, userId: number): ng.IPromise<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/Folder/DeleteFolder/{id}/{userId}";
-        if (id === undefined || id === null)
-            throw new Error("The parameter 'id' must be defined.");
-        url_ = url_.replace("{id}", encodeURIComponent("" + id)); 
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId)); 
+    deleteFolder(id: number | undefined): ng.IPromise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Folder?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
 
         var options_ = <ng.IRequestConfig>{
             url: url_,
-            method: "POST",
+            method: "DELETE",
             responseType: "arraybuffer",
             transformResponse: [], 
             headers: {
