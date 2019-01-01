@@ -56,7 +56,7 @@
     "swaggerToTypeScriptClient": {
       "className": "{controller}Client",
       "moduleName": "",
-      "namespace": "",
+      "namespace": "PhotosOfUs",
       "typeScriptVersion": 2.7,
       "template": "AngularJS",
       "promiseType": "Promise",
