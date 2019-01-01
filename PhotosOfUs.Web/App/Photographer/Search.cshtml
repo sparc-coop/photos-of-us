@@ -43,11 +43,11 @@
 
     <div>
         <div class="search--grid">
-            @foreach (var Photo in Model.Photos)
+            @foreach (var photo in Model.Photos)
             {
-                <div class="grid-item">
-                    <img src="@Photo.ThumbnailUrl" ng-click="viewPhoto(@Photo.Id)" />
-                </div>
+                <a href="/Photographer/Photo/@photo.Id" class="grid-item">
+                    <img src="@photo.ThumbnailUrl" />
+                </a>
             }
         </div>
         {{ arrangePhotos() }}

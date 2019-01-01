@@ -8,53 +8,54 @@
 @section ProfileImageBackdrop {
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
-    <div class="photographer-profile--wrapper" ng-controller="PhotographerCtrl" ng-cloak>
-        @if (Model.Photographer.IsDeactivated == true)
-        {
-            <div style="margin-top: 150px;">
-                Oops! We can't find that account.
-                <a href="/">Return Home</a>
-            </div>
-        }
-        else
-        {
-            <div>
-                <div class="g-row">
-                    <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
-                        <div class="photographer-info">
-                            @if (Model.Photographer.ProfilePhotoUrl == null)
+
+<div class="photographer-profile--wrapper" ng-cloak>
+    @if (Model.Photographer.IsDeactivated == true)
+    {
+        <div style="margin-top: 150px;">
+            Oops! We can't find that account.
+            <a href="/">Return Home</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <div class="g-row">
+                <div class="g-col-xs-12 g-col-sm-3 g-no-padding-xs">
+                    <div class="photographer-info">
+                        @if (Model.Photographer.ProfilePhotoUrl == null)
+                        {
+                            <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
+                        }
+                        else
+                        {
+                            <div class="photographer-image" style="background-image: url('@Model.Photographer.ProfilePhotoUrl')"></div>
+                        }
+                        <h2>@Model.Photographer.DisplayName</h2>
+                        <p class="photographer-title">@Model.Photographer.JobPosition</p>
+                        <p class="photographer-bio">@Model.Photographer.Bio</p>
+                    </div>
+                    <div class="photographer-social">
+                        <ul>
+                            @if (Model.Photographer.Facebook != null)
                             {
-                                <div class="photographer-image" style="background-image: url(/images/icons/profile-icon.png)"></div>
+                                <li><a class="facebook" href="@Model.Photographer.Facebook" target="_blank">Facebook</a></li>
                             }
-                            else
+                            @if (Model.Photographer.Twitter != null)
                             {
-                                <div class="photographer-image" style="background-image: url('@Model.Photographer.ProfilePhotoUrl')"></div>
+                                <li><a class="twitter" href="@Model.Photographer.Twitter" target="_blank">Twitter</a></li>
                             }
-                            <h2>@Model.Photographer.DisplayName</h2>
-                            <p class="photographer-title">@Model.Photographer.JobPosition</p>
-                            <p class="photographer-bio">@Model.Photographer.Bio</p>
-                        </div>
-                        <div class="photographer-social">
-                            <ul>
-                                @if (Model.Photographer.Facebook != null)
-                                {
-                                    <li><a class="facebook" href="@Model.Photographer.Facebook" target="_blank">Facebook</a></li>
-                                }
-                                @if (Model.Photographer.Twitter != null)
-                                {
-                                    <li><a class="twitter" href="@Model.Photographer.Twitter" target="_blank">Twitter</a></li>
-                                }
-                                @if (Model.Photographer.Instagram != null)
-                                {
-                                    <li><a class="instagram" href="@Model.Photographer.Instagram" target="_blank">Instagram</a></li>
-                                }
-                                @if (Model.Photographer.Dribbble != null)
-                                {
-                                    <li><a class="dribbl" href="@Model.Photographer.Dribbble" target="_blank">Dribbble</a></li>
-                                }
-                            </ul>
-                        </div>
-                        @if (Model.IsAdmin)
+                            @if (Model.Photographer.Instagram != null)
+                            {
+                                <li><a class="instagram" href="@Model.Photographer.Instagram" target="_blank">Instagram</a></li>
+                            }
+                            @if (Model.Photographer.Dribbble != null)
+                            {
+                                <li><a class="dribbl" href="@Model.Photographer.Dribbble" target="_blank">Dribbble</a></li>
+                            }
+                        </ul>
+                    </div>
+                    @if (Model.IsAdmin)
                         {
                             <div class="gallery-search-container">
                                 <input class="input--light-blue searchbox" placeholder="Search gallery by code" ng-model="search" />
@@ -78,20 +79,23 @@
                                 </div>
                             </div>
                         }
-                    </div>
-                    <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
-                        <div class="photographer-gallery-container" ng-init="getProfilePhotos()">
-                            <div class="g-row">
-                                <div ng-repeat="photo in profilePhotos track by $index" class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" ng-if="photo.Code.includes(search) || search == null || search == ''"> 
-                                    <img class="gallery-image" src="{{photo.ThumbnailUrl}}" ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" 
+                </div>
+                <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs" ng-controller="AccountCtrl">
+                    <div class="photographer-gallery-container" ng-init="getProfilePhotos(@Model.Photographer.Id)">
+                        <div class="g-row">
+                            <div ng-repeat="photo in profilePhotos track by $index" 
+                                 class="g-col-xs-12 g-col-sm-6 g-col-md-4 gallery-image-pad" 
+                                 ng-if="photo.Code.includes(search) || search == null || search == ''"> 
+                                    <img class="gallery-image" src="{{photo.ThumbnailUrl}}" 
+                                        ng-click="isBulkEditEnabled ? selectPhoto(photo) : viewPhoto(photo.Id)" 
                                         ng-style="isBulkEditEnabled ? (isPhotoSelected(photo) ? isHighlighted : isNotHighlighted) : {}" />
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 
