@@ -4,17 +4,16 @@
 }
 
 <md-dialog class="bulkedit-dialog">
-    <div class="bulkedit-container" ng-init="getTagsByPhotos(); getPhotoPrice()">
+    <div class="bulkedit-container">
         <i class="material-icons" ng-click="close()">close</i>
 
-        <h2 id="bulkedit-title">Edit Photos  <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
+        <h2 id="bulkedit-title">Edit Photos <span id="photosnumber">({{selectedPhotos.length}} images selected)</span></h2>
 
         <div class="tags">
             <div>Tags</div>
             <div>
                 <tags-input ng-model="tags" add-on-paste="true" type="text" placeholder="ex. travel, food, party">
                     <auto-complete source="loadedtags"></auto-complete>
-
                 </tags-input>
             </div>
         </div>

@@ -50,19 +50,10 @@ namespace PhotosOfUs {
             });
         };
 
-        $scope.openBulkEdit = (folder) => {
-            $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/BulkEditModal',
-                controller: 'BulkEditController',
-                locals: { folder },
-                clickOutsideToClose: true
-            });
-        };
-
         $scope.openPhotoEdit = (folder) => {
             $mdDialog.show({
                 templateUrl: '/Events/Admin/Modals/PhotoEditModal',
-                controller: 'BulkEditController',
+                controller: 'BulkEditCtrl',
                 locals: { folder },
                 clickOutsideToClose: true
             });

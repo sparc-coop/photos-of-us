@@ -9,7 +9,7 @@
     <div class="photographer-profile--backdrop"><figure><img src="/images/kuvio-circle.png" /></figure></div>
 }
 
-<div class="photographer-profile--wrapper" ng-cloak>
+<div class="photographer-profile--wrapper" ng-cloak ng-controller="AccountCtrl">
     @if (Model.Photographer.IsDeactivated == true)
     {
         <div style="margin-top: 150px;">
@@ -80,7 +80,7 @@
                             </div>
                         }
                 </div>
-                <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs" ng-controller="AccountCtrl">
+                <div class="g-col-xs-12 g-col-sm-9 g-no-padding-xs">
                     <div class="photographer-gallery-container" ng-init="getProfilePhotos(@Model.Photographer.Id)">
                         <div class="g-row">
                             <div ng-repeat="photo in profilePhotos track by $index" 

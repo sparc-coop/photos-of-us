@@ -1,4 +1,4 @@
-﻿angular.module('app').controller('BulkEditController', function ($scope, $http, $window, $mdDialog, $filter, folder) {
+﻿angular.module('app').controller('BulkEditCtrl', function ($scope, $http, $window, $mdDialog, $filter, folder) {
 
     $scope.close = () => $mdDialog.hide();
     $scope.folderID = folder;
