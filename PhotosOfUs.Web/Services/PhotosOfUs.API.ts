@@ -6,8 +6,8 @@
 //----------------------
 // ReSharper disable InconsistentNaming
 
-import * as ng from 'angular';
-
+namespace PhotosOfUs
+{
 export class PhotographerClient {
     private baseUrl: string | undefined = undefined; 
     private http: ng.IHttpService; 
@@ -3057,4 +3057,5 @@ function blobToText(blob: Blob, q: ng.IQService): ng.IPromise<string> {
         reader.onload = event => resolve((<any>event.target).result);
         reader.readAsText(blob); 
     });
+}
 }
