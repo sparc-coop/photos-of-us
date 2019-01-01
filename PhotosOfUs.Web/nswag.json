@@ -93,7 +93,7 @@
       "handleReferences": false,
       "generateConstructorInterface": true,
       "convertConstructorInterfaceData": false,
-      "importRequiredTypes": true,
+      "importRequiredTypes": false,
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
       "queryNullValue": "",
@@ -104,7 +104,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "/Services/PhotosOfUs.API.ts"
+      "output": "Services/PhotosOfUs.API.ts"
     }
   }
 }
