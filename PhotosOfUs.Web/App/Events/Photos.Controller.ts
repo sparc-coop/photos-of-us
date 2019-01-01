@@ -50,16 +50,6 @@ namespace PhotosOfUs {
             });
         };
 
-        $scope.openPhotoEdit = (folder) => {
-            $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/PhotoEditModal',
-                controller: 'BulkEditCtrl',
-                locals: { folder },
-                clickOutsideToClose: true
-            });
-        };
-
-
         $scope.share = (provider: string, photoUrl?: string) => {
             const url = $location.absUrl().split('?')[0];
             Socialshare.share({
