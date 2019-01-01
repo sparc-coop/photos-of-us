@@ -46,7 +46,7 @@
       "wwwroot/js/controllers/FolderRenameModalController.js",
       "wwwroot/js/controllers/ModalController.js",
       "wwwroot/js/controllers/PaymentController.js",
-      "wwwroot/js/controllers/PhotoController.js",
+      "wwwroot/js/App/Events/EventController.js",
       "wwwroot/js/controllers/UploadController.js",
       "wwwroot/js/controllers/CardController.js",
       "wwwroot/js/controllers/PhotographerController.js",
@@ -56,7 +56,7 @@
       "wwwroot/js/controllers/SalesHistoryController.js",
       "wwwroot/js/controllers/PhotoTagsController.js",
       "wwwroot/js/controllers/UploadProfileImageController.js",
-      "wwwroot/js/controllers/RandomPhotoController.js"
+      "wwwroot/js/App/Photos/RandomPhotoController.js"
     ]
   }
 ]

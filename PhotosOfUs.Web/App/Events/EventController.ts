@@ -1,6 +1,6 @@
 ﻿import * as api from './../../Services/PhotosOfUs.API';
 import * as angular from 'angular';
-import Shepherd from 'shepherd.js';
+declare var Shepherd;
 
 angular.module('app').controller('EventCtrl',
     ['$scope', '$location', '$mdDialog', 'Socialshare', 'UserApiClient', 'EventApiClient',

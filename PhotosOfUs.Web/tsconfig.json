@@ -2,6 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "target": "es5",
+        "module": "none",
         "sourceMap": true,
         "outDir": "wwwroot/js"
     }
