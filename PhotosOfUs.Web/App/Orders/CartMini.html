@@ -10,7 +10,7 @@
                         <span class="price">Price</span>
                     </div>
                     <div class="cart--preview__items">
-                        <div ng-repeat="item in cart" class="cart--preview__item">
+                        <div ng-repeat="item in $root.cart" class="cart--preview__item">
                             <div class="type">
                                 {{item.PrintType.Name}}
                             </div>
@@ -27,7 +27,7 @@
                         <span class="amount">${{calculatedTotal()}}</span>
                     </div>
                 </div>
-                <div ng-if="!cart || !cart.length" class="heading">No items in cart.</div>
+                <div ng-if="!$root.cart || !$root.cart.length" class="heading">No items in cart.</div>
                 <a class="button--checkout--preview" asp-page="/Orders/Cart">
                     <img src="~/images/icons/cart-red.png" />
                     Checkout

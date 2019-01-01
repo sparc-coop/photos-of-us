@@ -1,6 +1,6 @@
 ﻿namespace PhotosOfUs {
     angular.module('app')
-    .controller('CheckoutCtrl', ['$scope', '$rootScope', '$http', '$mdDialog', ($scope, $rootScope, $http, $mdDialog) => {
+    .controller('CartCtrl', ['$scope', '$rootScope', '$http', '$mdDialog', ($scope, $rootScope, $http, $mdDialog) => {
         $scope.showPurchaseTour = (user) => {
             if (user.PurchaseTour === true) {
                 return null;

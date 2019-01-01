@@ -1,29 +1,25 @@
 ﻿@page
-@model CartModel
 @{
     ViewData["Title"] = "Cart";
 }
 
-<div class="cart" ng-controller="CheckoutCtrl">
+<div class="cart" ng-controller="CartCtrl">
     <h1 class="header-large">Shopping Cart</h1>
-    @*<div class="purchase__photo-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</div>*@
+    <div class="purchase__photo-text">Review your items below and make any necessary changes, then hit Continue to Checkout to add your delivery address.</div>
     <div class="divider"></div>
 
-    @foreach (var item in Model.Order.OrderDetail)
-    {
-        <div class="cart-photo">
-            <img src="@item.Photo.Url" class="photo" />
-            <div class="cart-photo--container">
-                <div class="cart-item">
-                    <div class="type">@item.PrintType.Type</div>
-                    <div class="height">Height: @item.PrintType.Height in</div>
-                    <div class="length">Length: @item.PrintType.Length in</div>
-                    <div class="quantity">QTY: @item.Quantity</div>
-                    <div class="price">@string.Format("{0:C}", item.UnitPrice)</div>
-                </div>
+    <div class="cart-photo" ng-repeat="item in $root.cart">
+        <img ng-src="{{ item.Photo.Url }}" class="photo" />
+        <div class="cart-photo--container">
+            <div class="cart-item">
+                <div class="type">{{ item.PrintType.Type }}</div>
+                <div class="height">Height: {{ item.PrintType.Height }}in</div>
+                <div class="length">Length: {{ item.PrintType.Length }} in</div>
+                <div class="quantity">Qty: {{ item.Quantity }}</div>
+                <div class="price">{{ item.UnitPrice | currency }}</div>
             </div>
         </div>
-    }
+    </div>
     <a class="button--yellow button--yellow--large" asp-page="./Checkout">
         <img src="~/images/icons/cart-red.png" />
         Continue To Checkout

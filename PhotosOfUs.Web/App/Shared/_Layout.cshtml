@@ -50,7 +50,7 @@
                         <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
                     </div>
                 </nav>
-                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id == null" ng-controller="CheckoutCtrl" ng-cloak>
+                <nav class="nav" ng-if="user.IsPhotographer != true && user.Id == null" ng-cloak>
                     <a href="/Photographer/Search" class="logo"><img src="~/images/logo.png" /></a>
                     <div class="nav--right">
                         <a href="~/Session/SignIn" style="padding-right: 20px;">Log In</a>

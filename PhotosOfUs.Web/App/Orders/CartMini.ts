@@ -3,22 +3,22 @@ namespace PhotosOfUs {
         return {
             restrict: 'E',
             templateUrl: 'CartMini.html',
-            controller: ['$scope', ($scope) => {
+            controller: ['$scope', '$rootScope', ($scope, $rootScope) => {
                 $scope.showCart = false;
 
                 const localStorageCart = localStorage.getItem('cart');
-                $scope.cart = localStorageCart ? JSON.parse(localStorageCart) : [];
+                $rootScope.cart = localStorageCart ? JSON.parse(localStorageCart) : [];
 
                 $scope.$on('updatecart', (e, items) => {
                     localStorage.setItem('cart', JSON.stringify(items));
-                    $scope.cart = items;
+                    $rootScope.cart = items;
                     $scope.showCart = true;
                 });
 
                 $scope.calculatedTotal = () => {
-                    if ($scope.cart) {
+                    if ($rootScope.cart) {
                         let sum = 0;
-                        angular.forEach($scope.cart, (item: IOrderDetail) => sum += item.unitPrice);
+                        angular.forEach($rootScope.cart, (item: IOrderDetail) => sum += item.unitPrice);
                         return sum;
                     }
                     return null;
