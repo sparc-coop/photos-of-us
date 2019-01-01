@@ -4,7 +4,7 @@
     ViewData["Title"] = "Event Settings";
 }
 
-<div class="account-settings" ng-init="initBrandSettings()" ng-controller="PhotographerAccountCtrl">
+<div class="account-settings" ng-init="initBrandSettings()" ng-controller="SettingsCtrl">
     <h2 class="header-large">Event Settings</h2>
     <div class="yellow-background line--small"></div>
 
@@ -19,12 +19,10 @@
                 <a href="#" class="deactivate">Deactivate Account</a>
             </div>
             <div class="btn-group">
-                <a href="#" class="btn-apply">Apply Changes</a>
-                <a href="#" class="discard-link">Discard Changes</a>
+                <a ng-click="saveAccountSettings($event)" href="" class="btn-apply">Apply Changes</a>
+                <a ng-click="discardAccountSettings()" class="discard-link">Discard Changes</a>
             </div>
-
         </div>
-
 
         <div class="brand-settings">
             <div class="homepage-template">

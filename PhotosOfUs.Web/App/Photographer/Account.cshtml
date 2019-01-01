@@ -1,26 +1,31 @@
 ﻿@page
+@model AccountModel
 @{
     ViewData["Title"] = "Account";
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="account-settings" ng-controller="PhotographerAccountCtrl" ng-init="initAccountSettings()">
+<form method="post" class="account-settings" ng-controller="AccountCtrl">
     <h2 class="header-large">Account Settings</h2>
     <div class="yellow-background line--small"></div>
 
     <div class="container">
-
         <div>
             <div class="account-sidemenu">
                 <div class="sidemenu-item" ng-click="setSelected('details')"><a href="#" ng-class="{'active': selected == 'details'}"><i class="material-icons">face</i> Profile Details</a></div>
-                <div class="sidemenu-item" ng-click="setSelected('cards')"><a href="#" ng-class="{'active': selected == 'cards'}"><i class="material-icons">chrome_reader_mode</i>Coded Cards</a></div>
                 <div class="sidemenu-item" ng-click="setSelected('social')"><a href="#" ng-class="{'active': selected == 'social'}"><i class="material-icons">language</i>Social Accounts</a></div>
                 @*<div class="sidemenu-item"><a href="#"><i class="material-icons">payment</i>Payment Details</a></div>*@
-                <div class="deactivate" ng-click="deactivateModal('true', accountSettings)" ng-if="accountSettings.IsDeactivated != true" ng-cloak>Deactivate Account</div>
-                <div class="deactivate" ng-click="deactivateModal('false', accountSettings)" ng-if="accountSettings.IsDeactivated == true" ng-cloak>Reactivate Account</div>
+                @if (Model.Photographer.IsDeactivated == true)
+                {
+                    <div class="deactivate" ng-click="deactivateModal('false')" ng-cloak>Reactivate Account</div>
+                } 
+                else 
+                {
+                    <div class="deactivate" ng-click="deactivateModal('true')" ng-cloak>Deactivate Account</div>
+                }
             </div>
             <div class="btn-group">
-                <a href="#" class="btn-apply" ng-click="saveAccountSettings(accountSettings)">
+                <a href="#" class="btn-apply" ng-click="saveAccountSettings($event)">
                     <span>
                         Apply Changes
                     </span>
@@ -29,17 +34,24 @@
                
                 <a href="#" class="discard-link" ng-click="discardChanges()">Discard Changes</a>
             </div>
-
         </div>
 
-
         <div class="form-account" ng-cloak ng-if="selected == 'details'">
-            <div ng-if="accountSettings.IsDeactivated == true">Your account is currently deactivated.</div>
+            @if (Model.Photographer.IsDeactivated == true)
+            {
+                <div>Your account is currently deactivated.</div>
+            }
             <div class="form-input">
                 <label>Profile Photo</label>
                 <div class="img-container" ng-click="uploadProfileImage()">
-                    <img ng-if="!accountSettings.ProfilePhotoUrl" class="profile-image" src="~/images/avatar_512.png" />
-                    <img ng-if="accountSettings.ProfilePhotoUrl != ''" class="profile-image" ng-src="{{accountSettings.ProfilePhotoUrl}}" />
+                    @if (Model.Photographer.ProfilePhotoUrl == null)
+                    {
+                        <img class="profile-image" src="~/images/avatar_512.png" />
+                    }
+                    else
+                    {
+                        <img class="profile-image" src="@Model.Photographer.ProfilePhotoUrl" />
+                    }
                     <div class="overlay">
                         <a href="#" class="icon" title="Upload Photo">
                             <i class="material-icons">file_upload</i>
@@ -47,35 +59,36 @@
                     </div>
                 </div>
             </div>
-            <form action="/Cart/SaveAddress" method="POST" class="form">
+
+            <div class="form">
                 <div class="form-input">
                     <label>First Name</label>
-                    <input ng-model="accountSettings.FirstName" />
+                    <input asp-for="Model.Photographer.FirstName" />
                 </div>
                 <div class="form-input">
                     <label>Last Name</label>
-                    <input ng-model="accountSettings.LastName" />
+                    <input asp-for="Model.Photographer.LastName" />
                 </div>
                 <div class="form-input">
                     <label>Display Name</label>
-                    <input ng-model="accountSettings.DisplayName" />
+                    <input asp-for="Model.Photographer.DisplayName" />
                 </div>
                 <div class="form-input">
                     <label>Job Position</label>
-                    <input ng-model="accountSettings.JobPosition" />
+                    <input asp-for="Model.Photographer.JobPosition" />
                 </div>
 
                 <div class="form-input form-input--email">
                     <label>Email</label>
-                    <input ng-model="accountSettings.Email" disabled />
-                    <input ng-model="accountSettings.Email" type="hidden" />
+                    <input asp-for="Model.Photographer.Email" disabled />
+                    <input asp-for="Model.Photographer.Email" type="hidden" />
                 </div>
 
                 <div class="form-input">
                     <label>Bio</label>
-                    <textarea ng-model="accountSettings.Bio"></textarea>
+                    <textarea asp-for="Model.Photographer.Bio"></textarea>
                 </div>
-            </form>
+            </div>
 
         </div>
         <div class="form-account form-account--social" ng-cloak ng-if="selected == 'social'">
@@ -83,34 +96,31 @@
                 <img src="~/images/icons/Facebook-color.svg"/>
                 <div>
                     <label>Facebook</label>
-                    <input ng-model="accountSettings.Facebook" />
+                    <input asp-for="Model.Photographer.Facebook" />
                 </div>
             </div>
             <div class="form-input">
                 <img src="~/images/icons/Twitter-color.svg" />
                 <div>
                     <label>Twitter</label>
-                    <input ng-model="accountSettings.Twitter" />
+                    <input asp-for="Model.Photographer.Twitter" />
                 </div>
             </div>
             <div class="form-input">
                 <img src="~/images/icons/Instagram-color.svg" />
                 <div>
                     <label>Instagram</label>
-                    <input ng-model="accountSettings.Instagram" />
+                    <input asp-for="Model.Photographer.Instagram" />
                 </div>
             </div>
             <div class="form-input">
                 <img src="~/images/icons/Dribbble-color.svg" />
                 <div>
                     <label>Dribbble</label>
-                    <input ng-model="accountSettings.Dribbble" />
+                    <input asp-for="Model.Photographer.Dribbble" />
                 </div>
             </div>
         </div>
-        <div ng-cloak ng-if="selected == 'cards'" class="card-design">
-            <partial name="/Events/Admin/CreateCards" />
-        </div>
     </div>
-</div>
+</form>
 
