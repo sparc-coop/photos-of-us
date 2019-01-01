@@ -36,6 +36,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Order>(entity =>
             {
+                entity.ToTable("Order");
                 entity.Property(e => e.OrderDate).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
                 //entity.Ignore(x => x.Amount);
@@ -50,6 +51,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Photo>(entity =>
             {
+                entity.ToTable("Photo");
                 entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
                 entity.Property(e => e.UploadDate).HasColumnType("datetime");
                 entity.Ignore(x => x.FolderName);
@@ -62,6 +64,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<User>(entity =>
             {
+                entity.ToTable("User");
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
                 entity.Property(e => e.CreateDate).HasColumnType("datetime");
@@ -69,6 +72,7 @@ namespace PhotosOfUs.Model.Models
 
             modelBuilder.Entity<Event>(entity =>
             {
+                entity.ToTable("Event");
                 entity.Property(e => e.EventId).HasColumnName("EventID");
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });

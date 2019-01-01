@@ -9,6 +9,15 @@
         'angular.filter'
     ]);
 
+    // Register NSwag APIs
+    angular.module('app')
+        .value('baseUrl', '')
+        .service('PhotographerClient', PhotographerClient)
+        .service('EventApiClient', EventApiClient)
+        .service('FolderApiClient', FolderApiClient)
+        .service('RandomPhotoClient', RandomPhotoClient)
+        .service('UserApiClient', UserApiClient);
+
     angular.module('app').filter('startFrom', () => {
         return (data, start) => data.slice(start);
     });
