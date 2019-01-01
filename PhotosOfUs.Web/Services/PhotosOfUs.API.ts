@@ -1858,7 +1858,6 @@ export class Folder implements IFolder {
     isDeleted!: boolean;
     createdDate!: Date;
     photographer?: User | null;
-    photo?: Photo[] | null;
 
     constructor(data?: IFolder) {
         if (data) {
@@ -1877,11 +1876,6 @@ export class Folder implements IFolder {
             this.isDeleted = data["IsDeleted"] !== undefined ? data["IsDeleted"] : <any>null;
             this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : <any>null;
             this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : <any>null;
-            if (data["Photo"] && data["Photo"].constructor === Array) {
-                this.photo = [];
-                for (let item of data["Photo"])
-                    this.photo.push(Photo.fromJS(item));
-            }
         }
     }
 
@@ -1900,11 +1894,6 @@ export class Folder implements IFolder {
         data["IsDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
         data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
         data["Photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
-        if (this.photo && this.photo.constructor === Array) {
-            data["Photo"] = [];
-            for (let item of this.photo)
-                data["Photo"].push(item.toJSON());
-        }
         return data; 
     }
 }
@@ -1916,7 +1905,6 @@ export interface IFolder {
     isDeleted: boolean;
     createdDate: Date;
     photographer?: User | null;
-    photo?: Photo[] | null;
 }
 
 export class Order implements IOrder {

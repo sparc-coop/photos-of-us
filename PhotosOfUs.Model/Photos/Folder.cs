@@ -7,7 +7,6 @@ namespace PhotosOfUs.Model.Models
     {
         public Folder()
         {
-            Photo = new HashSet<Photo>();
         }
 
         public Folder(string name, int userId)
@@ -23,6 +22,5 @@ namespace PhotosOfUs.Model.Models
         public DateTime CreatedDate { get; set; }
 
         public User Photographer { get; set; }
-        public ICollection<Photo> Photo { get; set; }
     }
 }

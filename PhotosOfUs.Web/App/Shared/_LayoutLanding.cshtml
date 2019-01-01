@@ -7,7 +7,8 @@
 
     <partial name="_Styles" />
 </head>
-<body style="padding: 0">
+<body class="landing-container">
+    @await Component.InvokeAsync("Nav")
     @RenderBody()
 
     <partial name="_Scripts" />

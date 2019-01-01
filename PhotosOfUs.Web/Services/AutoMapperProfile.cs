@@ -3,6 +3,7 @@ using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using PhotosOfUs.Model.Models;
+using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Web.Models;
 
 namespace PhotosOfUs.Web.Utilities
@@ -12,6 +13,9 @@ namespace PhotosOfUs.Web.Utilities
         public AutoMapperProfile()
         {
             CreateMap<User, UserViewModel>();
+            CreateMap<Photo, PhotoViewModel>();
+            CreateMap<Folder, FolderViewModel>();
+            CreateMap<Tag, TagViewModel>();
         }
     }
 

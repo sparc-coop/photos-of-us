@@ -1,5 +1,11 @@
 ﻿@import "../variables";
 
+.landing-container {
+    .nav {
+        background-color: $dark;
+    }
+}
+
 .landing {
     overflow-x: hidden;
 
@@ -67,6 +73,8 @@
             width: 436px;
             height: 202px;
             padding-bottom: 38px;
+            position: relative;
+            background-color: $dark;
         }
 
         .tagline {
@@ -74,24 +82,33 @@
             font-size: 28px;
             font-family: 'Open Sans';
             font-weight: 500;
-            padding-bottom: 38px;
+            margin-bottom: 38px;
             width: 563px;
+            position: relative;
+            background-color: $dark;
         }
 
         &--img-container {
             text-align: right;
             width: 64%;
-            margin-left: 41%;
+            left: 41%;
             position: absolute;
             overflow: hidden;
-            margin-top: -95px;
+            top: 60px;
+            bottom: 0;
 
             .random-photo {
                 max-height: 300px;
                 max-width: 300px;
                 border-radius: 8px;
                 margin: 8px;
+                position: absolute;
                 box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+                transition: transform 0.3s ease-in-out;
+                &:hover {
+                    transform: scale(1.1, 1.1);
+                    z-index: 1000;
+                }
             }
         }
     }

@@ -1587,7 +1587,7 @@ body > div.container.body-content hr {
 .nav--right {
   position: absolute;
   right: 46px;
-  margin-top: -11px;
+  margin-top: -5px;
 }
 
 .nav--right img {
@@ -4811,6 +4811,10 @@ tags-input .tag-item {
   margin-right: 25px;
 }
 
+.landing-container .nav {
+  background-color: #194952;
+}
+
 .landing {
   overflow-x: hidden;
 }
@@ -4881,6 +4885,8 @@ tags-input .tag-item {
   width: 436px;
   height: 202px;
   padding-bottom: 38px;
+  position: relative;
+  background-color: #194952;
 }
 
 .landing .main-landing .tagline {
@@ -4888,17 +4894,20 @@ tags-input .tag-item {
   font-size: 28px;
   font-family: 'Open Sans';
   font-weight: 500;
-  padding-bottom: 38px;
+  margin-bottom: 38px;
   width: 563px;
+  position: relative;
+  background-color: #194952;
 }
 
 .landing .main-landing--img-container {
   text-align: right;
   width: 64%;
-  margin-left: 41%;
+  left: 41%;
   position: absolute;
   overflow: hidden;
-  margin-top: -95px;
+  top: 60px;
+  bottom: 0;
 }
 
 .landing .main-landing--img-container .random-photo {
@@ -4906,8 +4915,19 @@ tags-input .tag-item {
   max-width: 300px;
   border-radius: 8px;
   margin: 8px;
+  position: absolute;
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+.landing .main-landing--img-container .random-photo:hover {
+  -webkit-transform: scale(1.1, 1.1);
+          transform: scale(1.1, 1.1);
+  z-index: 1000;
 }
 
 .landing .button-styling {

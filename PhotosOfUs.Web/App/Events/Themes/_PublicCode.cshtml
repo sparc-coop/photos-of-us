@@ -1,8 +1,8 @@
 ﻿<form method="POST" class="publicCode">
     <div class="landing">
-        <div class="main-landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhotos(15)">
+        <div class="main-landing" ng-controller="RandomPhotoCtrl">
             <a href="/"><img src="~/images/logo.png" class="logo" /></a>
-            <div class="main-landing--img-container">
+            <div class="main-landing--img-container" ng-init="getRandomPhotos($element, 15)">
                 <img ng-repeat="photo in photoList" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
             </div>
             <div class="welcome-section">

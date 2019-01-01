@@ -7,13 +7,13 @@
         }
 
         // let area = document.getElementsByClassName("main-landing")[0];
-        $scope.getRandomPosition = (element) => {
-            const x = 800 - element.clientHeight;
-            const y = document.body.offsetWidth - element.clientWidth;
+        $scope.getRandomPosition = () => {
+            //console.log(element);
+            //const x = 800 - element.clientHeight;
+            //const y = document.body.offsetWidth - element.clientWidth;
             // var randomX = Math.floor(Math.random() * x);
             // var randomY = Math.floor(Math.random() * y);
-            const coords = [getRandomInt(0, x), getRandomInt(650, 900)];
-            return coords;
+            return [getRandomInt(0, 80) + '%', getRandomInt(0, 80) + '%'];
         };
 
         // $scope.loadImages = (ph) => {
@@ -34,11 +34,14 @@
             let counter = 0;
             const interval = setInterval(function () {
                 counter += 1;
-                if (counter === numPhotos) {
+                if (counter >= numPhotos) {
                     clearInterval(interval);
                 }
 
-                RandomPhotoClient.get().then(photo => $scope.photoList.push(photo));
+                RandomPhotoClient.get().then(photo => {
+                    photo['coords'] = $scope.getRandomPosition();
+                    $scope.photoList.push(photo);
+                });
             }, 0);
         };
     }]);
