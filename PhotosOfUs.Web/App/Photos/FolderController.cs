@@ -8,9 +8,11 @@ using Kuvio.Kernel.Architecture;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Web.Controllers.API
 {
+    [Authorize]
     [Route("api/Folder")]
     public class FolderApiController : Controller
     {
@@ -22,11 +24,10 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpPost]
-        [Route("{name}/{userId:int}")]
-        public FolderViewModel Post(string name, int userId)
+        [Route("{name}")]
+        public FolderViewModel Post(string name)
         {
-            var newuserId = userId;
-            var photographer = _user.Find(x => x.Id == userId);
+            var photographer = _user.Find(x => x.Id == User.ID());
             var folder = photographer.AddFolder(name);
             _user.Commit();
 
@@ -36,12 +37,12 @@ namespace PhotosOfUs.Web.Controllers.API
         
         [HttpPost]
         [Route("RenameFolder")]
-        public FolderViewModel Put([FromBody]FolderRenameViewModel model)
+        public FolderViewModel Put(int id, string newName)
         {
-            var photographer = _user.Find(x => x.Id == model.UserId);
+            var photographer = _user.Find(x => x.Id == User.ID());
 
-            var folder = photographer.Folders.First(x => x.Id == model.Id);
-            folder.Name = model.NewName;
+            var folder = photographer.Folders.First(x => x.Id == id);
+            folder.Name = newName;
             _user.Commit();
 
             return folder.ToViewModel<FolderViewModel>();

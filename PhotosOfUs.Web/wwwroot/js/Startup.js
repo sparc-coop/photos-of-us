@@ -10,8 +10,8 @@ var PhotosOfUs;
         'angular.filter',
         'PhotosOfUs.API'
     ]);
-    angular.module('app').filter('startFrom', function () {
-        return function (data, start) { return data.slice(start); };
+    angular.module('app').filter('startFrom', () => {
+        return (data, start) => data.slice(start);
     });
 })(PhotosOfUs || (PhotosOfUs = {}));
 //# sourceMappingURL=Startup.js.map

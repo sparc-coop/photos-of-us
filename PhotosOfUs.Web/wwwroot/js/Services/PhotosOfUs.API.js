@@ -5,32 +5,18 @@
 // </auto-generated>
 //----------------------
 // ReSharper disable InconsistentNaming
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var PhotosOfUs;
 (function (PhotosOfUs) {
-    var PhotographerClient = /** @class */ (function () {
-        function PhotographerClient($http, $q, baseUrl) {
+    class PhotographerClient {
+        constructor($http, $q, baseUrl) {
             this.baseUrl = undefined;
             this.jsonParseReviver = undefined;
             this.http = $http;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        PhotographerClient.prototype.uploadProfilePhoto = function (contentType, contentDisposition, headers, length, name, fileName) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Photographer/ProfilePhoto?";
+        uploadProfilePhoto(contentType, contentDisposition, headers, length, name, fileName) {
+            let url_ = this.baseUrl + "/api/Photographer/ProfilePhoto?";
             if (contentType !== undefined)
                 url_ += "ContentType=" + encodeURIComponent("" + contentType) + "&";
             if (contentDisposition !== undefined)
@@ -54,33 +40,32 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processUploadProfilePhoto(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processUploadProfilePhoto(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processUploadProfilePhoto(_response);
+                    return this.processUploadProfilePhoto(_response);
                 throw _response;
             });
-        };
-        PhotographerClient.prototype.processUploadProfilePhoto = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processUploadProfilePhoto(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? UploadPhotoCommandResult.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        PhotographerClient.prototype.uploadProfileImage = function (contentType, contentDisposition, headers, length, name, fileName, photoName, extension) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Photographer?";
+        }
+        uploadProfileImage(contentType, contentDisposition, headers, length, name, fileName, photoName, extension) {
+            let url_ = this.baseUrl + "/api/Photographer?";
             if (contentType !== undefined)
                 url_ += "ContentType=" + encodeURIComponent("" + contentType) + "&";
             if (contentDisposition !== undefined)
@@ -106,41 +91,39 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processUploadProfileImage(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processUploadProfileImage(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processUploadProfileImage(_response);
+                    return this.processUploadProfileImage(_response);
                 throw _response;
             });
-        };
-        PhotographerClient.prototype.processUploadProfileImage = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processUploadProfileImage(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        return PhotographerClient;
-    }());
+        }
+    }
     PhotosOfUs.PhotographerClient = PhotographerClient;
-    var EventApiClient = /** @class */ (function () {
-        function EventApiClient($http, $q, baseUrl) {
+    class EventApiClient {
+        constructor($http, $q, baseUrl) {
             this.baseUrl = undefined;
             this.jsonParseReviver = undefined;
             this.http = $http;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        EventApiClient.prototype.get = function (eventId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}";
+        get(eventId) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
@@ -153,33 +136,32 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGet(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGet(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGet(_response);
+                    return this.processGet(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processGet = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGet(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? Event.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.getEventCards = function (eventId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
+        }
+        getEventCards(eventId) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
@@ -192,44 +174,41 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGetEventCards(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGetEventCards(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGetEventCards(_response);
+                    return this.processGetEventCards(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processGetEventCards = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGetEventCards(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_1 = resultData200; _i < resultData200_1.length; _i++) {
-                        var item = resultData200_1[_i];
+                    for (let item of resultData200)
                         result200.push(Card.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.createEventCards = function (eventId, quantity) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
+        }
+        createEventCards(eventId, quantity) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
             url_ = url_.replace(/[?&]$/, "");
-            var content_ = JSON.stringify(quantity);
+            const content_ = JSON.stringify(quantity);
             var options_ = {
                 url: url_,
                 method: "POST",
@@ -240,39 +219,36 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processCreateEventCards(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processCreateEventCards(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processCreateEventCards(_response);
+                    return this.processCreateEventCards(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processCreateEventCards = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processCreateEventCards(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_2 = resultData200; _i < resultData200_2.length; _i++) {
-                        var item = resultData200_2[_i];
+                    for (let item of resultData200)
                         result200.push(Card.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.getCodePhotos = function (eventId, code) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/Cards/{code}";
+        }
+        getCodePhotos(eventId, code) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/Cards/{code}";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
@@ -288,39 +264,36 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGetCodePhotos(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGetCodePhotos(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGetCodePhotos(_response);
+                    return this.processGetCodePhotos(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processGetCodePhotos = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGetCodePhotos(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_3 = resultData200; _i < resultData200_3.length; _i++) {
-                        var item = resultData200_3[_i];
+                    for (let item of resultData200)
                         result200.push(PhotoViewModel.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.uploadPhoto = function (eventId, photoCode, contentType, contentDisposition, headers, length, name, fileName) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/Photos?";
+        }
+        uploadPhoto(eventId, photoCode, contentType, contentDisposition, headers, length, name, fileName) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/Photos?";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
@@ -349,33 +322,32 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processUploadPhoto(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processUploadPhoto(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processUploadPhoto(_response);
+                    return this.processUploadPhoto(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processUploadPhoto = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processUploadPhoto(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? UploadPhotoCommandResult.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.getAllTags = function (eventId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/Tags";
+        }
+        getAllTags(eventId) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/Tags";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
@@ -388,44 +360,41 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGetAllTags(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGetAllTags(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGetAllTags(_response);
+                    return this.processGetAllTags(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processGetAllTags = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGetAllTags(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_4 = resultData200; _i < resultData200_4.length; _i++) {
-                        var item = resultData200_4[_i];
+                    for (let item of resultData200)
                         result200.push(TagViewModel.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.bulkEdit = function (eventId, photoIds) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        }
+        bulkEdit(eventId, photoIds) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
             if (photoIds !== undefined)
-                photoIds && photoIds.forEach(function (item) { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
+                photoIds && photoIds.forEach(item => { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -435,46 +404,43 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processBulkEdit(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processBulkEdit(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processBulkEdit(_response);
+                    return this.processBulkEdit(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processBulkEdit = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processBulkEdit(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_5 = resultData200; _i < resultData200_5.length; _i++) {
-                        var item = resultData200_5[_i];
+                    for (let item of resultData200)
                         result200.push(TagViewModel.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.bulkEditSave = function (eventId, photoIds, model) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        }
+        bulkEditSave(eventId, photoIds, model) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
             if (photoIds !== undefined)
-                photoIds && photoIds.forEach(function (item) { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
+                photoIds && photoIds.forEach(item => { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
             url_ = url_.replace(/[?&]$/, "");
-            var content_ = JSON.stringify(model);
+            const content_ = JSON.stringify(model);
             var options_ = {
                 url: url_,
                 method: "PUT",
@@ -484,35 +450,34 @@ var PhotosOfUs;
                     "Content-Type": "application/json",
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processBulkEditSave(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processBulkEditSave(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processBulkEditSave(_response);
+                    return this.processBulkEditSave(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processBulkEditSave = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processBulkEditSave(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.bulkDelete = function (eventId, photoIds) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        }
+        bulkDelete(eventId, photoIds) {
+            let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
             if (eventId === undefined || eventId === null)
                 throw new Error("The parameter 'eventId' must be defined.");
             url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId));
             if (photoIds !== undefined)
-                photoIds && photoIds.forEach(function (item) { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
+                photoIds && photoIds.forEach(item => { url_ += "photoIds=" + encodeURIComponent("" + item) + "&"; });
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -520,30 +485,29 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processBulkDelete(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processBulkDelete(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processBulkDelete(_response);
+                    return this.processBulkDelete(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processBulkDelete = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processBulkDelete(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        EventApiClient.prototype.cardsPdf = function (json) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Events/CardsPdf?";
+        }
+        cardsPdf(json) {
+            let url_ = this.baseUrl + "/api/Events/CardsPdf?";
             if (json !== undefined)
                 url_ += "json=" + encodeURIComponent("" + json) + "&";
             url_ = url_.replace(/[?&]$/, "");
@@ -556,45 +520,42 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processCardsPdf(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processCardsPdf(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processCardsPdf(_response);
+                    return this.processCardsPdf(_response);
                 throw _response;
             });
-        };
-        EventApiClient.prototype.processCardsPdf = function (response) {
-            var _this = this;
-            var status = response.status;
-            var _headers = {};
+        }
+        processCardsPdf(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200 || status === 206) {
-                var contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
-                var fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                var fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+                const contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
+                const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
                 return this.q.resolve({ fileName: fileName, status: status, data: new Blob([response.data]), headers: _headers });
             }
             else if (status !== 200 && status !== 204) {
-                return blobToText(new Blob([response]), this.q).then(function (_responseText) {
-                    return throwException(_this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+                return blobToText(new Blob([response]), this.q).then(_responseText => {
+                    return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
                 });
             }
             return this.q.resolve(null);
-        };
-        return EventApiClient;
-    }());
+        }
+    }
     PhotosOfUs.EventApiClient = EventApiClient;
-    var FolderApiClient = /** @class */ (function () {
-        function FolderApiClient($http, $q, baseUrl) {
+    class FolderApiClient {
+        constructor($http, $q, baseUrl) {
             this.baseUrl = undefined;
             this.jsonParseReviver = undefined;
             this.http = $http;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        FolderApiClient.prototype.post = function (name, userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Folder/{name}/{userId}";
+        post(name, userId) {
+            let url_ = this.baseUrl + "/api/Folder/{name}/{userId}";
             if (name === undefined || name === null)
                 throw new Error("The parameter 'name' must be defined.");
             url_ = url_.replace("{name}", encodeURIComponent("" + name));
@@ -610,35 +571,34 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processPost(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processPost(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processPost(_response);
+                    return this.processPost(_response);
                 throw _response;
             });
-        };
-        FolderApiClient.prototype.processPost = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processPost(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? FolderViewModel.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        FolderApiClient.prototype.put = function (model) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Folder/RenameFolder";
+        }
+        put(model) {
+            let url_ = this.baseUrl + "/api/Folder/RenameFolder";
             url_ = url_.replace(/[?&]$/, "");
-            var content_ = JSON.stringify(model);
+            const content_ = JSON.stringify(model);
             var options_ = {
                 url: url_,
                 method: "POST",
@@ -649,33 +609,32 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processPut(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processPut(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processPut(_response);
+                    return this.processPut(_response);
                 throw _response;
             });
-        };
-        FolderApiClient.prototype.processPut = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processPut(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? FolderViewModel.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        FolderApiClient.prototype.deleteFolder = function (id, userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/Folder/DeleteFolder/{id}/{userId}";
+        }
+        deleteFolder(id, userId) {
+            let url_ = this.baseUrl + "/api/Folder/DeleteFolder/{id}/{userId}";
             if (id === undefined || id === null)
                 throw new Error("The parameter 'id' must be defined.");
             url_ = url_.replace("{id}", encodeURIComponent("" + id));
@@ -692,45 +651,42 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processDeleteFolder(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processDeleteFolder(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processDeleteFolder(_response);
+                    return this.processDeleteFolder(_response);
                 throw _response;
             });
-        };
-        FolderApiClient.prototype.processDeleteFolder = function (response) {
-            var _this = this;
-            var status = response.status;
-            var _headers = {};
+        }
+        processDeleteFolder(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200 || status === 206) {
-                var contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
-                var fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                var fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+                const contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
+                const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
                 return this.q.resolve({ fileName: fileName, status: status, data: new Blob([response.data]), headers: _headers });
             }
             else if (status !== 200 && status !== 204) {
-                return blobToText(new Blob([response]), this.q).then(function (_responseText) {
-                    return throwException(_this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+                return blobToText(new Blob([response]), this.q).then(_responseText => {
+                    return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
                 });
             }
             return this.q.resolve(null);
-        };
-        return FolderApiClient;
-    }());
+        }
+    }
     PhotosOfUs.FolderApiClient = FolderApiClient;
-    var RandomPhotoClient = /** @class */ (function () {
-        function RandomPhotoClient($http, $q, baseUrl) {
+    class RandomPhotoClient {
+        constructor($http, $q, baseUrl) {
             this.baseUrl = undefined;
             this.jsonParseReviver = undefined;
             this.http = $http;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        RandomPhotoClient.prototype.get = function () {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/RandomPhotos";
+        get() {
+            let url_ = this.baseUrl + "/api/RandomPhotos";
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -740,44 +696,42 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGet(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGet(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGet(_response);
+                    return this.processGet(_response);
                 throw _response;
             });
-        };
-        RandomPhotoClient.prototype.processGet = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGet(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? PhotoViewModel.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        return RandomPhotoClient;
-    }());
+        }
+    }
     PhotosOfUs.RandomPhotoClient = RandomPhotoClient;
-    var UserApiClient = /** @class */ (function () {
-        function UserApiClient($http, $q, baseUrl) {
+    class UserApiClient {
+        constructor($http, $q, baseUrl) {
             this.baseUrl = undefined;
             this.jsonParseReviver = undefined;
             this.http = $http;
             this.q = $q;
             this.baseUrl = baseUrl ? baseUrl : "";
         }
-        UserApiClient.prototype.get = function () {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User";
+        get() {
+            let url_ = this.baseUrl + "/api/User";
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -787,35 +741,34 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGet(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGet(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGet(_response);
+                    return this.processGet(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processGet = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGet(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 result200 = resultData200 ? UserViewModel.fromJS(resultData200) : null;
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.put = function (model) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User";
+        }
+        put(model) {
+            let url_ = this.baseUrl + "/api/User";
             url_ = url_.replace(/[?&]$/, "");
-            var content_ = JSON.stringify(model);
+            const content_ = JSON.stringify(model);
             var options_ = {
                 url: url_,
                 method: "PUT",
@@ -827,34 +780,32 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processPut(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processPut(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processPut(_response);
+                    return this.processPut(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processPut = function (response) {
-            var _this = this;
-            var status = response.status;
-            var _headers = {};
+        }
+        processPut(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200 || status === 206) {
-                var contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
-                var fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-                var fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+                const contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
+                const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+                const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
                 return this.q.resolve({ fileName: fileName, status: status, data: new Blob([response.data]), headers: _headers });
             }
             else if (status !== 200 && status !== 204) {
-                return blobToText(new Blob([response]), this.q).then(function (_responseText) {
-                    return throwException(_this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+                return blobToText(new Blob([response]), this.q).then(_responseText => {
+                    return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
                 });
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.deactivateAccount = function () {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User";
+        }
+        deactivateAccount() {
+            let url_ = this.baseUrl + "/api/User";
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -862,30 +813,29 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processDeactivateAccount(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processDeactivateAccount(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processDeactivateAccount(_response);
+                    return this.processDeactivateAccount(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processDeactivateAccount = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processDeactivateAccount(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.reactivateAccount = function () {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User";
+        }
+        reactivateAccount() {
+            let url_ = this.baseUrl + "/api/User";
             url_ = url_.replace(/[?&]$/, "");
             var options_ = {
                 url: url_,
@@ -893,30 +843,29 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processReactivateAccount(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processReactivateAccount(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processReactivateAccount(_response);
+                    return this.processReactivateAccount(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processReactivateAccount = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processReactivateAccount(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.getFolders = function (id) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User/Folders?";
+        }
+        getFolders(id) {
+            let url_ = this.baseUrl + "/api/User/Folders?";
             if (id === null)
                 throw new Error("The parameter 'id' cannot be null.");
             else if (id !== undefined)
@@ -930,39 +879,36 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGetFolders(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGetFolders(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGetFolders(_response);
+                    return this.processGetFolders(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processGetFolders = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGetFolders(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_6 = resultData200; _i < resultData200_6.length; _i++) {
-                        var item = resultData200_6[_i];
+                    for (let item of resultData200)
                         result200.push(FolderViewModel.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.getProfilePhotos = function (userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User/GetProfilePhotos/{userId}";
+        }
+        getProfilePhotos(userId) {
+            let url_ = this.baseUrl + "/api/User/GetProfilePhotos/{userId}";
             if (userId === undefined || userId === null)
                 throw new Error("The parameter 'userId' must be defined.");
             url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
@@ -975,39 +921,36 @@ var PhotosOfUs;
                     "Accept": "application/json"
                 }
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processGetProfilePhotos(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processGetProfilePhotos(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processGetProfilePhotos(_response);
+                    return this.processGetProfilePhotos(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processGetProfilePhotos = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processGetProfilePhotos(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
-                var result200 = null;
-                var resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+                const _responseText = response.data;
+                let result200 = null;
+                let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
                 if (resultData200 && resultData200.constructor === Array) {
                     result200 = [];
-                    for (var _i = 0, resultData200_7 = resultData200; _i < resultData200_7.length; _i++) {
-                        var item = resultData200_7[_i];
+                    for (let item of resultData200)
                         result200.push(Photo.fromJS(item));
-                    }
                 }
                 return this.q.resolve(result200);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.viewedPricingInfo = function (userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User/ViewedPricing/{userId}";
+        }
+        viewedPricingInfo(userId) {
+            let url_ = this.baseUrl + "/api/User/ViewedPricing/{userId}";
             if (userId === undefined || userId === null)
                 throw new Error("The parameter 'userId' must be defined.");
             url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
@@ -1018,30 +961,29 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processViewedPricingInfo(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processViewedPricingInfo(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processViewedPricingInfo(_response);
+                    return this.processViewedPricingInfo(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processViewedPricingInfo = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processViewedPricingInfo(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.viewedDashboardTour = function (userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User/ViewedDashboard/{userId}";
+        }
+        viewedDashboardTour(userId) {
+            let url_ = this.baseUrl + "/api/User/ViewedDashboard/{userId}";
             if (userId === undefined || userId === null)
                 throw new Error("The parameter 'userId' must be defined.");
             url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
@@ -1052,30 +994,29 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processViewedDashboardTour(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processViewedDashboardTour(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processViewedDashboardTour(_response);
+                    return this.processViewedDashboardTour(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processViewedDashboardTour = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processViewedDashboardTour(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        UserApiClient.prototype.viewedPhotoTour = function (userId) {
-            var _this = this;
-            var url_ = this.baseUrl + "/api/User/ViewedPhoto/{userId}";
+        }
+        viewedPhotoTour(userId) {
+            let url_ = this.baseUrl + "/api/User/ViewedPhoto/{userId}";
             if (userId === undefined || userId === null)
                 throw new Error("The parameter 'userId' must be defined.");
             url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
@@ -1086,32 +1027,31 @@ var PhotosOfUs;
                 transformResponse: [],
                 headers: {}
             };
-            return this.http(options_).then(function (_response) {
-                return _this.processViewedPhotoTour(_response);
-            }, function (_response) {
+            return this.http(options_).then((_response) => {
+                return this.processViewedPhotoTour(_response);
+            }, (_response) => {
                 if (_response.status)
-                    return _this.processViewedPhotoTour(_response);
+                    return this.processViewedPhotoTour(_response);
                 throw _response;
             });
-        };
-        UserApiClient.prototype.processViewedPhotoTour = function (response) {
-            var status = response.status;
-            var _headers = {};
+        }
+        processViewedPhotoTour(response) {
+            const status = response.status;
+            let _headers = {};
             if (status === 200) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return this.q.resolve(null);
             }
             else if (status !== 200 && status !== 204) {
-                var _responseText = response.data;
+                const _responseText = response.data;
                 return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
             }
             return this.q.resolve(null);
-        };
-        return UserApiClient;
-    }());
+        }
+    }
     PhotosOfUs.UserApiClient = UserApiClient;
-    var UploadPhotoCommandResult = /** @class */ (function () {
-        function UploadPhotoCommandResult(data) {
+    class UploadPhotoCommandResult {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1119,43 +1059,38 @@ var PhotosOfUs;
                 }
             }
         }
-        UploadPhotoCommandResult.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 if (data["SuggestedTags"] && data["SuggestedTags"].constructor === Array) {
                     this.suggestedTags = [];
-                    for (var _i = 0, _a = data["SuggestedTags"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["SuggestedTags"])
                         this.suggestedTags.push(item);
-                    }
                 }
                 this.code = data["Code"] !== undefined ? data["Code"] : null;
                 this.isValid = data["IsValid"] !== undefined ? data["IsValid"] : null;
             }
-        };
-        UploadPhotoCommandResult.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new UploadPhotoCommandResult();
+            let result = new UploadPhotoCommandResult();
             result.init(data);
             return result;
-        };
-        UploadPhotoCommandResult.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             if (this.suggestedTags && this.suggestedTags.constructor === Array) {
                 data["SuggestedTags"] = [];
-                for (var _i = 0, _a = this.suggestedTags; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.suggestedTags)
                     data["SuggestedTags"].push(item);
-                }
             }
             data["Code"] = this.code !== undefined ? this.code : null;
             data["IsValid"] = this.isValid !== undefined ? this.isValid : null;
             return data;
-        };
-        return UploadPhotoCommandResult;
-    }());
+        }
+    }
     PhotosOfUs.UploadPhotoCommandResult = UploadPhotoCommandResult;
-    var IHeaderDictionary = /** @class */ (function () {
-        function IHeaderDictionary(data) {
+    class IHeaderDictionary {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1166,39 +1101,34 @@ var PhotosOfUs;
                 this.item = [];
             }
         }
-        IHeaderDictionary.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 if (data["Item"] && data["Item"].constructor === Array) {
                     this.item = [];
-                    for (var _i = 0, _a = data["Item"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["Item"])
                         this.item.push(item);
-                    }
                 }
                 this.contentLength = data["ContentLength"] !== undefined ? data["ContentLength"] : null;
             }
-        };
-        IHeaderDictionary.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
             throw new Error("The abstract class 'IHeaderDictionary' cannot be instantiated.");
-        };
-        IHeaderDictionary.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             if (this.item && this.item.constructor === Array) {
                 data["Item"] = [];
-                for (var _i = 0, _a = this.item; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.item)
                     data["Item"].push(item);
-                }
             }
             data["ContentLength"] = this.contentLength !== undefined ? this.contentLength : null;
             return data;
-        };
-        return IHeaderDictionary;
-    }());
+        }
+    }
     PhotosOfUs.IHeaderDictionary = IHeaderDictionary;
-    var Event = /** @class */ (function () {
-        function Event(data) {
+    class Event {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1206,7 +1136,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Event.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.eventId = data["EventId"] !== undefined ? data["EventId"] : null;
                 this.userId = data["UserId"] !== undefined ? data["UserId"] : null;
@@ -1230,28 +1160,24 @@ var PhotosOfUs;
                 this.brandingStyle = data["BrandingStyle"] !== undefined ? data["BrandingStyle"] : null;
                 if (data["Cards"] && data["Cards"].constructor === Array) {
                     this.cards = [];
-                    for (var _i = 0, _a = data["Cards"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["Cards"])
                         this.cards.push(Card.fromJS(item));
-                    }
                 }
                 if (data["Photos"] && data["Photos"].constructor === Array) {
                     this.photos = [];
-                    for (var _b = 0, _c = data["Photos"]; _b < _c.length; _b++) {
-                        var item = _c[_b];
+                    for (let item of data["Photos"])
                         this.photos.push(Photo.fromJS(item));
-                    }
                 }
                 this.user = data["User"] ? User.fromJS(data["User"]) : null;
             }
-        };
-        Event.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Event();
+            let result = new Event();
             result.init(data);
             return result;
-        };
-        Event.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["EventId"] = this.eventId !== undefined ? this.eventId : null;
             data["UserId"] = this.userId !== undefined ? this.userId : null;
@@ -1275,26 +1201,21 @@ var PhotosOfUs;
             data["BrandingStyle"] = this.brandingStyle !== undefined ? this.brandingStyle : null;
             if (this.cards && this.cards.constructor === Array) {
                 data["Cards"] = [];
-                for (var _i = 0, _a = this.cards; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.cards)
                     data["Cards"].push(item.toJSON());
-                }
             }
             if (this.photos && this.photos.constructor === Array) {
                 data["Photos"] = [];
-                for (var _b = 0, _c = this.photos; _b < _c.length; _b++) {
-                    var item = _c[_b];
+                for (let item of this.photos)
                     data["Photos"].push(item.toJSON());
-                }
             }
             data["User"] = this.user ? this.user.toJSON() : null;
             return data;
-        };
-        return Event;
-    }());
+        }
+    }
     PhotosOfUs.Event = Event;
-    var Card = /** @class */ (function () {
-        function Card(data) {
+    class Card {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1302,7 +1223,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Card.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.eventId = data["EventId"] !== undefined ? data["EventId"] : null;
@@ -1310,20 +1231,18 @@ var PhotosOfUs;
                 this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : null;
                 if (data["Photos"] && data["Photos"].constructor === Array) {
                     this.photos = [];
-                    for (var _i = 0, _a = data["Photos"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["Photos"])
                         this.photos.push(Photo.fromJS(item));
-                    }
                 }
             }
-        };
-        Card.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Card();
+            let result = new Card();
             result.init(data);
             return result;
-        };
-        Card.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["EventId"] = this.eventId !== undefined ? this.eventId : null;
@@ -1331,18 +1250,15 @@ var PhotosOfUs;
             data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : null;
             if (this.photos && this.photos.constructor === Array) {
                 data["Photos"] = [];
-                for (var _i = 0, _a = this.photos; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photos)
                     data["Photos"].push(item.toJSON());
-                }
             }
             return data;
-        };
-        return Card;
-    }());
+        }
+    }
     PhotosOfUs.Card = Card;
-    var Photo = /** @class */ (function () {
-        function Photo(data) {
+    class Photo {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1350,7 +1266,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Photo.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : null;
@@ -1365,17 +1281,13 @@ var PhotosOfUs;
                 this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : null;
                 if (data["PhotoTag"] && data["PhotoTag"].constructor === Array) {
                     this.photoTag = [];
-                    for (var _i = 0, _a = data["PhotoTag"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["PhotoTag"])
                         this.photoTag.push(PhotoTag.fromJS(item));
-                    }
                 }
                 if (data["PrintType"] && data["PrintType"].constructor === Array) {
                     this.printType = [];
-                    for (var _b = 0, _c = data["PrintType"]; _b < _c.length; _b++) {
-                        var item = _c[_b];
+                    for (let item of data["PrintType"])
                         this.printType.push(PrintType.fromJS(item));
-                    }
                 }
                 this.filename = data["Filename"] !== undefined ? data["Filename"] : null;
                 this.folderName = data["FolderName"] !== undefined ? data["FolderName"] : null;
@@ -1385,14 +1297,14 @@ var PhotosOfUs;
                 this.thumbnailUrl = data["ThumbnailUrl"] !== undefined ? data["ThumbnailUrl"] : null;
                 this.waterMarkUrl = data["WaterMarkUrl"] !== undefined ? data["WaterMarkUrl"] : null;
             }
-        };
-        Photo.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Photo();
+            let result = new Photo();
             result.init(data);
             return result;
-        };
-        Photo.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : null;
@@ -1407,17 +1319,13 @@ var PhotosOfUs;
             data["Photographer"] = this.photographer ? this.photographer.toJSON() : null;
             if (this.photoTag && this.photoTag.constructor === Array) {
                 data["PhotoTag"] = [];
-                for (var _i = 0, _a = this.photoTag; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photoTag)
                     data["PhotoTag"].push(item.toJSON());
-                }
             }
             if (this.printType && this.printType.constructor === Array) {
                 data["PrintType"] = [];
-                for (var _b = 0, _c = this.printType; _b < _c.length; _b++) {
-                    var item = _c[_b];
+                for (let item of this.printType)
                     data["PrintType"].push(item.toJSON());
-                }
             }
             data["Filename"] = this.filename !== undefined ? this.filename : null;
             data["FolderName"] = this.folderName !== undefined ? this.folderName : null;
@@ -1427,12 +1335,11 @@ var PhotosOfUs;
             data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : null;
             data["WaterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : null;
             return data;
-        };
-        return Photo;
-    }());
+        }
+    }
     PhotosOfUs.Photo = Photo;
-    var User = /** @class */ (function () {
-        function User(data) {
+    class User {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1440,7 +1347,7 @@ var PhotosOfUs;
                 }
             }
         }
-        User.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.azureId = data["AzureId"] !== undefined ? data["AzureId"] : null;
@@ -1465,57 +1372,45 @@ var PhotosOfUs;
                 this.fullName = data["FullName"] !== undefined ? data["FullName"] : null;
                 if (data["SocialMedia"] && data["SocialMedia"].constructor === Array) {
                     this.socialMedia = [];
-                    for (var _i = 0, _a = data["SocialMedia"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["SocialMedia"])
                         this.socialMedia.push(SocialMedia.fromJS(item));
-                    }
                 }
                 if (data["Folders"] && data["Folders"].constructor === Array) {
                     this.folders = [];
-                    for (var _b = 0, _c = data["Folders"]; _b < _c.length; _b++) {
-                        var item = _c[_b];
+                    for (let item of data["Folders"])
                         this.folders.push(Folder.fromJS(item));
-                    }
                 }
                 if (data["Order"] && data["Order"].constructor === Array) {
                     this.order = [];
-                    for (var _d = 0, _e = data["Order"]; _d < _e.length; _d++) {
-                        var item = _e[_d];
+                    for (let item of data["Order"])
                         this.order.push(Order.fromJS(item));
-                    }
                 }
                 if (data["Photos"] && data["Photos"].constructor === Array) {
                     this.photos = [];
-                    for (var _f = 0, _g = data["Photos"]; _f < _g.length; _f++) {
-                        var item = _g[_f];
+                    for (let item of data["Photos"])
                         this.photos.push(Photo.fromJS(item));
-                    }
                 }
                 if (data["PrintPrice"] && data["PrintPrice"].constructor === Array) {
                     this.printPrice = [];
-                    for (var _h = 0, _j = data["PrintPrice"]; _h < _j.length; _h++) {
-                        var item = _j[_h];
+                    for (let item of data["PrintPrice"])
                         this.printPrice.push(PrintPrice.fromJS(item));
-                    }
                 }
                 if (data["UserIdentities"] && data["UserIdentities"].constructor === Array) {
                     this.userIdentities = [];
-                    for (var _k = 0, _l = data["UserIdentities"]; _k < _l.length; _k++) {
-                        var item = _l[_k];
+                    for (let item of data["UserIdentities"])
                         this.userIdentities.push(UserIdentity.fromJS(item));
-                    }
                 }
                 this.address = data["Address"] ? Address.fromJS(data["Address"]) : null;
                 this.publicFolder = data["PublicFolder"] ? Folder.fromJS(data["PublicFolder"]) : null;
             }
-        };
-        User.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new User();
+            let result = new User();
             result.init(data);
             return result;
-        };
-        User.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["AzureId"] = this.azureId !== undefined ? this.azureId : null;
@@ -1540,55 +1435,42 @@ var PhotosOfUs;
             data["FullName"] = this.fullName !== undefined ? this.fullName : null;
             if (this.socialMedia && this.socialMedia.constructor === Array) {
                 data["SocialMedia"] = [];
-                for (var _i = 0, _a = this.socialMedia; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.socialMedia)
                     data["SocialMedia"].push(item.toJSON());
-                }
             }
             if (this.folders && this.folders.constructor === Array) {
                 data["Folders"] = [];
-                for (var _b = 0, _c = this.folders; _b < _c.length; _b++) {
-                    var item = _c[_b];
+                for (let item of this.folders)
                     data["Folders"].push(item.toJSON());
-                }
             }
             if (this.order && this.order.constructor === Array) {
                 data["Order"] = [];
-                for (var _d = 0, _e = this.order; _d < _e.length; _d++) {
-                    var item = _e[_d];
+                for (let item of this.order)
                     data["Order"].push(item.toJSON());
-                }
             }
             if (this.photos && this.photos.constructor === Array) {
                 data["Photos"] = [];
-                for (var _f = 0, _g = this.photos; _f < _g.length; _f++) {
-                    var item = _g[_f];
+                for (let item of this.photos)
                     data["Photos"].push(item.toJSON());
-                }
             }
             if (this.printPrice && this.printPrice.constructor === Array) {
                 data["PrintPrice"] = [];
-                for (var _h = 0, _j = this.printPrice; _h < _j.length; _h++) {
-                    var item = _j[_h];
+                for (let item of this.printPrice)
                     data["PrintPrice"].push(item.toJSON());
-                }
             }
             if (this.userIdentities && this.userIdentities.constructor === Array) {
                 data["UserIdentities"] = [];
-                for (var _k = 0, _l = this.userIdentities; _k < _l.length; _k++) {
-                    var item = _l[_k];
+                for (let item of this.userIdentities)
                     data["UserIdentities"].push(item.toJSON());
-                }
             }
             data["Address"] = this.address ? this.address.toJSON() : null;
             data["PublicFolder"] = this.publicFolder ? this.publicFolder.toJSON() : null;
             return data;
-        };
-        return User;
-    }());
+        }
+    }
     PhotosOfUs.User = User;
-    var SocialMedia = /** @class */ (function () {
-        function SocialMedia(data) {
+    class SocialMedia {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1596,7 +1478,7 @@ var PhotosOfUs;
                 }
             }
         }
-        SocialMedia.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.azureId = data["AzureId"] !== undefined ? data["AzureId"] : null;
@@ -1604,14 +1486,14 @@ var PhotosOfUs;
                 this.link = data["Link"] !== undefined ? data["Link"] : null;
                 this.username = data["Username"] !== undefined ? data["Username"] : null;
             }
-        };
-        SocialMedia.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new SocialMedia();
+            let result = new SocialMedia();
             result.init(data);
             return result;
-        };
-        SocialMedia.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["AzureId"] = this.azureId !== undefined ? this.azureId : null;
@@ -1619,12 +1501,11 @@ var PhotosOfUs;
             data["Link"] = this.link !== undefined ? this.link : null;
             data["Username"] = this.username !== undefined ? this.username : null;
             return data;
-        };
-        return SocialMedia;
-    }());
+        }
+    }
     PhotosOfUs.SocialMedia = SocialMedia;
-    var Folder = /** @class */ (function () {
-        function Folder(data) {
+    class Folder {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1632,7 +1513,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Folder.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : null;
@@ -1642,20 +1523,18 @@ var PhotosOfUs;
                 this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : null;
                 if (data["Photo"] && data["Photo"].constructor === Array) {
                     this.photo = [];
-                    for (var _i = 0, _a = data["Photo"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["Photo"])
                         this.photo.push(Photo.fromJS(item));
-                    }
                 }
             }
-        };
-        Folder.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Folder();
+            let result = new Folder();
             result.init(data);
             return result;
-        };
-        Folder.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : null;
@@ -1665,18 +1544,15 @@ var PhotosOfUs;
             data["Photographer"] = this.photographer ? this.photographer.toJSON() : null;
             if (this.photo && this.photo.constructor === Array) {
                 data["Photo"] = [];
-                for (var _i = 0, _a = this.photo; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photo)
                     data["Photo"].push(item.toJSON());
-                }
             }
             return data;
-        };
-        return Folder;
-    }());
+        }
+    }
     PhotosOfUs.Folder = Folder;
-    var Order = /** @class */ (function () {
-        function Order(data) {
+    class Order {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1684,7 +1560,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Order.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.userId = data["UserId"] !== undefined ? data["UserId"] : null;
@@ -1698,24 +1574,22 @@ var PhotosOfUs;
                 this.user = data["User"] ? User.fromJS(data["User"]) : null;
                 if (data["OrderDetail"] && data["OrderDetail"].constructor === Array) {
                     this.orderDetail = [];
-                    for (var _i = 0, _a = data["OrderDetail"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["OrderDetail"])
                         this.orderDetail.push(OrderDetail.fromJS(item));
-                    }
                 }
                 this.amount = data["Amount"] !== undefined ? data["Amount"] : null;
                 this.totalPaid = data["TotalPaid"] !== undefined ? data["TotalPaid"] : null;
                 this.earning = data["Earning"] !== undefined ? data["Earning"] : null;
                 this.calculatedTotal = data["CalculatedTotal"] !== undefined ? data["CalculatedTotal"] : null;
             }
-        };
-        Order.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Order();
+            let result = new Order();
             result.init(data);
             return result;
-        };
-        Order.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["UserId"] = this.userId !== undefined ? this.userId : null;
@@ -1729,22 +1603,19 @@ var PhotosOfUs;
             data["User"] = this.user ? this.user.toJSON() : null;
             if (this.orderDetail && this.orderDetail.constructor === Array) {
                 data["OrderDetail"] = [];
-                for (var _i = 0, _a = this.orderDetail; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.orderDetail)
                     data["OrderDetail"].push(item.toJSON());
-                }
             }
             data["Amount"] = this.amount !== undefined ? this.amount : null;
             data["TotalPaid"] = this.totalPaid !== undefined ? this.totalPaid : null;
             data["Earning"] = this.earning !== undefined ? this.earning : null;
             data["CalculatedTotal"] = this.calculatedTotal !== undefined ? this.calculatedTotal : null;
             return data;
-        };
-        return Order;
-    }());
+        }
+    }
     PhotosOfUs.Order = Order;
-    var Address = /** @class */ (function () {
-        function Address(data) {
+    class Address {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1752,7 +1623,7 @@ var PhotosOfUs;
                 }
             }
         }
-        Address.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.userId = data["UserId"] !== undefined ? data["UserId"] : null;
@@ -1766,14 +1637,14 @@ var PhotosOfUs;
                 this.phone = data["Phone"] !== undefined ? data["Phone"] : null;
                 this.email = data["Email"] !== undefined ? data["Email"] : null;
             }
-        };
-        Address.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Address();
+            let result = new Address();
             result.init(data);
             return result;
-        };
-        Address.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["UserId"] = this.userId !== undefined ? this.userId : null;
@@ -1787,12 +1658,11 @@ var PhotosOfUs;
             data["Phone"] = this.phone !== undefined ? this.phone : null;
             data["Email"] = this.email !== undefined ? this.email : null;
             return data;
-        };
-        return Address;
-    }());
+        }
+    }
     PhotosOfUs.Address = Address;
-    var OrderDetail = /** @class */ (function () {
-        function OrderDetail(data) {
+    class OrderDetail {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1800,7 +1670,7 @@ var PhotosOfUs;
                 }
             }
         }
-        OrderDetail.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.orderId = data["OrderId"] !== undefined ? data["OrderId"] : null;
@@ -1811,14 +1681,14 @@ var PhotosOfUs;
                 this.photo = data["Photo"] ? Photo.fromJS(data["Photo"]) : null;
                 this.printType = data["PrintType"] ? PrintType.fromJS(data["PrintType"]) : null;
             }
-        };
-        OrderDetail.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new OrderDetail();
+            let result = new OrderDetail();
             result.init(data);
             return result;
-        };
-        OrderDetail.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["OrderId"] = this.orderId !== undefined ? this.orderId : null;
@@ -1829,12 +1699,11 @@ var PhotosOfUs;
             data["Photo"] = this.photo ? this.photo.toJSON() : null;
             data["PrintType"] = this.printType ? this.printType.toJSON() : null;
             return data;
-        };
-        return OrderDetail;
-    }());
+        }
+    }
     PhotosOfUs.OrderDetail = OrderDetail;
-    var PrintType = /** @class */ (function () {
-        function PrintType(data) {
+    class PrintType {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1842,7 +1711,7 @@ var PhotosOfUs;
                 }
             }
         }
-        PrintType.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.type = data["Type"] !== undefined ? data["Type"] : null;
@@ -1851,14 +1720,14 @@ var PhotosOfUs;
                 this.icon = data["Icon"] !== undefined ? data["Icon"] : null;
                 this.baseCost = data["BaseCost"] !== undefined ? data["BaseCost"] : null;
             }
-        };
-        PrintType.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new PrintType();
+            let result = new PrintType();
             result.init(data);
             return result;
-        };
-        PrintType.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Type"] = this.type !== undefined ? this.type : null;
@@ -1867,12 +1736,11 @@ var PhotosOfUs;
             data["Icon"] = this.icon !== undefined ? this.icon : null;
             data["BaseCost"] = this.baseCost !== undefined ? this.baseCost : null;
             return data;
-        };
-        return PrintType;
-    }());
+        }
+    }
     PhotosOfUs.PrintType = PrintType;
-    var PrintPrice = /** @class */ (function () {
-        function PrintPrice(data) {
+    class PrintPrice {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1880,7 +1748,7 @@ var PhotosOfUs;
                 }
             }
         }
-        PrintPrice.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.photoId = data["PhotoId"] !== undefined ? data["PhotoId"] : null;
@@ -1888,14 +1756,14 @@ var PhotosOfUs;
                 this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : null;
                 this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : null;
             }
-        };
-        PrintPrice.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new PrintPrice();
+            let result = new PrintPrice();
             result.init(data);
             return result;
-        };
-        PrintPrice.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["PhotoId"] = this.photoId !== undefined ? this.photoId : null;
@@ -1903,12 +1771,11 @@ var PhotosOfUs;
             data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : null;
             data["Photographer"] = this.photographer ? this.photographer.toJSON() : null;
             return data;
-        };
-        return PrintPrice;
-    }());
+        }
+    }
     PhotosOfUs.PrintPrice = PrintPrice;
-    var UserIdentity = /** @class */ (function () {
-        function UserIdentity(data) {
+    class UserIdentity {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1916,7 +1783,7 @@ var PhotosOfUs;
                 }
             }
         }
-        UserIdentity.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.azureID = data["AzureID"] !== undefined ? data["AzureID"] : null;
                 this.identityProvider = data["IdentityProvider"] !== undefined ? data["IdentityProvider"] : null;
@@ -1925,14 +1792,14 @@ var PhotosOfUs;
                 this.lastLoginDate = data["LastLoginDate"] ? new Date(data["LastLoginDate"].toString()) : null;
                 this.user = data["User"] ? User.fromJS(data["User"]) : null;
             }
-        };
-        UserIdentity.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new UserIdentity();
+            let result = new UserIdentity();
             result.init(data);
             return result;
-        };
-        UserIdentity.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["AzureID"] = this.azureID !== undefined ? this.azureID : null;
             data["IdentityProvider"] = this.identityProvider !== undefined ? this.identityProvider : null;
@@ -1941,12 +1808,11 @@ var PhotosOfUs;
             data["LastLoginDate"] = this.lastLoginDate ? this.lastLoginDate.toISOString() : null;
             data["User"] = this.user ? this.user.toJSON() : null;
             return data;
-        };
-        return UserIdentity;
-    }());
+        }
+    }
     PhotosOfUs.UserIdentity = UserIdentity;
-    var PhotoTag = /** @class */ (function () {
-        function PhotoTag(data) {
+    class PhotoTag {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1954,7 +1820,7 @@ var PhotosOfUs;
                 }
             }
         }
-        PhotoTag.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.photoId = data["PhotoId"] !== undefined ? data["PhotoId"] : null;
                 this.tagId = data["TagId"] !== undefined ? data["TagId"] : null;
@@ -1962,14 +1828,14 @@ var PhotosOfUs;
                 this.photo = data["Photo"] ? Photo.fromJS(data["Photo"]) : null;
                 this.tag = data["Tag"] ? Tag.fromJS(data["Tag"]) : null;
             }
-        };
-        PhotoTag.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new PhotoTag();
+            let result = new PhotoTag();
             result.init(data);
             return result;
-        };
-        PhotoTag.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["PhotoId"] = this.photoId !== undefined ? this.photoId : null;
             data["TagId"] = this.tagId !== undefined ? this.tagId : null;
@@ -1977,12 +1843,11 @@ var PhotosOfUs;
             data["Photo"] = this.photo ? this.photo.toJSON() : null;
             data["Tag"] = this.tag ? this.tag.toJSON() : null;
             return data;
-        };
-        return PhotoTag;
-    }());
+        }
+    }
     PhotosOfUs.PhotoTag = PhotoTag;
-    var Tag = /** @class */ (function () {
-        function Tag(data) {
+    class Tag {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -1990,43 +1855,38 @@ var PhotosOfUs;
                 }
             }
         }
-        Tag.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.name = data["Name"] !== undefined ? data["Name"] : null;
                 if (data["PhotoTag"] && data["PhotoTag"].constructor === Array) {
                     this.photoTag = [];
-                    for (var _i = 0, _a = data["PhotoTag"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["PhotoTag"])
                         this.photoTag.push(PhotoTag.fromJS(item));
-                    }
                 }
             }
-        };
-        Tag.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new Tag();
+            let result = new Tag();
             result.init(data);
             return result;
-        };
-        Tag.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Name"] = this.name !== undefined ? this.name : null;
             if (this.photoTag && this.photoTag.constructor === Array) {
                 data["PhotoTag"] = [];
-                for (var _i = 0, _a = this.photoTag; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photoTag)
                     data["PhotoTag"].push(item.toJSON());
-                }
             }
             return data;
-        };
-        return Tag;
-    }());
+        }
+    }
     PhotosOfUs.Tag = Tag;
-    var MarshalByRefObject = /** @class */ (function () {
-        function MarshalByRefObject(data) {
+    class MarshalByRefObject {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2034,49 +1894,46 @@ var PhotosOfUs;
                 }
             }
         }
-        MarshalByRefObject.prototype.init = function (data) {
-        };
-        MarshalByRefObject.fromJS = function (data) {
+        init(data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
             throw new Error("The abstract class 'MarshalByRefObject' cannot be instantiated.");
-        };
-        MarshalByRefObject.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             return data;
-        };
-        return MarshalByRefObject;
-    }());
-    PhotosOfUs.MarshalByRefObject = MarshalByRefObject;
-    var Stream = /** @class */ (function (_super) {
-        __extends(Stream, _super);
-        function Stream(data) {
-            return _super.call(this, data) || this;
         }
-        Stream.prototype.init = function (data) {
-            _super.prototype.init.call(this, data);
+    }
+    PhotosOfUs.MarshalByRefObject = MarshalByRefObject;
+    class Stream extends MarshalByRefObject {
+        constructor(data) {
+            super(data);
+        }
+        init(data) {
+            super.init(data);
             if (data) {
                 this.canTimeout = data["CanTimeout"] !== undefined ? data["CanTimeout"] : null;
                 this.readTimeout = data["ReadTimeout"] !== undefined ? data["ReadTimeout"] : null;
                 this.writeTimeout = data["WriteTimeout"] !== undefined ? data["WriteTimeout"] : null;
             }
-        };
-        Stream.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
             throw new Error("The abstract class 'Stream' cannot be instantiated.");
-        };
-        Stream.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["CanTimeout"] = this.canTimeout !== undefined ? this.canTimeout : null;
             data["ReadTimeout"] = this.readTimeout !== undefined ? this.readTimeout : null;
             data["WriteTimeout"] = this.writeTimeout !== undefined ? this.writeTimeout : null;
-            _super.prototype.toJSON.call(this, data);
+            super.toJSON(data);
             return data;
-        };
-        return Stream;
-    }(MarshalByRefObject));
+        }
+    }
     PhotosOfUs.Stream = Stream;
-    var PhotoViewModel = /** @class */ (function () {
-        function PhotoViewModel(data) {
+    class PhotoViewModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2084,7 +1941,7 @@ var PhotosOfUs;
                 }
             }
         }
-        PhotoViewModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : null;
@@ -2100,14 +1957,14 @@ var PhotosOfUs;
                 this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : null;
                 this.waterMarkUrl = data["WaterMarkUrl"] !== undefined ? data["WaterMarkUrl"] : null;
             }
-        };
-        PhotoViewModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new PhotoViewModel();
+            let result = new PhotoViewModel();
             result.init(data);
             return result;
-        };
-        PhotoViewModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : null;
@@ -2123,12 +1980,11 @@ var PhotosOfUs;
             data["Photographer"] = this.photographer ? this.photographer.toJSON() : null;
             data["WaterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : null;
             return data;
-        };
-        return PhotoViewModel;
-    }());
+        }
+    }
     PhotosOfUs.PhotoViewModel = PhotoViewModel;
-    var TagViewModel = /** @class */ (function () {
-        function TagViewModel(data) {
+    class TagViewModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2136,31 +1992,30 @@ var PhotosOfUs;
                 }
             }
         }
-        TagViewModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.name = data["Name"] !== undefined ? data["Name"] : null;
                 this.text = data["text"] !== undefined ? data["text"] : null;
             }
-        };
-        TagViewModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new TagViewModel();
+            let result = new TagViewModel();
             result.init(data);
             return result;
-        };
-        TagViewModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Name"] = this.name !== undefined ? this.name : null;
             data["text"] = this.text !== undefined ? this.text : null;
             return data;
-        };
-        return TagViewModel;
-    }());
+        }
+    }
     PhotosOfUs.TagViewModel = TagViewModel;
-    var BulkEditModel = /** @class */ (function () {
-        function BulkEditModel(data) {
+    class BulkEditModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2168,55 +2023,46 @@ var PhotosOfUs;
                 }
             }
         }
-        BulkEditModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 if (data["photoIds"] && data["photoIds"].constructor === Array) {
                     this.photoIds = [];
-                    for (var _i = 0, _a = data["photoIds"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["photoIds"])
                         this.photoIds.push(item);
-                    }
                 }
                 if (data["tags"] && data["tags"].constructor === Array) {
                     this.tags = [];
-                    for (var _b = 0, _c = data["tags"]; _b < _c.length; _b++) {
-                        var item = _c[_b];
+                    for (let item of data["tags"])
                         this.tags.push(TagModel.fromJS(item));
-                    }
                 }
                 this.newPrice = data["newPrice"] !== undefined ? data["newPrice"] : null;
             }
-        };
-        BulkEditModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new BulkEditModel();
+            let result = new BulkEditModel();
             result.init(data);
             return result;
-        };
-        BulkEditModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             if (this.photoIds && this.photoIds.constructor === Array) {
                 data["photoIds"] = [];
-                for (var _i = 0, _a = this.photoIds; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photoIds)
                     data["photoIds"].push(item);
-                }
             }
             if (this.tags && this.tags.constructor === Array) {
                 data["tags"] = [];
-                for (var _b = 0, _c = this.tags; _b < _c.length; _b++) {
-                    var item = _c[_b];
+                for (let item of this.tags)
                     data["tags"].push(item.toJSON());
-                }
             }
             data["newPrice"] = this.newPrice !== undefined ? this.newPrice : null;
             return data;
-        };
-        return BulkEditModel;
-    }());
+        }
+    }
     PhotosOfUs.BulkEditModel = BulkEditModel;
-    var TagModel = /** @class */ (function () {
-        function TagModel(data) {
+    class TagModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2224,29 +2070,28 @@ var PhotosOfUs;
                 }
             }
         }
-        TagModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.name = data["Name"] !== undefined ? data["Name"] : null;
             }
-        };
-        TagModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new TagModel();
+            let result = new TagModel();
             result.init(data);
             return result;
-        };
-        TagModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Name"] = this.name !== undefined ? this.name : null;
             return data;
-        };
-        return TagModel;
-    }());
+        }
+    }
     PhotosOfUs.TagModel = TagModel;
-    var FolderViewModel = /** @class */ (function () {
-        function FolderViewModel(data) {
+    class FolderViewModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2254,7 +2099,7 @@ var PhotosOfUs;
                 }
             }
         }
-        FolderViewModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : null;
@@ -2262,20 +2107,18 @@ var PhotosOfUs;
                 this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : null;
                 if (data["Photo"] && data["Photo"].constructor === Array) {
                     this.photo = [];
-                    for (var _i = 0, _a = data["Photo"]; _i < _a.length; _i++) {
-                        var item = _a[_i];
+                    for (let item of data["Photo"])
                         this.photo.push(PhotoViewModel.fromJS(item));
-                    }
                 }
             }
-        };
-        FolderViewModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new FolderViewModel();
+            let result = new FolderViewModel();
             result.init(data);
             return result;
-        };
-        FolderViewModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : null;
@@ -2283,18 +2126,15 @@ var PhotosOfUs;
             data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : null;
             if (this.photo && this.photo.constructor === Array) {
                 data["Photo"] = [];
-                for (var _i = 0, _a = this.photo; _i < _a.length; _i++) {
-                    var item = _a[_i];
+                for (let item of this.photo)
                     data["Photo"].push(item.toJSON());
-                }
             }
             return data;
-        };
-        return FolderViewModel;
-    }());
+        }
+    }
     PhotosOfUs.FolderViewModel = FolderViewModel;
-    var FolderRenameViewModel = /** @class */ (function () {
-        function FolderRenameViewModel(data) {
+    class FolderRenameViewModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2302,31 +2142,30 @@ var PhotosOfUs;
                 }
             }
         }
-        FolderRenameViewModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.newName = data["NewName"] !== undefined ? data["NewName"] : null;
                 this.userId = data["UserId"] !== undefined ? data["UserId"] : null;
             }
-        };
-        FolderRenameViewModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new FolderRenameViewModel();
+            let result = new FolderRenameViewModel();
             result.init(data);
             return result;
-        };
-        FolderRenameViewModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["NewName"] = this.newName !== undefined ? this.newName : null;
             data["UserId"] = this.userId !== undefined ? this.userId : null;
             return data;
-        };
-        return FolderRenameViewModel;
-    }());
+        }
+    }
     PhotosOfUs.FolderRenameViewModel = FolderRenameViewModel;
-    var UserViewModel = /** @class */ (function () {
-        function UserViewModel(data) {
+    class UserViewModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2334,7 +2173,7 @@ var PhotosOfUs;
                 }
             }
         }
-        UserViewModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.email = data["Email"] !== undefined ? data["Email"] : null;
@@ -2354,14 +2193,14 @@ var PhotosOfUs;
                 this.dashboardTour = data["DashboardTour"] !== undefined ? data["DashboardTour"] : null;
                 this.photoTour = data["PhotoTour"] !== undefined ? data["PhotoTour"] : null;
             }
-        };
-        UserViewModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new UserViewModel();
+            let result = new UserViewModel();
             result.init(data);
             return result;
-        };
-        UserViewModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Email"] = this.email !== undefined ? this.email : null;
@@ -2381,12 +2220,11 @@ var PhotosOfUs;
             data["DashboardTour"] = this.dashboardTour !== undefined ? this.dashboardTour : null;
             data["PhotoTour"] = this.photoTour !== undefined ? this.photoTour : null;
             return data;
-        };
-        return UserViewModel;
-    }());
+        }
+    }
     PhotosOfUs.UserViewModel = UserViewModel;
-    var UserProfileUpdateCommandModel = /** @class */ (function () {
-        function UserProfileUpdateCommandModel(data) {
+    class UserProfileUpdateCommandModel {
+        constructor(data) {
             if (data) {
                 for (var property in data) {
                     if (data.hasOwnProperty(property))
@@ -2394,7 +2232,7 @@ var PhotosOfUs;
                 }
             }
         }
-        UserProfileUpdateCommandModel.prototype.init = function (data) {
+        init(data) {
             if (data) {
                 this.id = data["Id"] !== undefined ? data["Id"] : null;
                 this.email = data["Email"] !== undefined ? data["Email"] : null;
@@ -2410,14 +2248,14 @@ var PhotosOfUs;
                 this.dribbble = data["Dribbble"] !== undefined ? data["Dribbble"] : null;
                 this.isDeactivated = data["IsDeactivated"] !== undefined ? data["IsDeactivated"] : null;
             }
-        };
-        UserProfileUpdateCommandModel.fromJS = function (data) {
+        }
+        static fromJS(data) {
             data = typeof data === 'object' ? data : {};
-            var result = new UserProfileUpdateCommandModel();
+            let result = new UserProfileUpdateCommandModel();
             result.init(data);
             return result;
-        };
-        UserProfileUpdateCommandModel.prototype.toJSON = function (data) {
+        }
+        toJSON(data) {
             data = typeof data === 'object' ? data : {};
             data["Id"] = this.id !== undefined ? this.id : null;
             data["Email"] = this.email !== undefined ? this.email : null;
@@ -2433,27 +2271,23 @@ var PhotosOfUs;
             data["Dribbble"] = this.dribbble !== undefined ? this.dribbble : null;
             data["IsDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : null;
             return data;
-        };
-        return UserProfileUpdateCommandModel;
-    }());
-    PhotosOfUs.UserProfileUpdateCommandModel = UserProfileUpdateCommandModel;
-    var SwaggerException = /** @class */ (function (_super) {
-        __extends(SwaggerException, _super);
-        function SwaggerException(message, status, response, headers, result) {
-            var _this = _super.call(this) || this;
-            _this.isSwaggerException = true;
-            _this.message = message;
-            _this.status = status;
-            _this.response = response;
-            _this.headers = headers;
-            _this.result = result;
-            return _this;
         }
-        SwaggerException.isSwaggerException = function (obj) {
+    }
+    PhotosOfUs.UserProfileUpdateCommandModel = UserProfileUpdateCommandModel;
+    class SwaggerException extends Error {
+        constructor(message, status, response, headers, result) {
+            super();
+            this.isSwaggerException = true;
+            this.message = message;
+            this.status = status;
+            this.response = response;
+            this.headers = headers;
+            this.result = result;
+        }
+        static isSwaggerException(obj) {
             return obj.isSwaggerException === true;
-        };
-        return SwaggerException;
-    }(Error));
+        }
+    }
     PhotosOfUs.SwaggerException = SwaggerException;
     function throwException(q, message, status, response, headers, result) {
         if (result !== null && result !== undefined)
@@ -2462,9 +2296,9 @@ var PhotosOfUs;
             return q.reject(new SwaggerException(message, status, response, headers, null));
     }
     function blobToText(blob, q) {
-        return new q(function (resolve) {
-            var reader = new FileReader();
-            reader.onload = function (event) { return resolve(event.target.result); };
+        return new q((resolve) => {
+            let reader = new FileReader();
+            reader.onload = event => resolve(event.target.result);
             reader.readAsText(blob);
         });
     }

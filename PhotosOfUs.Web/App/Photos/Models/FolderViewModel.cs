@@ -14,11 +14,4 @@ namespace PhotosOfUs.Model.ViewModels
 
         public List<PhotoViewModel> Photo { get; set; }
     }
-
-    public class FolderRenameViewModel
-    {
-        public int Id { get; set; }
-        public string NewName { get; set; }
-        public int UserId { get; set; }
-    }
 }

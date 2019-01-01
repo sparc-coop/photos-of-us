@@ -20,7 +20,7 @@
     $scope.newFolderModal = () => {
         $mdDialog.show({
             templateUrl: '/Events/Admin/Modals/NewFolderModal',
-            controller: 'FolderModalCtrl',
+            controller: 'NewFolderModalCtrl',
             locals: { folderId: null, folderName: null, user: $scope.user},
             clickOutsideToClose: true,
         })
@@ -29,7 +29,7 @@
     $scope.renameFolderModal = (folder) => {
         $mdDialog.show({
             templateUrl: '/Events/Admin/Modals/NewFolderModal',
-            controller: 'FolderModalCtrl',
+            controller: 'NewFolderModalCtrl',
             locals: { folderId: folder.Id, folderName: folder.Name, user: $scope.user },
             clickOutsideToClose: true,
         })
@@ -225,7 +225,7 @@
             $scope.newFolderModal = () => {
                 $mdDialog.show({
                     templateUrl: '/Events/Admin/Modals/NewFolderModal',
-                    controller: 'FolderModalCtrl',
+                    controller: 'NewFolderModalCtrl',
                     locals: { folderId: null, folderName: null, user: $scope.user },
                     clickOutsideToClose: true,
                 });

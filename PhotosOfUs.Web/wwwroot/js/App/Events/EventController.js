@@ -1,12 +1,12 @@
 var PhotosOfUs;
 (function (PhotosOfUs) {
     angular.module('app').controller('EventCtrl', ['$scope', '$location', '$mdDialog', 'Socialshare', 'UserApiClient', 'EventApiClient',
-        function ($scope, $location, $mdDialog, Socialshare, UserApiClient, EventApiClient) {
-            $scope.getUserTour = function () {
+        ($scope, $location, $mdDialog, Socialshare, UserApiClient, EventApiClient) => {
+            $scope.getUserTour = () => {
                 UserApiClient.get()
-                    .then(function (user) {
+                    .then(user => {
                     if (user.photoTour == null) {
-                        var tour = new Shepherd.Tour({
+                        const tour = new Shepherd.Tour({
                             defaultStepOptions: {
                                 classes: 'shepherd-theme-arrows'
                             }
@@ -21,7 +21,7 @@ var PhotosOfUs;
                     }
                 });
             };
-            $scope.openUpload = function (eventId) {
+            $scope.openUpload = (eventId) => {
                 $mdDialog.show({
                     templateUrl: '/Events/Admin/Modals/UploadModal',
                     controller: 'UploadController',
@@ -29,12 +29,12 @@ var PhotosOfUs;
                     clickOutsideToClose: true
                 });
             };
-            $scope.openPhotosEdit = function (eventId, code) {
+            $scope.openPhotosEdit = (eventId, code) => {
                 $scope.selectedPhotos = [];
                 EventApiClient.getCodePhotos(eventId, code)
-                    .then(function (x) {
+                    .then(x => {
                     $scope.codePhotos = x;
-                    angular.forEach($scope.codePhotos, function (item) { return $scope.selectedPhotos.push(item.Id); });
+                    angular.forEach($scope.codePhotos, item => $scope.selectedPhotos.push(item.Id));
                     $mdDialog.show({
                         locals: { selectedPhotos: $scope.selectedPhotos },
                         templateUrl: '/Events/Admin/Modals/BulkEditModal',
@@ -43,24 +43,24 @@ var PhotosOfUs;
                     });
                 });
             };
-            $scope.openBulkEdit = function (folder) {
+            $scope.openBulkEdit = (folder) => {
                 $mdDialog.show({
                     templateUrl: '/Events/Admin/Modals/BulkEditModal',
                     controller: 'BulkEditController',
-                    locals: { folder: folder },
+                    locals: { folder },
                     clickOutsideToClose: true
                 });
             };
-            $scope.openPhotoEdit = function (folder) {
+            $scope.openPhotoEdit = (folder) => {
                 $mdDialog.show({
                     templateUrl: '/Events/Admin/Modals/PhotoEditModal',
                     controller: 'BulkEditController',
-                    locals: { folder: folder },
+                    locals: { folder },
                     clickOutsideToClose: true
                 });
             };
-            $scope.share = function (provider, photoUrl) {
-                var url = $location.absUrl().split('?')[0];
+            $scope.share = (provider, photoUrl) => {
+                const url = $location.absUrl().split('?')[0];
                 Socialshare.share({
                     'provider': provider,
                     'attrs': {

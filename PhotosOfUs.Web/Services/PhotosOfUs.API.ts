@@ -617,14 +617,11 @@ export class FolderApiClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    post(name: string | null, userId: number): ng.IPromise<FolderViewModel | null> {
-        let url_ = this.baseUrl + "/api/Folder/{name}/{userId}";
+    post(name: string | null): ng.IPromise<FolderViewModel | null> {
+        let url_ = this.baseUrl + "/api/Folder/{name}";
         if (name === undefined || name === null)
             throw new Error("The parameter 'name' must be defined.");
         url_ = url_.replace("{name}", encodeURIComponent("" + name)); 
-        if (userId === undefined || userId === null)
-            throw new Error("The parameter 'userId' must be defined.");
-        url_ = url_.replace("{userId}", encodeURIComponent("" + userId)); 
         url_ = url_.replace(/[?&]$/, "");
 
         var options_ = <ng.IRequestConfig>{
@@ -662,19 +659,21 @@ export class FolderApiClient {
         return this.q.resolve<FolderViewModel | null>(<any>null);
     }
 
-    put(model: FolderRenameViewModel): ng.IPromise<FolderViewModel | null> {
-        let url_ = this.baseUrl + "/api/Folder/RenameFolder";
+    put(id: number | undefined, newName: string | null | undefined): ng.IPromise<FolderViewModel | null> {
+        let url_ = this.baseUrl + "/api/Folder/RenameFolder?";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&"; 
+        if (newName !== undefined)
+            url_ += "newName=" + encodeURIComponent("" + newName) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(model);
 
         var options_ = <ng.IRequestConfig>{
             url: url_,
             method: "POST",
-            data: content_,
             transformResponse: [], 
             headers: {
-                "Content-Type": "application/json", 
                 "Accept": "application/json"
             }
         };
@@ -2783,50 +2782,6 @@ export interface IFolderViewModel {
     name?: string | null;
     createdDate: Date;
     photo?: PhotoViewModel[] | null;
-}
-
-export class FolderRenameViewModel implements IFolderRenameViewModel {
-    id!: number;
-    newName?: string | null;
-    userId!: number;
-
-    constructor(data?: IFolderRenameViewModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(data?: any) {
-        if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.newName = data["NewName"] !== undefined ? data["NewName"] : <any>null;
-            this.userId = data["UserId"] !== undefined ? data["UserId"] : <any>null;
-        }
-    }
-
-    static fromJS(data: any): FolderRenameViewModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new FolderRenameViewModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["NewName"] = this.newName !== undefined ? this.newName : <any>null;
-        data["UserId"] = this.userId !== undefined ? this.userId : <any>null;
-        return data; 
-    }
-}
-
-export interface IFolderRenameViewModel {
-    id: number;
-    newName?: string | null;
-    userId: number;
 }
 
 export class UserViewModel implements IUserViewModel {
