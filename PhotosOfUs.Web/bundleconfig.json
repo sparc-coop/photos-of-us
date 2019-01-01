@@ -33,30 +33,5 @@
       "node_modules/ng-tags-input/build/ng-tags-input.min.css",
       "node_modules/sweetalert2/dist/sweetalert2.min.css"
     ]
-  },
-  {
-    "outputFileName": "wwwroot/js/PoU-bundle.js",
-    "inputFiles": [
-      "wwwroot/js/Startup.js",
-      "wwwroot/js/API.js",
-      "wwwroot/js/controllers/BulkEditModalController.js",
-      "wwwroot/js/controllers/CheckoutController.js",
-      "wwwroot/js/controllers/DownloadController.js",
-      "wwwroot/js/controllers/FolderController.js",
-      "wwwroot/js/controllers/FolderRenameModalController.js",
-      "wwwroot/js/controllers/ModalController.js",
-      "wwwroot/js/controllers/PaymentController.js",
-      "wwwroot/js/App/Events/EventController.js",
-      "wwwroot/js/controllers/UploadController.js",
-      "wwwroot/js/controllers/CardController.js",
-      "wwwroot/js/controllers/PhotographerController.js",
-      "wwwroot/js/controllers/UploadPhotographerProfileController.js",
-      "wwwroot/js/controllers/PhotographerAccountController.js",
-      "wwwroot/js/controllers/CardController.js",
-      "wwwroot/js/controllers/SalesHistoryController.js",
-      "wwwroot/js/controllers/PhotoTagsController.js",
-      "wwwroot/js/controllers/UploadProfileImageController.js",
-      "wwwroot/js/App/Photos/RandomPhotoController.js"
-    ]
   }
 ]

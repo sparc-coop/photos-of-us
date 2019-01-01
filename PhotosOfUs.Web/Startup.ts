@@ -6,8 +6,7 @@
         '720kb.socialshare',
         'ui.bootstrap',
         'ngTagsInput',
-        'angular.filter',
-        'PhotosOfUs.API'
+        'angular.filter'
     ]);
 
     angular.module('app').filter('startFrom', () => {

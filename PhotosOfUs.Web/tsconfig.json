@@ -4,6 +4,11 @@
         "target": "es6",
         "module": "none",
         "sourceMap": true,
-        "outDir": "wwwroot/js"
-    }
+        "outFile": "wwwroot/js/PhotosOfUs.App.js",
+    },
+    "include": [
+        "Services/*",
+        "Startup.ts",
+        "App/**/*"
+    ]
 }

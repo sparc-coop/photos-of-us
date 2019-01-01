@@ -11,8 +11,8 @@
 
             $scope.uploadProfileImage = () => {
                 $mdDialog.show({
-                    templateUrl: '/Photographer/UploadProfileImage',
-                    controller: 'UploadProfileImageCtrl',
+                    templateUrl: '/Photographer/Modals/UploadProfileImageModal',
+                    controller: 'UploadProfileImageModalCtrl',
                     clickOutsideToClose: true,
                 });
             };

@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 PoU-bundle.*
+PhotosOfUs.Web/wwwroot/js
 
 # Visual Studio 2015 cache/options directory
 .vs/
