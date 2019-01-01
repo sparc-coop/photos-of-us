@@ -6,7 +6,7 @@
     Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
-<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getPwintyCatalog(); priceModal();">
+<div class="purchase" ng-controller="CheckoutCtrl" ng-init="getPwintyCatalog()">
     <h1 class="header-large">Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
@@ -45,33 +45,37 @@
         <div ng-click="showPriceModal()" class="price__info">Price Breakdown</div>
         <div class="purchase__options--container">
             <div class="purchase__options--row">
-                <div class="select"><md-checkbox aria-label="Select" ng-click="selectAllPrintTypes()"></md-checkbox></div>
+                <div class="select"></div>
                 @*<div class="icon"></div>*@
                 <div class="type">Type</div>
                 <div class="height">Height</div>
                 <div class="length">Length</div>
-                <div class="quantity">QTY</div>
+                <div class="quantity">Qty.</div>
                 <div class="price">Price</div>
             </div>
             <div class="purchase__options--row" ng-repeat="print in standardProducts.items" ng-show="print.itemType == 'Print' && printQuality == 'Standard'">
-                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.name, print.Quantity, print.price)" ng-checked="isSelected(print.name)"></md-checkbox></div>
+                <div class="select"><md-checkbox aria-label="Select" ng-click="select(@Model.Photo.Id, print.name, print.Quantity, @Model.Photo.Price)" ng-checked="isSelected(print.name)"></md-checkbox></div>
                 <div class="type">{{print.itemType}}</div>
                 <div class="height">{{print.fullProductVerticalSize}}in</div>
                 <div class="length">{{print.fullProductHorizontalSize}}in</div>
                 <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
-                <div class="price"><strong>${{'@Model.Photo.Price' ? (print.price / 100) + '@Model.Photo.Price' : (print.price / 100) | number: 2}}</strong></div>
+                <div class="price"><strong>@string.Format("{0:C}", Model.Photo.Price)</strong></div>
             </div>
 
             <div class="purchase__options--row" ng-repeat="print in proProducts.items" ng-show="print.itemType == 'Print' && printQuality == 'Pro'">
-                <div class="select"><md-checkbox aria-label="Select" ng-click="select(print.name, print.Quantity, print.price)" ng-checked="isSelected(print.name)"></md-checkbox></div>
+                <div class="select">
+                    <md-checkbox aria-label="Select" ng-click="select(@Model.Photo.Id, print.name, print.Quantity, @Model.Photo.Price)" ng-checked="isSelected(print.name)"></md-checkbox>
+                </div>
                 <div class="type">{{print.itemType}}</div>
                 <div class="height">{{print.fullProductVerticalSize}}in</div>
                 <div class="length">{{print.fullProductHorizontalSize}}in</div>
                 <div class="quantity"><input ng-model="print.Quantity" placeholder="1" /></div>
-                <div class="price"><strong>${{'@Model.Photo.Price' ? (print.price / 100) + '@Model.Photo.Price' : (print.price / 100) | number: 2}}</strong></div>
+                <div class="price"><strong>@string.Format("{0:C}", Model.Photo.Price)</strong></div>
             </div>
         </div>
-        <div class="button--yellow button--yellow--large" ng-click="createPwintyOrder()" style="margin-top: 50px"><img src="~/images/icons/cart-red.png" /> Add Selected To Cart</div>
+        <div class="button--yellow button--yellow--large" ng-click="addToCart()" style="margin-top: 50px">
+            <img src="~/images/icons/cart-red.png" /> Add Selected To Cart
+        </div>
     </div>
 </div>
 

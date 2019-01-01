@@ -1,0 +1,38 @@
+<div class="img-cart">
+    <img src="~/images/icons/cart-yellow.png" ng-click="toggleCart()" alt="cart" />
+    <div ng-if="showCart == true">
+        <div class="cart--preview" id="cart--preview">
+            <div class="cart--preview__content">
+                <div class="cart--preview--arrow"></div>
+                <div>
+                    <div class="heading">
+                        <span class="item">Items</span>
+                        <span class="price">Price</span>
+                    </div>
+                    <div class="cart--preview__items">
+                        <div ng-repeat="item in cart" class="cart--preview__item">
+                            <div class="type">
+                                {{item.PrintType.Name}}
+                            </div>
+                            <div class="quantity">
+                                x{{item.Quantity}}
+                            </div>
+                            <div class="price">
+                                ${{item.UnitPrice | number:2}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total">
+                        <span class="label">Cart Total</span>
+                        <span class="amount">${{calculatedTotal()}}</span>
+                    </div>
+                </div>
+                <div ng-if="!cart || !cart.length" class="heading">No items in cart.</div>
+                <a class="button--checkout--preview" asp-page="/Orders/Cart">
+                    <img src="~/images/icons/cart-red.png" />
+                    Checkout
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
