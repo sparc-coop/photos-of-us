@@ -77,30 +77,6 @@
             });
         };
 
-        $scope.createMooOrder = () => {
-            const data = {
-                'product': 'businesscard',
-                'pack': {
-                    'numCards': 50,
-                    'productCode': 'businesscard',
-                    'productVersion': 1,
-                    'sides': [
-                    ]
-                }
-            };
-            $http.post({
-                method: 'moo.pack.createPack',
-                url: 'https://www.moo.com/api/service/',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                data: data
-            }).then(x => {
-                $scope.orderId = x.data;
-            });
-        };
-
         $scope.printQuality = 'Standard';
 
         // Pwinty API documentation https://www.pwinty.com/api/2.6/
