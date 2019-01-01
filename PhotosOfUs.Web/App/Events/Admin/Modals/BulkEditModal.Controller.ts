@@ -19,7 +19,7 @@
             }
 
             const photoIds = photos.map(x => x.id);
-            EventApiClient.bulkEditSave(photos[0].eventId, photoIds, new BulkEditModel({ }))
+            EventApiClient.bulkEditSave(photos[0].eventId, photoIds, new BulkEditModel({ photoIds, tags, newPrice: price }))
                 .then(() => $window.location.reload());
         };
 

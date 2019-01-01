@@ -29,7 +29,7 @@ namespace PhotosOfUs {
         $scope.openUpload = (eventId: number) => {
             $mdDialog.show({
                 templateUrl: '/Events/Admin/Modals/UploadModal',
-                controller: 'UploadController',
+                controller: 'UploadModalCtrl',
                 locals: { eventId: eventId },
                 clickOutsideToClose: true
             });
