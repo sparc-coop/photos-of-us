@@ -2,7 +2,7 @@ namespace PhotosOfUs {
     angular.module('app').directive('cartMini', () => {
         return {
             restrict: 'E',
-            templateUrl: 'CartMini.html',
+            templateUrl: '/Orders/CartMini',
             controller: ['$scope', '$rootScope', ($scope, $rootScope) => {
                 $scope.showCart = false;
 

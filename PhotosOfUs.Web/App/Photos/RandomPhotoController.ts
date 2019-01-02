@@ -8,9 +8,9 @@
 
         // let area = document.getElementsByClassName("main-landing")[0];
         $scope.getRandomPosition = () => {
-            //console.log(element);
-            //const x = 800 - element.clientHeight;
-            //const y = document.body.offsetWidth - element.clientWidth;
+            // console.log(element);
+            // const x = 800 - element.clientHeight;
+            // const y = document.body.offsetWidth - element.clientWidth;
             // var randomX = Math.floor(Math.random() * x);
             // var randomY = Math.floor(Math.random() * y);
             return [getRandomInt(0, 80) + '%', getRandomInt(0, 80) + '%'];

@@ -8,7 +8,7 @@
 </head>
 <body>
     <div ng-cloak>        
-        <vc:nav></vc:nav>
+        @await Component.InvokeAsync("Nav")
     </div>
 
     @RenderSection("ProfileImageBackdrop", false)

@@ -10,7 +10,6 @@ namespace PhotosOfUs
     public class NavViewComponent : ViewComponent
     {
         private readonly IRepository<User> _users;
-        public User CurrentUser { get; set; }
 
         public NavViewComponent(IRepository<User> users)
         {
@@ -22,7 +21,7 @@ namespace PhotosOfUs
             User currentUser = null;
             var user = User as ClaimsPrincipal;
             if (user != null)
-                CurrentUser = _users.Find(x => x.Id == user.ID());
+                currentUser = _users.Find(x => x.Id == user.ID());
 
             return View(currentUser);
         }
