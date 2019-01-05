@@ -9,7 +9,7 @@
     <div class="yellow-background line--small"></div>
     @*<a href="@Url.Action("ExportCard","Photographer")" class="btn btn-pou-default">Export new cards</a>*@
     <hr />
-    <div class="flex-box filters">
+    @*<div class="flex-box filters">
         <input class="input--light-blue searchbox" placeholder="Search Library" ng-model="searchFolder" />
 
         <div class="view-icons align-right">
@@ -20,15 +20,15 @@
                 </select>
             </div>
 
-            @*<i class="material-icons">view_list</i>
-                <i class="material-icons selected">apps</i>*@
+                <i class="material-icons">view_list</i>
+                <i class="material-icons selected">apps</i>
         </div>
-    </div>
+    </div>*@
     <div class="folder-card--wrapper flex-box" ng-cloak>
-        <div class="folder-new" id="step1" ng-click="newFolderModal()">
-            <img src="~/images/icons/folder.png" id="step1" />
-            <div class="label">New Folder</div>
-        </div>
+        <a class="folder-new" id="step1" asp-page="./Settings">
+            <img src="~/images/icons/event icon.png" id="step1" />
+            <div class="label">Create New Event</div>
+        </a>
         <div class="folder-card flex-box" ng-repeat="folder in folders | orderBy: orderByOption | filter: searchFolder">
             <a class="full-width-anchor" href="/Photographer/Photos/{{folder.Id}}"></a>
             <div class="header flex-box">

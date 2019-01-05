@@ -42,9 +42,11 @@
         position: absolute;
         right: 46px;
         margin-top: -5px;
+        display: flex;
+        align-items: center;
 
         img {
-            padding: 5px 10px 10px 10px;
+            padding: 0 10px;
             outline: none;
             cursor: pointer;
             vertical-align: middle;
@@ -82,7 +84,7 @@
             border: 2px solid $yellow;
             background-color: $dark;
             display: inline-block;
-            margin-top: 4px;
+            margin-top: 0px;
         }
 
         .menu-item.active {

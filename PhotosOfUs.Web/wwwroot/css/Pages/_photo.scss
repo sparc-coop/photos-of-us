@@ -351,16 +351,17 @@
     .folder-new {
         border: 2px dashed $primary;
         border-radius: 8px;
-        width: 243px;
-        height: 237px;
+        box-sizing: border-box;
+        width: 330px;
+        height: 295px;
         margin: 0 10px;
+        padding: 80px;
         text-align: center;
         cursor: pointer;
         outline: none;
 
         img {
-            margin: 0 auto;
-            padding: 57px 0 20px 0;
+            margin: 0 auto 20px;
             width: unset !important;
         }
 

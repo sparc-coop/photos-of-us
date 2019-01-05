@@ -700,6 +700,11 @@ body > div.container.body-content hr {
   }
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -1588,10 +1593,16 @@ body > div.container.body-content hr {
   position: absolute;
   right: 46px;
   margin-top: -5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .nav--right img {
-  padding: 5px 10px 10px 10px;
+  padding: 0 10px;
   outline: none;
   cursor: pointer;
   vertical-align: middle;
@@ -1628,7 +1639,7 @@ body > div.container.body-content hr {
   border: 2px solid #FFE261;
   background-color: #194952;
   display: inline-block;
-  margin-top: 4px;
+  margin-top: 0px;
 }
 
 .nav--right .menu-item.active {
@@ -3370,17 +3381,19 @@ canvas {
 .photographer-dashboard--wrapper .folder-new {
   border: 2px dashed #43C6BA;
   border-radius: 8px;
-  width: 243px;
-  height: 237px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 330px;
+  height: 295px;
   margin: 0 10px;
+  padding: 80px;
   text-align: center;
   cursor: pointer;
   outline: none;
 }
 
 .photographer-dashboard--wrapper .folder-new img {
-  margin: 0 auto;
-  padding: 57px 0 20px 0;
+  margin: 0 auto 20px;
   width: unset !important;
 }
 

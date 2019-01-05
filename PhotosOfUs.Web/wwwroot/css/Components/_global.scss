@@ -25,6 +25,11 @@ body {
     }
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
