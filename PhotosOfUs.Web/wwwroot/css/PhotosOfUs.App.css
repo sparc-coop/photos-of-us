@@ -1475,10 +1475,21 @@ form label {
   font-size: 10px;
   color: #757575;
   display: block;
+  position: relative;
+}
+
+form label .fixed-placeholder {
+  position: absolute;
+  top: 30px;
+  left: 16px;
+  font: 400 14px/19px "Open Sans";
+  color: #757575;
 }
 
 form input, form .form-input textarea, .form-input form textarea, form textarea {
   display: block;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   margin-top: 8px;
   margin-bottom: 16px;
   width: 100%;
@@ -5651,7 +5662,7 @@ tags-input .tag-item {
 .event-settings .right {
   position: fixed;
   top: 250px;
-  right: 30px;
+  right: 60px;
 }
 
 .event-settings .right figure {
@@ -5660,10 +5671,71 @@ tags-input .tag-item {
   border-radius: 4px;
   height: 311px;
   width: 40vw;
+  margin: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 13%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.event-settings .right figure h1 {
+  font: 600 16px/20px Dosis;
+}
+
+.event-settings .right figure hr {
+  width: 50px;
+  margin: 8px 0;
+}
+
+.event-settings .right figure p {
+  font: 500 8px/19px "Open Sans";
+  color: #000;
+}
+
+.event-settings .right figure div {
+  font-size: 2px;
+}
+
+.event-settings .right figure input, .event-settings .right figure .form-input textarea, .form-input .event-settings .right figure textarea, .event-settings .right figure button {
+  line-height: 15px;
+  display: inline;
+}
+
+.event-settings .right figure input, .event-settings .right figure .form-input textarea, .form-input .event-settings .right figure textarea {
+  width: 76px;
+  font-size: 6px;
+  padding: 0 5px 0 8px;
+  border-radius: 3px 0 0 3px;
+}
+
+.event-settings .right figure button {
+  background-color: black;
+  outline: none;
+  color: white;
+  font-size: 8px;
+  line-height: 15px;
+  border: none;
+  border-radius: 0 3px 3px 0;
 }
 
 .event-settings section {
   margin-bottom: 120px;
+}
+
+.event-settings input.url, .event-settings .form-input textarea.url, .form-input .event-settings textarea.url {
+  padding-left: 140px;
 }
 
 .event-settings img.selected {

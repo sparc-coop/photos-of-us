@@ -6,7 +6,7 @@
     .right {
         position: fixed;
         top: 250px;
-        right: 30px;
+        right: 60px;
 
         figure {
             background-color: #f6ffff;
@@ -14,11 +14,55 @@
             border-radius: 4px;
             height: 311px;
             width: 40vw;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 13%;
+            box-sizing: border-box;
+            align-items: center;
+            h1 {
+                font: 600 16px/20px Dosis;
+            }
+            hr {
+                width: 50px;
+                margin: 8px 0;
+            }
+            p {
+                font: 500 8px/19px "Open Sans";
+                color: #000;
+            }
+            div {
+                font-size: 2px;
+            }
+            input, button {
+                line-height: 15px;
+                display: inline;
+            }
+            input {
+                width: 76px;
+                font-size: 6px;
+                padding: 0 5px 0 8px;
+                border-radius: 3px 0 0 3px;
+            }
+            button {
+                background-color: black;
+                outline: none;
+                color: white;
+                font-size: 8px;
+                line-height: 15px;
+                border: none;
+                border-radius: 0 3px 3px 0; 
+            }
         }
     }
 
     section {
         margin-bottom: 120px;
+    }
+
+    input.url {
+        padding-left: 140px;
     }
 
     img.selected {

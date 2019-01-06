@@ -6,10 +6,19 @@ form {
         font-size: 10px;
         color: $text-gray;
         display: block;
+        position: relative;
+        .fixed-placeholder {
+            position: absolute;
+            top: 30px;
+            left: 16px;
+            font: 400 14px/19px "Open Sans";
+            color: #757575;
+        }
     }
 
     input, textarea {
         display: block;
+        box-sizing: border-box;
         margin-top: 8px;
         margin-bottom: 16px;
         width: 100%;

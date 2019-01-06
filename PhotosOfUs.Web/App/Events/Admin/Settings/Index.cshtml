@@ -4,46 +4,47 @@
     ViewData["Title"] = "Event Settings";
 }
 
-<div class="event-settings">
+<div class="event-settings" ng-cloak>
+    <form>
     <div class="left">
     <h1>Create New Event</h1>
     <hr />
 
-    <form>
         <section>
             <h3>Event Information</h3>
             <label>
                 Event Name
-                <input asp-for="Event.Name" />
+                <input asp-for="Event.Name" ng-model="settings.name" />
             </label>
             <label>
                 Event URL
-                <input asp-for="Event.Url" />
+                <input asp-for="Event.Url" class="url" />
+                <span class="fixed-placeholder">www.photosof.us/</span>
             </label>
             <label>
                 Event Description
-                <textarea asp-for="Event.Description" rows="3"></textarea>
+                <textarea asp-for="Event.Description" ng-model="settings.description" rows="3"></textarea>
             </label>
         </section>
         <h3>Event Site &amp; Card Settings</h3>
         <h4>Homepage Template</h4>
         <div class="homepage-template">
             <div class="item">
-                <img src="~/images/image_right.png" ng-click="brandSettings.HomepageTemplate = 0" ng-style="brandSettings.HomepageTemplate == 0 ? 'selected' : ''" />
+                <img src="~/images/image_right.png" ng-click="settings.homepageTemplate = 0" ng-style="settings.homepageTemplate == 0 ? 'selected' : ''" />
                 <h3 class="header xs yellow">2/1 Split - Image Right</h3>
                 <p>
                     A side by side layout, with a full hieght image on the right, information and branding on the left.
                 </p>
             </div>
             <div class="item">
-                <img src="~/images/image_left.jpg" ng-click="brandSettings.HomepageTemplate = 1" ng-style="brandSettings.HomepageTemplate == 1 ? 'selected' : ''" />
+                <img src="~/images/image_left.jpg" ng-click="settings.homepageTemplate = 1" ng-style="settings.homepageTemplate == 1 ? 'selected' : ''" />
                 <h3 class="header xs yellow">1/2 Split - Image Left</h3>
                 <p>
                     A side by side layout, with a full hieght image on the right, information and branding on the left.
                 </p>
             </div>
             <div class="item">
-                <img src="~/images/full_image.png" ng-click="brandSettings.HomepageTemplate = 2" ng-style="brandSettings.HomepageTemplate == 2 ? 'selected' : ''" />
+                <img src="~/images/full_image.png" ng-click="settings.homepageTemplate = 2" ng-style="settings.homepageTemplate == 2 ? 'selected' : ''" />
                 <h3 class="header xs yellow">Full Image Background</h3>
                 <p>
                     A large, full screen image background, with all information centered within the page.
@@ -90,9 +91,9 @@
                         </span>
 
                         <div class="color-picker">
-                            @*<div class="color" ng-style="{ 'background-color: #' + brandSettings.BackgroundColorCode}"></div>*@
+                            @*<div class="color" ng-style="{ 'background-color: #' + settings.BackgroundColorCode}"></div>*@
                             <div class="text">
-                                <input ng-model="brandSettings.BackgroundColorCode" />
+                                <input ng-model="settings.BackgroundColorCode" />
                             </div>
                         </div>
                     </div>
@@ -105,7 +106,7 @@
                         <div class="color-picker">
                             <div class="color"></div>
                             <div class="text">
-                                <input ng-model="brandSettings.AccentColorCode" />
+                                <input ng-model="settings.AccentColorCode" />
                             </div>
                         </div>
                     </div>
@@ -118,7 +119,7 @@
                         <div class="color-picker">
                             <div class="color"></div>
                             <div class="text">
-                                <input ng-model="brandSettings.HeaderColorCode" />
+                                <input ng-model="settings.HeaderColorCode" />
                             </div>
                         </div>
                     </div>
@@ -131,7 +132,7 @@
                         <div class="color-picker">
                             <div class="color"></div>
                             <div class="text">
-                                <input ng-model="brandSettings.BodyColorCode" />
+                                <input ng-model="settings.BodyColorCode" />
                             </div>
                         </div>
                     </div>
@@ -209,13 +210,13 @@
                     Page Title
                 </h4>
 
-                <input class="input" ng-model="brandSettings.PageTitle" />
+                <input class="input" ng-model="settings.PageTitle" />
 
                 <h4>
                     Description
                 </h4>
 
-                <textarea class="input" ng-model="brandSettings.Description"> </textarea>
+                <textarea class="input" ng-model="settings.Description"> </textarea>
 
             </div>
 
@@ -238,7 +239,7 @@
                             Separator Style
                         </h4>
 
-                        <select ng-model="brandSettings.SeparatorStyle">
+                        <select ng-model="settings.SeparatorStyle">
                             <option value="0">Straight Line ----------</option>
                             <option value="1">Dotted Line ...........</option>
                         </select>
@@ -249,7 +250,7 @@
                             Thickness
                         </h4>
 
-                        <input type="number" class="input" ng-model="brandSettings.SeparatorThickness" />
+                        <input type="number" class="input" ng-model="settings.SeparatorThickness" />
                     </div>
 
                     <div>
@@ -257,7 +258,7 @@
                             Width
                         </h4>
 
-                        <input type="number" class="input" ng-model="brandSettings.SeparatorWidth" />
+                        <input type="number" class="input" ng-model="settings.SeparatorWidth" />
                     </div>
                 </div>
 
@@ -287,11 +288,19 @@
             </div>
 
             <button ng-click="saveBrandSettings()" class="button--green">Save</button>
-        </form>
     </div>
     </div>
     <div class="right">
-        <figure>
+        <label>Page Preview</label>
+        <figure class="code-{{ settings.homepageTemplate }}">
+            <h1>{{ settings.name || 'Event Name' }}</h1>
+            <hr />
+            <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
+            <div>
+                <input placeholder="Enter Your Code" />
+                <button type="button">Go!</button>
+            </div>
         </figure>
     </div>
+        </form>
 </div>
