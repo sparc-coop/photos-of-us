@@ -1,5 +1,27 @@
 ﻿@import "../variables";
 
+button {
+    background: $yellow;
+    border-radius: 8px;
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FF6060;
+    padding: 7px 20px;
+    letter-spacing: 0;
+    text-align: center;
+    min-width: 173px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out;
+    &:hover {
+        transform: scale(1.08, 1.08);
+    }
+}
+
 .button {
     &--red {
         background: $red;

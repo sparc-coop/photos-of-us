@@ -12,6 +12,7 @@ namespace PhotosOfUs.Pages.Events
         private readonly IRepository<Event> _events;
 
         public Event Event { get; set; }
+        public IEnumerable<int> Opacities { get; private set; }
 
         public SettingsModel(IRepository<Event> events)
         {
@@ -20,6 +21,7 @@ namespace PhotosOfUs.Pages.Events
 
         public void OnGet()
         {
+            Opacities = Enumerable.Range(0, 101).Where(x => x % 5 == 0);
         }
     }
 }

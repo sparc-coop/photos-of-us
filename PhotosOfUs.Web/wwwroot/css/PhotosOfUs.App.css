@@ -178,6 +178,33 @@
   height: 100%;
 }
 
+button {
+  background: #FFE261;
+  border-radius: 8px;
+  font-family: "Dosis";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FF6060;
+  padding: 7px 20px;
+  letter-spacing: 0;
+  text-align: center;
+  min-width: 173px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  vertical-align: middle;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  transition: -webkit-transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+}
+
+button:hover {
+  -webkit-transform: scale(1.08, 1.08);
+          transform: scale(1.08, 1.08);
+}
+
 .button--red {
   background: #FF6060;
   border-radius: 8px;
@@ -1481,7 +1508,7 @@ form label .fixed-placeholder {
   color: #757575;
 }
 
-form input, form .form-input textarea, .form-input form textarea, form textarea {
+form input, form .form-input textarea, .form-input form textarea, form textarea, form select {
   display: block;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -5681,110 +5708,17 @@ tags-input .tag-item {
   color: #000;
 }
 
-.event-settings .right figure {
-  border: 2px solid #dfdfdf;
-  border-top: 0;
-  border-radius: 0 0 4px 4px;
-  height: 311px;
-  width: 40vw;
-  margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 13%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-size: cover;
-  position: relative;
-}
-
-.event-settings .right figure > * {
-  position: relative;
-}
-
-.event-settings .right figure .background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #f6ffff;
-}
-
-.event-settings .right figure h1 {
-  font: 600 16px/20px Dosis;
-}
-
-.event-settings .right figure hr {
-  width: 50px;
-  margin: 8px 0;
-}
-
-.event-settings .right figure p {
-  font: 500 8px/19px "Open Sans";
-  color: #000;
-}
-
-.event-settings .right figure .enter-code {
-  font-size: 2px;
-}
-
-.event-settings .right figure input, .event-settings .right figure .form-input textarea, .form-input .event-settings .right figure textarea, .event-settings .right figure button {
-  line-height: 15px;
-  display: inline;
-}
-
-.event-settings .right figure input, .event-settings .right figure .form-input textarea, .form-input .event-settings .right figure textarea {
-  width: 76px;
-  font-size: 6px;
-  padding: 0 5px 0 8px;
-  border-radius: 3px 0 0 3px;
-}
-
-.event-settings .right figure button {
-  background-color: black;
-  outline: none;
-  color: white;
-  font-size: 8px;
-  line-height: 15px;
-  border: none;
-  border-radius: 0 3px 3px 0;
-}
-
-.event-settings .right figure.code-0 {
-  padding-right: 55%;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.event-settings .right figure.code-0 .background {
-  right: 50%;
-}
-
-.event-settings .right figure.code-1 {
-  padding-left: 55%;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.event-settings .right figure.code-1 .background {
-  left: 50%;
-}
-
 .event-settings section {
   margin-bottom: 120px;
+}
+
+.event-settings p {
+  /*font-family: OpenSans;*/
+  font-size: 12px;
+  font-weight: 400;
+  color: #194952;
+  letter-spacing: 0;
+  line-height: 20px;
 }
 
 .event-settings input.url, .event-settings .form-input textarea.url, .form-input .event-settings textarea.url {
@@ -5840,21 +5774,118 @@ tags-input .tag-item {
   margin-bottom: 6px;
 }
 
-.event-settings .homepage-template figure p {
-  /*font-family: OpenSans;*/
-  font-size: 12px;
-  font-weight: 400;
-  color: #194952;
-  letter-spacing: 0;
-  line-height: 20px;
-}
-
 .event-settings .homepage-template figure.selected img {
   border-color: #43C6BA;
 }
 
 .event-settings .homepage-template figure.selected .check {
   display: block;
+}
+
+.event-settings .preview {
+  border: 2px solid #dfdfdf;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  height: 311px;
+  width: 40vw;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 13%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-size: cover;
+  position: relative;
+}
+
+.event-settings .preview > * {
+  position: relative;
+}
+
+.event-settings .preview .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f6ffff;
+}
+
+.event-settings .preview h1 {
+  font: 600 16px/20px Dosis;
+}
+
+.event-settings .preview hr {
+  width: 50px;
+  margin: 8px 0;
+}
+
+.event-settings .preview p {
+  font: 500 8px/19px "Open Sans";
+  color: #000;
+}
+
+.event-settings .preview .enter-code {
+  font-size: 2px;
+}
+
+.event-settings .preview input, .event-settings .preview .form-input textarea, .form-input .event-settings .preview textarea,
+.event-settings .preview button {
+  line-height: 15px;
+  display: inline-block;
+}
+
+.event-settings .preview input, .event-settings .preview .form-input textarea, .form-input .event-settings .preview textarea {
+  width: 76px;
+  font-size: 6px;
+  padding: 0 5px 0 8px;
+  border-radius: 3px 0 0 3px;
+}
+
+.event-settings .preview button {
+  background-color: black;
+  padding: 0 5px;
+  margin-left: 2px;
+  min-width: 0;
+  outline: none;
+  color: white;
+  font-size: 8px;
+  line-height: 15px;
+  border: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.event-settings .preview.code-0 {
+  padding-right: 55%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.event-settings .preview.code-0 .background {
+  right: 50%;
+}
+
+.event-settings .preview.code-1 {
+  padding-left: 55%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.event-settings .preview.code-1 .background {
+  left: 50%;
 }
 
 .event-settings .featured-image .image {
