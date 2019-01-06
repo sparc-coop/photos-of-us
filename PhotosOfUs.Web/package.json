@@ -26,6 +26,7 @@
     "bootstrap": "^3.3.7",
     "imagesloaded": "~4.1.4",
     "masonry-layout": "~4.2.2",
-    "requirejs": "~2.3.6"
+    "requirejs": "~2.3.6",
+    "ng-pattern-restrict": "~0.2.3"
   }
 }

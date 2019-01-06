@@ -6,7 +6,8 @@
         '720kb.socialshare',
         'ui.bootstrap',
         'ngTagsInput',
-        'angular.filter'
+        'angular.filter',
+        'ngPatternRestrict'
     ]);
 
     // Register NSwag APIs

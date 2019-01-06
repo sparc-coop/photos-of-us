@@ -1,20 +1,37 @@
 .event-settings {
     .left {
-        padding-right: 55%;
+        padding-right: 45%;
     }
 
     .right {
         position: fixed;
-        top: 250px;
+        top: 230px;
         right: 60px;
+
+        header {
+            background-color: #dfdfdf;
+            margin-top: 10px;
+            margin-bottom: 0;
+            padding: 10px;
+            span {
+                background-color: white;
+                border: 1px solid #aaa;
+                padding: 8px 20px;
+                border-radius: 20px;
+                font-size: 11px;
+                display: block;
+                color: #000;
+            }
+        }
 
         figure {
             background-color: #f6ffff;
             border: 2px solid #dfdfdf;
-            border-radius: 4px;
+            border-top: 0;
+            border-radius: 0 0 4px 4px;
             height: 311px;
             width: 40vw;
-            margin: 10px 0;
+            margin: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -65,28 +82,61 @@
         padding-left: 140px;
     }
 
-    img.selected {
-        border: 2px solid #43C6BA;
-        border-radius: 4px;
-    }
-
     .homepage-template {
-        .item {
-            width: 30%;
-            padding-right: 20px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        figure {
+            max-width: 40%;
+            margin: 0 40px 20px 0;
             display: inline-block; 
-            vertical-align: top;  
+            vertical-align: top;
+            position: relative;
+            outline: none;
+            
+            .check {
+                display: none;
+                position: absolute;
+                top: -8px;
+                right: -11px;
+                border-radius: 20px;
+                height: 20px;
+                width: 20px;
+                text-align: center;
+                color: white;
+                background-color: #43c6ba;
+                line-height: 20px;
+                font-size: 16px;
+            }
 
             img { 
                 max-width: 100%;
+                border: 2px solid transparent;
+                border-radius: 4px;
+            }
+
+            h3 {
+                font: 600 14px/19px "Open Sans";
+                margin-bottom: 6px;
             }
 
             p {
                 /*font-family: OpenSans;*/
                 font-size: 12px;
+                font-weight: 400;
                 color: #194952;
                 letter-spacing: 0;
                 line-height: 20px;
+            }
+
+            &.selected {
+                img { 
+                    border-color: #43C6BA;
+                }
+                .check {
+                    display: block;
+                }
             }
         }
     }

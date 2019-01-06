@@ -678,14 +678,14 @@ body {
   height: unset !important;
 }
 
-body > div.container.body-content {
-  margin: 0 auto;
+body main {
+  margin: 66px auto;
   max-width: 1050px;
-  padding: 60px 30px;
+  padding: 54px 30px;
 }
 
 @media screen and (max-width: 450px) {
-  body > div.container.body-content {
+  body main {
     padding: 40px 20px;
   }
 }
@@ -710,11 +710,6 @@ hr {
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
-.body-content {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
   /* Hide captions */
@@ -1576,7 +1571,11 @@ form input, form .form-input textarea, .form-input form textarea, form textarea 
   margin-top: 0;
   font-size: 18px;
   color: #FFFFFF;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
   height: 46px;
   padding: 20px 46px 0px 80px;
   display: -webkit-box;
@@ -5656,22 +5655,40 @@ tags-input .tag-item {
 }
 
 .event-settings .left {
-  padding-right: 55%;
+  padding-right: 45%;
 }
 
 .event-settings .right {
   position: fixed;
-  top: 250px;
+  top: 230px;
   right: 60px;
+}
+
+.event-settings .right header {
+  background-color: #dfdfdf;
+  margin-top: 10px;
+  margin-bottom: 0;
+  padding: 10px;
+}
+
+.event-settings .right header span {
+  background-color: white;
+  border: 1px solid #aaa;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-size: 11px;
+  display: block;
+  color: #000;
 }
 
 .event-settings .right figure {
   background-color: #f6ffff;
   border: 2px solid #dfdfdf;
-  border-radius: 4px;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
   height: 311px;
   width: 40vw;
-  margin: 10px 0;
+  margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5738,28 +5755,70 @@ tags-input .tag-item {
   padding-left: 140px;
 }
 
-.event-settings img.selected {
-  border: 2px solid #43C6BA;
+.event-settings .homepage-template {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.event-settings .homepage-template figure {
+  max-width: 40%;
+  margin: 0 40px 20px 0;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  outline: none;
+}
+
+.event-settings .homepage-template figure .check {
+  display: none;
+  position: absolute;
+  top: -8px;
+  right: -11px;
+  border-radius: 20px;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  color: white;
+  background-color: #43c6ba;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.event-settings .homepage-template figure img {
+  max-width: 100%;
+  border: 2px solid transparent;
   border-radius: 4px;
 }
 
-.event-settings .homepage-template .item {
-  width: 30%;
-  padding-right: 20px;
-  display: inline-block;
-  vertical-align: top;
+.event-settings .homepage-template figure h3 {
+  font: 600 14px/19px "Open Sans";
+  margin-bottom: 6px;
 }
 
-.event-settings .homepage-template .item img {
-  max-width: 100%;
-}
-
-.event-settings .homepage-template .item p {
+.event-settings .homepage-template figure p {
   /*font-family: OpenSans;*/
   font-size: 12px;
+  font-weight: 400;
   color: #194952;
   letter-spacing: 0;
   line-height: 20px;
+}
+
+.event-settings .homepage-template figure.selected img {
+  border-color: #43C6BA;
+}
+
+.event-settings .homepage-template figure.selected .check {
+  display: block;
 }
 
 .event-settings .featured-image .image {
