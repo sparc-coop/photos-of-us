@@ -1381,25 +1381,31 @@ a {
   }
 }
 
-.header-large {
-  font-family: "Dosis";
-  font-weight: 600;
-  font-size: 42px;
+h1 {
+  font: 600 42px/42px Dosis;
   color: #194952;
   letter-spacing: 0;
 }
 
-.header-large span {
+h1 span {
   color: #43C6BA;
   text-transform: uppercase;
 }
 
-.header-small {
-  font-family: "Dosis";
-  font-weight: 600;
-  font-size: 26px;
-  color: #43C6BA;
+h2 {
+  font: 600 32px/32px Dosis;
+  color: #194952;
   letter-spacing: 0;
+}
+
+h3 {
+  font: 600 18px/22px Dosis;
+  color: #194952;
+}
+
+h4 {
+  font: 600 14px/18px "Open Sans";
+  color: #43C6BA;
 }
 
 .header-xs {
@@ -1409,14 +1415,6 @@ a {
   color: #194952;
   letter-spacing: 0;
   padding-left: 20px;
-}
-
-.header-medium {
-  font-family: "Dosis";
-  font-weight: 600;
-  font-size: 32px;
-  color: #194952;
-  letter-spacing: 0;
 }
 
 .header-yellow {
@@ -1471,6 +1469,26 @@ a {
   font-size: 14px;
   color: #194952;
   letter-spacing: 0;
+}
+
+form label {
+  font-family: "Open Sans";
+  font-size: 10px;
+  color: #757575;
+  display: block;
+}
+
+form input, form .form-input textarea, .form-input form textarea, form textarea {
+  display: block;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  width: 100%;
+  padding: 7px 16px;
+  border: 1px solid #43C6BA;
+  border-radius: 3px;
+  outline: none;
+  font: 400 14px/19px "Open Sans";
+  color: #194952;
 }
 
 .form {
@@ -3380,7 +3398,7 @@ canvas {
 
 .photographer-dashboard--wrapper .folder-new {
   border: 2px dashed #43C6BA;
-  border-radius: 8px;
+  border-radius: 2px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   width: 330px;
@@ -4752,78 +4770,6 @@ tags-input .tag-item {
   color: #194952;
 }
 
-.brand-settings {
-  padding-left: 20px;
-}
-
-.brand-settings img.selected {
-  border: 2px solid #43C6BA;
-  border-radius: 4px;
-}
-
-.brand-settings .homepage-template .item {
-  width: 30%;
-  padding-right: 20px;
-  display: inline-block;
-  vertical-align: top;
-}
-
-.brand-settings .homepage-template .item img {
-  max-width: 100%;
-}
-
-.brand-settings .homepage-template .item p {
-  /*font-family: OpenSans;*/
-  font-size: 12px;
-  color: #194952;
-  letter-spacing: 0;
-  line-height: 20px;
-}
-
-.brand-settings .featured-image .image {
-  width: 20%;
-}
-
-.brand-settings .featured-image .overlay-settings h3 {
-  /*font-family: OpenSans;*/
-  font-size: 10px;
-  color: #757575;
-  letter-spacing: 0;
-}
-
-.brand-settings .homepage-settings > img {
-  max-width: 110%;
-}
-
-.brand-settings .homepage-settings .section {
-  padding-top: 30px;
-}
-
-.brand-settings .homepage-settings .section p {
-  /*font-family: OpenSans;*/
-  font-size: 12px;
-  color: #194952;
-  letter-spacing: 0;
-  line-height: 20px;
-}
-
-.brand-settings .homepage-settings .section .colors {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.brand-settings .homepage-settings .section .colors span {
-  /*font-family: OpenSans;*/
-  font-size: 10px;
-  color: #757575;
-  letter-spacing: 0;
-}
-
-.brand-settings .homepage-settings .section .colors .color-picker {
-  margin-right: 25px;
-}
-
 .landing-container .nav {
   background-color: #194952;
 }
@@ -5712,5 +5658,73 @@ tags-input .tag-item {
   border-right: 12px solid transparent;
   border-bottom: 12px solid #194952;
   margin: 0 auto;
+}
+
+.event-settings img.selected {
+  border: 2px solid #43C6BA;
+  border-radius: 4px;
+}
+
+.event-settings .homepage-template .item {
+  width: 30%;
+  padding-right: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.event-settings .homepage-template .item img {
+  max-width: 100%;
+}
+
+.event-settings .homepage-template .item p {
+  /*font-family: OpenSans;*/
+  font-size: 12px;
+  color: #194952;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+.event-settings .featured-image .image {
+  width: 20%;
+}
+
+.event-settings .featured-image .overlay-settings h3 {
+  /*font-family: OpenSans;*/
+  font-size: 10px;
+  color: #757575;
+  letter-spacing: 0;
+}
+
+.event-settings .homepage-settings > img {
+  max-width: 110%;
+}
+
+.event-settings .homepage-settings .section {
+  padding-top: 30px;
+}
+
+.event-settings .homepage-settings .section p {
+  /*font-family: OpenSans;*/
+  font-size: 12px;
+  color: #194952;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+.event-settings .homepage-settings .section .colors {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.event-settings .homepage-settings .section .colors span {
+  /*font-family: OpenSans;*/
+  font-size: 10px;
+  color: #757575;
+  letter-spacing: 0;
+}
+
+.event-settings .homepage-settings .section .colors .color-picker {
+  margin-right: 25px;
 }
 /*# sourceMappingURL=PhotosOfUs.App.css.map */

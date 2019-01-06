@@ -1,9 +1,7 @@
 ﻿@import '../variables';
 
-.header-large {
-    font-family: "Dosis";
-    font-weight: 600;
-    font-size: 42px;
+h1 {
+    font: 600 42px/42px Dosis;
     color: #194952;
     letter-spacing: 0;
 
@@ -13,12 +11,21 @@
     }
 }
 
-.header-small {
-    font-family: "Dosis";
-    font-weight: 600;
-    font-size: 26px;
-    color: #43C6BA;
+h2 {
+    font: 600 32px/32px Dosis;
+    color: #194952;
     letter-spacing: 0;
+}
+
+h3 {
+    font: 600 18px/22px Dosis;
+    color: #194952;
+}
+
+
+h4 {
+    font: 600 14px/18px "Open Sans";
+    color: $primary;
 }
 
 .header-xs {
@@ -29,14 +36,6 @@
     letter-spacing: 0;
     padding-left:20px;
     
-}
-
-.header-medium {
-    font-family: "Dosis";
-    font-weight: 600;
-    font-size: 32px;
-    color: #194952;
-    letter-spacing: 0;
 }
 
 .header-yellow {

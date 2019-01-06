@@ -1,4 +1,27 @@
 ﻿@import "../variables";
+
+form {
+    label {
+        font-family: "Open Sans";
+        font-size: 10px;
+        color: $text-gray;
+        display: block;
+    }
+
+    input, textarea {
+        display: block;
+        margin-top: 8px;
+        margin-bottom: 16px;
+        width: 100%;
+        padding: 7px 16px;
+        border: 1px solid $primary;
+        border-radius: 3px;
+        outline: none;
+        font: 400 14px/19px "Open Sans";
+        color: $dark;
+    }
+}
+
 .form {
     display: flex;
     flex-wrap: wrap;

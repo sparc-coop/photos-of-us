@@ -7,14 +7,14 @@
 }
 
 <div class="purchase" ng-controller="CartCtrl" ng-init="getPwintyCatalog()">
-    <h1 class="header-large">Purchase Photo</h1>
+    <h1>Purchase Photo</h1>
     <div class="divider"></div>
     <div class="flex-box">
         <div class="photo">
             <img src="@(string.IsNullOrEmpty(Model.Photo.WaterMarkUrl) ? Model.Photo.Url : Model.Photo.WaterMarkUrl)" />
         </div>
         <div class="purchase__photo-info">
-            <h3 class="header-small">
+            <h3>
                 Photo Information
             </h3>
             <div class="info">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div>
-        <h2 class="header-medium">Photo Options</h2>
+        <h2>Photo Options</h2>
         <md-switch ng-model="printQuality" ng-true-value="'Pro'" ng-false-value="'Standard'" aria-label="print quality">
             Photo Quality: {{ printQuality }}
         </md-switch>
