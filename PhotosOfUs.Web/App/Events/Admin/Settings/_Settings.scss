@@ -25,7 +25,6 @@
         }
 
         figure {
-            background-color: #f6ffff;
             border: 2px solid #dfdfdf;
             border-top: 0;
             border-radius: 0 0 4px 4px;
@@ -38,6 +37,21 @@
             padding: 13%;
             box-sizing: border-box;
             align-items: center;
+            background-size: cover;
+            position: relative;
+            > * {
+                position: relative;
+            }
+
+            .background {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #f6ffff;
+            }
+
             h1 {
                 font: 600 16px/20px Dosis;
             }
@@ -49,7 +63,7 @@
                 font: 500 8px/19px "Open Sans";
                 color: #000;
             }
-            div {
+            .enter-code {
                 font-size: 2px;
             }
             input, button {
@@ -70,6 +84,22 @@
                 line-height: 15px;
                 border: none;
                 border-radius: 0 3px 3px 0; 
+            }
+
+            &.code-0 {
+                padding-right: 55%;
+                align-items: flex-start;
+                .background {
+                    right: 50%;
+                }
+            }
+
+            &.code-1 {
+                padding-left: 55%;
+                align-items: flex-start;
+                .background {
+                    left: 50%;
+                }
             }
         }
     }

@@ -5682,7 +5682,6 @@ tags-input .tag-item {
 }
 
 .event-settings .right figure {
-  background-color: #f6ffff;
   border: 2px solid #dfdfdf;
   border-top: 0;
   border-radius: 0 0 4px 4px;
@@ -5705,6 +5704,21 @@ tags-input .tag-item {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-size: cover;
+  position: relative;
+}
+
+.event-settings .right figure > * {
+  position: relative;
+}
+
+.event-settings .right figure .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f6ffff;
 }
 
 .event-settings .right figure h1 {
@@ -5721,7 +5735,7 @@ tags-input .tag-item {
   color: #000;
 }
 
-.event-settings .right figure div {
+.event-settings .right figure .enter-code {
   font-size: 2px;
 }
 
@@ -5745,6 +5759,28 @@ tags-input .tag-item {
   line-height: 15px;
   border: none;
   border-radius: 0 3px 3px 0;
+}
+
+.event-settings .right figure.code-0 {
+  padding-right: 55%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.event-settings .right figure.code-0 .background {
+  right: 50%;
+}
+
+.event-settings .right figure.code-1 {
+  padding-left: 55%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.event-settings .right figure.code-1 .background {
+  left: 50%;
 }
 
 .event-settings section {

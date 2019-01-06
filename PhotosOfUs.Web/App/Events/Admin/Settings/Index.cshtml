@@ -317,11 +317,12 @@
             </header>
             <figure class="code-{{ settings.homepageTemplate }}" 
             ng-style="{ 'background-image': settings.homepageTemplate == 2 ? null : 'url(/images/BG2.png)' }">
+                <div class="background"></div>
                 <h1>{{ settings.name || 'Event Name' }}</h1>
                 <hr />
                 <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                     tempor incididunt ut labore et dolore magna aliqua.' }}</p>
-                <div>
+                <div class="enter-code">
                     <input placeholder="Enter Your Code" />
                     <button type="button">Go!</button>
                 </div>
