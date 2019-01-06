@@ -1,4 +1,26 @@
 .event-settings {
+    .left {
+        padding-right: 55%;
+    }
+
+    .right {
+        position: fixed;
+        top: 250px;
+        right: 30px;
+
+        figure {
+            background-color: #f6ffff;
+            border: 2px solid #dfdfdf;
+            border-radius: 4px;
+            height: 311px;
+            width: 40vw;
+        }
+    }
+
+    section {
+        margin-bottom: 120px;
+    }
+
     img.selected {
         border: 2px solid #43C6BA;
         border-radius: 4px;

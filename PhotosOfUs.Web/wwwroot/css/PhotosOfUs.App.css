@@ -684,10 +684,6 @@ body > div.container.body-content {
   padding: 60px 30px;
 }
 
-body > div.container.body-content hr {
-  display: none;
-}
-
 @media screen and (max-width: 450px) {
   body > div.container.body-content {
     padding: 40px 20px;
@@ -705,6 +701,13 @@ a {
   color: inherit;
 }
 
+hr {
+  border-top: 2px solid #FFE261;
+  border-radius: 2px;
+  margin: 35px 0 30px;
+  max-width: 140px;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -718,10 +721,6 @@ a {
   .carousel-caption {
     display: none;
   }
-}
-
-.yellow-background {
-  background-color: #FFE261;
 }
 
 /* Carousel */
@@ -1559,11 +1558,6 @@ form input, form .form-input textarea, .form-input form textarea, form textarea 
   border-radius: 8px;
   color: #43C6BA;
   padding: 0px 20px;
-}
-
-.line--small {
-  width: 140px;
-  height: 2px;
 }
 
 .nav {
@@ -3391,11 +3385,6 @@ canvas {
   width: unset;
 }
 
-.photographer-dashboard--wrapper .yellow-background.line--small {
-  margin-top: 35px;
-  margin-bottom: 30px;
-}
-
 .photographer-dashboard--wrapper .folder-new {
   border: 2px dashed #43C6BA;
   border-radius: 2px;
@@ -4743,11 +4732,6 @@ tags-input .tag-item {
   padding: 9px 8px;
 }
 
-.account-settings--wrapper .yellow-background.line--small {
-  margin-top: 35px;
-  margin-bottom: 30px;
-}
-
 .account-settings--wrapper .deactivate-modal {
   border: 2px dashed #43C6BA;
   border-radius: 8px;
@@ -5658,6 +5642,28 @@ tags-input .tag-item {
   border-right: 12px solid transparent;
   border-bottom: 12px solid #194952;
   margin: 0 auto;
+}
+
+.event-settings .left {
+  padding-right: 55%;
+}
+
+.event-settings .right {
+  position: fixed;
+  top: 250px;
+  right: 30px;
+}
+
+.event-settings .right figure {
+  background-color: #f6ffff;
+  border: 2px solid #dfdfdf;
+  border-radius: 4px;
+  height: 311px;
+  width: 40vw;
+}
+
+.event-settings section {
+  margin-bottom: 120px;
 }
 
 .event-settings img.selected {

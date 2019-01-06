@@ -11,10 +11,6 @@ body {
         max-width: 1050px;
         padding: 60px 30px;
 
-        hr {
-            display: none;
-        }
-
         @media screen and (max-width: $mobile) {
             padding: 40px 20px;
         }
@@ -28,6 +24,13 @@ body {
 a {
     text-decoration: none;
     color: inherit;
+}
+
+hr {
+    border-top: 2px solid $yellow;
+    border-radius: 2px;
+    margin: 35px 0 30px;
+    max-width: 140px;
 }
 
 /* Wrapping element */
@@ -44,12 +47,6 @@ a {
         display: none;
     }
 }
-
-.yellow-background {
-    background-color: $yellow;
-}
-
-
 
 /* Carousel */
 .carousel-caption p {

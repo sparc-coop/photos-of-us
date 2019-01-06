@@ -5,24 +5,26 @@
 }
 
 <div class="event-settings">
+    <div class="left">
     <h1>Create New Event</h1>
-    <div class="yellow-background line--small"></div>
+    <hr />
 
     <form>
-        <h3>Event Information</h3>
-        <label>
-            Event Name
-            <input asp-for="Event.Name" />
-        </label>
-        <label>
-            Event URL
-            <input asp-for="Event.Url" />
-        </label>
-        <label>
-            Event Description
-            <textarea asp-for="Event.Description"></textarea>
-        </label>
-
+        <section>
+            <h3>Event Information</h3>
+            <label>
+                Event Name
+                <input asp-for="Event.Name" />
+            </label>
+            <label>
+                Event URL
+                <input asp-for="Event.Url" />
+            </label>
+            <label>
+                Event Description
+                <textarea asp-for="Event.Description" rows="3"></textarea>
+            </label>
+        </section>
         <h3>Event Site &amp; Card Settings</h3>
         <h4>Homepage Template</h4>
         <div class="homepage-template">
@@ -286,5 +288,10 @@
 
             <button ng-click="saveBrandSettings()" class="button--green">Save</button>
         </form>
+    </div>
+    </div>
+    <div class="right">
+        <figure>
+        </figure>
     </div>
 </div>
