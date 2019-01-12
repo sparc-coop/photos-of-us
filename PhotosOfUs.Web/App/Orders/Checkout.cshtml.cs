@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using Order = PhotosOfUs.Model.Models.Order;
+using Address = PhotosOfUs.Model.Models.Address;
 
 namespace PhotosOfUs.Pages.Orders
 {
@@ -61,16 +63,16 @@ namespace PhotosOfUs.Pages.Orders
                 total += (item.UnitPrice * item.Quantity);
             }
 
-            var customers = new StripeCustomerService();
-            var charges = new StripeChargeService();
+            var customers = new Stripe.CustomerService();
+            var charges = new Stripe.ChargeService();
 
-            var customer = customers.Create(new StripeCustomerCreateOptions
+            var customer = customers.Create(new Stripe.CustomerCreateOptions
             {
                 Email = order.User.Email,
                 SourceToken = stripeToken
             });
 
-            var charge = charges.Create(new StripeChargeCreateOptions
+            var charge = charges.Create(new Stripe.ChargeCreateOptions
             {
                 Amount = (int)(total * 100),
                 Description = "Photos Of Us Order",
