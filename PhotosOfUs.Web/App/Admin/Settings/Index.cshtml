@@ -71,11 +71,15 @@ ViewData["Title"] = "Event Settings";
                 </p>
 
                 <div class="featured-image">
-                    <div class="image">
-
-                    </div>
-
-                    <div class="overlay-settings">
+                    <figure ngf-drop ngf-select ng-model="settings.featuredImage" ngf-pattern="image/*" accept="image/*">
+                        <img ngf-thumbnail="settings.featuredImage" alt="Cover Image" />
+                        <figcaption ng-show="!settings.featuredImage">
+                            Drag image here or click the button on the right to choose from your computer.
+                        </figcaption>
+                        <div class="close" ng-if="settings.featuredImage" ng-click="removeFeaturedImage($event)">X</div>
+                    </figure>
+                    <div>
+                        <button ngf-select ng-model="settings.featuredImage" accept="image/*">Select Image...</button>
                         <label>Overlay</label>
                         <p>
                             Using an overlay can help brighten or darker your image. This can be helpful if
@@ -91,9 +95,9 @@ ViewData["Title"] = "Event Settings";
                             <select ng-model="settings.overlayOpacity">
                                 @foreach (var opacity in Model.Opacities)
                                 {
-                                <option value="@opacity">
-                                    @(opacity)%
-                                </option>
+                                    <option value="@opacity">
+                                        @(opacity)%
+                                    </option>
                                 }
                             </select>
                         </label>
@@ -176,12 +180,12 @@ ViewData["Title"] = "Event Settings";
             <header>
                 <span>https://photosof.us/{{ settings.url }}</span>
             </header>
-            <figure class="preview code-{{ settings.homepageTemplate }}" ng-style="{ 'background-image': settings.homepageTemplate == 2 ? null : 'url(/images/BG2.png)' }">
-                <div class="background"></div>
+            <figure class="preview code-{{ settings.homepageTemplate }}" 
+                ng-style="{ 'background-image': settings.homepageTemplate == 2 && !settings.featuredImageUrl ? null : 'url(' + (settings.featuredImageUrl || '/images/BG2.png)') + ')' }">
+                <div class="background" ng-if="settings.homepageTemplate != 2 || !settings.featuredImageUrl"></div>
                 <h1>{{ settings.name || 'Event Name' }}</h1>
                 <hr />
-                <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.' }}</p>
+                <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
                 <div class="enter-code">
                     <input placeholder="Enter Your Code" />
                     <button type="button">Go!</button>

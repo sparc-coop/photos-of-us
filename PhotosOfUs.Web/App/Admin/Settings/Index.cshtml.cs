@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Pages.Admin
 {
+    [Authorize]
     public class SettingsModel : PageModel
     {
         private readonly IRepository<Event> _events;

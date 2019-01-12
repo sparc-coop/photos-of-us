@@ -16,18 +16,22 @@ namespace PhotosOfUs.Model.Models
             PhotoTag = new HashSet<PhotoTag>();
         }
 
-        public Photo(int userId, string filename, int eventId, int? cardId) : this(userId, filename)
+        public Photo(int userId, string filename, int eventId, int? cardId) : this(userId, filename, null)
         {
             EventId = eventId;
             CardId = cardId;
             Filename = Filename.Replace($"{userId}/", $"{userId}/{eventId}/");
         }
 
-        public Photo(int userId, string filename)
+        public Photo(int userId, string filename, Stream stream)
         {
             var urlTimeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
             var extension = filename.Contains('.') ? filename.Split('.').Last() : ".jpg";
             Filename = $"{userId}/{filename.Split('.')[0] + urlTimeStamp + extension}";
+            Name = $"{filename.Split('.')[0]}";
+            Stream = stream;
+            UploadDate = DateTime.UtcNow;
+            PhotographerId = userId;
         }
 
         public int Id { get; set; }

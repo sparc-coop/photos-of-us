@@ -50,7 +50,7 @@ namespace PhotosOfUs.Model.Photos.Commands
         // For public photos
         public async Task<UploadPhotoCommandResult> ExecuteAsync(int userId, string filename, Stream stream)
         {
-            var photo = new Photo(userId, filename);
+            var photo = new Photo(userId, filename, stream);
             photo.Url = (await _photoFiles.UploadAsync(photo)).AbsoluteUri;
 
             var bytes = TransformImageIntoBytes(stream);
@@ -62,7 +62,8 @@ namespace PhotosOfUs.Model.Photos.Commands
             return new UploadPhotoCommandResult
             {
                 SuggestedTags = suggestedTags,
-                IsValid = true
+                IsValid = true,
+                Url = photo.Url
             };
         }
 
@@ -85,6 +86,7 @@ namespace PhotosOfUs.Model.Photos.Commands
         {
             public List<string> SuggestedTags { get; set; }
             public string Code { get; set; }
+            public string Url { get; set; }
             public bool IsValid { get; set; }
         }
     }

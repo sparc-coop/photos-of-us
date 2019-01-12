@@ -23,7 +23,8 @@
       "node_modules/bootstrap/dist/js/bootstrap.js",
       "node_modules/imagesloaded/imagesloaded.pkgd.js",
       "node_modules/masonry-layout/dist/masonry.pkgd.js",
-      "node_modules/ng-pattern-restrict/src/ng-pattern-restrict.js"
+      "node_modules/ng-pattern-restrict/src/ng-pattern-restrict.js",
+      "node_modules/ng-file-upload/dist/ng-file-upload.js"
     ]
   },
   {

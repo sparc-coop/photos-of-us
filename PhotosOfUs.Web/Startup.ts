@@ -7,7 +7,8 @@
         'ui.bootstrap',
         'ngTagsInput',
         'angular.filter',
-        'ngPatternRestrict'
+        'ngPatternRestrict',
+        'ngFileUpload'
     ]);
 
     // Register NSwag APIs

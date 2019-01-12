@@ -5788,6 +5788,7 @@ tags-input .tag-item {
   border-radius: 0 0 4px 4px;
   height: 311px;
   width: 40vw;
+  max-width: 600px;
   margin: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -5888,15 +5889,66 @@ tags-input .tag-item {
   left: 50%;
 }
 
-.event-settings .featured-image .image {
-  width: 20%;
+.event-settings .featured-image {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
-.event-settings .featured-image .overlay-settings h3 {
-  /*font-family: OpenSans;*/
-  font-size: 10px;
-  color: #757575;
-  letter-spacing: 0;
+.event-settings .featured-image > * {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.event-settings .featured-image figure {
+  height: 286px;
+  width: 100%;
+  background-color: #eee;
+  margin: 0 30px 0 0;
+  position: relative;
+}
+
+.event-settings .featured-image figure:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+
+.event-settings .featured-image figure img {
+  width: 100%;
+  height: auto;
+}
+
+.event-settings .featured-image figure .close {
+  position: absolute;
+  top: -8px;
+  right: -11px;
+  border-radius: 20px;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+  color: white;
+  background-color: #FF6060;
+  line-height: 22px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.event-settings .featured-image figcaption {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  bottom: 0;
+  margin: auto;
+  color: #ccc;
+  text-align: center;
+  height: 80px;
+}
+
+.event-settings .featured-image button {
+  margin-bottom: 20px;
 }
 
 .event-settings .homepage-settings > img {

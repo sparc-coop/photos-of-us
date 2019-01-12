@@ -84,6 +84,8 @@ namespace PhotosOfUs.Web
             })
             .AddCookie("B2C");
 
+            services.ConfigureApplicationCookie(x => x.LoginPath = "/Session/SignIn");
+
             services.AddAuthorization(options =>
             {
                 options.DefaultPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder()

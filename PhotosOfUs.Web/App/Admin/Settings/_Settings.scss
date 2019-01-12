@@ -101,6 +101,7 @@
         border-radius: 0 0 4px 4px;
         height: 311px;
         width: 40vw;
+        max-width: 600px;
         margin: 0;
         display: flex;
         flex-direction: column;
@@ -188,17 +189,53 @@
     }
 
     .featured-image {
-        .image {
-            width: 20%;
+        display: flex;
+        > * { 
+            flex: 1;
         }
-
-        .overlay-settings {
-            h3 {
-                /*font-family: OpenSans;*/
-                font-size: 10px;
-                color: #757575;
-                letter-spacing: 0;
+        figure {
+            height: 286px;
+            width: 100%;
+            background-color: #eee;
+            margin: 0 30px 0 0;
+            position: relative;
+            &:hover {
+                background-color: #ddd;
+                cursor: pointer;
             }
+            img {
+                width: 100%;
+                height: auto;
+            }
+            .close {
+                position: absolute;
+                top: -8px;
+                right: -11px;
+                border-radius: 20px;
+                height: 20px;
+                width: 20px;
+                text-align: center;
+                color: white;
+                background-color: $red;
+                line-height: 22px;
+                font-size: 14px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+        }
+        figcaption {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            bottom: 0;
+            margin: auto;
+            color: #ccc;
+            text-align: center;
+            height: 80px;
+        }
+        button {
+            margin-bottom: 20px;
         }
     }
 

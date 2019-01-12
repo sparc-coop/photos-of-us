@@ -73,6 +73,13 @@ namespace PhotosOfUs.Web.Controllers.API
             return await command.ExecuteAsync(eventId, User.ID(), file.FileName, file.OpenReadStream(), photoCode);
         }
 
+        [HttpPost]
+        [Route("Photos")]
+        public async Task<UploadPhotoCommand.UploadPhotoCommandResult> UploadCoverPhotoAsync(IFormFile file, [FromServices]UploadPhotoCommand command)
+        {
+            return await command.ExecuteAsync(User.ID(), file.FileName, file.OpenReadStream());
+        }
+
         [HttpGet]
         [Route("{eventId:int}/Tags")]
         public List<TagViewModel> GetAllTags(int eventId)
