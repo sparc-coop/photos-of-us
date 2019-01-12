@@ -11,7 +11,7 @@ using PhotosOfUs.Web.Utilities;
 using PhotosOfUs.Model.Events;
 using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
-using PhotosOfUs.Pages.Events;
+using PhotosOfUs.Pages.Admin;
 using Microsoft.AspNetCore.Http;
 using PhotosOfUs.Model.Photos.Commands;
 using System.Threading.Tasks;
@@ -19,13 +19,13 @@ using System.Threading.Tasks;
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Produces("application/json")]
-    [Route("api/Events")]
+    [Route("api/Admin")]
     [Authorize]
-    public class EventApiController : Controller
+    public class AdminApiController : Controller
     {
         private readonly IRepository<Event> _events;
 
-        public EventApiController(IRepository<Event> events)
+        public AdminApiController(IRepository<Event> events)
         {
             _events = events;
         }

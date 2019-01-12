@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 using Rotativa.AspNetCore.Options;
 
-namespace PhotosOfUs.Pages.Events
+namespace PhotosOfUs.Pages.Admin
 {
     public class CardsModel : PageModel
     {

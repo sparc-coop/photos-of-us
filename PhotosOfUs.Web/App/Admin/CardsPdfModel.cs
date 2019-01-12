@@ -1,6 +1,6 @@
 using PhotosOfUs.Model.Models;
 
-namespace PhotosOfUs.Pages.Events
+namespace PhotosOfUs.Pages.Admin
 {
     public class CardsPdfModel
     {

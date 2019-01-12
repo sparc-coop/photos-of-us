@@ -5,17 +5,17 @@ using PhotosOfUs.Model.Models;
 using Kuvio.Kernel.Auth;
 using Microsoft.AspNetCore.Authorization;
 
-namespace PhotosOfUs.Pages.Events
+namespace PhotosOfUs.Pages.Admin
 {
     [Authorize]
-    public class AdminIndexModel : PageModel
+    public class IndexModel : PageModel
     {
         private IRepository<User> _users;
 
         public string Name { get; set; }
         public int PhotographerId { get; set; }
 
-        public AdminIndexModel(IRepository<User> users)
+        public IndexModel(IRepository<User> users)
         {
             _users = users;
         }

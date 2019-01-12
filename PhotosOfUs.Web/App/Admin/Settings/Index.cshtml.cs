@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PhotosOfUs.Pages.Events
+namespace PhotosOfUs.Pages.Admin
 {
     public class SettingsModel : PageModel
     {
