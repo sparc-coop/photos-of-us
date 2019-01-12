@@ -5812,15 +5812,23 @@ tags-input .tag-item {
 
 .event-settings .preview > * {
   position: relative;
+  z-index: 10;
 }
 
-.event-settings .preview .background {
+.event-settings .preview .background, .event-settings .preview .overlay {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: #f6ffff;
+  z-index: 4;
+}
+
+.event-settings .preview .overlay {
+  z-index: 5;
+  background-color: black;
+  opacity: 0.5;
 }
 
 .event-settings .preview h1 {

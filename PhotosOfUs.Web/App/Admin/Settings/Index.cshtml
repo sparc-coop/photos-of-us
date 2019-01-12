@@ -183,6 +183,7 @@ ViewData["Title"] = "Event Settings";
             <figure class="preview code-{{ settings.homepageTemplate }}" 
                 ng-style="{ 'background-image': settings.homepageTemplate == 2 && !settings.featuredImageUrl ? null : 'url(' + (settings.featuredImageUrl || '/images/BG2.png)') + ')' }">
                 <div class="background" ng-if="settings.homepageTemplate != 2 || !settings.featuredImageUrl"></div>
+                <div class="overlay" ng-style="{ opacity: settings.overlayOpacity / 100 }">{{ settings.overlayOpacity + '%' }}</div>
                 <h1>{{ settings.name || 'Event Name' }}</h1>
                 <hr />
                 <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
