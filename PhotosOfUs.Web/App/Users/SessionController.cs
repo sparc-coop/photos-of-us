@@ -26,7 +26,7 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult SignIn(string redirectUrl = null)
         {
-            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/");
+            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Index");
             if (redirectUrl == null) redirectUrl = Url.Page("/Admin/Index");
             
             return Challenge(
@@ -39,7 +39,7 @@ namespace PhotosOfUs.Web.Controllers
         public IActionResult SignInPhotographer()
         {
             if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Index");
-            var redirectUrl = Url.Page("/Events/Index");
+            var redirectUrl = Url.Page("/Admin/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.SignUpSignInPolicyIdPhotographer;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);

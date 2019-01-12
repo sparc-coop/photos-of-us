@@ -11,7 +11,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/PhotosOfUs.Web/bin/Debug/netcoreapp2.1/PhotosOfUs.Web.dll",
+            "program": "${workspaceFolder}/PhotosOfUs.Web/bin/Debug/netcoreapp2.2/PhotosOfUs.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PhotosOfUs.Web",
             "stopAtEntry": false,
