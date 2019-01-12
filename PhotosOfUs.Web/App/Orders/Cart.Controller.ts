@@ -12,7 +12,7 @@
 
         $scope.showPriceModal = () => {
             $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/PriceModal',
+                templateUrl: '/Admin/Modals/PriceModal',
                 controller: 'ModalController',
                 clickOutsideToClose: true
             });

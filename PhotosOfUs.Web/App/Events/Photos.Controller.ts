@@ -28,7 +28,7 @@ namespace PhotosOfUs {
 
         $scope.openUpload = (eventId: number) => {
             $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/UploadModal',
+                templateUrl: '/Admin/Modals/UploadModal',
                 controller: 'UploadModalCtrl',
                 locals: { eventId: eventId },
                 clickOutsideToClose: true
@@ -43,7 +43,7 @@ namespace PhotosOfUs {
                     angular.forEach($scope.codePhotos, item => $scope.selectedPhotos.push(item.Id));
                     $mdDialog.show({
                         locals: { selectedPhotos: $scope.selectedPhotos },
-                        templateUrl: '/Events/Admin/Modals/BulkEditModal',
+                        templateUrl: '/Admin/Modals/BulkEditModal',
                         controller: 'BulkEditModalCtrl',
                         clickOutsideToClose: true,
                     });

@@ -27,7 +27,7 @@ namespace PhotosOfUs.Web.Controllers
         public IActionResult SignIn(string redirectUrl = null)
         {
             if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/");
-            if (redirectUrl == null) redirectUrl = Url.Page("/Events/Admin/Index");
+            if (redirectUrl == null) redirectUrl = Url.Page("/Admin/Index");
             
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
@@ -38,7 +38,7 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult SignInPhotographer()
         {
-            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Events/Admin/Index");
+            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Index");
             var redirectUrl = Url.Page("/Events/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.SignUpSignInPolicyIdPhotographer;
@@ -49,7 +49,7 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword()
         {
-            var redirectUrl = Url.Page("/Events/Admin/Index");
+            var redirectUrl = Url.Page("/Admin/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.ResetPasswordPolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -58,7 +58,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var redirectUrl = Url.Page("/Events/Admin/Index");
+            var redirectUrl = Url.Page("/Admin/Index");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.EditProfilePolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);

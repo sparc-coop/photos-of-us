@@ -18,7 +18,7 @@ namespace PhotosOfUs {
 
         $scope.newFolderModal = () => {
             $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/NewFolderModal',
+                templateUrl: '/Admin/Modals/NewFolderModal',
                 controller: 'NewFolderModalCtrl',
                 locals: { folderId: null, folderName: null },
                 clickOutsideToClose: true,
@@ -27,7 +27,7 @@ namespace PhotosOfUs {
 
         $scope.renameFolderModal = (folder) => {
             $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/NewFolderModal',
+                templateUrl: '/Admin/Modals/NewFolderModal',
                 controller: 'NewFolderModalCtrl',
                 locals: { folderId: folder.Id, folderName: folder.Name },
                 clickOutsideToClose: true,
@@ -220,7 +220,7 @@ namespace PhotosOfUs {
 
                 $scope.newFolderModal = () => {
                     $mdDialog.show({
-                        templateUrl: '/Events/Admin/Modals/NewFolderModal',
+                        templateUrl: '/Admin/Modals/NewFolderModal',
                         controller: 'NewFolderModalCtrl',
                         locals: { folderId: null, folderName: null, user: $scope.user },
                         clickOutsideToClose: true,

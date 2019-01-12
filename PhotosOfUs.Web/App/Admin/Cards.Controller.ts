@@ -17,7 +17,7 @@
 
         $scope.exportMultipleCardsModal = () => {
             $mdDialog.show({
-                templateUrl: '/Events/Admin/Modals/MultipleCardsModal',
+                templateUrl: '/Admin/Modals/MultipleCardsModal',
                 scope: $scope,
                 clickOutsideToClose: true
             });
