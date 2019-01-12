@@ -80,15 +80,16 @@ ViewData["Title"] = "Event Settings";
                     </figure>
                     <div>
                         <button ngf-select ng-model="settings.featuredImage" accept="image/*">Select Image...</button>
+                        <div ng-show="settings.featuredImage">
                         <label>Overlay</label>
                         <p>
-                            Using an overlay can help brighten or darker your image. This can be helpful if
+                            Using an overlay can help brighten or darken your image. This can be helpful if
                             your template
                             has overlapping text, or your image has high contrast to the rest of your website.
                         </p>
                         <label>
                             Overlay Color
-                            <color-picker ng-model="settings.overlayColorCode" />
+                            <color-picker ng-model="settings.overlayColorCode" options="colorPickerOptions" />
                         </label>
                         <label>
                             Opacity
@@ -101,6 +102,7 @@ ViewData["Title"] = "Event Settings";
                                 }
                             </select>
                         </label>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -112,24 +114,24 @@ ViewData["Title"] = "Event Settings";
                 <div class="flex">
                     <label>
                         Background Color
-                        <color-picker ng-model="settings.backgroundColorCode" />
+                        <color-picker ng-model="settings.backgroundColorCode" options="colorPickerOptions" />
                     </label>
                     <label>
                         Accent Color
-                        <color-picker ng-model="settings.accentColorCode" />
+                        <color-picker ng-model="settings.accentColorCode" options="colorPickerOptions" />
                     </label>
                     <label>
                         Header Color
-                        <color-picker ng-model="settings.headerColorCode" />
+                        <color-picker ng-model="settings.headerColorCode" options="colorPickerOptions" />
                     </label>
                     <label>
                         Body Color
-                        <color-picker ng-model="settings.bodyColorCode" />
+                        <color-picker ng-model="settings.bodyColorCode" options="colorPickerOptions" />
                     </label>
                 </div>
             </section>
 
-            <section>
+            @*<section>
                 <h4>Content Separator</h4>
                 <p>
                     A small line between your title and description. Often used to help break up text, but not
@@ -155,23 +157,33 @@ ViewData["Title"] = "Event Settings";
                         <input type="number" class="input" ng-model="settings.SeparatorWidth" />
                     </label>
                 </div>
-            </section>
+            </section>*@
 
             <section>
                 <h4>Photos of Us Branding</h4>
                 <p>
                     Using the Photos of Us Branding allows you to print cards completely free! You can add your own
-                    branding
-                    to give your cards that extra pop!
+                    branding to give your cards that extra pop!
                 </p>
 
-                <div class="flex">
-                    <img src="~/images/account/dark branding@1x.png" />
-                    <img src="~/images/account/light branding@1x.png" />
-                    <img src="~/images/account/Remove Branding@1x.png" />
+                <div class="branding-selector">
+                    <figure ng-class="{ selected: settings.brandingStyle == 1 }" ng-click="settings.brandingStyle = 1">
+                        <img src="~/images/account/dark branding@1x.png" alt="Dark Branding" />
+                        <div class="check">&#10003;</div>
+                    </figure>
+                    <figure ng-class="{ selected: settings.brandingStyle == 2 }" ng-click="settings.brandingStyle = 2">
+                        <img src="~/images/account/light branding@1x.png" alt="Light Branding" />
+                        <div class="check">&#10003;</div>
+                    </figure>
+                    @*
+                    <figure ng-class="{ selected: settings.brandingStyle == 0 }" ng-click="settings.brandingStyle = 0">
+                        <img src="~/images/account/Remove Branding@1x.png" alt="No Branding" />
+                        <div class="check">&#10003;</div>
+                    </figure>
+                    *@
                 </div>
             </section>
-            <button ng-click="saveBrandSettings()">Save &amp; Create Event</button>
+            <button ng-click="save()" ng-disabled="!settings.name || !settings.url || !settings.description">Save &amp; Create Event</button>
         </div>
 
         <div class="right">
@@ -182,14 +194,18 @@ ViewData["Title"] = "Event Settings";
             </header>
             <figure class="preview code-{{ settings.homepageTemplate }}" 
                 ng-style="{ 'background-image': settings.homepageTemplate == 2 && !settings.featuredImageUrl ? null : 'url(' + (settings.featuredImageUrl || '/images/BG2.png)') + ')' }">
-                <div class="background" ng-if="settings.homepageTemplate != 2 || !settings.featuredImageUrl"></div>
-                <div class="overlay" ng-style="{ opacity: settings.overlayOpacity / 100 }">{{ settings.overlayOpacity + '%' }}</div>
-                <h1>{{ settings.name || 'Event Name' }}</h1>
-                <hr />
-                <p>{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
+                <div class="background" ng-style="{ 'background-color': settings.backgroundColorCode }" ng-if="settings.homepageTemplate != 2 || !settings.featuredImageUrl"></div>
+                <div class="overlay" ng-style="{ 'background-color': settings.overlayColorCode, opacity: settings.overlayOpacity / 100 }"></div>
+                <h1 ng-style="{ color: settings.headerColorCode }">{{ settings.name || 'Event Name' }}</h1>
+                <hr ng-style="{ 'border-top-color': settings.accentColorCode }" />
+                <p ng-style="{ color: settings.bodyColorCode }">{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
                 <div class="enter-code">
-                    <input placeholder="Enter Your Code" />
-                    <button type="button">Go!</button>
+                    <input ng-style="{ 'border-color': settings.accentColorCode }" placeholder="Enter Your Code" />
+                    <button type="button" ng-style="{ 'background-color': settings.accentColorCode }">Go!</button>
+                </div>
+                <div class="branding">
+                    <img src="~/images/account/dark branding@1x.png" ng-if="settings.brandingStyle === 1" />
+                    <img src="~/images/account/light branding@1x.png" ng-if="settings.brandingStyle === 2" />
                 </div>
             </figure>
         </div>

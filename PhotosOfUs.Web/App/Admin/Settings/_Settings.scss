@@ -26,6 +26,31 @@
         }
     }
 
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .branding-selector {
+        display: flex;
+        flex-wrap: wrap;
+        figure {
+            margin: 0 40px 20px 0;
+            position: relative;
+            outline: none;
+
+            .check {
+                top: 50%;
+                margin-top: -15px;
+            }
+            &.selected {
+                .check {
+                    display: block;
+                }
+            }
+        }
+    }
+
     section {
         margin-bottom: 120px;
     }
@@ -43,6 +68,21 @@
         padding-left: 140px;
     }
 
+    .check {
+        display: none;
+        position: absolute;
+        top: -8px;
+        right: -11px;
+        border-radius: 20px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        color: white;
+        background-color: #43c6ba;
+        line-height: 20px;
+        font-size: 16px;
+    }
+
     .homepage-template {
         display: flex;
         align-items: flex-start;
@@ -56,21 +96,6 @@
             vertical-align: top;
             position: relative;
             outline: none;
-
-            .check {
-                display: none;
-                position: absolute;
-                top: -8px;
-                right: -11px;
-                border-radius: 20px;
-                height: 20px;
-                width: 20px;
-                text-align: center;
-                color: white;
-                background-color: #43c6ba;
-                line-height: 20px;
-                font-size: 16px;
-            }
 
             img {
                 max-width: 100%;
@@ -130,7 +155,7 @@
         .overlay {
             z-index: 5;
             background-color: black;
-            opacity: 0.5;
+            opacity: 0;
         }
 
         h1 {
@@ -177,12 +202,30 @@
             border-radius: 0 3px 3px 0;
         }
 
+        .branding {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            margin-left: -27px;
+            img {
+                width: 54px;
+                height: auto;
+            }
+        }
+
         &.code-0 {
             padding-right: 55%;
+            padding-left: 22px;
             align-items: flex-start;
 
             .background {
                 right: 50%;
+                z-index: 9;
+            }
+
+            .branding {
+                margin-left: 0;
+                left: 22px;
             }
         }
 
@@ -192,6 +235,13 @@
 
             .background {
                 left: 50%;
+                z-index: 9;
+            }
+
+            .branding {
+                margin-left: 0;
+                right: 22px;
+                left: auto;
             }
         }
     }

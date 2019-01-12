@@ -24,7 +24,9 @@
       "node_modules/imagesloaded/imagesloaded.pkgd.js",
       "node_modules/masonry-layout/dist/masonry.pkgd.js",
       "node_modules/ng-pattern-restrict/src/ng-pattern-restrict.js",
-      "node_modules/ng-file-upload/dist/ng-file-upload.js"
+      "node_modules/ng-file-upload/dist/ng-file-upload.js",
+      "node_modules/tinycolor2/tinycolor.js",
+      "node_modules/angularjs-color-picker/dist/angularjs-color-picker.js"
     ]
   },
   {
@@ -33,7 +35,8 @@
       "node_modules/angular-material/angular-material.min.css",
       "node_modules/shepherd.js/dist/css/shepherd-theme-arrows.css",
       "node_modules/ng-tags-input/build/ng-tags-input.min.css",
-      "node_modules/sweetalert2/dist/sweetalert2.min.css"
+      "node_modules/sweetalert2/dist/sweetalert2.min.css",
+      "node_modules/angularjs-color-picker/dist/angularjs-color-picker.min.css"
     ]
   }
 ]

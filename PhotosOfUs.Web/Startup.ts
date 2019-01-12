@@ -8,7 +8,8 @@
         'ngTagsInput',
         'angular.filter',
         'ngPatternRestrict',
-        'ngFileUpload'
+        'ngFileUpload',
+        'color.picker'
     ]);
 
     // Register NSwag APIs

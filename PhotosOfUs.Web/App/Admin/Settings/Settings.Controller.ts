@@ -1,18 +1,36 @@
+
 namespace PhotosOfUs {
-    angular.module('app').controller('SettingsCtrl', ['$scope', 'Upload', '$timeout', ($scope, Upload, $timeout) => {
-        $scope.settings = {
-            homepageTemplate: 2
+    angular.module('app').controller('SettingsCtrl', ['$scope', 'Upload', 'EventApiClient', '$window',
+     ($scope, Upload, EventApiClient: EventApiClient, $window) => {
+        $scope.settings = <IEvent>{
+            eventId: null,
+            createdDate: null,
+            overlayOpacity: null,
+            separatorThickness: null,
+            separatorWidth: null,
+            homepageTemplate: '2',
+            headerColorCode: '#000000',
+            accentColorCode: '#ff6060',
+            backgroundColorCode: '#f6ffff',
+            bodyColorCode: '#000000',
+            overlayColorCode: '#000000',
+            brandingStyle: 1
+        };
+
+        $scope.colorPickerOptions = {
+            format: 'hex8String',
+            case: 'lower'
         };
 
         $scope.$watch('settings.featuredImage', () => {
             if ($scope.settings.featuredImage && !$scope.settings.featuredImage.error) {
                 Upload.upload({
-                    url: '/api/Admin/Photos',
+                    url: '/api/Event/Photos',
                     data: {
                       file: $scope.settings.featuredImage
                     }
                 }).then(resp => {
-                    $scope.settings.featuredImageUrl = resp.data.Url;
+                    $scope.settings.featuredImageUrl = resp.data.url;
                 }, null, evt => {
                     const progressPercentage = 100.0 * evt.loaded / evt.total;
                     console.log('progress: ' + progressPercentage +
@@ -25,6 +43,10 @@ namespace PhotosOfUs {
             $scope.settings.featuredImageUrl = null;
             $scope.settings.featuredImage = null;
             $event.stopPropagation();
+        };
+
+        $scope.save = () => {
+            EventApiClient.save($scope.settings).then(x => $window.location.href = '/Admin/Cards/' + x.data);
         };
     }]);
 }

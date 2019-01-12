@@ -7,7 +7,7 @@
         $scope.close = () => $mdDialog.hide();
 
         const uploader = $scope.uploader = new FileUploader({
-            url: '/api/Admin/' + eventId + '/Photos'
+            url: 'api/Event/' + eventId + '/Photos'
         });
 
         $scope.$watch(function () {

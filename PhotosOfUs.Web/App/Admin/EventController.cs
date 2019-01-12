@@ -19,13 +19,13 @@ using System.Threading.Tasks;
 namespace PhotosOfUs.Web.Controllers.API
 {
     [Produces("application/json")]
-    [Route("api/Admin")]
+    [Route("api/Event")]
     [Authorize]
-    public class AdminApiController : Controller
+    public class EventApiController : Controller
     {
         private readonly IRepository<Event> _events;
 
-        public AdminApiController(IRepository<Event> events)
+        public EventApiController(IRepository<Event> events)
         {
             _events = events;
         }
@@ -35,6 +35,15 @@ namespace PhotosOfUs.Web.Controllers.API
         public Event Get(int eventId)
         {
             return _events.Find(x => x.EventId == eventId);
+        }
+
+        [HttpPost]
+        [Route("Events")]
+        public IActionResult Save([FromBody]Event evt)
+        {
+            _events.Add(evt);
+            _events.Commit();
+            return Ok(evt.EventId);
         }
 
         [HttpGet]

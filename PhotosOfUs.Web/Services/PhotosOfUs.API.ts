@@ -140,7 +140,7 @@ export class EventApiClient {
     }
 
     get(eventId: number): ng.IPromise<Event | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}";
+        let url_ = this.baseUrl + "/api/Event/{eventId}";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -181,8 +181,52 @@ export class EventApiClient {
         return this.q.resolve<Event | null>(<any>null);
     }
 
+    save(evt: Event): ng.IPromise<FileResponse | null> {
+        let url_ = this.baseUrl + "/api/Event/Events";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(evt);
+
+        var options_ = <ng.IRequestConfig>{
+            url: url_,
+            method: "POST",
+            responseType: "arraybuffer",
+            data: content_,
+            transformResponse: [], 
+            headers: {
+                "Content-Type": "application/json", 
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http(options_).then((_response) => {
+            return this.processSave(_response);
+        }, (_response) => {
+            if (_response.status)
+                return this.processSave(_response);
+            throw _response;
+        });
+    }
+
+    protected processSave(response: any): ng.IPromise<FileResponse | null> {
+        const status = response.status; 
+
+        let _headers: any = {};
+        if (status === 200 || status === 206) {
+            const contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
+            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
+            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
+            return this.q.resolve({ fileName: fileName, status: status, data: new Blob([response.data]), headers: _headers });
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(new Blob([response]), this.q).then(_responseText => {
+            return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return this.q.resolve<FileResponse | null>(<any>null);
+    }
+
     getEventCards(eventId: number): ng.IPromise<Card[] | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/Cards";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -228,7 +272,7 @@ export class EventApiClient {
     }
 
     createEventCards(eventId: number, quantity: number): ng.IPromise<Card[] | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/Cards";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/Cards";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -278,7 +322,7 @@ export class EventApiClient {
     }
 
     getCodePhotos(eventId: number, code: string | null): ng.IPromise<PhotoViewModel[] | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/Cards/{code}";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/Cards/{code}";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -327,7 +371,7 @@ export class EventApiClient {
     }
 
     uploadPhoto(eventId: number, photoCode: string | null | undefined, contentType: string | null | undefined, contentDisposition: string | null | undefined, headers: IHeaderDictionary | null | undefined, length: number | undefined, name: string | null | undefined, fileName: string | null | undefined): ng.IPromise<UploadPhotoCommandResult | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/Photos?";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/Photos?";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -384,8 +428,61 @@ export class EventApiClient {
         return this.q.resolve<UploadPhotoCommandResult | null>(<any>null);
     }
 
+    uploadCoverPhoto(contentType: string | null | undefined, contentDisposition: string | null | undefined, headers: IHeaderDictionary | null | undefined, length: number | undefined, name: string | null | undefined, fileName: string | null | undefined): ng.IPromise<UploadPhotoCommandResult | null> {
+        let url_ = this.baseUrl + "/api/Event/Photos?";
+        if (contentType !== undefined)
+            url_ += "ContentType=" + encodeURIComponent("" + contentType) + "&"; 
+        if (contentDisposition !== undefined)
+            url_ += "ContentDisposition=" + encodeURIComponent("" + contentDisposition) + "&"; 
+        if (headers !== undefined)
+            url_ += "Headers=" + encodeURIComponent("" + headers) + "&"; 
+        if (length === null)
+            throw new Error("The parameter 'length' cannot be null.");
+        else if (length !== undefined)
+            url_ += "Length=" + encodeURIComponent("" + length) + "&"; 
+        if (name !== undefined)
+            url_ += "Name=" + encodeURIComponent("" + name) + "&"; 
+        if (fileName !== undefined)
+            url_ += "FileName=" + encodeURIComponent("" + fileName) + "&"; 
+        url_ = url_.replace(/[?&]$/, "");
+
+        var options_ = <ng.IRequestConfig>{
+            url: url_,
+            method: "POST",
+            transformResponse: [], 
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http(options_).then((_response) => {
+            return this.processUploadCoverPhoto(_response);
+        }, (_response) => {
+            if (_response.status)
+                return this.processUploadCoverPhoto(_response);
+            throw _response;
+        });
+    }
+
+    protected processUploadCoverPhoto(response: any): ng.IPromise<UploadPhotoCommandResult | null> {
+        const status = response.status; 
+
+        let _headers: any = {};
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? UploadPhotoCommandResult.fromJS(resultData200) : <any>null;
+            return this.q.resolve(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return this.q.resolve<UploadPhotoCommandResult | null>(<any>null);
+    }
+
     getAllTags(eventId: number): ng.IPromise<TagViewModel[] | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/Tags";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/Tags";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -431,7 +528,7 @@ export class EventApiClient {
     }
 
     bulkEdit(eventId: number, photoIds: number[] | null | undefined): ng.IPromise<TagViewModel[] | null> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/BulkEdit?";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -479,7 +576,7 @@ export class EventApiClient {
     }
 
     bulkEditSave(eventId: number, photoIds: number[] | null | undefined, model: BulkEditModel): ng.IPromise<void> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/BulkEdit?";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -523,7 +620,7 @@ export class EventApiClient {
     }
 
     bulkDelete(eventId: number, photoIds: number[] | null | undefined): ng.IPromise<void> {
-        let url_ = this.baseUrl + "/api/Events/{eventId}/BulkEdit?";
+        let url_ = this.baseUrl + "/api/Event/{eventId}/BulkEdit?";
         if (eventId === undefined || eventId === null)
             throw new Error("The parameter 'eventId' must be defined.");
         url_ = url_.replace("{eventId}", encodeURIComponent("" + eventId)); 
@@ -563,7 +660,7 @@ export class EventApiClient {
     }
 
     cardsPdf(json: string | null | undefined): ng.IPromise<FileResponse | null> {
-        let url_ = this.baseUrl + "/api/Events/CardsPdf?";
+        let url_ = this.baseUrl + "/api/Event/CardsPdf?";
         if (json !== undefined)
             url_ += "json=" + encodeURIComponent("" + json) + "&"; 
         url_ = url_.replace(/[?&]$/, "");
@@ -1177,6 +1274,7 @@ export class UserApiClient {
 export class UploadPhotoCommandResult implements IUploadPhotoCommandResult {
     suggestedTags?: string[] | null;
     code?: string | null;
+    url?: string | null;
     isValid!: boolean;
 
     constructor(data?: IUploadPhotoCommandResult) {
@@ -1190,13 +1288,14 @@ export class UploadPhotoCommandResult implements IUploadPhotoCommandResult {
 
     init(data?: any) {
         if (data) {
-            if (data["SuggestedTags"] && data["SuggestedTags"].constructor === Array) {
+            if (data["suggestedTags"] && data["suggestedTags"].constructor === Array) {
                 this.suggestedTags = [];
-                for (let item of data["SuggestedTags"])
+                for (let item of data["suggestedTags"])
                     this.suggestedTags.push(item);
             }
-            this.code = data["Code"] !== undefined ? data["Code"] : <any>null;
-            this.isValid = data["IsValid"] !== undefined ? data["IsValid"] : <any>null;
+            this.code = data["code"] !== undefined ? data["code"] : <any>null;
+            this.url = data["url"] !== undefined ? data["url"] : <any>null;
+            this.isValid = data["isValid"] !== undefined ? data["isValid"] : <any>null;
         }
     }
 
@@ -1210,12 +1309,13 @@ export class UploadPhotoCommandResult implements IUploadPhotoCommandResult {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         if (this.suggestedTags && this.suggestedTags.constructor === Array) {
-            data["SuggestedTags"] = [];
+            data["suggestedTags"] = [];
             for (let item of this.suggestedTags)
-                data["SuggestedTags"].push(item);
+                data["suggestedTags"].push(item);
         }
-        data["Code"] = this.code !== undefined ? this.code : <any>null;
-        data["IsValid"] = this.isValid !== undefined ? this.isValid : <any>null;
+        data["code"] = this.code !== undefined ? this.code : <any>null;
+        data["url"] = this.url !== undefined ? this.url : <any>null;
+        data["isValid"] = this.isValid !== undefined ? this.isValid : <any>null;
         return data; 
     }
 }
@@ -1223,6 +1323,7 @@ export class UploadPhotoCommandResult implements IUploadPhotoCommandResult {
 export interface IUploadPhotoCommandResult {
     suggestedTags?: string[] | null;
     code?: string | null;
+    url?: string | null;
     isValid: boolean;
 }
 
@@ -1244,12 +1345,12 @@ export abstract class IHeaderDictionary implements IIHeaderDictionary {
 
     init(data?: any) {
         if (data) {
-            if (data["Item"] && data["Item"].constructor === Array) {
+            if (data["item"] && data["item"].constructor === Array) {
                 this.item = [];
-                for (let item of data["Item"])
+                for (let item of data["item"])
                     this.item.push(item);
             }
-            this.contentLength = data["ContentLength"] !== undefined ? data["ContentLength"] : <any>null;
+            this.contentLength = data["contentLength"] !== undefined ? data["contentLength"] : <any>null;
         }
     }
 
@@ -1261,11 +1362,11 @@ export abstract class IHeaderDictionary implements IIHeaderDictionary {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         if (this.item && this.item.constructor === Array) {
-            data["Item"] = [];
+            data["item"] = [];
             for (let item of this.item)
-                data["Item"].push(item);
+                data["item"].push(item);
         }
-        data["ContentLength"] = this.contentLength !== undefined ? this.contentLength : <any>null;
+        data["contentLength"] = this.contentLength !== undefined ? this.contentLength : <any>null;
         return data; 
     }
 }
@@ -1311,37 +1412,37 @@ export class Event implements IEvent {
 
     init(data?: any) {
         if (data) {
-            this.eventId = data["EventId"] !== undefined ? data["EventId"] : <any>null;
-            this.userId = data["UserId"] !== undefined ? data["UserId"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            this.url = data["Url"] !== undefined ? data["Url"] : <any>null;
-            this.pageTitle = data["PageTitle"] !== undefined ? data["PageTitle"] : <any>null;
-            this.description = data["Description"] !== undefined ? data["Description"] : <any>null;
-            this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : <any>null;
-            this.homepageTemplate = data["HomepageTemplate"] !== undefined ? data["HomepageTemplate"] : <any>null;
-            this.personalLogoUrl = data["PersonalLogoUrl"] !== undefined ? data["PersonalLogoUrl"] : <any>null;
-            this.featuredImageUrl = data["FeaturedImageUrl"] !== undefined ? data["FeaturedImageUrl"] : <any>null;
-            this.overlayColorCode = data["OverlayColorCode"] !== undefined ? data["OverlayColorCode"] : <any>null;
-            this.overlayOpacity = data["OverlayOpacity"] !== undefined ? data["OverlayOpacity"] : <any>null;
-            this.accentColorCode = data["AccentColorCode"] !== undefined ? data["AccentColorCode"] : <any>null;
-            this.backgroundColorCode = data["BackgroundColorCode"] !== undefined ? data["BackgroundColorCode"] : <any>null;
-            this.headerColorCode = data["HeaderColorCode"] !== undefined ? data["HeaderColorCode"] : <any>null;
-            this.bodyColorCode = data["BodyColorCode"] !== undefined ? data["BodyColorCode"] : <any>null;
-            this.separatorStyle = data["SeparatorStyle"] !== undefined ? data["SeparatorStyle"] : <any>null;
-            this.separatorThickness = data["SeparatorThickness"] !== undefined ? data["SeparatorThickness"] : <any>null;
-            this.separatorWidth = data["SeparatorWidth"] !== undefined ? data["SeparatorWidth"] : <any>null;
-            this.brandingStyle = data["BrandingStyle"] !== undefined ? data["BrandingStyle"] : <any>null;
-            if (data["Cards"] && data["Cards"].constructor === Array) {
+            this.eventId = data["eventId"] !== undefined ? data["eventId"] : <any>null;
+            this.userId = data["userId"] !== undefined ? data["userId"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            this.url = data["url"] !== undefined ? data["url"] : <any>null;
+            this.pageTitle = data["pageTitle"] !== undefined ? data["pageTitle"] : <any>null;
+            this.description = data["description"] !== undefined ? data["description"] : <any>null;
+            this.createdDate = data["createdDate"] ? new Date(data["createdDate"].toString()) : <any>null;
+            this.homepageTemplate = data["homepageTemplate"] !== undefined ? data["homepageTemplate"] : <any>null;
+            this.personalLogoUrl = data["personalLogoUrl"] !== undefined ? data["personalLogoUrl"] : <any>null;
+            this.featuredImageUrl = data["featuredImageUrl"] !== undefined ? data["featuredImageUrl"] : <any>null;
+            this.overlayColorCode = data["overlayColorCode"] !== undefined ? data["overlayColorCode"] : <any>null;
+            this.overlayOpacity = data["overlayOpacity"] !== undefined ? data["overlayOpacity"] : <any>null;
+            this.accentColorCode = data["accentColorCode"] !== undefined ? data["accentColorCode"] : <any>null;
+            this.backgroundColorCode = data["backgroundColorCode"] !== undefined ? data["backgroundColorCode"] : <any>null;
+            this.headerColorCode = data["headerColorCode"] !== undefined ? data["headerColorCode"] : <any>null;
+            this.bodyColorCode = data["bodyColorCode"] !== undefined ? data["bodyColorCode"] : <any>null;
+            this.separatorStyle = data["separatorStyle"] !== undefined ? data["separatorStyle"] : <any>null;
+            this.separatorThickness = data["separatorThickness"] !== undefined ? data["separatorThickness"] : <any>null;
+            this.separatorWidth = data["separatorWidth"] !== undefined ? data["separatorWidth"] : <any>null;
+            this.brandingStyle = data["brandingStyle"] !== undefined ? data["brandingStyle"] : <any>null;
+            if (data["cards"] && data["cards"].constructor === Array) {
                 this.cards = [];
-                for (let item of data["Cards"])
+                for (let item of data["cards"])
                     this.cards.push(Card.fromJS(item));
             }
-            if (data["Photos"] && data["Photos"].constructor === Array) {
+            if (data["photos"] && data["photos"].constructor === Array) {
                 this.photos = [];
-                for (let item of data["Photos"])
+                for (let item of data["photos"])
                     this.photos.push(Photo.fromJS(item));
             }
-            this.user = data["User"] ? User.fromJS(data["User"]) : <any>null;
+            this.user = data["user"] ? User.fromJS(data["user"]) : <any>null;
         }
     }
 
@@ -1354,37 +1455,37 @@ export class Event implements IEvent {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["EventId"] = this.eventId !== undefined ? this.eventId : <any>null;
-        data["UserId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
-        data["Url"] = this.url !== undefined ? this.url : <any>null;
-        data["PageTitle"] = this.pageTitle !== undefined ? this.pageTitle : <any>null;
-        data["Description"] = this.description !== undefined ? this.description : <any>null;
-        data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
-        data["HomepageTemplate"] = this.homepageTemplate !== undefined ? this.homepageTemplate : <any>null;
-        data["PersonalLogoUrl"] = this.personalLogoUrl !== undefined ? this.personalLogoUrl : <any>null;
-        data["FeaturedImageUrl"] = this.featuredImageUrl !== undefined ? this.featuredImageUrl : <any>null;
-        data["OverlayColorCode"] = this.overlayColorCode !== undefined ? this.overlayColorCode : <any>null;
-        data["OverlayOpacity"] = this.overlayOpacity !== undefined ? this.overlayOpacity : <any>null;
-        data["AccentColorCode"] = this.accentColorCode !== undefined ? this.accentColorCode : <any>null;
-        data["BackgroundColorCode"] = this.backgroundColorCode !== undefined ? this.backgroundColorCode : <any>null;
-        data["HeaderColorCode"] = this.headerColorCode !== undefined ? this.headerColorCode : <any>null;
-        data["BodyColorCode"] = this.bodyColorCode !== undefined ? this.bodyColorCode : <any>null;
-        data["SeparatorStyle"] = this.separatorStyle !== undefined ? this.separatorStyle : <any>null;
-        data["SeparatorThickness"] = this.separatorThickness !== undefined ? this.separatorThickness : <any>null;
-        data["SeparatorWidth"] = this.separatorWidth !== undefined ? this.separatorWidth : <any>null;
-        data["BrandingStyle"] = this.brandingStyle !== undefined ? this.brandingStyle : <any>null;
+        data["eventId"] = this.eventId !== undefined ? this.eventId : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["url"] = this.url !== undefined ? this.url : <any>null;
+        data["pageTitle"] = this.pageTitle !== undefined ? this.pageTitle : <any>null;
+        data["description"] = this.description !== undefined ? this.description : <any>null;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
+        data["homepageTemplate"] = this.homepageTemplate !== undefined ? this.homepageTemplate : <any>null;
+        data["personalLogoUrl"] = this.personalLogoUrl !== undefined ? this.personalLogoUrl : <any>null;
+        data["featuredImageUrl"] = this.featuredImageUrl !== undefined ? this.featuredImageUrl : <any>null;
+        data["overlayColorCode"] = this.overlayColorCode !== undefined ? this.overlayColorCode : <any>null;
+        data["overlayOpacity"] = this.overlayOpacity !== undefined ? this.overlayOpacity : <any>null;
+        data["accentColorCode"] = this.accentColorCode !== undefined ? this.accentColorCode : <any>null;
+        data["backgroundColorCode"] = this.backgroundColorCode !== undefined ? this.backgroundColorCode : <any>null;
+        data["headerColorCode"] = this.headerColorCode !== undefined ? this.headerColorCode : <any>null;
+        data["bodyColorCode"] = this.bodyColorCode !== undefined ? this.bodyColorCode : <any>null;
+        data["separatorStyle"] = this.separatorStyle !== undefined ? this.separatorStyle : <any>null;
+        data["separatorThickness"] = this.separatorThickness !== undefined ? this.separatorThickness : <any>null;
+        data["separatorWidth"] = this.separatorWidth !== undefined ? this.separatorWidth : <any>null;
+        data["brandingStyle"] = this.brandingStyle !== undefined ? this.brandingStyle : <any>null;
         if (this.cards && this.cards.constructor === Array) {
-            data["Cards"] = [];
+            data["cards"] = [];
             for (let item of this.cards)
-                data["Cards"].push(item.toJSON());
+                data["cards"].push(item.toJSON());
         }
         if (this.photos && this.photos.constructor === Array) {
-            data["Photos"] = [];
+            data["photos"] = [];
             for (let item of this.photos)
-                data["Photos"].push(item.toJSON());
+                data["photos"].push(item.toJSON());
         }
-        data["User"] = this.user ? this.user.toJSON() : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
         return data; 
     }
 }
@@ -1433,13 +1534,13 @@ export class Card implements ICard {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.eventId = data["EventId"] !== undefined ? data["EventId"] : <any>null;
-            this.code = data["Code"] !== undefined ? data["Code"] : <any>null;
-            this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : <any>null;
-            if (data["Photos"] && data["Photos"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.eventId = data["eventId"] !== undefined ? data["eventId"] : <any>null;
+            this.code = data["code"] !== undefined ? data["code"] : <any>null;
+            this.createdDate = data["createdDate"] ? new Date(data["createdDate"].toString()) : <any>null;
+            if (data["photos"] && data["photos"].constructor === Array) {
                 this.photos = [];
-                for (let item of data["Photos"])
+                for (let item of data["photos"])
                     this.photos.push(Photo.fromJS(item));
             }
         }
@@ -1454,14 +1555,14 @@ export class Card implements ICard {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["EventId"] = this.eventId !== undefined ? this.eventId : <any>null;
-        data["Code"] = this.code !== undefined ? this.code : <any>null;
-        data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["eventId"] = this.eventId !== undefined ? this.eventId : <any>null;
+        data["code"] = this.code !== undefined ? this.code : <any>null;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
         if (this.photos && this.photos.constructor === Array) {
-            data["Photos"] = [];
+            data["photos"] = [];
             for (let item of this.photos)
-                data["Photos"].push(item.toJSON());
+                data["photos"].push(item.toJSON());
         }
         return data; 
     }
@@ -1508,34 +1609,34 @@ export class Photo implements IPhoto {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : <any>null;
-            this.url = data["Url"] !== undefined ? data["Url"] : <any>null;
-            this.price = data["Price"] !== undefined ? data["Price"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            this.uploadDate = data["UploadDate"] ? new Date(data["UploadDate"].toString()) : <any>null;
-            this.publicProfile = data["PublicProfile"] !== undefined ? data["PublicProfile"] : <any>null;
-            this.isDeleted = data["IsDeleted"] !== undefined ? data["IsDeleted"] : <any>null;
-            this.eventId = data["EventId"] !== undefined ? data["EventId"] : <any>null;
-            this.cardId = data["CardId"] !== undefined ? data["CardId"] : <any>null;
-            this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : <any>null;
-            if (data["PhotoTag"] && data["PhotoTag"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.photographerId = data["photographerId"] !== undefined ? data["photographerId"] : <any>null;
+            this.url = data["url"] !== undefined ? data["url"] : <any>null;
+            this.price = data["price"] !== undefined ? data["price"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            this.uploadDate = data["uploadDate"] ? new Date(data["uploadDate"].toString()) : <any>null;
+            this.publicProfile = data["publicProfile"] !== undefined ? data["publicProfile"] : <any>null;
+            this.isDeleted = data["isDeleted"] !== undefined ? data["isDeleted"] : <any>null;
+            this.eventId = data["eventId"] !== undefined ? data["eventId"] : <any>null;
+            this.cardId = data["cardId"] !== undefined ? data["cardId"] : <any>null;
+            this.photographer = data["photographer"] ? User.fromJS(data["photographer"]) : <any>null;
+            if (data["photoTag"] && data["photoTag"].constructor === Array) {
                 this.photoTag = [];
-                for (let item of data["PhotoTag"])
+                for (let item of data["photoTag"])
                     this.photoTag.push(PhotoTag.fromJS(item));
             }
-            if (data["PrintType"] && data["PrintType"].constructor === Array) {
+            if (data["printType"] && data["printType"].constructor === Array) {
                 this.printType = [];
-                for (let item of data["PrintType"])
+                for (let item of data["printType"])
                     this.printType.push(PrintType.fromJS(item));
             }
-            this.filename = data["Filename"] !== undefined ? data["Filename"] : <any>null;
-            this.folderName = data["FolderName"] !== undefined ? data["FolderName"] : <any>null;
-            this.fileSize = data["FileSize"] !== undefined ? data["FileSize"] : <any>null;
-            this.resolution = data["Resolution"] !== undefined ? data["Resolution"] : <any>null;
-            this.stream = data["Stream"] ? Stream.fromJS(data["Stream"]) : <any>null;
-            this.thumbnailUrl = data["ThumbnailUrl"] !== undefined ? data["ThumbnailUrl"] : <any>null;
-            this.waterMarkUrl = data["WaterMarkUrl"] !== undefined ? data["WaterMarkUrl"] : <any>null;
+            this.filename = data["filename"] !== undefined ? data["filename"] : <any>null;
+            this.folderName = data["folderName"] !== undefined ? data["folderName"] : <any>null;
+            this.fileSize = data["fileSize"] !== undefined ? data["fileSize"] : <any>null;
+            this.resolution = data["resolution"] !== undefined ? data["resolution"] : <any>null;
+            this.stream = data["stream"] ? Stream.fromJS(data["stream"]) : <any>null;
+            this.thumbnailUrl = data["thumbnailUrl"] !== undefined ? data["thumbnailUrl"] : <any>null;
+            this.waterMarkUrl = data["waterMarkUrl"] !== undefined ? data["waterMarkUrl"] : <any>null;
         }
     }
 
@@ -1548,34 +1649,34 @@ export class Photo implements IPhoto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
-        data["Url"] = this.url !== undefined ? this.url : <any>null;
-        data["Price"] = this.price !== undefined ? this.price : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
-        data["UploadDate"] = this.uploadDate ? this.uploadDate.toISOString() : <any>null;
-        data["PublicProfile"] = this.publicProfile !== undefined ? this.publicProfile : <any>null;
-        data["IsDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
-        data["EventId"] = this.eventId !== undefined ? this.eventId : <any>null;
-        data["CardId"] = this.cardId !== undefined ? this.cardId : <any>null;
-        data["Photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["photographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
+        data["url"] = this.url !== undefined ? this.url : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["uploadDate"] = this.uploadDate ? this.uploadDate.toISOString() : <any>null;
+        data["publicProfile"] = this.publicProfile !== undefined ? this.publicProfile : <any>null;
+        data["isDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
+        data["eventId"] = this.eventId !== undefined ? this.eventId : <any>null;
+        data["cardId"] = this.cardId !== undefined ? this.cardId : <any>null;
+        data["photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
         if (this.photoTag && this.photoTag.constructor === Array) {
-            data["PhotoTag"] = [];
+            data["photoTag"] = [];
             for (let item of this.photoTag)
-                data["PhotoTag"].push(item.toJSON());
+                data["photoTag"].push(item.toJSON());
         }
         if (this.printType && this.printType.constructor === Array) {
-            data["PrintType"] = [];
+            data["printType"] = [];
             for (let item of this.printType)
-                data["PrintType"].push(item.toJSON());
+                data["printType"].push(item.toJSON());
         }
-        data["Filename"] = this.filename !== undefined ? this.filename : <any>null;
-        data["FolderName"] = this.folderName !== undefined ? this.folderName : <any>null;
-        data["FileSize"] = this.fileSize !== undefined ? this.fileSize : <any>null;
-        data["Resolution"] = this.resolution !== undefined ? this.resolution : <any>null;
-        data["Stream"] = this.stream ? this.stream.toJSON() : <any>null;
-        data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : <any>null;
-        data["WaterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : <any>null;
+        data["filename"] = this.filename !== undefined ? this.filename : <any>null;
+        data["folderName"] = this.folderName !== undefined ? this.folderName : <any>null;
+        data["fileSize"] = this.fileSize !== undefined ? this.fileSize : <any>null;
+        data["resolution"] = this.resolution !== undefined ? this.resolution : <any>null;
+        data["stream"] = this.stream ? this.stream.toJSON() : <any>null;
+        data["thumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : <any>null;
+        data["waterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : <any>null;
         return data; 
     }
 }
@@ -1645,59 +1746,59 @@ export class User implements IUser {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.azureId = data["AzureId"] !== undefined ? data["AzureId"] : <any>null;
-            this.email = data["Email"] !== undefined ? data["Email"] : <any>null;
-            this.firstName = data["FirstName"] !== undefined ? data["FirstName"] : <any>null;
-            this.lastName = data["LastName"] !== undefined ? data["LastName"] : <any>null;
-            this.displayName = data["DisplayName"] !== undefined ? data["DisplayName"] : <any>null;
-            this.jobPosition = data["JobPosition"] !== undefined ? data["JobPosition"] : <any>null;
-            this.bio = data["Bio"] !== undefined ? data["Bio"] : <any>null;
-            this.profilePhotoUrl = data["ProfilePhotoUrl"] !== undefined ? data["ProfilePhotoUrl"] : <any>null;
-            this.createDate = data["CreateDate"] ? new Date(data["CreateDate"].toString()) : <any>null;
-            this.isPhotographer = data["IsPhotographer"] !== undefined ? data["IsPhotographer"] : <any>null;
-            this.isDeactivated = data["IsDeactivated"] !== undefined ? data["IsDeactivated"] : <any>null;
-            this.facebook = data["Facebook"] !== undefined ? data["Facebook"] : <any>null;
-            this.twitter = data["Twitter"] !== undefined ? data["Twitter"] : <any>null;
-            this.instagram = data["Instagram"] !== undefined ? data["Instagram"] : <any>null;
-            this.dribbble = data["Dribbble"] !== undefined ? data["Dribbble"] : <any>null;
-            this.templateSelected = data["TemplateSelected"] !== undefined ? data["TemplateSelected"] : <any>null;
-            this.purchaseTour = data["PurchaseTour"] !== undefined ? data["PurchaseTour"] : <any>null;
-            this.dashboardTour = data["DashboardTour"] !== undefined ? data["DashboardTour"] : <any>null;
-            this.photoTour = data["PhotoTour"] !== undefined ? data["PhotoTour"] : <any>null;
-            this.fullName = data["FullName"] !== undefined ? data["FullName"] : <any>null;
-            if (data["SocialMedia"] && data["SocialMedia"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.azureId = data["azureId"] !== undefined ? data["azureId"] : <any>null;
+            this.email = data["email"] !== undefined ? data["email"] : <any>null;
+            this.firstName = data["firstName"] !== undefined ? data["firstName"] : <any>null;
+            this.lastName = data["lastName"] !== undefined ? data["lastName"] : <any>null;
+            this.displayName = data["displayName"] !== undefined ? data["displayName"] : <any>null;
+            this.jobPosition = data["jobPosition"] !== undefined ? data["jobPosition"] : <any>null;
+            this.bio = data["bio"] !== undefined ? data["bio"] : <any>null;
+            this.profilePhotoUrl = data["profilePhotoUrl"] !== undefined ? data["profilePhotoUrl"] : <any>null;
+            this.createDate = data["createDate"] ? new Date(data["createDate"].toString()) : <any>null;
+            this.isPhotographer = data["isPhotographer"] !== undefined ? data["isPhotographer"] : <any>null;
+            this.isDeactivated = data["isDeactivated"] !== undefined ? data["isDeactivated"] : <any>null;
+            this.facebook = data["facebook"] !== undefined ? data["facebook"] : <any>null;
+            this.twitter = data["twitter"] !== undefined ? data["twitter"] : <any>null;
+            this.instagram = data["instagram"] !== undefined ? data["instagram"] : <any>null;
+            this.dribbble = data["dribbble"] !== undefined ? data["dribbble"] : <any>null;
+            this.templateSelected = data["templateSelected"] !== undefined ? data["templateSelected"] : <any>null;
+            this.purchaseTour = data["purchaseTour"] !== undefined ? data["purchaseTour"] : <any>null;
+            this.dashboardTour = data["dashboardTour"] !== undefined ? data["dashboardTour"] : <any>null;
+            this.photoTour = data["photoTour"] !== undefined ? data["photoTour"] : <any>null;
+            this.fullName = data["fullName"] !== undefined ? data["fullName"] : <any>null;
+            if (data["socialMedia"] && data["socialMedia"].constructor === Array) {
                 this.socialMedia = [];
-                for (let item of data["SocialMedia"])
+                for (let item of data["socialMedia"])
                     this.socialMedia.push(SocialMedia.fromJS(item));
             }
-            if (data["Folders"] && data["Folders"].constructor === Array) {
+            if (data["folders"] && data["folders"].constructor === Array) {
                 this.folders = [];
-                for (let item of data["Folders"])
+                for (let item of data["folders"])
                     this.folders.push(Folder.fromJS(item));
             }
-            if (data["Order"] && data["Order"].constructor === Array) {
+            if (data["order"] && data["order"].constructor === Array) {
                 this.order = [];
-                for (let item of data["Order"])
+                for (let item of data["order"])
                     this.order.push(Order.fromJS(item));
             }
-            if (data["Photos"] && data["Photos"].constructor === Array) {
+            if (data["photos"] && data["photos"].constructor === Array) {
                 this.photos = [];
-                for (let item of data["Photos"])
+                for (let item of data["photos"])
                     this.photos.push(Photo.fromJS(item));
             }
-            if (data["PrintPrice"] && data["PrintPrice"].constructor === Array) {
+            if (data["printPrice"] && data["printPrice"].constructor === Array) {
                 this.printPrice = [];
-                for (let item of data["PrintPrice"])
+                for (let item of data["printPrice"])
                     this.printPrice.push(PrintPrice.fromJS(item));
             }
-            if (data["UserIdentities"] && data["UserIdentities"].constructor === Array) {
+            if (data["userIdentities"] && data["userIdentities"].constructor === Array) {
                 this.userIdentities = [];
-                for (let item of data["UserIdentities"])
+                for (let item of data["userIdentities"])
                     this.userIdentities.push(UserIdentity.fromJS(item));
             }
-            this.address = data["Address"] ? Address.fromJS(data["Address"]) : <any>null;
-            this.publicFolder = data["PublicFolder"] ? Folder.fromJS(data["PublicFolder"]) : <any>null;
+            this.address = data["address"] ? Address.fromJS(data["address"]) : <any>null;
+            this.publicFolder = data["publicFolder"] ? Folder.fromJS(data["publicFolder"]) : <any>null;
         }
     }
 
@@ -1710,59 +1811,59 @@ export class User implements IUser {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["AzureId"] = this.azureId !== undefined ? this.azureId : <any>null;
-        data["Email"] = this.email !== undefined ? this.email : <any>null;
-        data["FirstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["LastName"] = this.lastName !== undefined ? this.lastName : <any>null;
-        data["DisplayName"] = this.displayName !== undefined ? this.displayName : <any>null;
-        data["JobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
-        data["Bio"] = this.bio !== undefined ? this.bio : <any>null;
-        data["ProfilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
-        data["CreateDate"] = this.createDate ? this.createDate.toISOString() : <any>null;
-        data["IsPhotographer"] = this.isPhotographer !== undefined ? this.isPhotographer : <any>null;
-        data["IsDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
-        data["Facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
-        data["Twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
-        data["Instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
-        data["Dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
-        data["TemplateSelected"] = this.templateSelected !== undefined ? this.templateSelected : <any>null;
-        data["PurchaseTour"] = this.purchaseTour !== undefined ? this.purchaseTour : <any>null;
-        data["DashboardTour"] = this.dashboardTour !== undefined ? this.dashboardTour : <any>null;
-        data["PhotoTour"] = this.photoTour !== undefined ? this.photoTour : <any>null;
-        data["FullName"] = this.fullName !== undefined ? this.fullName : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["azureId"] = this.azureId !== undefined ? this.azureId : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["displayName"] = this.displayName !== undefined ? this.displayName : <any>null;
+        data["jobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
+        data["bio"] = this.bio !== undefined ? this.bio : <any>null;
+        data["profilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
+        data["createDate"] = this.createDate ? this.createDate.toISOString() : <any>null;
+        data["isPhotographer"] = this.isPhotographer !== undefined ? this.isPhotographer : <any>null;
+        data["isDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
+        data["facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
+        data["twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
+        data["instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
+        data["dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
+        data["templateSelected"] = this.templateSelected !== undefined ? this.templateSelected : <any>null;
+        data["purchaseTour"] = this.purchaseTour !== undefined ? this.purchaseTour : <any>null;
+        data["dashboardTour"] = this.dashboardTour !== undefined ? this.dashboardTour : <any>null;
+        data["photoTour"] = this.photoTour !== undefined ? this.photoTour : <any>null;
+        data["fullName"] = this.fullName !== undefined ? this.fullName : <any>null;
         if (this.socialMedia && this.socialMedia.constructor === Array) {
-            data["SocialMedia"] = [];
+            data["socialMedia"] = [];
             for (let item of this.socialMedia)
-                data["SocialMedia"].push(item.toJSON());
+                data["socialMedia"].push(item.toJSON());
         }
         if (this.folders && this.folders.constructor === Array) {
-            data["Folders"] = [];
+            data["folders"] = [];
             for (let item of this.folders)
-                data["Folders"].push(item.toJSON());
+                data["folders"].push(item.toJSON());
         }
         if (this.order && this.order.constructor === Array) {
-            data["Order"] = [];
+            data["order"] = [];
             for (let item of this.order)
-                data["Order"].push(item.toJSON());
+                data["order"].push(item.toJSON());
         }
         if (this.photos && this.photos.constructor === Array) {
-            data["Photos"] = [];
+            data["photos"] = [];
             for (let item of this.photos)
-                data["Photos"].push(item.toJSON());
+                data["photos"].push(item.toJSON());
         }
         if (this.printPrice && this.printPrice.constructor === Array) {
-            data["PrintPrice"] = [];
+            data["printPrice"] = [];
             for (let item of this.printPrice)
-                data["PrintPrice"].push(item.toJSON());
+                data["printPrice"].push(item.toJSON());
         }
         if (this.userIdentities && this.userIdentities.constructor === Array) {
-            data["UserIdentities"] = [];
+            data["userIdentities"] = [];
             for (let item of this.userIdentities)
-                data["UserIdentities"].push(item.toJSON());
+                data["userIdentities"].push(item.toJSON());
         }
-        data["Address"] = this.address ? this.address.toJSON() : <any>null;
-        data["PublicFolder"] = this.publicFolder ? this.publicFolder.toJSON() : <any>null;
+        data["address"] = this.address ? this.address.toJSON() : <any>null;
+        data["publicFolder"] = this.publicFolder ? this.publicFolder.toJSON() : <any>null;
         return data; 
     }
 }
@@ -1817,11 +1918,11 @@ export class SocialMedia implements ISocialMedia {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.azureId = data["AzureId"] !== undefined ? data["AzureId"] : <any>null;
-            this.type = data["Type"] !== undefined ? data["Type"] : <any>null;
-            this.link = data["Link"] !== undefined ? data["Link"] : <any>null;
-            this.username = data["Username"] !== undefined ? data["Username"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.azureId = data["azureId"] !== undefined ? data["azureId"] : <any>null;
+            this.type = data["type"] !== undefined ? data["type"] : <any>null;
+            this.link = data["link"] !== undefined ? data["link"] : <any>null;
+            this.username = data["username"] !== undefined ? data["username"] : <any>null;
         }
     }
 
@@ -1834,11 +1935,11 @@ export class SocialMedia implements ISocialMedia {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["AzureId"] = this.azureId !== undefined ? this.azureId : <any>null;
-        data["Type"] = this.type !== undefined ? this.type : <any>null;
-        data["Link"] = this.link !== undefined ? this.link : <any>null;
-        data["Username"] = this.username !== undefined ? this.username : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["azureId"] = this.azureId !== undefined ? this.azureId : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["link"] = this.link !== undefined ? this.link : <any>null;
+        data["username"] = this.username !== undefined ? this.username : <any>null;
         return data; 
     }
 }
@@ -1870,12 +1971,12 @@ export class Folder implements IFolder {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            this.isDeleted = data["IsDeleted"] !== undefined ? data["IsDeleted"] : <any>null;
-            this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : <any>null;
-            this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.photographerId = data["photographerId"] !== undefined ? data["photographerId"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            this.isDeleted = data["isDeleted"] !== undefined ? data["isDeleted"] : <any>null;
+            this.createdDate = data["createdDate"] ? new Date(data["createdDate"].toString()) : <any>null;
+            this.photographer = data["photographer"] ? User.fromJS(data["photographer"]) : <any>null;
         }
     }
 
@@ -1888,12 +1989,12 @@ export class Folder implements IFolder {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
-        data["IsDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
-        data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
-        data["Photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["photographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["isDeleted"] = this.isDeleted !== undefined ? this.isDeleted : <any>null;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
+        data["photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
         return data; 
     }
 }
@@ -1935,25 +2036,25 @@ export class Order implements IOrder {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.userId = data["UserId"] !== undefined ? data["UserId"] : <any>null;
-            this.shippingAddressId = data["ShippingAddressId"] !== undefined ? data["ShippingAddressId"] : <any>null;
-            this.billingAddressId = data["BillingAddressId"] !== undefined ? data["BillingAddressId"] : <any>null;
-            this.total = data["Total"] !== undefined ? data["Total"] : <any>null;
-            this.orderStatus = data["OrderStatus"] !== undefined ? data["OrderStatus"] : <any>null;
-            this.orderDate = data["OrderDate"] ? new Date(data["OrderDate"].toString()) : <any>null;
-            this.billingAddress = data["BillingAddress"] ? Address.fromJS(data["BillingAddress"]) : <any>null;
-            this.shippingAddress = data["ShippingAddress"] ? Address.fromJS(data["ShippingAddress"]) : <any>null;
-            this.user = data["User"] ? User.fromJS(data["User"]) : <any>null;
-            if (data["OrderDetail"] && data["OrderDetail"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.userId = data["userId"] !== undefined ? data["userId"] : <any>null;
+            this.shippingAddressId = data["shippingAddressId"] !== undefined ? data["shippingAddressId"] : <any>null;
+            this.billingAddressId = data["billingAddressId"] !== undefined ? data["billingAddressId"] : <any>null;
+            this.total = data["total"] !== undefined ? data["total"] : <any>null;
+            this.orderStatus = data["orderStatus"] !== undefined ? data["orderStatus"] : <any>null;
+            this.orderDate = data["orderDate"] ? new Date(data["orderDate"].toString()) : <any>null;
+            this.billingAddress = data["billingAddress"] ? Address.fromJS(data["billingAddress"]) : <any>null;
+            this.shippingAddress = data["shippingAddress"] ? Address.fromJS(data["shippingAddress"]) : <any>null;
+            this.user = data["user"] ? User.fromJS(data["user"]) : <any>null;
+            if (data["orderDetail"] && data["orderDetail"].constructor === Array) {
                 this.orderDetail = [];
-                for (let item of data["OrderDetail"])
+                for (let item of data["orderDetail"])
                     this.orderDetail.push(OrderDetail.fromJS(item));
             }
-            this.amount = data["Amount"] !== undefined ? data["Amount"] : <any>null;
-            this.totalPaid = data["TotalPaid"] !== undefined ? data["TotalPaid"] : <any>null;
-            this.earning = data["Earning"] !== undefined ? data["Earning"] : <any>null;
-            this.calculatedTotal = data["CalculatedTotal"] !== undefined ? data["CalculatedTotal"] : <any>null;
+            this.amount = data["amount"] !== undefined ? data["amount"] : <any>null;
+            this.totalPaid = data["totalPaid"] !== undefined ? data["totalPaid"] : <any>null;
+            this.earning = data["earning"] !== undefined ? data["earning"] : <any>null;
+            this.calculatedTotal = data["calculatedTotal"] !== undefined ? data["calculatedTotal"] : <any>null;
         }
     }
 
@@ -1966,25 +2067,25 @@ export class Order implements IOrder {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["UserId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["ShippingAddressId"] = this.shippingAddressId !== undefined ? this.shippingAddressId : <any>null;
-        data["BillingAddressId"] = this.billingAddressId !== undefined ? this.billingAddressId : <any>null;
-        data["Total"] = this.total !== undefined ? this.total : <any>null;
-        data["OrderStatus"] = this.orderStatus !== undefined ? this.orderStatus : <any>null;
-        data["OrderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>null;
-        data["BillingAddress"] = this.billingAddress ? this.billingAddress.toJSON() : <any>null;
-        data["ShippingAddress"] = this.shippingAddress ? this.shippingAddress.toJSON() : <any>null;
-        data["User"] = this.user ? this.user.toJSON() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["shippingAddressId"] = this.shippingAddressId !== undefined ? this.shippingAddressId : <any>null;
+        data["billingAddressId"] = this.billingAddressId !== undefined ? this.billingAddressId : <any>null;
+        data["total"] = this.total !== undefined ? this.total : <any>null;
+        data["orderStatus"] = this.orderStatus !== undefined ? this.orderStatus : <any>null;
+        data["orderDate"] = this.orderDate ? this.orderDate.toISOString() : <any>null;
+        data["billingAddress"] = this.billingAddress ? this.billingAddress.toJSON() : <any>null;
+        data["shippingAddress"] = this.shippingAddress ? this.shippingAddress.toJSON() : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
         if (this.orderDetail && this.orderDetail.constructor === Array) {
-            data["OrderDetail"] = [];
+            data["orderDetail"] = [];
             for (let item of this.orderDetail)
-                data["OrderDetail"].push(item.toJSON());
+                data["orderDetail"].push(item.toJSON());
         }
-        data["Amount"] = this.amount !== undefined ? this.amount : <any>null;
-        data["TotalPaid"] = this.totalPaid !== undefined ? this.totalPaid : <any>null;
-        data["Earning"] = this.earning !== undefined ? this.earning : <any>null;
-        data["CalculatedTotal"] = this.calculatedTotal !== undefined ? this.calculatedTotal : <any>null;
+        data["amount"] = this.amount !== undefined ? this.amount : <any>null;
+        data["totalPaid"] = this.totalPaid !== undefined ? this.totalPaid : <any>null;
+        data["earning"] = this.earning !== undefined ? this.earning : <any>null;
+        data["calculatedTotal"] = this.calculatedTotal !== undefined ? this.calculatedTotal : <any>null;
         return data; 
     }
 }
@@ -2031,17 +2132,17 @@ export class Address implements IAddress {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.userId = data["UserId"] !== undefined ? data["UserId"] : <any>null;
-            this.fullName = data["FullName"] !== undefined ? data["FullName"] : <any>null;
-            this.address1 = data["Address1"] !== undefined ? data["Address1"] : <any>null;
-            this.address2 = data["Address2"] !== undefined ? data["Address2"] : <any>null;
-            this.city = data["City"] !== undefined ? data["City"] : <any>null;
-            this.state = data["State"] !== undefined ? data["State"] : <any>null;
-            this.zipCode = data["ZipCode"] !== undefined ? data["ZipCode"] : <any>null;
-            this.country = data["Country"] !== undefined ? data["Country"] : <any>null;
-            this.phone = data["Phone"] !== undefined ? data["Phone"] : <any>null;
-            this.email = data["Email"] !== undefined ? data["Email"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.userId = data["userId"] !== undefined ? data["userId"] : <any>null;
+            this.fullName = data["fullName"] !== undefined ? data["fullName"] : <any>null;
+            this.address1 = data["address1"] !== undefined ? data["address1"] : <any>null;
+            this.address2 = data["address2"] !== undefined ? data["address2"] : <any>null;
+            this.city = data["city"] !== undefined ? data["city"] : <any>null;
+            this.state = data["state"] !== undefined ? data["state"] : <any>null;
+            this.zipCode = data["zipCode"] !== undefined ? data["zipCode"] : <any>null;
+            this.country = data["country"] !== undefined ? data["country"] : <any>null;
+            this.phone = data["phone"] !== undefined ? data["phone"] : <any>null;
+            this.email = data["email"] !== undefined ? data["email"] : <any>null;
         }
     }
 
@@ -2054,17 +2155,17 @@ export class Address implements IAddress {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["UserId"] = this.userId !== undefined ? this.userId : <any>null;
-        data["FullName"] = this.fullName !== undefined ? this.fullName : <any>null;
-        data["Address1"] = this.address1 !== undefined ? this.address1 : <any>null;
-        data["Address2"] = this.address2 !== undefined ? this.address2 : <any>null;
-        data["City"] = this.city !== undefined ? this.city : <any>null;
-        data["State"] = this.state !== undefined ? this.state : <any>null;
-        data["ZipCode"] = this.zipCode !== undefined ? this.zipCode : <any>null;
-        data["Country"] = this.country !== undefined ? this.country : <any>null;
-        data["Phone"] = this.phone !== undefined ? this.phone : <any>null;
-        data["Email"] = this.email !== undefined ? this.email : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["userId"] = this.userId !== undefined ? this.userId : <any>null;
+        data["fullName"] = this.fullName !== undefined ? this.fullName : <any>null;
+        data["address1"] = this.address1 !== undefined ? this.address1 : <any>null;
+        data["address2"] = this.address2 !== undefined ? this.address2 : <any>null;
+        data["city"] = this.city !== undefined ? this.city : <any>null;
+        data["state"] = this.state !== undefined ? this.state : <any>null;
+        data["zipCode"] = this.zipCode !== undefined ? this.zipCode : <any>null;
+        data["country"] = this.country !== undefined ? this.country : <any>null;
+        data["phone"] = this.phone !== undefined ? this.phone : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
         return data; 
     }
 }
@@ -2104,14 +2205,14 @@ export class OrderDetail implements IOrderDetail {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.orderId = data["OrderId"] !== undefined ? data["OrderId"] : <any>null;
-            this.photoId = data["PhotoId"] !== undefined ? data["PhotoId"] : <any>null;
-            this.quantity = data["Quantity"] !== undefined ? data["Quantity"] : <any>null;
-            this.printTypeId = data["PrintTypeId"] !== undefined ? data["PrintTypeId"] : <any>null;
-            this.unitPrice = data["UnitPrice"] !== undefined ? data["UnitPrice"] : <any>null;
-            this.photo = data["Photo"] ? Photo.fromJS(data["Photo"]) : <any>null;
-            this.printType = data["PrintType"] ? PrintType.fromJS(data["PrintType"]) : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.orderId = data["orderId"] !== undefined ? data["orderId"] : <any>null;
+            this.photoId = data["photoId"] !== undefined ? data["photoId"] : <any>null;
+            this.quantity = data["quantity"] !== undefined ? data["quantity"] : <any>null;
+            this.printTypeId = data["printTypeId"] !== undefined ? data["printTypeId"] : <any>null;
+            this.unitPrice = data["unitPrice"] !== undefined ? data["unitPrice"] : <any>null;
+            this.photo = data["photo"] ? Photo.fromJS(data["photo"]) : <any>null;
+            this.printType = data["printType"] ? PrintType.fromJS(data["printType"]) : <any>null;
         }
     }
 
@@ -2124,14 +2225,14 @@ export class OrderDetail implements IOrderDetail {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["OrderId"] = this.orderId !== undefined ? this.orderId : <any>null;
-        data["PhotoId"] = this.photoId !== undefined ? this.photoId : <any>null;
-        data["Quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
-        data["PrintTypeId"] = this.printTypeId !== undefined ? this.printTypeId : <any>null;
-        data["UnitPrice"] = this.unitPrice !== undefined ? this.unitPrice : <any>null;
-        data["Photo"] = this.photo ? this.photo.toJSON() : <any>null;
-        data["PrintType"] = this.printType ? this.printType.toJSON() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["orderId"] = this.orderId !== undefined ? this.orderId : <any>null;
+        data["photoId"] = this.photoId !== undefined ? this.photoId : <any>null;
+        data["quantity"] = this.quantity !== undefined ? this.quantity : <any>null;
+        data["printTypeId"] = this.printTypeId !== undefined ? this.printTypeId : <any>null;
+        data["unitPrice"] = this.unitPrice !== undefined ? this.unitPrice : <any>null;
+        data["photo"] = this.photo ? this.photo.toJSON() : <any>null;
+        data["printType"] = this.printType ? this.printType.toJSON() : <any>null;
         return data; 
     }
 }
@@ -2166,12 +2267,12 @@ export class PrintType implements IPrintType {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.type = data["Type"] !== undefined ? data["Type"] : <any>null;
-            this.height = data["Height"] !== undefined ? data["Height"] : <any>null;
-            this.length = data["Length"] !== undefined ? data["Length"] : <any>null;
-            this.icon = data["Icon"] !== undefined ? data["Icon"] : <any>null;
-            this.baseCost = data["BaseCost"] !== undefined ? data["BaseCost"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.type = data["type"] !== undefined ? data["type"] : <any>null;
+            this.height = data["height"] !== undefined ? data["height"] : <any>null;
+            this.length = data["length"] !== undefined ? data["length"] : <any>null;
+            this.icon = data["icon"] !== undefined ? data["icon"] : <any>null;
+            this.baseCost = data["baseCost"] !== undefined ? data["baseCost"] : <any>null;
         }
     }
 
@@ -2184,12 +2285,12 @@ export class PrintType implements IPrintType {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Type"] = this.type !== undefined ? this.type : <any>null;
-        data["Height"] = this.height !== undefined ? this.height : <any>null;
-        data["Length"] = this.length !== undefined ? this.length : <any>null;
-        data["Icon"] = this.icon !== undefined ? this.icon : <any>null;
-        data["BaseCost"] = this.baseCost !== undefined ? this.baseCost : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["type"] = this.type !== undefined ? this.type : <any>null;
+        data["height"] = this.height !== undefined ? this.height : <any>null;
+        data["length"] = this.length !== undefined ? this.length : <any>null;
+        data["icon"] = this.icon !== undefined ? this.icon : <any>null;
+        data["baseCost"] = this.baseCost !== undefined ? this.baseCost : <any>null;
         return data; 
     }
 }
@@ -2221,11 +2322,11 @@ export class PrintPrice implements IPrintPrice {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.photoId = data["PhotoId"] !== undefined ? data["PhotoId"] : <any>null;
-            this.price = data["Price"] !== undefined ? data["Price"] : <any>null;
-            this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : <any>null;
-            this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.photoId = data["photoId"] !== undefined ? data["photoId"] : <any>null;
+            this.price = data["price"] !== undefined ? data["price"] : <any>null;
+            this.photographerId = data["photographerId"] !== undefined ? data["photographerId"] : <any>null;
+            this.photographer = data["photographer"] ? User.fromJS(data["photographer"]) : <any>null;
         }
     }
 
@@ -2238,11 +2339,11 @@ export class PrintPrice implements IPrintPrice {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["PhotoId"] = this.photoId !== undefined ? this.photoId : <any>null;
-        data["Price"] = this.price !== undefined ? this.price : <any>null;
-        data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
-        data["Photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["photoId"] = this.photoId !== undefined ? this.photoId : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["photographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
+        data["photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
         return data; 
     }
 }
@@ -2274,12 +2375,12 @@ export class UserIdentity implements IUserIdentity {
 
     init(data?: any) {
         if (data) {
-            this.azureID = data["AzureID"] !== undefined ? data["AzureID"] : <any>null;
-            this.identityProvider = data["IdentityProvider"] !== undefined ? data["IdentityProvider"] : <any>null;
-            this.userID = data["UserID"] !== undefined ? data["UserID"] : <any>null;
-            this.createDate = data["CreateDate"] ? new Date(data["CreateDate"].toString()) : <any>null;
-            this.lastLoginDate = data["LastLoginDate"] ? new Date(data["LastLoginDate"].toString()) : <any>null;
-            this.user = data["User"] ? User.fromJS(data["User"]) : <any>null;
+            this.azureID = data["azureID"] !== undefined ? data["azureID"] : <any>null;
+            this.identityProvider = data["identityProvider"] !== undefined ? data["identityProvider"] : <any>null;
+            this.userID = data["userID"] !== undefined ? data["userID"] : <any>null;
+            this.createDate = data["createDate"] ? new Date(data["createDate"].toString()) : <any>null;
+            this.lastLoginDate = data["lastLoginDate"] ? new Date(data["lastLoginDate"].toString()) : <any>null;
+            this.user = data["user"] ? User.fromJS(data["user"]) : <any>null;
         }
     }
 
@@ -2292,12 +2393,12 @@ export class UserIdentity implements IUserIdentity {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["AzureID"] = this.azureID !== undefined ? this.azureID : <any>null;
-        data["IdentityProvider"] = this.identityProvider !== undefined ? this.identityProvider : <any>null;
-        data["UserID"] = this.userID !== undefined ? this.userID : <any>null;
-        data["CreateDate"] = this.createDate ? this.createDate.toISOString() : <any>null;
-        data["LastLoginDate"] = this.lastLoginDate ? this.lastLoginDate.toISOString() : <any>null;
-        data["User"] = this.user ? this.user.toJSON() : <any>null;
+        data["azureID"] = this.azureID !== undefined ? this.azureID : <any>null;
+        data["identityProvider"] = this.identityProvider !== undefined ? this.identityProvider : <any>null;
+        data["userID"] = this.userID !== undefined ? this.userID : <any>null;
+        data["createDate"] = this.createDate ? this.createDate.toISOString() : <any>null;
+        data["lastLoginDate"] = this.lastLoginDate ? this.lastLoginDate.toISOString() : <any>null;
+        data["user"] = this.user ? this.user.toJSON() : <any>null;
         return data; 
     }
 }
@@ -2329,11 +2430,11 @@ export class PhotoTag implements IPhotoTag {
 
     init(data?: any) {
         if (data) {
-            this.photoId = data["PhotoId"] !== undefined ? data["PhotoId"] : <any>null;
-            this.tagId = data["TagId"] !== undefined ? data["TagId"] : <any>null;
-            this.registerDate = data["RegisterDate"] ? new Date(data["RegisterDate"].toString()) : <any>null;
-            this.photo = data["Photo"] ? Photo.fromJS(data["Photo"]) : <any>null;
-            this.tag = data["Tag"] ? Tag.fromJS(data["Tag"]) : <any>null;
+            this.photoId = data["photoId"] !== undefined ? data["photoId"] : <any>null;
+            this.tagId = data["tagId"] !== undefined ? data["tagId"] : <any>null;
+            this.registerDate = data["registerDate"] ? new Date(data["registerDate"].toString()) : <any>null;
+            this.photo = data["photo"] ? Photo.fromJS(data["photo"]) : <any>null;
+            this.tag = data["tag"] ? Tag.fromJS(data["tag"]) : <any>null;
         }
     }
 
@@ -2346,11 +2447,11 @@ export class PhotoTag implements IPhotoTag {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["PhotoId"] = this.photoId !== undefined ? this.photoId : <any>null;
-        data["TagId"] = this.tagId !== undefined ? this.tagId : <any>null;
-        data["RegisterDate"] = this.registerDate ? this.registerDate.toISOString() : <any>null;
-        data["Photo"] = this.photo ? this.photo.toJSON() : <any>null;
-        data["Tag"] = this.tag ? this.tag.toJSON() : <any>null;
+        data["photoId"] = this.photoId !== undefined ? this.photoId : <any>null;
+        data["tagId"] = this.tagId !== undefined ? this.tagId : <any>null;
+        data["registerDate"] = this.registerDate ? this.registerDate.toISOString() : <any>null;
+        data["photo"] = this.photo ? this.photo.toJSON() : <any>null;
+        data["tag"] = this.tag ? this.tag.toJSON() : <any>null;
         return data; 
     }
 }
@@ -2379,11 +2480,11 @@ export class Tag implements ITag {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            if (data["PhotoTag"] && data["PhotoTag"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            if (data["photoTag"] && data["photoTag"].constructor === Array) {
                 this.photoTag = [];
-                for (let item of data["PhotoTag"])
+                for (let item of data["photoTag"])
                     this.photoTag.push(PhotoTag.fromJS(item));
             }
         }
@@ -2398,12 +2499,12 @@ export class Tag implements ITag {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         if (this.photoTag && this.photoTag.constructor === Array) {
-            data["PhotoTag"] = [];
+            data["photoTag"] = [];
             for (let item of this.photoTag)
-                data["PhotoTag"].push(item.toJSON());
+                data["photoTag"].push(item.toJSON());
         }
         return data; 
     }
@@ -2455,9 +2556,9 @@ export abstract class Stream extends MarshalByRefObject implements IStream {
     init(data?: any) {
         super.init(data);
         if (data) {
-            this.canTimeout = data["CanTimeout"] !== undefined ? data["CanTimeout"] : <any>null;
-            this.readTimeout = data["ReadTimeout"] !== undefined ? data["ReadTimeout"] : <any>null;
-            this.writeTimeout = data["WriteTimeout"] !== undefined ? data["WriteTimeout"] : <any>null;
+            this.canTimeout = data["canTimeout"] !== undefined ? data["canTimeout"] : <any>null;
+            this.readTimeout = data["readTimeout"] !== undefined ? data["readTimeout"] : <any>null;
+            this.writeTimeout = data["writeTimeout"] !== undefined ? data["writeTimeout"] : <any>null;
         }
     }
 
@@ -2468,9 +2569,9 @@ export abstract class Stream extends MarshalByRefObject implements IStream {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["CanTimeout"] = this.canTimeout !== undefined ? this.canTimeout : <any>null;
-        data["ReadTimeout"] = this.readTimeout !== undefined ? this.readTimeout : <any>null;
-        data["WriteTimeout"] = this.writeTimeout !== undefined ? this.writeTimeout : <any>null;
+        data["canTimeout"] = this.canTimeout !== undefined ? this.canTimeout : <any>null;
+        data["readTimeout"] = this.readTimeout !== undefined ? this.readTimeout : <any>null;
+        data["writeTimeout"] = this.writeTimeout !== undefined ? this.writeTimeout : <any>null;
         super.toJSON(data);
         return data; 
     }
@@ -2508,19 +2609,19 @@ export class PhotoViewModel implements IPhotoViewModel {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : <any>null;
-            this.folderId = data["FolderId"] !== undefined ? data["FolderId"] : <any>null;
-            this.url = data["Url"] !== undefined ? data["Url"] : <any>null;
-            this.thumbnailUrl = data["ThumbnailUrl"] !== undefined ? data["ThumbnailUrl"] : <any>null;
-            this.code = data["Code"] !== undefined ? data["Code"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            this.uploadDate = data["UploadDate"] ? new Date(data["UploadDate"].toString()) : <any>null;
-            this.price = data["Price"] !== undefined ? data["Price"] : <any>null;
-            this.resolution = data["Resolution"] !== undefined ? data["Resolution"] : <any>null;
-            this.fileSize = data["FileSize"] !== undefined ? data["FileSize"] : <any>null;
-            this.photographer = data["Photographer"] ? User.fromJS(data["Photographer"]) : <any>null;
-            this.waterMarkUrl = data["WaterMarkUrl"] !== undefined ? data["WaterMarkUrl"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.photographerId = data["photographerId"] !== undefined ? data["photographerId"] : <any>null;
+            this.folderId = data["folderId"] !== undefined ? data["folderId"] : <any>null;
+            this.url = data["url"] !== undefined ? data["url"] : <any>null;
+            this.thumbnailUrl = data["thumbnailUrl"] !== undefined ? data["thumbnailUrl"] : <any>null;
+            this.code = data["code"] !== undefined ? data["code"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            this.uploadDate = data["uploadDate"] ? new Date(data["uploadDate"].toString()) : <any>null;
+            this.price = data["price"] !== undefined ? data["price"] : <any>null;
+            this.resolution = data["resolution"] !== undefined ? data["resolution"] : <any>null;
+            this.fileSize = data["fileSize"] !== undefined ? data["fileSize"] : <any>null;
+            this.photographer = data["photographer"] ? User.fromJS(data["photographer"]) : <any>null;
+            this.waterMarkUrl = data["waterMarkUrl"] !== undefined ? data["waterMarkUrl"] : <any>null;
         }
     }
 
@@ -2533,19 +2634,19 @@ export class PhotoViewModel implements IPhotoViewModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
-        data["FolderId"] = this.folderId !== undefined ? this.folderId : <any>null;
-        data["Url"] = this.url !== undefined ? this.url : <any>null;
-        data["ThumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : <any>null;
-        data["Code"] = this.code !== undefined ? this.code : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
-        data["UploadDate"] = this.uploadDate ? this.uploadDate.toISOString() : <any>null;
-        data["Price"] = this.price !== undefined ? this.price : <any>null;
-        data["Resolution"] = this.resolution !== undefined ? this.resolution : <any>null;
-        data["FileSize"] = this.fileSize !== undefined ? this.fileSize : <any>null;
-        data["Photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
-        data["WaterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["photographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
+        data["folderId"] = this.folderId !== undefined ? this.folderId : <any>null;
+        data["url"] = this.url !== undefined ? this.url : <any>null;
+        data["thumbnailUrl"] = this.thumbnailUrl !== undefined ? this.thumbnailUrl : <any>null;
+        data["code"] = this.code !== undefined ? this.code : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["uploadDate"] = this.uploadDate ? this.uploadDate.toISOString() : <any>null;
+        data["price"] = this.price !== undefined ? this.price : <any>null;
+        data["resolution"] = this.resolution !== undefined ? this.resolution : <any>null;
+        data["fileSize"] = this.fileSize !== undefined ? this.fileSize : <any>null;
+        data["photographer"] = this.photographer ? this.photographer.toJSON() : <any>null;
+        data["waterMarkUrl"] = this.waterMarkUrl !== undefined ? this.waterMarkUrl : <any>null;
         return data; 
     }
 }
@@ -2582,8 +2683,8 @@ export class TagViewModel implements ITagViewModel {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
             this.text = data["text"] !== undefined ? data["text"] : <any>null;
         }
     }
@@ -2597,8 +2698,8 @@ export class TagViewModel implements ITagViewModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         data["text"] = this.text !== undefined ? this.text : <any>null;
         return data; 
     }
@@ -2685,8 +2786,8 @@ export class TagModel implements ITagModel {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
         }
     }
 
@@ -2699,8 +2800,8 @@ export class TagModel implements ITagModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
         return data; 
     }
 }
@@ -2728,13 +2829,13 @@ export class FolderViewModel implements IFolderViewModel {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.photographerId = data["PhotographerId"] !== undefined ? data["PhotographerId"] : <any>null;
-            this.name = data["Name"] !== undefined ? data["Name"] : <any>null;
-            this.createdDate = data["CreatedDate"] ? new Date(data["CreatedDate"].toString()) : <any>null;
-            if (data["Photo"] && data["Photo"].constructor === Array) {
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.photographerId = data["photographerId"] !== undefined ? data["photographerId"] : <any>null;
+            this.name = data["name"] !== undefined ? data["name"] : <any>null;
+            this.createdDate = data["createdDate"] ? new Date(data["createdDate"].toString()) : <any>null;
+            if (data["photo"] && data["photo"].constructor === Array) {
                 this.photo = [];
-                for (let item of data["Photo"])
+                for (let item of data["photo"])
                     this.photo.push(PhotoViewModel.fromJS(item));
             }
         }
@@ -2749,14 +2850,14 @@ export class FolderViewModel implements IFolderViewModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["PhotographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
-        data["Name"] = this.name !== undefined ? this.name : <any>null;
-        data["CreatedDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["photographerId"] = this.photographerId !== undefined ? this.photographerId : <any>null;
+        data["name"] = this.name !== undefined ? this.name : <any>null;
+        data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
         if (this.photo && this.photo.constructor === Array) {
-            data["Photo"] = [];
+            data["photo"] = [];
             for (let item of this.photo)
-                data["Photo"].push(item.toJSON());
+                data["photo"].push(item.toJSON());
         }
         return data; 
     }
@@ -2800,23 +2901,23 @@ export class UserViewModel implements IUserViewModel {
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.email = data["Email"] !== undefined ? data["Email"] : <any>null;
-            this.firstName = data["FirstName"] !== undefined ? data["FirstName"] : <any>null;
-            this.lastName = data["LastName"] !== undefined ? data["LastName"] : <any>null;
-            this.displayName = data["DisplayName"] !== undefined ? data["DisplayName"] : <any>null;
-            this.jobPosition = data["JobPosition"] !== undefined ? data["JobPosition"] : <any>null;
-            this.bio = data["Bio"] !== undefined ? data["Bio"] : <any>null;
-            this.profilePhotoUrl = data["ProfilePhotoUrl"] !== undefined ? data["ProfilePhotoUrl"] : <any>null;
-            this.facebook = data["Facebook"] !== undefined ? data["Facebook"] : <any>null;
-            this.twitter = data["Twitter"] !== undefined ? data["Twitter"] : <any>null;
-            this.instagram = data["Instagram"] !== undefined ? data["Instagram"] : <any>null;
-            this.dribbble = data["Dribbble"] !== undefined ? data["Dribbble"] : <any>null;
-            this.isPhotographer = data["IsPhotographer"] !== undefined ? data["IsPhotographer"] : <any>null;
-            this.isDeactivated = data["IsDeactivated"] !== undefined ? data["IsDeactivated"] : <any>null;
-            this.purchaseTour = data["PurchaseTour"] !== undefined ? data["PurchaseTour"] : <any>null;
-            this.dashboardTour = data["DashboardTour"] !== undefined ? data["DashboardTour"] : <any>null;
-            this.photoTour = data["PhotoTour"] !== undefined ? data["PhotoTour"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.email = data["email"] !== undefined ? data["email"] : <any>null;
+            this.firstName = data["firstName"] !== undefined ? data["firstName"] : <any>null;
+            this.lastName = data["lastName"] !== undefined ? data["lastName"] : <any>null;
+            this.displayName = data["displayName"] !== undefined ? data["displayName"] : <any>null;
+            this.jobPosition = data["jobPosition"] !== undefined ? data["jobPosition"] : <any>null;
+            this.bio = data["bio"] !== undefined ? data["bio"] : <any>null;
+            this.profilePhotoUrl = data["profilePhotoUrl"] !== undefined ? data["profilePhotoUrl"] : <any>null;
+            this.facebook = data["facebook"] !== undefined ? data["facebook"] : <any>null;
+            this.twitter = data["twitter"] !== undefined ? data["twitter"] : <any>null;
+            this.instagram = data["instagram"] !== undefined ? data["instagram"] : <any>null;
+            this.dribbble = data["dribbble"] !== undefined ? data["dribbble"] : <any>null;
+            this.isPhotographer = data["isPhotographer"] !== undefined ? data["isPhotographer"] : <any>null;
+            this.isDeactivated = data["isDeactivated"] !== undefined ? data["isDeactivated"] : <any>null;
+            this.purchaseTour = data["purchaseTour"] !== undefined ? data["purchaseTour"] : <any>null;
+            this.dashboardTour = data["dashboardTour"] !== undefined ? data["dashboardTour"] : <any>null;
+            this.photoTour = data["photoTour"] !== undefined ? data["photoTour"] : <any>null;
         }
     }
 
@@ -2829,23 +2930,23 @@ export class UserViewModel implements IUserViewModel {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Email"] = this.email !== undefined ? this.email : <any>null;
-        data["FirstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["LastName"] = this.lastName !== undefined ? this.lastName : <any>null;
-        data["DisplayName"] = this.displayName !== undefined ? this.displayName : <any>null;
-        data["JobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
-        data["Bio"] = this.bio !== undefined ? this.bio : <any>null;
-        data["ProfilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
-        data["Facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
-        data["Twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
-        data["Instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
-        data["Dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
-        data["IsPhotographer"] = this.isPhotographer !== undefined ? this.isPhotographer : <any>null;
-        data["IsDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
-        data["PurchaseTour"] = this.purchaseTour !== undefined ? this.purchaseTour : <any>null;
-        data["DashboardTour"] = this.dashboardTour !== undefined ? this.dashboardTour : <any>null;
-        data["PhotoTour"] = this.photoTour !== undefined ? this.photoTour : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["displayName"] = this.displayName !== undefined ? this.displayName : <any>null;
+        data["jobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
+        data["bio"] = this.bio !== undefined ? this.bio : <any>null;
+        data["profilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
+        data["facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
+        data["twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
+        data["instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
+        data["dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
+        data["isPhotographer"] = this.isPhotographer !== undefined ? this.isPhotographer : <any>null;
+        data["isDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
+        data["purchaseTour"] = this.purchaseTour !== undefined ? this.purchaseTour : <any>null;
+        data["dashboardTour"] = this.dashboardTour !== undefined ? this.dashboardTour : <any>null;
+        data["photoTour"] = this.photoTour !== undefined ? this.photoTour : <any>null;
         return data; 
     }
 }
@@ -2896,19 +2997,19 @@ export class UserProfileUpdateCommandModel implements IUserProfileUpdateCommandM
 
     init(data?: any) {
         if (data) {
-            this.id = data["Id"] !== undefined ? data["Id"] : <any>null;
-            this.email = data["Email"] !== undefined ? data["Email"] : <any>null;
-            this.firstName = data["FirstName"] !== undefined ? data["FirstName"] : <any>null;
-            this.lastName = data["LastName"] !== undefined ? data["LastName"] : <any>null;
-            this.displayName = data["DisplayName"] !== undefined ? data["DisplayName"] : <any>null;
-            this.jobPosition = data["JobPosition"] !== undefined ? data["JobPosition"] : <any>null;
-            this.bio = data["Bio"] !== undefined ? data["Bio"] : <any>null;
-            this.profilePhotoUrl = data["ProfilePhotoUrl"] !== undefined ? data["ProfilePhotoUrl"] : <any>null;
-            this.facebook = data["Facebook"] !== undefined ? data["Facebook"] : <any>null;
-            this.twitter = data["Twitter"] !== undefined ? data["Twitter"] : <any>null;
-            this.instagram = data["Instagram"] !== undefined ? data["Instagram"] : <any>null;
-            this.dribbble = data["Dribbble"] !== undefined ? data["Dribbble"] : <any>null;
-            this.isDeactivated = data["IsDeactivated"] !== undefined ? data["IsDeactivated"] : <any>null;
+            this.id = data["id"] !== undefined ? data["id"] : <any>null;
+            this.email = data["email"] !== undefined ? data["email"] : <any>null;
+            this.firstName = data["firstName"] !== undefined ? data["firstName"] : <any>null;
+            this.lastName = data["lastName"] !== undefined ? data["lastName"] : <any>null;
+            this.displayName = data["displayName"] !== undefined ? data["displayName"] : <any>null;
+            this.jobPosition = data["jobPosition"] !== undefined ? data["jobPosition"] : <any>null;
+            this.bio = data["bio"] !== undefined ? data["bio"] : <any>null;
+            this.profilePhotoUrl = data["profilePhotoUrl"] !== undefined ? data["profilePhotoUrl"] : <any>null;
+            this.facebook = data["facebook"] !== undefined ? data["facebook"] : <any>null;
+            this.twitter = data["twitter"] !== undefined ? data["twitter"] : <any>null;
+            this.instagram = data["instagram"] !== undefined ? data["instagram"] : <any>null;
+            this.dribbble = data["dribbble"] !== undefined ? data["dribbble"] : <any>null;
+            this.isDeactivated = data["isDeactivated"] !== undefined ? data["isDeactivated"] : <any>null;
         }
     }
 
@@ -2921,19 +3022,19 @@ export class UserProfileUpdateCommandModel implements IUserProfileUpdateCommandM
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["Id"] = this.id !== undefined ? this.id : <any>null;
-        data["Email"] = this.email !== undefined ? this.email : <any>null;
-        data["FirstName"] = this.firstName !== undefined ? this.firstName : <any>null;
-        data["LastName"] = this.lastName !== undefined ? this.lastName : <any>null;
-        data["DisplayName"] = this.displayName !== undefined ? this.displayName : <any>null;
-        data["JobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
-        data["Bio"] = this.bio !== undefined ? this.bio : <any>null;
-        data["ProfilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
-        data["Facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
-        data["Twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
-        data["Instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
-        data["Dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
-        data["IsDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
+        data["id"] = this.id !== undefined ? this.id : <any>null;
+        data["email"] = this.email !== undefined ? this.email : <any>null;
+        data["firstName"] = this.firstName !== undefined ? this.firstName : <any>null;
+        data["lastName"] = this.lastName !== undefined ? this.lastName : <any>null;
+        data["displayName"] = this.displayName !== undefined ? this.displayName : <any>null;
+        data["jobPosition"] = this.jobPosition !== undefined ? this.jobPosition : <any>null;
+        data["bio"] = this.bio !== undefined ? this.bio : <any>null;
+        data["profilePhotoUrl"] = this.profilePhotoUrl !== undefined ? this.profilePhotoUrl : <any>null;
+        data["facebook"] = this.facebook !== undefined ? this.facebook : <any>null;
+        data["twitter"] = this.twitter !== undefined ? this.twitter : <any>null;
+        data["instagram"] = this.instagram !== undefined ? this.instagram : <any>null;
+        data["dribbble"] = this.dribbble !== undefined ? this.dribbble : <any>null;
+        data["isDeactivated"] = this.isDeactivated !== undefined ? this.isDeactivated : <any>null;
         return data; 
     }
 }
