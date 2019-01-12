@@ -181,7 +181,7 @@ export class EventApiClient {
         return this.q.resolve<Event | null>(<any>null);
     }
 
-    save(evt: Event): ng.IPromise<FileResponse | null> {
+    save(evt: Event): ng.IPromise<Event | null> {
         let url_ = this.baseUrl + "/api/Event/Events";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -190,7 +190,6 @@ export class EventApiClient {
         var options_ = <ng.IRequestConfig>{
             url: url_,
             method: "POST",
-            responseType: "arraybuffer",
             data: content_,
             transformResponse: [], 
             headers: {
@@ -208,21 +207,21 @@ export class EventApiClient {
         });
     }
 
-    protected processSave(response: any): ng.IPromise<FileResponse | null> {
+    protected processSave(response: any): ng.IPromise<Event | null> {
         const status = response.status; 
 
         let _headers: any = {};
-        if (status === 200 || status === 206) {
-            const contentDisposition = response.headers ? response.headers("content-disposition") : undefined;
-            const fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            const fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-            return this.q.resolve({ fileName: fileName, status: status, data: new Blob([response.data]), headers: _headers });
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 ? Event.fromJS(resultData200) : <any>null;
+            return this.q.resolve(result200);
         } else if (status !== 200 && status !== 204) {
-            return blobToText(new Blob([response]), this.q).then(_responseText => {
+            const _responseText = response.data;
             return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
-            });
         }
-        return this.q.resolve<FileResponse | null>(<any>null);
+        return this.q.resolve<Event | null>(<any>null);
     }
 
     getEventCards(eventId: number): ng.IPromise<Card[] | null> {
@@ -1381,14 +1380,13 @@ export class Event implements IEvent {
     userId!: number;
     name?: string | null;
     url?: string | null;
-    pageTitle?: string | null;
     description?: string | null;
     createdDate!: Date;
     homepageTemplate?: string | null;
     personalLogoUrl?: string | null;
     featuredImageUrl?: string | null;
     overlayColorCode?: string | null;
-    overlayOpacity!: number;
+    overlayOpacity?: number | null;
     accentColorCode?: string | null;
     backgroundColorCode?: string | null;
     headerColorCode?: string | null;
@@ -1416,7 +1414,6 @@ export class Event implements IEvent {
             this.userId = data["userId"] !== undefined ? data["userId"] : <any>null;
             this.name = data["name"] !== undefined ? data["name"] : <any>null;
             this.url = data["url"] !== undefined ? data["url"] : <any>null;
-            this.pageTitle = data["pageTitle"] !== undefined ? data["pageTitle"] : <any>null;
             this.description = data["description"] !== undefined ? data["description"] : <any>null;
             this.createdDate = data["createdDate"] ? new Date(data["createdDate"].toString()) : <any>null;
             this.homepageTemplate = data["homepageTemplate"] !== undefined ? data["homepageTemplate"] : <any>null;
@@ -1459,7 +1456,6 @@ export class Event implements IEvent {
         data["userId"] = this.userId !== undefined ? this.userId : <any>null;
         data["name"] = this.name !== undefined ? this.name : <any>null;
         data["url"] = this.url !== undefined ? this.url : <any>null;
-        data["pageTitle"] = this.pageTitle !== undefined ? this.pageTitle : <any>null;
         data["description"] = this.description !== undefined ? this.description : <any>null;
         data["createdDate"] = this.createdDate ? this.createdDate.toISOString() : <any>null;
         data["homepageTemplate"] = this.homepageTemplate !== undefined ? this.homepageTemplate : <any>null;
@@ -1495,14 +1491,13 @@ export interface IEvent {
     userId: number;
     name?: string | null;
     url?: string | null;
-    pageTitle?: string | null;
     description?: string | null;
     createdDate: Date;
     homepageTemplate?: string | null;
     personalLogoUrl?: string | null;
     featuredImageUrl?: string | null;
     overlayColorCode?: string | null;
-    overlayOpacity: number;
+    overlayOpacity?: number | null;
     accentColorCode?: string | null;
     backgroundColorCode?: string | null;
     headerColorCode?: string | null;

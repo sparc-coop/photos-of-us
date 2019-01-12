@@ -39,11 +39,12 @@ namespace PhotosOfUs.Web.Controllers.API
 
         [HttpPost]
         [Route("Events")]
-        public IActionResult Save([FromBody]Event evt)
+        public Event Save([FromBody]Event evt)
         {
+            evt.UserId = User.ID();
             _events.Add(evt);
             _events.Commit();
-            return Ok(evt.EventId);
+            return evt;
         }
 
         [HttpGet]

@@ -3,18 +3,19 @@ namespace PhotosOfUs {
     angular.module('app').controller('SettingsCtrl', ['$scope', 'Upload', 'EventApiClient', '$window',
      ($scope, Upload, EventApiClient: EventApiClient, $window) => {
         $scope.settings = <IEvent>{
-            eventId: null,
-            createdDate: null,
-            overlayOpacity: null,
-            separatorThickness: null,
-            separatorWidth: null,
+            eventId: 0,
+            createdDate: new Date(),
+            overlayOpacity: 0,
+            separatorThickness: 0,
+            separatorWidth: 0,
             homepageTemplate: '2',
             headerColorCode: '#000000',
             accentColorCode: '#ff6060',
             backgroundColorCode: '#f6ffff',
             bodyColorCode: '#000000',
             overlayColorCode: '#000000',
-            brandingStyle: 1
+            brandingStyle: 1,
+            separatorStyle: 'Solid'
         };
 
         $scope.colorPickerOptions = {
@@ -46,7 +47,7 @@ namespace PhotosOfUs {
         };
 
         $scope.save = () => {
-            EventApiClient.save($scope.settings).then(x => $window.location.href = '/Admin/Cards/' + x.data);
+            EventApiClient.save($scope.settings).then(x => $window.location.href = '/Admin/Cards/' + x.eventId);
         };
     }]);
 }

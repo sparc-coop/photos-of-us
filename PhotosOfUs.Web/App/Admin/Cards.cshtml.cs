@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 using Rotativa.AspNetCore.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PhotosOfUs.Pages.Admin
 {
+    [Authorize]
     public class CardsModel : PageModel
     {
         private readonly IRepository<Event> _events;

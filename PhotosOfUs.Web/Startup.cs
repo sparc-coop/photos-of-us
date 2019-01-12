@@ -99,8 +99,7 @@ namespace PhotosOfUs.Web
                 .WithRazorPagesRoot("/App")
                 .AddRazorPagesOptions(options => {
                     options.Conventions.AddPageRoute("/Home/Index", "");
-                })
-                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+                });
 
             services.AddSwaggerDocument();
 

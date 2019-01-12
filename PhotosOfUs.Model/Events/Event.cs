@@ -11,14 +11,13 @@ namespace PhotosOfUs.Model.Models
         public int UserId { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
-        public string PageTitle { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public string HomepageTemplate { get; set; }
         public string PersonalLogoUrl { get; set; }
         public string FeaturedImageUrl { get; set; }
         public string OverlayColorCode { get; set; }
-        public decimal OverlayOpacity { get; set; }
+        public decimal? OverlayOpacity { get; set; }
         public string AccentColorCode { get; set; }
         public string BackgroundColorCode { get; set; }
         public string HeaderColorCode { get; set; }
@@ -61,29 +60,6 @@ namespace PhotosOfUs.Model.Models
             Dark,
             Light,
             None
-        }
-
-        public Event CreateDefaultBrandAccount(int id)
-        {
-            UserId = id;
-            EventId = id;
-            HomepageTemplate = Event.HomepageTemplates.TwoOneSplit.ToString();
-            PersonalLogoUrl = "";
-            BackgroundColorCode = "F6FFFF";
-            AccentColorCode = "FF6060";
-            HeaderColorCode = "000000";
-            BodyColorCode = "000000";
-            FeaturedImageUrl = "";
-            OverlayColorCode = "194952";
-            OverlayOpacity = 0.5M;
-            PageTitle = "My Page Title";
-            Description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores.";
-            SeparatorStyle = Event.SeparatorStyles.StraightLine.ToString();
-            SeparatorThickness = 1;
-            SeparatorWidth = 40;
-            BrandingStyle = (int)Event.FeatureTypes.Dark;
-
-            return this;
         }
 
         public void DeletePhotos(List<int> photoIds)

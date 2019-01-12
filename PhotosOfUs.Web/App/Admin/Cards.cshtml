@@ -1,8 +1,7 @@
-﻿@page "{eventId:int}"
+﻿@page "{eventId}"
 @model CardsModel
 @{
     ViewData["Title"] = "Cards";
-    Layout = "~/Home/Views/Shared/_Layout.cshtml";
 }
 
 <div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardsCtrl" ng-init="getCards(@Model.EventId)">
