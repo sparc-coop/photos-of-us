@@ -5802,147 +5802,6 @@ tags-input .tag-item {
   display: block;
 }
 
-.event-settings .preview {
-  border: 2px solid #dfdfdf;
-  border-top: 0;
-  border-radius: 0 0 4px 4px;
-  height: 311px;
-  width: 40vw;
-  max-width: 600px;
-  margin: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  padding: 13%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-size: cover;
-  position: relative;
-}
-
-.event-settings .preview > * {
-  position: relative;
-  z-index: 10;
-}
-
-.event-settings .preview .background, .event-settings .preview .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #f6ffff;
-  z-index: 4;
-}
-
-.event-settings .preview .overlay {
-  z-index: 5;
-  background-color: black;
-  opacity: 0;
-}
-
-.event-settings .preview h1 {
-  font: 600 16px/20px Dosis;
-}
-
-.event-settings .preview hr {
-  width: 50px;
-  margin: 8px 0;
-}
-
-.event-settings .preview p {
-  font: 500 8px/19px "Open Sans";
-  color: #000;
-}
-
-.event-settings .preview .enter-code {
-  font-size: 2px;
-}
-
-.event-settings .preview input, .event-settings .preview .form-input textarea, .form-input .event-settings .preview textarea,
-.event-settings .preview button {
-  line-height: 15px;
-  display: inline-block;
-}
-
-.event-settings .preview input, .event-settings .preview .form-input textarea, .form-input .event-settings .preview textarea {
-  width: 76px;
-  font-size: 6px;
-  padding: 0 5px 0 8px;
-  border-radius: 3px 0 0 3px;
-}
-
-.event-settings .preview button {
-  background-color: black;
-  padding: 0 5px;
-  margin-left: 2px;
-  min-width: 0;
-  outline: none;
-  color: white;
-  font-size: 8px;
-  line-height: 15px;
-  border: none;
-  border-radius: 0 3px 3px 0;
-}
-
-.event-settings .preview .branding {
-  position: absolute;
-  bottom: 22px;
-  left: 50%;
-  margin-left: -27px;
-}
-
-.event-settings .preview .branding img {
-  width: 54px;
-  height: auto;
-}
-
-.event-settings .preview.code-0 {
-  padding-right: 55%;
-  padding-left: 22px;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.event-settings .preview.code-0 .background {
-  right: 50%;
-  z-index: 9;
-}
-
-.event-settings .preview.code-0 .branding {
-  margin-left: 0;
-  left: 22px;
-}
-
-.event-settings .preview.code-1 {
-  padding-left: 55%;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
-}
-
-.event-settings .preview.code-1 .background {
-  left: 50%;
-  z-index: 9;
-}
-
-.event-settings .preview.code-1 .branding {
-  margin-left: 0;
-  right: 22px;
-  left: auto;
-}
-
 .event-settings .featured-image {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -6036,5 +5895,146 @@ tags-input .tag-item {
 
 .event-settings .homepage-settings .section .colors .color-picker {
   margin-right: 25px;
+}
+
+.preview {
+  border: 2px solid #dfdfdf;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  height: 311px;
+  width: 40vw;
+  max-width: 600px;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 13%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-size: cover;
+  position: relative;
+}
+
+.preview > * {
+  position: relative;
+  z-index: 10;
+}
+
+.preview .background, .preview .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f6ffff;
+  z-index: 4;
+}
+
+.preview .overlay {
+  z-index: 5;
+  background-color: black;
+  opacity: 0;
+}
+
+.preview h1 {
+  font: 600 16px/20px Dosis;
+}
+
+.preview hr {
+  width: 50px;
+  margin: 8px 0;
+}
+
+.preview p {
+  font: 500 8px/19px "Open Sans";
+  color: #000;
+}
+
+.preview .enter-code {
+  font-size: 2px;
+}
+
+.preview input, .preview .form-input textarea, .form-input .preview textarea,
+.preview button {
+  line-height: 15px;
+  display: inline-block;
+}
+
+.preview input, .preview .form-input textarea, .form-input .preview textarea {
+  width: 76px;
+  font-size: 6px;
+  padding: 0 5px 0 8px;
+  border-radius: 3px 0 0 3px;
+}
+
+.preview button {
+  background-color: black;
+  padding: 0 5px;
+  margin-left: 2px;
+  min-width: 0;
+  outline: none;
+  color: white;
+  font-size: 8px;
+  line-height: 15px;
+  border: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.preview .branding {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  margin-left: -27px;
+}
+
+.preview .branding img {
+  width: 54px;
+  height: auto;
+}
+
+.preview.code-0 {
+  padding-right: 55%;
+  padding-left: 22px;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.preview.code-0 .background {
+  right: 50%;
+  z-index: 9;
+}
+
+.preview.code-0 .branding {
+  margin-left: 0;
+  left: 22px;
+}
+
+.preview.code-1 {
+  padding-left: 55%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.preview.code-1 .background {
+  left: 50%;
+  z-index: 9;
+}
+
+.preview.code-1 .branding {
+  margin-left: 0;
+  right: 22px;
+  left: auto;
 }
 /*# sourceMappingURL=PhotosOfUs.App.css.map */

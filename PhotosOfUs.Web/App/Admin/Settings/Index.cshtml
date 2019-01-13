@@ -192,22 +192,7 @@ ViewData["Title"] = "Event Settings";
             <header>
                 <span>https://photosof.us/{{ settings.url }}</span>
             </header>
-            <figure class="preview code-{{ settings.homepageTemplate }}" 
-                ng-style="{ 'background-image': settings.homepageTemplate == 2 && !settings.featuredImageUrl ? null : 'url(' + (settings.featuredImageUrl || '/images/BG2.png)') + ')' }">
-                <div class="background" ng-style="{ 'background-color': settings.backgroundColorCode }" ng-if="settings.homepageTemplate != 2 || !settings.featuredImageUrl"></div>
-                <div class="overlay" ng-style="{ 'background-color': settings.overlayColorCode, opacity: settings.overlayOpacity / 100 }"></div>
-                <h1 ng-style="{ color: settings.headerColorCode }">{{ settings.name || 'Event Name' }}</h1>
-                <hr ng-style="{ 'border-top-color': settings.accentColorCode }" />
-                <p ng-style="{ color: settings.bodyColorCode }">{{ settings.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
-                <div class="enter-code">
-                    <input ng-style="{ 'border-color': settings.accentColorCode }" placeholder="Enter Your Code" />
-                    <button type="button" ng-style="{ 'background-color': settings.accentColorCode }">Go!</button>
-                </div>
-                <div class="branding">
-                    <img src="~/images/account/dark branding@1x.png" ng-if="settings.brandingStyle === 1" />
-                    <img src="~/images/account/light branding@1x.png" ng-if="settings.brandingStyle === 2" />
-                </div>
-            </figure>
+            <preview event="settings"></preview>
         </div>
     </form>
 </div>

@@ -1,0 +1,22 @@
+@page
+@{ 
+    Layout = null;
+}
+<figure class="preview code-{{ $ctrl.event.homepageTemplate }}" 
+        ng-style="{ 'background-image': $ctrl.event.homepageTemplate == 2 && !$ctrl.event.featuredImageUrl ? null : 'url(' + ($ctrl.event.featuredImageUrl || '/images/BG2.png)') + ')' }">
+    <div class="background" ng-style="{ 'background-color': $ctrl.event.backgroundColorCode }" 
+         ng-if="$ctrl.event.homepageTemplate != 2 || !$ctrl.event.featuredImageUrl">
+    </div>
+    <div class="overlay" ng-style="{ 'background-color': $ctrl.event.overlayColorCode, opacity: $ctrl.event.overlayOpacity / 100 }"></div>
+    <h1 ng-style="{ color: $ctrl.event.headerColorCode }">{{ $ctrl.event.name || 'Event Name' }}</h1>
+    <hr ng-style="{ 'border-top-color': $ctrl.event.accentColorCode }" />
+    <p ng-style="{ color: $ctrl.event.bodyColorCode }">{{ $ctrl.event.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' }}</p>
+    <div class="enter-code">
+        <input ng-style="{ 'border-color': $ctrl.event.accentColorCode }" placeholder="Enter Your Code" />
+        <button type="button" ng-style="{ 'background-color': $ctrl.event.accentColorCode }">Go!</button>
+    </div>
+    <div class="branding">
+        <img src="~/images/account/dark branding@1x.png" ng-if="$ctrl.event.brandingStyle === 1" />
+        <img src="~/images/account/light branding@1x.png" ng-if="$ctrl.event.brandingStyle === 2" />
+    </div>
+</figure>
