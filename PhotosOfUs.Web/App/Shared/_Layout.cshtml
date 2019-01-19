@@ -19,5 +19,6 @@
 
     <partial name="_Scripts" />
     @RenderSection("Scripts", required: false)
+    @await Component.InvokeAsync("AngularModel", new { model = Model })
 </body>
 </html>

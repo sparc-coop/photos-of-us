@@ -1,0 +1,8 @@
+@model PhotosOfUs.AngularModelViewComponent
+
+@if (Model.HasClientSideData)
+{
+    <script>
+        angular.module('@Model.AppName').value('@Model.ModelName', @Model.Json);
+    </script>
+}
