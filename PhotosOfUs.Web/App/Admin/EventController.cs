@@ -31,6 +31,12 @@ namespace PhotosOfUs.Web.Controllers.API
         }
 
         [HttpGet]
+        public List<Event> GetAll()
+        {
+            return null;
+        } 
+        
+        [HttpGet]
         [Route("{eventId:int}")]
         public Event Get(int eventId)
         {

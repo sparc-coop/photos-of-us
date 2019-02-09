@@ -1,8 +1,9 @@
 using System;
+using System.Linq;
 
 namespace Kuvio.Kernel.Architecture
 {
-    public class Query<T>
+    public abstract class Query<T> 
     {
         protected IRepository<T> Set;
         

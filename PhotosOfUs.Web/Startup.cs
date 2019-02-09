@@ -59,7 +59,54 @@ namespace PhotosOfUs.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddHttpContextAccessor();
+            ConfigureAuth(services);
+
+            services.AddMvc()
+                .WithRazorPagesRoot("/App")
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/Home/Index", "");
+                });
+
+            services.AddSwaggerDocument();
+
+            
+
+            services.AddCors(o => o.AddPolicy("LoginPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                 .AllowAnyMethod()
+                 .AllowAnyHeader()
+                 .AllowCredentials();
+            }));
+
+            Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
+
+            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
+            services.AddScoped<DbContext, PhotosOfUsContext>();
+            services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
+
+            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
+
+            services.AddScoped<LoginCommand>()
+                .AddScoped<UploadPhotoCommand>()
+                .AddScoped<UploadProfileImageCommand>()
+                .AddScoped<UserProfileUpdateCommand>()
+                .AddScoped<BulkEditCommand>();
+
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
+
+            services.AddScoped<IViewRenderService, ViewRenderService>();
+
+            // For injecting the user data into repositories
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
+        }
+
+        private void ConfigureAuth(IServiceCollection services)
+        {
             services.Configure<AzureAdB2COptions>(Configuration.GetSection("Authentication:AzureAdB2C"));
 
             services.AddAuthentication(sharedOptions =>
@@ -94,52 +141,11 @@ namespace PhotosOfUs.Web
                 .Build();
             });
 
-
-            services.AddMvc()
-                .WithRazorPagesRoot("/App")
-                .AddRazorPagesOptions(options => {
-                    options.Conventions.AddPageRoute("/Home/Index", "");
-                });
-
-            services.AddSwaggerDocument();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromHours(1);
                 options.Cookie.HttpOnly = true;
             });
-
-            services.AddCors(o => o.AddPolicy("LoginPolicy", builder =>
-            {
-                builder.AllowAnyOrigin()
-                 .AllowAnyMethod()
-                 .AllowAnyHeader()
-                 .AllowCredentials();
-            }));
-
-            Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
-
-            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
-            services.AddScoped<DbContext, PhotosOfUsContext>();
-            services.AddScoped<StorageContext>(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
-            services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
-
-            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
-            services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
-
-            services.AddScoped<LoginCommand>()
-                .AddScoped<UploadPhotoCommand>()
-                .AddScoped<UploadProfileImageCommand>()
-                .AddScoped<UserProfileUpdateCommand>()
-                .AddScoped<BulkEditCommand>();
-
-            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-
-            services.AddScoped<IViewRenderService, ViewRenderService>();
-
-            // For injecting the user data into repositories
-            // Hack: Testing. I'm not sure if this is working
-            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
         }
 
 

@@ -1,7 +1,7 @@
 ﻿declare var swal;
 
 namespace PhotosOfUs {
-    angular.module('app').controller('EventAdminCtrl',
+    angular.module('app').controller('PhotosCtrl',
     ['$scope', '$rootScope', '$mdDialog', 'FolderApiClient', '$http',
     ($scope, $rootScope, $mdDialog, FolderApiClient: FolderApiClient, $http) => {
 

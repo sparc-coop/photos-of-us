@@ -1,0 +1,14 @@
+﻿@page
+@model DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="dashboard" ng-controller="DashboardCtrl">
+    <h1>Hello, @Model.Name</h1>
+    <hr />
+    
+    
+    <div class="button--red tutorial--skip" ng-class="{'tutorial--skip--show': skipTour == true}" ng-click="finishTour()">Skip Tutorial</div>
+</div>
+

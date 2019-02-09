@@ -14,7 +14,5 @@ namespace Kuvio.Kernel.Architecture
         public void Dispose() => Commit();
 
         protected void Commit() => Set.Commit();
-
-        
     }
 }

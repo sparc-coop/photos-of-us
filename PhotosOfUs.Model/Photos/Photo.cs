@@ -124,7 +124,7 @@ namespace PhotosOfUs.Model.Models
             }
             else if (extension.ToLower() == "jpg" || extension.ToLower() == "jpeg" || extension.ToLower() == "jpe")
             {
-                return ImageFormat.Png;
+                return ImageFormat.Jpeg;
             }
             else
             {

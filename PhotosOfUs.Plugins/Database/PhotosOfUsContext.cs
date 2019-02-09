@@ -1,20 +1,32 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Security.Claims;
+using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Model.Models
 {
     public partial class PhotosOfUsContext : DbContext
     {
+        private int? _userId;
+
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Photo> Photos { get; set; }
-        public virtual DbSet<ShoppingCartItem> ShoppingCart { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
-        { }
+        { 
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
+            _userId = this.GetService<ClaimsPrincipal>()?.ID();
+            base.OnConfiguring(builder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

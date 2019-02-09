@@ -26,8 +26,8 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult SignIn(string redirectUrl = null)
         {
-            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Index");
-            if (redirectUrl == null) redirectUrl = Url.Page("/Admin/Index");
+            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Dashboard");
+            if (redirectUrl == null) redirectUrl = Url.Page("/Admin/Dashboard");
             
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
@@ -38,8 +38,8 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult SignInPhotographer()
         {
-            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Index");
-            var redirectUrl = Url.Page("/Admin/Index");
+            if (User?.Identity?.IsAuthenticated == true) return RedirectToPage("/Admin/Dashboard");
+            var redirectUrl = Url.Page("/Admin/Dashboard");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.SignUpSignInPolicyIdPhotographer;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -49,7 +49,7 @@ namespace PhotosOfUs.Web.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword()
         {
-            var redirectUrl = Url.Page("/Admin/Index");
+            var redirectUrl = Url.Page("/Admin/Dashboard");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.ResetPasswordPolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
@@ -58,7 +58,7 @@ namespace PhotosOfUs.Web.Controllers
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var redirectUrl = Url.Page("/Admin/Index");
+            var redirectUrl = Url.Page("/Admin/Dashboard");
             var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
             properties.Items[AzureAdB2COptions.PolicyAuthenticationProperty] = AzureAdB2COptions.EditProfilePolicyId;
             return Challenge(properties, OpenIdConnectDefaults.AuthenticationScheme);
