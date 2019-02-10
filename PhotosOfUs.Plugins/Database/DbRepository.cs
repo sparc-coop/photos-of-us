@@ -19,7 +19,7 @@ namespace PhotosOfUs.Connectors.Database
         {
             this.context = context;
             Command = context.Set<T>();
-            Query = context.Set<T>();
+            Query = context.Set<T>().AsNoTracking();
         }
 
         // Commands

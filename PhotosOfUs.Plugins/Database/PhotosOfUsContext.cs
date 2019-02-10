@@ -7,8 +7,6 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class PhotosOfUsContext : DbContext
     {
-        private int? _userId;
-
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Photo> Photos { get; set; }
@@ -20,7 +18,6 @@ namespace PhotosOfUs.Model.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            _userId = this.GetService<ClaimsPrincipal>()?.ID();
             base.OnConfiguring(builder);
         }
 
