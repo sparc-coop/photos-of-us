@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Kuvio.Kernel.AspNet
 {
-    public static class KeyVault
+    public static class KeyVaultExtensions
     {
         public static IHostBuilder ConfigureKuvioSecrets(this IHostBuilder builder, string keyVaultName)
         {
