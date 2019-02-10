@@ -8,6 +8,7 @@ using Kuvio.Kernel.AspNet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using PhotosOfUs.Model;
 
 namespace PhotosOfUs.Client.Server
 {
@@ -27,8 +28,10 @@ namespace PhotosOfUs.Client.Server
             services.AddRazorComponents<App.Startup>();
             services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], (principal) =>
             {
-                //services.GetRequiredService<LoginCommand>().Execute(context.Principal);
+                services.BuildServiceProvider().GetRequiredService<GetOrCreateUserCommand>()
+                    .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
             });
+            services.AddScoped<GetOrCreateUserCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

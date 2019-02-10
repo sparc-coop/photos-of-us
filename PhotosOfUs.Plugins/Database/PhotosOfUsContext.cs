@@ -1,7 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Security.Claims;
-using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Model.Models
 {

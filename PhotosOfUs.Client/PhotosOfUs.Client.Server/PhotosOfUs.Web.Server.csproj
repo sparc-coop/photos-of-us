@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -17,7 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Kuvio.Kernel.AspNet\Kuvio.Kernel.AspNet.csproj" />
-    <ProjectReference Include="..\PhotosOfUs.Client.App\PhotosOfUs.App.csproj" />
+    <ProjectReference Include="..\..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
+    <ProjectReference Include="..\PhotosOfUs.Client.App\PhotosOfUs.Web.Client.csproj" />
   </ItemGroup>
 
 </Project>

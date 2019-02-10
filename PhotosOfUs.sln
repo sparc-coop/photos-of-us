@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28531.58
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Model", "PhotosOfUs.Model\PhotosOfUs.Model.csproj", "{5F04CB68-3AFD-4ABA-AF93-086E52142006}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Core", "PhotosOfUs.Model\PhotosOfUs.Core.csproj", "{5F04CB68-3AFD-4ABA-AF93-086E52142006}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web", "PhotosOfUs.Web\PhotosOfUs.Web.csproj", "{4412985D-B4FD-4E9D-BCA6-1AEC0738BA1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Plugins", "PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.Server", "PhotosOfUs.Client\PhotosOfUs.Client.Server\PhotosOfUs.Server.csproj", "{D8264C5B-948D-4FCE-9DAD-C1DFC60D8476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web.Server", "PhotosOfUs.Client\PhotosOfUs.Client.Server\PhotosOfUs.Web.Server.csproj", "{D8264C5B-948D-4FCE-9DAD-C1DFC60D8476}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.App", "PhotosOfUs.Client\PhotosOfUs.Client.App\PhotosOfUs.App.csproj", "{C2A110F8-693B-4654-BDCC-ABB0249971D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Web.Client", "PhotosOfUs.Client\PhotosOfUs.Client.App\PhotosOfUs.Web.Client.csproj", "{C2A110F8-693B-4654-BDCC-ABB0249971D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{994FB746-AC02-4001-8000-B9D16E8BB248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuvio.Kernel.Core", "Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj", "{7E2DD2EC-976A-4FEF-B731-37E99245DF81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuvio.Kernel.Core", "Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj", "{7E2DD2EC-976A-4FEF-B731-37E99245DF81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kuvio.Kernel.AspNet", "Kuvio.Kernel.AspNet\Kuvio.Kernel.AspNet.csproj", "{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuvio.Kernel.AspNet", "Kuvio.Kernel.AspNet\Kuvio.Kernel.AspNet.csproj", "{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

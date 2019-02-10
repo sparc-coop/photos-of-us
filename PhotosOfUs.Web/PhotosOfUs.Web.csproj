@@ -43,7 +43,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
+    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
   </ItemGroup>
 
