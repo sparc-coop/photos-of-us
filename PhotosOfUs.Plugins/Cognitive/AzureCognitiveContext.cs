@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using PhotosOfUs.Model.Models;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Auth;
 
 namespace PhotosOfUs.Connectors.Cognitive

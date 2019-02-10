@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace PhotosOfUs.Model.Models
+namespace Kuvio.Kernel.Core
 {
     public interface IFile {
         string Filename { get; }

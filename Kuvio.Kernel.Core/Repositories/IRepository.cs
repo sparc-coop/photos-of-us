@@ -1,9 +1,8 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using PhotosOfUs.Model.Models;
 
-namespace Kuvio.Kernel.Architecture
+namespace Kuvio.Kernel.Core
 {
     public interface IRepository<T>
     {

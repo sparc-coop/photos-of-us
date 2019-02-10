@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Security.Claims;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Models;
 

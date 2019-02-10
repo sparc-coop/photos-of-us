@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Photos.Commands;
 

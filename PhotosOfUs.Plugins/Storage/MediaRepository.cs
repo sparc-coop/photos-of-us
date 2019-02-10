@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Microsoft.WindowsAzure.Storage.Blob;
 using PhotosOfUs.Model.Models;
 

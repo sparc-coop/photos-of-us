@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Microsoft.EntityFrameworkCore;
 
 namespace PhotosOfUs.Connectors.Database

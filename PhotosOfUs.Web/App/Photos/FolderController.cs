@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PhotosOfUs.Model.ViewModels;
 using PhotosOfUs.Model.Models;
 using System.Security.Claims;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Web.Utilities;
 using System.Collections.Generic;

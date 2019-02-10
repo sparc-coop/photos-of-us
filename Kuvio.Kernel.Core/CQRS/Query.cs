@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
-
-namespace Kuvio.Kernel.Architecture
+namespace Kuvio.Kernel.Core
 {
     public abstract class Query<T> 
     {

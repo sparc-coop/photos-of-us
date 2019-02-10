@@ -1,4 +1,4 @@
-﻿using Kuvio.Kernel.Architecture;
+﻿using Kuvio.Kernel.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;

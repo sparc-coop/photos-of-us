@@ -1,6 +1,4 @@
-using System;
-
-namespace Kuvio.Kernel.Architecture
+namespace Kuvio.Kernel.Core
 {
     public class Command<T>
     {

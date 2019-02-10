@@ -19,7 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using PhotosOfUs.Model.Repositories;
 using Kuvio.Kernel.Auth;
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using PhotosOfUs.Model;
 using AutoMapper;
 using PhotosOfUs.Connectors.Storage;

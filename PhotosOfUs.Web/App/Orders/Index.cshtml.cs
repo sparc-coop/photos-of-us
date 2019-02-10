@@ -1,4 +1,4 @@
-using Kuvio.Kernel.Architecture;
+using Kuvio.Kernel.Core;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Kuvio.Kernel.Auth;
 using PhotosOfUs.Model.Models;

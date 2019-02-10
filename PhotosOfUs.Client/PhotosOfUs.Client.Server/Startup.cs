@@ -41,6 +41,7 @@ namespace PhotosOfUs.Client.Server
 
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
             app.UseRazorComponents<App.Startup>();
         }
     }
