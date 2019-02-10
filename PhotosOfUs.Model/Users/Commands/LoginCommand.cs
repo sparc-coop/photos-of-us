@@ -5,11 +5,11 @@ using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.Model
 {
-    public class GetOrCreateUserCommand
+    public class LoginCommand
     {
         private readonly IRepository<User> _users;
 
-        public GetOrCreateUserCommand(IRepository<User> users)
+        public LoginCommand(IRepository<User> users)
         {
             _users = users;
         }

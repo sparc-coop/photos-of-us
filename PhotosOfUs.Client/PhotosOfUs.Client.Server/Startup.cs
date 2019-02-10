@@ -28,10 +28,10 @@ namespace PhotosOfUs.Client.Server
             services.AddRazorComponents<App.Startup>();
             services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], (principal) =>
             {
-                services.BuildServiceProvider().GetRequiredService<GetOrCreateUserCommand>()
+                services.BuildServiceProvider().GetRequiredService<LoginCommand>()
                     .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
             });
-            services.AddScoped<GetOrCreateUserCommand>();
+            services.AddScoped<LoginCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
