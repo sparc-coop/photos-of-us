@@ -139,6 +139,49 @@ export class EventApiClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
+    getAll(): ng.IPromise<Event[] | null> {
+        let url_ = this.baseUrl + "/api/Event";
+        url_ = url_.replace(/[?&]$/, "");
+
+        var options_ = <ng.IRequestConfig>{
+            url: url_,
+            method: "GET",
+            transformResponse: [], 
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.http(options_).then((_response) => {
+            return this.processGetAll(_response);
+        }, (_response) => {
+            if (_response.status)
+                return this.processGetAll(_response);
+            throw _response;
+        });
+    }
+
+    protected processGetAll(response: any): ng.IPromise<Event[] | null> {
+        const status = response.status; 
+
+        let _headers: any = {};
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (resultData200 && resultData200.constructor === Array) {
+                result200 = [];
+                for (let item of resultData200)
+                    result200.push(Event.fromJS(item));
+            }
+            return this.q.resolve(result200);
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException(this.q, "An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return this.q.resolve<Event[] | null>(<any>null);
+    }
+
     get(eventId: number): ng.IPromise<Event | null> {
         let url_ = this.baseUrl + "/api/Event/{eventId}";
         if (eventId === undefined || eventId === null)
