@@ -10,7 +10,7 @@ namespace PhotosOfUs.Pages.Events
 {
     public class PurchaseModel : PageModel
     {
-        private IRepository<Photo> _photos;
+        private readonly IRepository<Photo> _photos;
 
         public Photo Photo { get; set; }
         public User Photographer { get; set; }
@@ -20,10 +20,12 @@ namespace PhotosOfUs.Pages.Events
             _photos = photos;
         }
 
-        public void OnGet(int eventId, int photoId)
+        public IActionResult OnGet(int eventId, int photoId)
         {
-            Photo = _photos.Include(x => x.Photographer).Find(x => x.EventId == eventId && x.Id == photoId);
+            Photo = _photos.Find(photoId);
+            if (Photo?.EventId != eventId) return NotFound();
             Photographer = Photo.Photographer;
+            return Page();
         }
 
     }

@@ -26,7 +26,7 @@ namespace PhotosOfUs.Pages.Photographer
         {
            if (userId == null) userId = User.ID();
 
-           Photographer = _users.Find(x => x.Id == userId);
+           Photographer = _users.Find(userId);
            if (Photographer == null) return NotFound();
            
            if (Photographer.Id == User.ID()) IsAdmin = true;

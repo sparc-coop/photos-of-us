@@ -28,7 +28,7 @@ namespace PhotosOfUs.Model.Models
             } while (ev.Cards.Any(x => x.Code == Code));
         }
 
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
         private string NewCode(int length)
         {
             const string chars = "0123456789";

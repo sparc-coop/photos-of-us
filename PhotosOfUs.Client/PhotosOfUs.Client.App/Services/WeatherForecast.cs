@@ -10,6 +10,6 @@ namespace PhotosOfUs.Client.App.Services
 
         public int TemperatureF { get; set; }
 
-        public string Summary { get; set; }
+        public string Summary { get; set; } 
     }
 }

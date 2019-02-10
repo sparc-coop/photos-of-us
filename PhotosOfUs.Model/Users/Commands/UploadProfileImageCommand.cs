@@ -5,13 +5,13 @@ using Kuvio.Kernel.Core;
 
 namespace PhotosOfUs.Model.Repositories
 {
-    public class UploadProfileImageCommand : Command<User>
+    public class UploadProfileImageCommand
     {
         private readonly IRepository<User> _users;
         private readonly IMediaRepository<ProfilePhoto> _profilePhotos;
         private readonly IMediaRepository<ProfileThumbnail> _profileThumbnails;
 
-        public UploadProfileImageCommand(IRepository<User> users, IMediaRepository<ProfilePhoto> profilePhotos, IMediaRepository<ProfileThumbnail> profileThumbnails) : base(users)
+        public UploadProfileImageCommand(IRepository<User> users, IMediaRepository<ProfilePhoto> profilePhotos, IMediaRepository<ProfileThumbnail> profileThumbnails)
         {
             _users = users;
             _profilePhotos = profilePhotos;
@@ -26,11 +26,9 @@ namespace PhotosOfUs.Model.Repositories
             var thumbnail = new ProfileThumbnail(userId, photoName, extension, stream);
             await _profileThumbnails.UploadAsync(thumbnail);
 
-            var user = _users.Find(x => x.Id == userId);
-            user.SetProfilePhoto(uri.AbsoluteUri);
-            Commit();
+            _users.Execute(userId, u => u.SetProfilePhoto(uri.AbsoluteUri));
 
-            return user.ProfilePhotoUrl;
+            return uri.AbsoluteUri;
         }
     }
 }

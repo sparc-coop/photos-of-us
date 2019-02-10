@@ -21,31 +21,32 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/User")]
     public class UserApiController : Controller
     {
-        private IRepository<User> _users;
-        private IRepository<Folder> _folders;
+        private readonly IRepository<User> _users;
 
-        public UserApiController(IRepository<User> userRepository, IRepository<Folder> folderRepository)
+        public UserApiController(IRepository<User> userRepository)
         {
             _users = userRepository;
-            _folders = folderRepository;
         }
         
 
         [HttpGet]
         public UserViewModel Get()
         {
-            var user = _users.Find(x => x.Id == User.ID());
+            var user = _users.Find(User.ID());
             return user.ToViewModel<UserViewModel>();
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody]UserProfileUpdateCommandModel model, [FromServices]UserProfileUpdateCommand command)
+        public IActionResult Put([FromBody]UserProfileUpdateCommandModel model)
         {
-            var user = _users.Find(x => x.Id == User.ID());
-            if (user.Id != model.Id)
+            if (User.ID() != model.Id)
                 return Forbid();
 
-            command.Execute(model);
+            _users.Execute(User.ID(), user =>
+            {
+                user.UpdateProfile(model.Email, model.FirstName, model.LastName, model.DisplayName, model.JobPosition, model.ProfilePhotoUrl, model.Bio);
+                user.UpdateSocialMedia(model.Facebook, model.Instagram, model.Dribbble, model.Twitter);
+            });
 
             return Ok();
         }
@@ -53,24 +54,20 @@ namespace PhotosOfUs.Web.Controllers.API
         [HttpDelete]
         public void DeactivateAccount()
         {
-            var user = _users.Find(x => x.Id == User.ID());
-            user.Deactivate();
-            _users.Commit();
+            _users.Execute(User.ID(), x => x.Deactivate());
         }
 
         [HttpPost]
         public void ReactivateAccount()
         {
-            var user = _users.Find(x => x.Id == User.ID());
-            user.Activate();
-           _users.Commit();
+            _users.Execute(User.ID(), x => x.Activate());
         }
 
         [HttpGet]
         [Route("Folders")]
-        public List<FolderViewModel> GetFolders(int id)
+        public List<FolderViewModel> GetFolders()
         {
-            var user = _users.Find(x => x.Id == User.ID());
+            var user = _users.Find(User.ID());
             return user.Folders.ToViewModel<List<FolderViewModel>>();
         }
 
@@ -78,8 +75,7 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("GetProfilePhotos/{userId:int}")]
         public List<Photo> GetProfilePhotos(int userId)
         {
-            return _users.Include(x => x.Photos)
-                .Find(x => x.Id == userId)
+            return _users.Find(userId)
                 .Photos
                 .Where(x => x.PublicProfile && !x.IsDeleted)
                 .ToList();
@@ -89,27 +85,21 @@ namespace PhotosOfUs.Web.Controllers.API
         [Route("ViewedPricing/{userId:int}")]
         public void ViewedPricingInfo(int userId)
         {
-            User user = _users.Find(x => x.Id == userId);
-            user.PurchaseTour = true;
-            _users.Commit();
+            _users.Execute(userId, x => x.PurchaseTour = true);
         }
 
         [HttpPost]
         [Route("ViewedDashboard/{userId:int}")]
         public void ViewedDashboardTour(int userId)
         {
-            User user = _users.Find(x => x.Id == userId);
-            user.DashboardTour = true;
-            _users.Commit();
+            _users.Execute(userId, x => x.DashboardTour = true);
         }
 
         [HttpPost]
         [Route("ViewedPhoto/{userId:int}")]
         public void ViewedPhotoTour(int userId)
         {
-            User user = _users.Find(x => x.Id == userId);
-            user.PhotoTour = true;
-            _users.Commit();
+            _users.Execute(userId, x => x.PhotoTour = true);
         }
     }
 }

@@ -16,43 +16,35 @@ namespace PhotosOfUs.Web.Controllers.API
     [Route("api/Folder")]
     public class FolderApiController : Controller
     {
-        private IRepository<User> _user;
+        private readonly IRepository<User> _users;
 
         public FolderApiController(IRepository<User> userRepository)
         {
-            _user = userRepository;
+            _users = userRepository;
         }
 
         [HttpPost]
         [Route("{name}")]
-        public FolderViewModel Post(string name)
+        public void Post(string name)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
-            var folder = photographer.AddFolder(name);
-            _user.Commit();
-
-            return folder.ToViewModel<FolderViewModel>();
+            _users.Execute(User.ID(), x => x.AddFolder(name));
         }
     
         
         [HttpPut]
-        public FolderViewModel Put(int id, string newName)
+        public void Put(int id, string newName)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
-
-            var folder = photographer.Folders.First(x => x.Id == id);
-            folder.Name = newName;
-            _user.Commit();
-
-            return folder.ToViewModel<FolderViewModel>();
+            _users.Execute(User.ID(), user =>
+            {
+                var folder = user.Folders.First(x => x.Id == id);
+                folder.Name = newName;
+            });
         }
 
         [HttpDelete]
         public IActionResult DeleteFolder(int id)
         {
-            var photographer = _user.Find(x => x.Id == User.ID());
-            photographer.RemoveFolder(id);
-            _user.Commit();
+            _users.Execute(User.ID(), x => x.RemoveFolder(id));
 
             return Ok();
         }

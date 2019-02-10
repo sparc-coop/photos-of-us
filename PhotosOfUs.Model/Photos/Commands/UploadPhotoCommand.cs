@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace PhotosOfUs.Model.Photos.Commands
 {
-    public class UploadPhotoCommand : Command<Event>
+    public class UploadPhotoCommand
     {
         private readonly IMediaRepository<Photo> _photoFiles;
         private readonly IRepository<Event> _events;
         private readonly IRepository<Photo> _photos;
         private readonly ICognitiveContext _cognitive;
 
-        public UploadPhotoCommand(IRepository<Event> events, IRepository<Photo> photos, IMediaRepository<Photo> photoFiles, ICognitiveContext cognitiveContext) : base(events)
+        public UploadPhotoCommand(IRepository<Event> events, IRepository<Photo> photos, IMediaRepository<Photo> photoFiles, ICognitiveContext cognitiveContext)
         {
             _photoFiles = photoFiles;
             _events = events;
@@ -26,18 +26,21 @@ namespace PhotosOfUs.Model.Photos.Commands
 
         public async Task<UploadPhotoCommandResult> ExecuteAsync(int eventId, int userId, string filename, Stream stream, string photoCode)
         {
-            var ev = _events.Include(x => x.Cards).Find(x => x.EventId == eventId && x.UserId == userId);
+            List<string> suggestedTags = new List<string>();
+            string code = null;
 
-            var bytes = TransformImageIntoBytes(stream);
-            var suggestedTags = await _cognitive.GetSuggestedTags(bytes);
+            await _events.ExecuteAsync(eventId, async ev =>
+            {
+                var bytes = TransformImageIntoBytes(stream);
+                suggestedTags = await _cognitive.GetSuggestedTags(bytes);
 
-            var possibleCodes = ev.Cards.Select(x => x.Code).ToList();
-            var code = await _cognitive.GetPhotoCode(bytes, possibleCodes) ?? photoCode;
-            
-            var photo = new Photo(userId, filename, eventId, ev.Cards.First(x => x.Code == code)?.Id);
-            photo.Url = (await _photoFiles.UploadAsync(photo)).AbsoluteUri;
-            ev.AddPhoto(photo);
-            Commit();
+                var possibleCodes = ev.Cards.Select(x => x.Code).ToList();
+                code = await _cognitive.GetPhotoCode(bytes, possibleCodes) ?? photoCode;
+
+                var photo = new Photo(userId, filename, eventId, ev.Cards.First(x => x.Code == code)?.Id);
+                photo.Url = (await _photoFiles.UploadAsync(photo)).AbsoluteUri;
+                ev.AddPhoto(photo);
+            });
 
             return new UploadPhotoCommandResult
             {
@@ -57,7 +60,6 @@ namespace PhotosOfUs.Model.Photos.Commands
             var suggestedTags = await _cognitive.GetSuggestedTags(bytes);
             
             _photos.Add(photo);
-            Commit();
 
             return new UploadPhotoCommandResult
             {

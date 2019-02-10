@@ -11,14 +11,11 @@ namespace PhotosOfUs.Pages.Admin
     [Authorize]
     public class SettingsModel : PageModel
     {
-        private readonly IRepository<Event> _events;
-
         public Event Event { get; set; }
         public IEnumerable<int> Opacities { get; private set; }
 
-        public SettingsModel(IRepository<Event> events)
+        public SettingsModel()
         {
-            _events = events;
         }
 
         public void OnGet()

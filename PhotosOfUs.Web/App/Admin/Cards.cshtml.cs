@@ -27,8 +27,8 @@ namespace PhotosOfUs.Pages.Admin
 
         public IActionResult OnGet(int eventId)
         {
-            var ev = _events.Find(x => x.EventId == eventId && x.UserId == User.ID());
-            if (ev == null) return NotFound();
+            var ev = _events.Find(eventId);
+            if (ev?.UserId != User.ID()) return NotFound();
 
             EventId = eventId;
             return Page();
@@ -36,8 +36,8 @@ namespace PhotosOfUs.Pages.Admin
 
         public IActionResult OnPost(int eventId, List<int> cardIds)
         {
-            var ev = _events.Include(x => x.Cards).Find(x => x.EventId == eventId && x.UserId == User.ID());
-            if (ev == null || cardIds == null || !cardIds.Any()) return Unauthorized();
+            var ev = _events.Find(eventId);
+            if (ev?.UserId != User.ID() || cardIds == null || !cardIds.Any()) return Unauthorized();
             
             var cards = ev.Cards.Where(x => cardIds.Contains(x.Id))
                 .ToList()

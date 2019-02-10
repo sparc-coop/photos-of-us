@@ -22,12 +22,12 @@ namespace PhotosOfUs.Pages.Events
             _events = events;
         }
 
-        public IActionResult OnGet(int eventId, string code, int? page = 1, int? photosPerPage = 8)
+        public IActionResult OnGet(int eventId, string code, int page = 1, int photosPerPage = 8)
         {
-            var ev = _events.Include("Cards").Include("Photos.Photographer").Find(x => x.EventId == eventId);
+            var ev = _events.Find(eventId);
             Code = code;
             EventId = eventId;
-            Photos = ev.Cards.FirstOrDefault(x => x.Code == code)?.Photos.ToList();
+            Photos = ev.Cards.FirstOrDefault(x => x.Code == code)?.Photos.Skip((page - 1) * photosPerPage).Take(photosPerPage).ToList();
             if (!Photos.Any()) return RedirectToPage("/Events/Search");
 
             Photographer = Photos.First().Photographer;

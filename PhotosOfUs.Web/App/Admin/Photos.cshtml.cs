@@ -25,7 +25,7 @@ namespace PhotosOfUs.Pages.Admin
 
         public void OnGet(int eventId)
         {
-            var ev = _events.Include("Cards.Photos").Find(x => x.EventId == eventId);
+            var ev = _events.Find(eventId);
             Id = ev.EventId;
             PhotographerId = ev.UserId;
             Name = ev.Name;

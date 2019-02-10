@@ -10,7 +10,7 @@ namespace PhotosOfUs.Pages.Admin
     [Authorize]
     public class DashboardModel : PageModel
     {
-        private IRepository<User> _users;
+        private readonly IRepository<User> _users;
 
         public string Name { get; set; }
         public int PhotographerId { get; set; }
@@ -22,7 +22,7 @@ namespace PhotosOfUs.Pages.Admin
 
         public IActionResult OnGet()
         {
-            var photographer = _users.Find(x => x.Id == User.ID());
+            var photographer = _users.Find(User.ID());
 
             if (photographer.IsPhotographer == true)
             {

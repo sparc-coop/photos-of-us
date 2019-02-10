@@ -22,7 +22,7 @@ namespace PhotosOfUs.Pages.Events
 
         public void OnGet(string eventName)
         {
-            var ev = _events.Find(x => x.Url == eventName);
+            var ev = _events.Query.FirstOrDefault(x => x.Url == eventName);
             EventId = ev.EventId;
             ThemeName = "_" + ev.HomepageTemplate;
         }

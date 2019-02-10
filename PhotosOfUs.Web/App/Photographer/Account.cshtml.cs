@@ -23,7 +23,7 @@ namespace PhotosOfUs.Pages.Photographer
 
         public IActionResult OnGet()
         {
-           Photographer = _users.Find(x => x.Id == User.ID());
+           Photographer = _users.Find(User.ID());
            if (Photographer == null) return NotFound();
            
            return Page();
@@ -31,9 +31,7 @@ namespace PhotosOfUs.Pages.Photographer
 
         public IActionResult OnPost(User user)
         {
-            var photographer = _users.Find(x => x.Id == User.ID());
-            photographer.UpdateProfile(user.Email, user.FirstName, user.LastName, user.DisplayName, user.JobPosition, user.ProfilePhotoUrl, user.Bio);
-            _users.Commit();
+            _users.Execute(User.ID(), x => x.UpdateProfile(user.Email, user.FirstName, user.LastName, user.DisplayName, user.JobPosition, user.ProfilePhotoUrl, user.Bio));
             
             return Page();
         }

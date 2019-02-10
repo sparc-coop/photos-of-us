@@ -18,8 +18,8 @@ namespace PhotosOfUs
             ModelName = modelName;
             var clientSideModels = model.GetType().GetProperties()
                 .Where(x => x.CustomAttributes.Any(y => y.AttributeType == typeof(ClientSideAttribute)))
-                .Select(x => new { 
-                    Name = x.Name,
+                .Select(x => new {
+                    x.Name,
                     Value = x.GetValue(model)
                 });
 

@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using PhotosOfUs.Model.Models;
 using Kuvio.Kernel.Auth;
 using Microsoft.AspNetCore.Authorization;
 
@@ -12,12 +10,9 @@ namespace PhotosOfUs.Web.Controllers
     [Authorize]
     public class SessionController : Controller
     {
-        private PhotosOfUsContext _context;
-
-        public SessionController(IOptions<AzureAdB2COptions> b2cOptions, PhotosOfUsContext context)
+        public SessionController(IOptions<AzureAdB2COptions> b2cOptions)
         {
             AzureAdB2COptions = b2cOptions.Value;
-            _context = context;
         }
 
         public AzureAdB2COptions AzureAdB2COptions { get; set; }

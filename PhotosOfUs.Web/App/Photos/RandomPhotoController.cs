@@ -30,7 +30,7 @@ namespace PhotosOfUs.Web.Controllers.API
         public PhotoViewModel Get()
         {
             var random = new Random();
-            var photos = _photos.Where(x => x.PublicProfile && !x.IsDeleted);
+            var photos = _photos.Query.Where(x => x.PublicProfile && !x.IsDeleted);
             var toSkip = random.Next(0, photos.Count());
             return photos.Skip(toSkip).Take(1).FirstOrDefault().ToViewModel<PhotoViewModel>();
         }

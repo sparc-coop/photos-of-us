@@ -12,7 +12,7 @@ namespace PhotosOfUs.Pages.Photographer
     [Authorize]
     public class SalesHistoryModel : PageModel
     {
-        private IRepository<Order> _orders;
+        private readonly IRepository<Order> _orders;
 
         public List<Model> SalesHistory { get; set; }
         public List<Order> Orders { get; set; }
@@ -27,7 +27,7 @@ namespace PhotosOfUs.Pages.Photographer
 
         public void OnGet()
         {
-            var orderLines = _orders.Where(x => x.OrderDetail.Any(y => y.Photo.PhotographerId == User.ID()))
+            var orderLines = _orders.Query.Where(x => x.OrderDetail.Any(y => y.Photo.PhotographerId == User.ID()))
                 .SelectMany(x => x.OrderDetail.Where(y => y.Photo.PhotographerId == User.ID()));
 
             SalesHistory = orderLines.GroupBy(x => new { x.PhotoId, x.Photo.Name })

@@ -9,15 +9,16 @@ namespace PhotosOfUs.Model.ViewModels
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string text { get; set; }
+        public string Text { get; set; }
         
         public static TagViewModel ToViewModel(Tag entity)
         {
-            TagViewModel viewModel = new TagViewModel();
-
-            viewModel.Id = entity.Id;
-            viewModel.Name = entity.Name;
-            viewModel.text = entity.Name;
+            TagViewModel viewModel = new TagViewModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                Text = entity.Name
+            };
 
             return viewModel;
         }

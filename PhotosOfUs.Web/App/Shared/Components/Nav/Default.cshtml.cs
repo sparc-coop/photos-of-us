@@ -19,9 +19,8 @@ namespace PhotosOfUs
         public IViewComponentResult Invoke()
         {
             User currentUser = null;
-            var user = User as ClaimsPrincipal;
-            if (user != null)
-                currentUser = _users.Find(x => x.Id == user.ID());
+            if (User is ClaimsPrincipal user)
+                currentUser = _users.Find(user.ID());
 
             return View(currentUser);
         }

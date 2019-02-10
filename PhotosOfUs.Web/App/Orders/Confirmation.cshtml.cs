@@ -22,10 +22,10 @@ namespace PhotosOfUs.Pages.Orders
             _orders = orders;
         }
 
-        public void OnGet(int id)
+        public void OnGet()
         {
-            CurrentUser = _users.Find(x => x.Id == User.ID());
-            var order = _orders.Include(x => x.OrderDetail).Find(x => x.UserId == User.ID() && x.OrderStatus == "Open");
+            CurrentUser = _users.Find(User.ID());
+            var order = _orders.Query.FirstOrDefault(x => x.UserId == User.ID() && x.OrderStatus == "Open");
             TotalItems = order.OrderDetail.Count();
             TotalAmount = order.CalculatedTotal;
         }

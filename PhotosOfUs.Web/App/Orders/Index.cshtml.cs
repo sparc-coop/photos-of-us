@@ -9,7 +9,7 @@ namespace PhotosOfUs.Pages.Orders
 {
     public class IndexModel : PageModel
     {
-        private IRepository<Order> _orders;
+        private readonly IRepository<Order> _orders;
         public List<Order> Orders { get; private set; }
 
         public IndexModel(IRepository<Order> orders)
@@ -19,7 +19,7 @@ namespace PhotosOfUs.Pages.Orders
 
         public void OnGet()
         {
-            Orders = _orders.Include("OrderDetail.Photo").Where(x => x.UserId == User.ID()).ToList();
+            Orders = _orders.Query.Where(x => x.UserId == User.ID()).ToList();
         }
     }
 }

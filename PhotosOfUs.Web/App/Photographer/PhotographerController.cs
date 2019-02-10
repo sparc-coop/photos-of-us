@@ -36,7 +36,6 @@ namespace PhotosOfUs.Web.Controllers
         [Authorize]
         public async Task UploadProfileImageAsync(IFormFile file, string photoName, string extension, [FromServices]UploadProfileImageCommand command)
         {
-            var azureId = HttpContext.User.FindFirstValue("http://schemas.microsoft.com/identity/claims/objectidentifier");
             var photographerId = User.ID();
 
             var filePath = Path.GetTempFileName();

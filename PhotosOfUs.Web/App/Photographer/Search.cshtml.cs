@@ -23,14 +23,14 @@ namespace PhotosOfUs.Pages.Photographer
 
         public void OnGet()
         {
-           Photos = _photos.Where(x => x.PhotographerId == User.ID() && x.PublicProfile && !x.IsDeleted).ToList();
+           Photos = _photos.Query.Where(x => x.PhotographerId == User.ID() && x.PublicProfile && !x.IsDeleted).ToList();
         }
 
         public void OnPost(string tagnames)
         {
             string[] tagarray = tagnames.Split(' ');
             
-            Photos = _photos.Include("PhotoTag.Tag")
+            Photos = _photos.Query
                 .Where(x => x.PhotographerId == User.ID() && x.PublicProfile && x.PhotoTag.Any(y => tagarray.Contains(y.Tag.Name)))
                 .ToList();
             

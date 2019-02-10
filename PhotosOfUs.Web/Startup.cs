@@ -27,7 +27,6 @@ using PhotosOfUs.Connectors.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Security.Claims;
 using PhotosOfUs.Model.Photos.Commands;
-using PhotosOfUs.Model.Events;
 using PhotosOfUs.Connectors.Cognitive;
 
 namespace PhotosOfUs.Web
@@ -93,9 +92,7 @@ namespace PhotosOfUs.Web
 
             services.AddScoped<LoginCommand>()
                 .AddScoped<UploadPhotoCommand>()
-                .AddScoped<UploadProfileImageCommand>()
-                .AddScoped<UserProfileUpdateCommand>()
-                .AddScoped<BulkEditCommand>();
+                .AddScoped<UploadProfileImageCommand>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 

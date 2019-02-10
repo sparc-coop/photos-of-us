@@ -6,11 +6,13 @@ using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.Model
 {
-    public class LoginCommand : Command<User>
+    public class LoginCommand
     {
-        public LoginCommand(IRepository<User> repository) : base(repository)
-        {
+        private readonly IRepository<User> _users;
 
+        public LoginCommand(IRepository<User> users)
+        {
+            _users = users;
         }
 
         public User Execute(ClaimsPrincipal principal) 
@@ -18,21 +20,19 @@ namespace PhotosOfUs.Model
             var azureId = principal.AzureID();
 
             //var user = Set.Find(x => x.UserIdentities.Any(y => y.AzureID == azureId)); // User with identity
-            var user = Set.Include(x => x.UserIdentities).Find(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            var user = _users.Query.FirstOrDefault(x => x.UserIdentities.Any(y => y.AzureID == azureId));
 
             if (user == null)
             {
-                user = Set.Find(x => x.Email == principal.Email()); // User without identity
+                user = _users.Query.FirstOrDefault(x => x.Email == principal.Email()); // User without identity
                 if (user == null)
                 {
                     user = new User(principal.DisplayName(), principal.Email(), principal.AzureID(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
-                    user = Set.Add(user);
+                    user = _users.Add(user);
                 }
             }
 
-            user.Login(principal, principal.AzureID());
-            //Set.Update(user);
-            Commit();
+            _users.Execute(user.Id, u => u.Login(principal, principal.AzureID()));
 
             return user;
         }

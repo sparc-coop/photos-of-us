@@ -53,7 +53,7 @@ namespace PhotosOfUs.Model.Models
         public bool? DashboardTour { get; set; }
         public bool? PhotoTour { get; set; }
 
-        public string FullName => $"{(FirstName == null ? DisplayName : FirstName)}{(LastName == null ? "" : (" " + LastName))}";
+        public string FullName => $"{(FirstName ?? DisplayName)}{(LastName == null ? "" : (" " + LastName))}";
 
         public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Folder> Folders { get; set; }
@@ -111,6 +111,7 @@ namespace PhotosOfUs.Model.Models
             FirstName = firstName;
             JobPosition = jobPosition;
             Bio = bio;
+            SetProfilePhoto(profilePhotoUrl);
         }
 
         public void SetProfilePhoto(string absoluteUri)

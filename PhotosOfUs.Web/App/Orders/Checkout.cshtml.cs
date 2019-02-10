@@ -16,7 +16,7 @@ namespace PhotosOfUs.Pages.Orders
 {
     public class CheckoutModel : PageModel
     {
-        private IRepository<Order> _orders;
+        private readonly IRepository<Order> _orders;
         private readonly IRepository<User> _users;
 
         public Order Order { get; private set; }
@@ -29,7 +29,7 @@ namespace PhotosOfUs.Pages.Orders
 
         public void OnGet()
         {
-            Order = _orders.Include("OrderDetail.Photo").Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            Order = _orders.Query.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
         }
 
         public async Task<IActionResult> OnPostAsync(Address address, string stripeToken)
@@ -43,36 +43,33 @@ namespace PhotosOfUs.Pages.Orders
 
         public void SaveAddress(Address address)
         {
-            var user = _users.Find(x => x.Id == User.ID());
-            user.SetAddress(address);
-            _users.Commit();
+            _users.Execute(User.ID(), u => u.SetAddress(address));
         }
 
         private void ChargePayment(string stripeToken)
         {
             StripeConfiguration.SetApiKey("");
 
-            Order userOrder = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
-            userOrder.SetStatusToPending();
-            _orders.Commit();
+            Order userOrder = _orders.Query.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").FirstOrDefault();
+            _orders.Execute(userOrder.Id, x => x.SetStatusToPending());
 
-            Order order = _orders.Find(x => x.Id == userOrder.Id);
+            Order order = _orders.Find(userOrder.Id);
             decimal total = 0;
             foreach (var item in order.OrderDetail)
             {
                 total += (item.UnitPrice * item.Quantity);
             }
 
-            var customers = new Stripe.CustomerService();
-            var charges = new Stripe.ChargeService();
+            var customers = new CustomerService();
+            var charges = new ChargeService();
 
-            var customer = customers.Create(new Stripe.CustomerCreateOptions
+            var customer = customers.Create(new CustomerCreateOptions
             {
                 Email = order.User.Email,
                 SourceToken = stripeToken
             });
 
-            var charge = charges.Create(new Stripe.ChargeCreateOptions
+            var charge = charges.Create(new ChargeCreateOptions
             {
                 Amount = (int)(total * 100),
                 Description = "Photos Of Us Order",
@@ -83,8 +80,8 @@ namespace PhotosOfUs.Pages.Orders
 
         private async Task SendConfirmationEmail()
         {
-            var user = _users.Find(x => x.Id == User.ID());
-            var count = _orders.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").SelectMany(x => x.OrderDetail).Count();
+            var user = _users.Find(User.ID());
+            var count = _orders.Query.Where(x => x.UserId == User.ID() && x.OrderStatus == "Open").SelectMany(x => x.OrderDetail).Count();
 
             var apiKey = "";
             var client = new SendGridClient(apiKey);

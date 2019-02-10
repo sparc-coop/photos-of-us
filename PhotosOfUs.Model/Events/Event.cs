@@ -68,5 +68,19 @@ namespace PhotosOfUs.Model.Models
             foreach (var photo in photos)
                 Photos.Remove(photo);
         }
+
+        public void BulkEdit(List<int> photoIds, List<string> tags, decimal? newPrice)
+        {
+            var photos = Photos.Where(x => photoIds.Contains(x.Id)).ToList();
+
+            // Price
+            if (newPrice != null)
+                photos.ForEach(x => x.UpdatePrice(newPrice.Value));
+
+            // Tags
+            if (tags == null || !tags.Any()) return;
+
+            photos.ForEach(x => x.ReplaceTags(tags));
+        }
     }
 }
