@@ -26,7 +26,7 @@ namespace PhotosOfUs.Client.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorComponents<App.Startup>();
-            services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
+            //services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
             services.AddScoped<LoginCommand>();
         }
 
@@ -39,8 +39,7 @@ namespace PhotosOfUs.Client.Server
             }
 
             app.UseStaticFiles();
-            app.UseAuthentication();
-            app.UseMvcWithDefaultRoute();
+            //app.UseAuthentication();
             app.UseRazorComponents<App.Startup>();
         }
 
