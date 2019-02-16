@@ -26,11 +26,7 @@ namespace PhotosOfUs.Client.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorComponents<App.Startup>();
-            services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], (principal) =>
-            {
-                services.BuildServiceProvider().GetRequiredService<LoginCommand>()
-                    .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
-            });
+            services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
             services.AddScoped<LoginCommand>();
         }
 
@@ -46,6 +42,15 @@ namespace PhotosOfUs.Client.Server
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
             app.UseRazorComponents<App.Startup>();
+        }
+
+        private static Action<System.Security.Claims.ClaimsPrincipal> OnLogin(IServiceCollection services)
+        {
+            return (principal) =>
+            {
+                services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+                    .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
+            };
         }
     }
 }
