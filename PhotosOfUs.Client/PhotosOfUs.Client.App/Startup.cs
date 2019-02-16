@@ -11,7 +11,7 @@ namespace PhotosOfUs.Client.App
 
         public void Configure(IComponentsApplicationBuilder app)
         {
-            app.AddComponent<App>("app");
+            app.AddComponent<Shared.App>("app");
         }
     }
 }
