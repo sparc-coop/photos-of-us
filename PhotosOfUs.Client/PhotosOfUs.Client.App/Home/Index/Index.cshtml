@@ -1,10 +1,14 @@
 ﻿@page "/"
 @layout LandingLayout
+@inject IRepository<Event> Events
 
-<div class="landing" ng-controller="RandomPhotoCtrl">
+<div class="landing">
     <div class="main-landing">
-        <div class="main-landing--img-container" ng-init="getRandomPhotos(30)">
-            <img ng-repeat="photo in photoList" ng-src="{{photo.thumbnailUrl}}" ng-style="{ top: photo.coords[1], left: photo.coords[0] }" class="random-photo" ng-cloak alt="{{photo.name}}" />
+        <div class="main-landing--img-container">
+            @foreach (var photo in RandomPhotos)
+            {
+                <img src="@photo.Url" style="top: @RandomCoordinate(); left: @RandomCoordinate()" class="random-photo" alt="@photo.Name" />
+            }
         </div>
         <div class="welcome-section">
             <div class="welcome-text">less chat, more snaps</div>
@@ -61,10 +65,16 @@
 
     <div class="browse">
         <div class="browse--img-container right">
-            <img ng-repeat="photo in photoList | limitTo: 6" ng-src="{{photo.thumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.name}}" />
+            @foreach (var photo in RandomPhotos.Take(6))
+            {
+                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
+            }
         </div>
         <div class="browse--img-container left">
-            <img ng-repeat="photo in photoList | orderBy:'-' | limitTo: 6" ng-src="{{photo.thumbnailUrl}}" class="random-photo" ng-cloak alt="{{photo.name}}" />
+            @foreach (var photo in RandomPhotos.Skip(6).Take(6))
+            {
+                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
+            }
         </div>
         <div class="browse--content">
             <div class="subt-2">Not a photographer?</div>
@@ -101,9 +111,38 @@
         <div class="footer-right">
             <div class="code-enter">
                 Have a photo code? Enter it here!
-                <div class="code-enter-sub"><input class="code-input" placeholder="ABC123" ng-model="searchCode" /><a href="/Photographer/PhotoCode?code={{searchCode}}" class="code-button">Go!</a></div>
+                <div class="code-enter-sub"><input class="code-input" placeholder="ABC123" bind="SearchCode" /><a href="/Photographer/PhotoCode?code=@SearchCode" class="code-button">Go!</a></div>
             </div>
             <div class="bottom-logo"></div>
         </div>
     </div>
 </div>
+
+@functions {
+    public List<Photo> RandomPhotos;
+    public string SearchCode;
+
+    protected override void OnInit()
+    {
+        RandomPhotos = GetPhotos(30);
+    }
+
+    public string RandomCoordinate() => new Random().Next(0, 80) + "%";
+
+    public List<Photo> GetPhotos(int count)
+    {
+        var random = new Random();
+        var photos = Events.Query.SelectMany(x => x.Photos.Where(y => !y.IsDeleted));
+        var photoCount = photos.Count();
+        var photoList = new List<Photo>();
+
+        for (var i = 0; i < count; i++)
+        {
+            var toSkip = random.Next(0, photoCount);
+            var photo = photos.Skip(toSkip).Take(1).FirstOrDefault();
+            if (photo != null) photoList.Add(photo);
+        }
+
+        return photoList;
+    }
+}

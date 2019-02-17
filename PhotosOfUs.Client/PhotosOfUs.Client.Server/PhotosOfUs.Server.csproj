@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Kuvio.Kernel.AspNet\Kuvio.Kernel.AspNet.csproj" />
+    <ProjectReference Include="..\..\Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj" />
     <ProjectReference Include="..\..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
+    <ProjectReference Include="..\..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Client.App\PhotosOfUs.App.csproj" />
   </ItemGroup>
 

@@ -29,7 +29,6 @@ namespace PhotosOfUs.Model.Models
 
         public Address BillingAddress { get; set; }
         public Address ShippingAddress { get; set; }
-        public User User { get; set; }
         public ICollection<OrderDetail> OrderDetail { get; set; }
 
         // Not Mapped

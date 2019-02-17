@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview-19075-0444" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj" />
+    <ProjectReference Include="..\..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
+  </ItemGroup>
+
 </Project>

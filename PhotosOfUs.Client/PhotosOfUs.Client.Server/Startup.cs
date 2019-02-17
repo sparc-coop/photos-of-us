@@ -9,6 +9,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using PhotosOfUs.Model;
+using PhotosOfUs.Model.Models;
+using Microsoft.EntityFrameworkCore;
+using PhotosOfUs.Connectors.Storage;
+using PhotosOfUs.Connectors.Cognitive;
+using Kuvio.Kernel.Core;
+using PhotosOfUs.Connectors.Database;
 
 namespace PhotosOfUs.Client.Server
 {
@@ -27,6 +33,14 @@ namespace PhotosOfUs.Client.Server
         {
             services.AddRazorComponents<App.Startup>();
             //services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
+            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
+            services.AddScoped<DbContext, PhotosOfUsContext>();
+            services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
+
+            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
+
             services.AddScoped<LoginCommand>();
         }
 

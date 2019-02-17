@@ -11,11 +11,6 @@ namespace PhotosOfUs.Model.Models
         public string Code { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public List<Photo> Photos { get; set; }
-
-        // Not Mapped
-        //public string Url => "www.photosof.us/" + Photographer.DisplayName.ToLower().Replace(" ","");
-
         public Card() {}
 
         public Card(Event ev)

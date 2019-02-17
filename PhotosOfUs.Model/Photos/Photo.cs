@@ -12,7 +12,6 @@ namespace PhotosOfUs.Model.Models
     {
         public Photo()
         {
-            PrintType = new HashSet<PrintType>();
             PhotoTag = new HashSet<PhotoTag>();
         }
 
@@ -48,7 +47,6 @@ namespace PhotosOfUs.Model.Models
         public User Photographer { get; set; }
 
         public ICollection<PhotoTag> PhotoTag { get; set; }
-        public ICollection<PrintType> PrintType { get; set; }
 
         public string Filename { get; }
 

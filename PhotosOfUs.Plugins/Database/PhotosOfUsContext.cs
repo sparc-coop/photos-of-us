@@ -6,7 +6,6 @@ namespace PhotosOfUs.Model.Models
     {
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Photo> Photos { get; set; }
         public virtual DbSet<Event> Events { get; set; }
 
         public PhotosOfUsContext(DbContextOptions<PhotosOfUsContext> options) : base(options)
@@ -28,26 +27,8 @@ namespace PhotosOfUs.Model.Models
 
                 entity.OwnsMany(e => e.OrderDetail, x =>
                 {
+                    x.HasKey(y => y.Id);
                     x.Property(y => y.UnitPrice).HasColumnType("decimal(19, 4)");
-                });
-            });
-
-            modelBuilder.Entity<Photo>(entity =>
-            {
-                entity.ToTable("Photo");
-                entity.Property(e => e.Price).HasColumnType("decimal(19, 4)");
-                entity.Property(e => e.UploadDate).HasColumnType("datetime");
-                entity.Ignore(x => x.FolderName);
-                entity.Ignore(x => x.Stream);
-                entity.Ignore(x => x.FileSize);
-                entity.Ignore(x => x.Resolution);
-                entity.Ignore(x => x.ThumbnailUrl);
-                entity.Ignore(x => x.WaterMarkUrl);
-
-                entity.OwnsMany(e => e.PhotoTag, x =>
-                {
-                    x.HasKey(y => new { y.PhotoId, y.TagId });
-                    x.Property(y => y.RegisterDate).HasColumnType("datetime");
                 });
             });
 
@@ -70,12 +51,14 @@ namespace PhotosOfUs.Model.Models
 
                 entity.OwnsMany(e => e.SocialMedia, x =>
                 {
+                    x.HasKey(y => y.Id);
                     x.Property(y => y.AzureId).HasColumnName("AzureID");
                     x.Property(y => y.Type).HasColumnName("Type");
                 });
 
                 entity.OwnsMany(e => e.Folders, x =>
                 {
+                    x.HasKey(y => y.Id);
                     x.Property(y => y.CreatedDate).HasColumnType("datetime");
                 });
             });
@@ -87,7 +70,28 @@ namespace PhotosOfUs.Model.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
                 entity.OwnsMany(e => e.Cards, card =>
                 {
+                    card.HasKey(x => x.Id);
                     card.Property(x => x.CreatedDate).HasColumnType("datetime");
+                    
+                });
+                entity.OwnsMany(x => x.Photos, photo =>
+                {
+                    photo.ToTable("Photo");
+                    photo.HasKey(x => x.Id);
+                    photo.Property(e => e.Price).HasColumnType("decimal(19, 4)");
+                    photo.Property(e => e.UploadDate).HasColumnType("datetime");
+                    photo.Ignore(x => x.FolderName);
+                    photo.Ignore(x => x.Stream);
+                    photo.Ignore(x => x.FileSize);
+                    photo.Ignore(x => x.Resolution);
+                    photo.Ignore(x => x.ThumbnailUrl);
+                    photo.Ignore(x => x.WaterMarkUrl);
+
+                    photo.OwnsMany(e => e.PhotoTag, x =>
+                    {
+                        x.HasKey(y => new { y.PhotoId, y.TagId });
+                        x.Property(y => y.RegisterDate).HasColumnType("datetime");
+                    });
                 });
             });
 
