@@ -44,7 +44,7 @@ namespace Kuvio.Kernel.AspNet
                     };
                 });
 
-            builder.AddOpenIdConnect("B2CWeb", options =>
+            builder.AddOpenIdConnect(options =>
                 {
                     options.ClientId = b2cClientId;
                     options.Authority = $"https://login.microsoftonline.com/tfp/{b2cTenant}/{b2cPolicy}/v2.0/";
@@ -61,10 +61,20 @@ namespace Kuvio.Kernel.AspNet
 
             services.AddAuthorization(options =>
             {
-                options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .AddAuthenticationSchemes("B2C", "Mobile")
-                .Build();
+                if (jwtDomainName != null && jwtSigningKey != null)
+                {
+                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                        .RequireAuthenticatedUser()
+                        .AddAuthenticationSchemes("B2C", "Mobile")
+                        .Build();
+                }
+                else
+                {
+                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                       .RequireAuthenticatedUser()
+                       .AddAuthenticationSchemes("B2C")
+                       .Build();
+                }
             });
         }
 

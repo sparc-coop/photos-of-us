@@ -49,12 +49,12 @@ namespace PhotosOfUs.Model.Models
                     x.Property(y => y.LastLoginDate).HasColumnType("datetime");
                 });
 
-                entity.OwnsMany(e => e.SocialMedia, x =>
-                {
-                    x.HasKey(y => y.Id);
-                    x.Property(y => y.AzureId).HasColumnName("AzureID");
-                    x.Property(y => y.Type).HasColumnName("Type");
-                });
+                //entity.OwnsMany(e => e.SocialMedia, x =>
+                //{
+                //    x.HasKey(y => y.Id);
+                //    x.Property(y => y.AzureId).HasColumnName("AzureID");
+                //    x.Property(y => y.Type).HasColumnName("Type");
+                //});
 
                 entity.OwnsMany(e => e.Folders, x =>
                 {

@@ -32,7 +32,7 @@ namespace PhotosOfUs.Client.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorComponents<App.Startup>();
-            //services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
+            services.AddKuvioAuthentication(Configuration["AzureAdB2C:ClientId"], Configuration["AzureAdB2C:Tenant"], Configuration["AzureAdB2C:Policy"], OnLogin(services));
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
             services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
@@ -42,6 +42,8 @@ namespace PhotosOfUs.Client.Server
             services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
             services.AddScoped<LoginCommand>();
+
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +55,8 @@ namespace PhotosOfUs.Client.Server
             }
 
             app.UseStaticFiles();
-            //app.UseAuthentication();
+            app.UseAuthentication();
+            app.UseMvcWithDefaultRoute();
             app.UseRazorComponents<App.Startup>();
         }
 
