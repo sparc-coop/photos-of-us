@@ -14,5 +14,10 @@
     <app></app>
 
     <script src="_framework/components.server.js"></script>
+    <script>
+        window.navigateToNonBlazorUrl = function (url) {
+            window.location.href = url;
+        };
+    </script>
 </body>
 </html>
