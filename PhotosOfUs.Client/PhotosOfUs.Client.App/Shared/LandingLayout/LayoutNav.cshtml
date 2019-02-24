@@ -1,8 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@page "/Nav"
 @inject IJSRuntime Js
 @inject ClaimsPrincipal CurrentUser
 
-<div class="landing-container">
     <nav class="nav">
         <a href="/" class="logo">
             <img src="/images/logo.png" alt="Photos Of Us" />
@@ -50,7 +49,7 @@
                 <a href="/Photographer/PublicCode" class="menu-item">Code</a>
             </div>
             @if (ViewDropdown)
-            {
+            { 
                 <div class="adminMenu">
                     <div class="adminMenu__arrow"></div>
                     <a class="adminMenu__list" href="/Orders/OrderHistory">Order History</a>
@@ -60,8 +59,6 @@
         }
 
     </nav>
-    @Body
-</div>
 
 @functions {
     bool ViewDropdown;
@@ -73,3 +70,4 @@
 
     void ToggleDropdown() => ViewDropdown = !ViewDropdown;
 }
+

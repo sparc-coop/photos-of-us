@@ -63,7 +63,7 @@ namespace PhotosOfUs.Model.Models
 
         public List<Claim> GenerateClaims()
         {
-            return new List<Claim>
+            var claims = new List<Claim>
             {
                 new Claim("ID", Id.ToString()),
                 new Claim(ClaimTypes.Email, Email),
@@ -71,6 +71,11 @@ namespace PhotosOfUs.Model.Models
                 new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer"),
                 //new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", AzureId)
             };
+
+            if (ProfilePhotoUrl != null)
+                claims.Add(new Claim("Avatar", ProfilePhotoUrl));
+
+            return claims;
         }
 
         public UserIdentity GetOrCreateIdentity(string externalUserId)

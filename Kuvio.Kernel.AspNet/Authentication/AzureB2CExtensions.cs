@@ -1,83 +1,55 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Kuvio.Kernel.AspNet
 {
     public static class AzureB2CExtensions
     {
-        public static void AddKuvioAuthentication(this IServiceCollection services, string b2cClientId, string b2cTenant, string b2cPolicy, Action<ClaimsPrincipal> onLogin, string jwtDomainName = null, string jwtSigningKey = null)
+        public static void AddKuvioAuthentication(this IServiceCollection services, string b2cClientId, string b2cTenant, string b2cPolicy, Action<ClaimsPrincipal> onLogin)
         {
-            var builder = services.AddAuthentication();
-
-            if (jwtDomainName != null && jwtSigningKey != null)
-                builder.AddJwtBearer("Mobile", options =>
+            services.AddAuthentication(o => o.DefaultAuthenticateScheme = AzureADB2CDefaults.CookieScheme)
+                .AddAzureADB2C(options =>
                 {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = jwtDomainName,
-                        ValidAudience = jwtDomainName,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSigningKey)),
-                    };
-
-                    // For SignalR mobile authentication -- websocket headers can't be messed with, so you have to pass the token in the query string
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            if (context.Request.Query.TryGetValue("accesstoken", out StringValues token))
-                                context.Token = token;
-                            return Task.FromResult(true);
-                        }
-                    };
+                    options.Instance = "https://login.microsoftonline.com/tfp/";
+                    options.ClientId = b2cClientId;
+                    options.CallbackPath = "/signin-oidc";
+                    options.Domain = b2cTenant;
+                    options.SignUpSignInPolicyId = b2cPolicy;
                 });
 
-            builder.AddOpenIdConnect(options =>
-                {
-                    options.ClientId = b2cClientId;
-                    options.Authority = $"https://login.microsoftonline.com/tfp/{b2cTenant}/{b2cPolicy}/v2.0/";
-                    options.UseTokenLifetime = true;
-                    options.SignInScheme = "B2C";
-                    options.TokenValidationParameters = new TokenValidationParameters { NameClaimType = "name" };
-                    options.Events = new OpenIdConnectEvents
-                    {
-                        OnRedirectToIdentityProvider = (context) => OnRedirectToIdentityProviderAsync(context, b2cPolicy),
-                        OnTokenValidated = (context) => OnTokenValidatedAsync(context, onLogin)
-                    };
-                })
-                .AddCookie("B2C");
-
-            services.AddAuthorization(options =>
-            {
-                if (jwtDomainName != null && jwtSigningKey != null)
-                {
-                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                        .RequireAuthenticatedUser()
-                        .AddAuthenticationSchemes("B2C", "Mobile")
-                        .Build();
-                }
-                else
-                {
-                    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                       .RequireAuthenticatedUser()
-                       .AddAuthenticationSchemes("B2C")
-                       .Build();
-                }
-            });
         }
 
+        public static void OnLogin(this AuthenticationBuilder builder, Action<ClaimsPrincipal> onLogin)
+        { 
+            builder.Services.Configure<OpenIdConnectOptions>(AzureADB2CDefaults.OpenIdScheme, options => {
+                options.Events.OnTokenValidated = context => OnTokenValidatedAsync(context, onLogin);
+            });
+
+            builder.Services.AddClaimsPrincipalInjector();
+        }
+
+        public static void AddClaimsPrincipalInjector(this IServiceCollection services)
+        {
+            services.AddHttpContextAccessor();
+            services.AddScoped(context =>
+            {
+                var httpContextAccessor = context.GetRequiredService<IHttpContextAccessor>();
+                var httpContext = httpContextAccessor?.HttpContext;
+                return httpContext?.User;
+            });
+        }
 
         private static Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context, Action<ClaimsPrincipal> onLogin)
         {

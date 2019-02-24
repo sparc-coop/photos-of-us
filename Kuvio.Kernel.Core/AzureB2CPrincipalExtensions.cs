@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Kuvio.Kernel.AspNet
+namespace Kuvio.Kernel.Core
 {
     public static class AzureB2CPrincipalExtensions
     {
@@ -14,6 +14,8 @@ namespace Kuvio.Kernel.AspNet
             var id = principal.FindFirst(x => x.Type == "ID")?.Value;
             return id == null ? -1 : int.Parse(id);
         }
+
+        public static string Avatar(this ClaimsPrincipal principal) => principal.Get("Avatar");
         
         public static string Get(this ClaimsPrincipal principal, string claimName) => principal.FindFirst(claimName)?.Value;
     }

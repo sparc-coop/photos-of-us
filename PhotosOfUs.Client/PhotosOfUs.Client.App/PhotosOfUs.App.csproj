@@ -15,4 +15,8 @@
     <ProjectReference Include="..\..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shared\NavMenu\" />
+  </ItemGroup>
+
 </Project>

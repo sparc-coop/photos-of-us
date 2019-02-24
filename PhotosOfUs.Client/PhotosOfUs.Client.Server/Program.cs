@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Kuvio.Kernel.AspNet;
+using System;
 
 namespace PhotosOfUs.Client.Server
 {
@@ -8,9 +9,16 @@ namespace PhotosOfUs.Client.Server
     {
         public static void Main(string[] args)
         {
-            var builder = CreateHostBuilder(args);
-            var host = builder.Build();
-            host.Run(); 
+            try
+            {
+                var builder = CreateHostBuilder(args);
+                var host = builder.Build();
+                host.Run();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
