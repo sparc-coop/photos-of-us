@@ -36,12 +36,7 @@ namespace Kuvio.Kernel.AspNet
         public static void AddClaimsPrincipalInjector(this IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.AddScoped(context =>
-            {
-                var httpContextAccessor = context.GetRequiredService<IHttpContextAccessor>();
-                var httpContext = httpContextAccessor?.HttpContext;
-                return httpContext?.User;
-            });
+            services.AddScoped(context => context.GetRequiredService<IHttpContextAccessor>()?.HttpContext?.User);
         }
 
         private static Task OnTokenValidatedAsync(Microsoft.AspNetCore.Authentication.OpenIdConnect.TokenValidatedContext context, Action<ClaimsPrincipal> onLogin)
