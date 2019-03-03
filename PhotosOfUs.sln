@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Core", "PhotosOf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Plugins", "PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Server", "PhotosOfUs.Client\PhotosOfUs.Client.Server\PhotosOfUs.Server.csproj", "{D8264C5B-948D-4FCE-9DAD-C1DFC60D8476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Client.Server", "PhotosOfUs.Client\PhotosOfUs.Client.Server\PhotosOfUs.Client.Server.csproj", "{D8264C5B-948D-4FCE-9DAD-C1DFC60D8476}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.App", "PhotosOfUs.Client\PhotosOfUs.Client.App\PhotosOfUs.App.csproj", "{C2A110F8-693B-4654-BDCC-ABB0249971D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Client.App", "PhotosOfUs.Client\PhotosOfUs.Client.App\PhotosOfUs.Client.App.csproj", "{C2A110F8-693B-4654-BDCC-ABB0249971D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuvio.Kernel.Core", "Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj", "{7E2DD2EC-976A-4FEF-B731-37E99245DF81}"
 EndProject
