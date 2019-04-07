@@ -1,0 +1,26 @@
+﻿@inject ClaimsPrincipal CurrentUser
+
+@if (IsAuthorized())
+{
+    @ChildContent
+}
+
+@functions {
+    [Parameter] string Roles { get; set; }
+    [Parameter] RenderFragment ChildContent { get; set; }
+
+    bool IsAuthorized()
+    {
+        if (!string.IsNullOrWhiteSpace(Roles))
+        {
+            var roles = Roles.Split(',').Select(x => x.Trim());
+            foreach (var role in roles)
+            {
+                if (CurrentUser.IsInRole(role)) return true;
+            }
+            return false;
+        }
+
+        return CurrentUser.Identity.IsAuthenticated;
+    }
+}

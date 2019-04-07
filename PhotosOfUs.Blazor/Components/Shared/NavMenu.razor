@@ -1,0 +1,73 @@
+@inject IJSRuntime Js
+@inject ClaimsPrincipal CurrentUser
+
+<nav class="nav">
+    <a href="/" class="logo">
+        <img src="/images/logo.png" alt="Photos Of Us" />
+    </a>
+
+    @if (CurrentUser.Identity.IsAuthenticated == false)
+    {
+        <div class="nav--right">
+            <button onclick=@SignIn style="padding-right: 20px;">Log In</button>
+            <!--If user is customer-->
+            <cart-mini>
+        </div>
+    }
+    else
+    {
+        <Authorize Roles="Photographer">
+            <div class="nav--center">
+                <a href="/Photographer" class="menu-item">Dashboard</a>
+                <a href="/Photographer/Cards" class="menu-item">Cards</a>
+            </div>
+            <div class="nav--right">
+                <a href="/Photographer/SalesHistory"><img src="~/images/icons/alert.png" alt="notifications" /></a>
+                <img src="@(CurrentUser.Avatar() ?? "~/images/avatar_512.png")" onclick=@ToggleDropdown class="profileImg" />
+            </div>
+            @if (ViewDropdown == true)
+            {
+                <div class="adminMenu">
+                    <div class="adminMenu__arrow"></div>
+                    <a class="adminMenu__list" href="/Photographer">Photo Gallery</a>
+                    <a class="adminMenu__list" href="/Photographer/SalesHistory">Sales History</a>
+                    <a class="adminMenu__list" href="/Photographer/Cards">Cards</a>
+                    <a class="adminMenu__list" href="/Photographer/Account">Account Settings</a>
+                    <a class="adminMenu__list" href="/Photographer/Profile">Profile</a>
+                    <a class="adminMenu__list logout" href="/Session/SignOut">Log Out</a>
+                </div>
+            }
+        </Authorize>
+        <Authorize Roles="Customer">
+            <div class="nav--right">
+                <cart-mini></cart-mini>
+                <img src="@(CurrentUser.Avatar() ?? "~/images/avatar_512.png")" onclick="@ToggleDropdown" class="profileImg" />
+            </div>
+            <div class="nav--center">
+                <a href="/Photographer/Search" class="menu-item">Search</a>
+                <a href="/Photographer/PublicCode" class="menu-item">Code</a>
+            </div>
+            @if (ViewDropdown)
+            {
+                <div class="adminMenu">
+                    <div class="adminMenu__arrow"></div>
+                    <a class="adminMenu__list" href="/Orders/OrderHistory">Order History</a>
+                    <a class="adminMenu__list logout" href="~/Session/SignOut">Log Out</a>
+                </div>
+            }
+        </Authorize>
+    }
+
+</nav>
+
+@functions {
+    bool ViewDropdown;
+
+    async void SignIn()
+    {
+        await Js.InvokeAsync<string>("navigateToNonBlazorUrl", "/Session/SignIn");
+    }
+
+    void ToggleDropdown() => ViewDropdown = !ViewDropdown;
+}
+
