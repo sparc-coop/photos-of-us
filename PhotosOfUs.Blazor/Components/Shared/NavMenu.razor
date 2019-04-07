@@ -9,7 +9,7 @@
     @if (CurrentUser.Identity.IsAuthenticated == false)
     {
         <div class="nav--right">
-            <button onclick=@SignIn style="padding-right: 20px;">Log In</button>
+            <button onclick=@SignIn style="padding-right: 20px;">Logzy In</button>
             <!--If user is customer-->
             <cart-mini>
         </div>
@@ -65,7 +65,7 @@
 
     async void SignIn()
     {
-        await Js.InvokeAsync<string>("navigateToNonBlazorUrl", "/Session/SignIn");
+        await Js.InvokeAsync<string>("navigateToNonBlazorUrl", "/AzureADB2C/Account/SignIn");
     }
 
     void ToggleDropdown() => ViewDropdown = !ViewDropdown;

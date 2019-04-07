@@ -72,9 +72,11 @@ namespace PhotosOfUs.Blazor
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting(routes =>
             {
+                routes.MapAreaControllerRoute("AzureADB2C", "AzureADB2C", "AzureADB2C/{controller}/{action}");
                 routes.MapRazorPages();
                 routes.MapComponentHub<App>("app");
             });
