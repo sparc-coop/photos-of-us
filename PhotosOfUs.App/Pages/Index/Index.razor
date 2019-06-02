@@ -1,0 +1,151 @@
+﻿@page "/"
+@layout MainLayout
+@inject IRepository<Event> Events
+
+<div class="landing">
+    <div class="main-landing">
+        <div class="main-landing--img-container">
+            @foreach (var photo in RandomPhotos)
+            {
+                <img src="@photo.Url" style="top: @RandomCoordinate(); left: @RandomCoordinate()" class="random-photo" alt="@photo.Name" />
+            }
+        </div>
+        <div class="welcome-section">
+            <div class="welcome-text">less chat, more snaps</div>
+            <div class="tagline">Sell your photos quickly and easily online. No awkward details exchange.</div>
+            <a href="/Session/SignInPhotographer" class="button-styling start-button">Get Started</a>
+        </div>
+    </div>
+    <div class="steps">
+        <div class="landing-subtitle">
+            Photo Taken, Now What?
+        </div>
+        <div class="landing-subtext">
+            The burning question people have after having their photo taken,
+            "Where do I get that photo?!"
+        </div>
+        <div class="landing-subtext" style="padding-top: 0;">
+            Well, we have the answer, for you, <i>and</i> them.
+        </div>
+        <div class="steps--container">
+            <div>
+                <img src="/images/icons/card_icon.PNG" />
+                <h4>Print Codes</h4>
+                <p>
+                    Generate your unique POU Coded cards, print them out and take them with you on your next photoshoot.
+                </p>
+            </div>
+            <img src="/images/icons/arrow_down.png" class="arrow" />
+            <div>
+                <img src="/images/icons/camera2_icon.PNG" />
+                <h4>Take Photos</h4>
+                <p>
+                    Go out to your photoshoot location and take photos like you normally do.
+                </p>
+            </div>
+            <img src="/images/icons/arrow_up.png" class="arrow" />
+            <div>
+                <img src="/images/icons/give-card_icon.PNG" />
+                <h4>Give Code</h4>
+                <p>
+                    With the perfect picture taken, take a photo of your code and hand the card over to your photo subject.
+                </p>
+            </div>
+            <img src="/images/icons/arrow_down.png" class="arrow" />
+            <div>
+                <img src="/images/icons/upload_icon.PNG" />
+                <h4>Upload Photos</h4>
+                <p>
+                    Upload your photos to POU. Our system will attach the photos of the codes to the photos before it.
+                </p>
+            </div>
+        </div>
+        <div class="subt-1">Easy as that, <a href="~/Session/SignInPhotographer">get started</a> now.</div>
+    </div>
+
+    <div class="browse">
+        <div class="browse--img-container right">
+            @foreach (var photo in RandomPhotos.Take(6))
+            {
+                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
+            }
+        </div>
+        <div class="browse--img-container left">
+            @foreach (var photo in RandomPhotos.Skip(6).Take(6))
+            {
+                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
+            }
+        </div>
+        <div class="browse--content">
+            <div class="subt-2">Not a photographer?</div>
+            <div class="landing-subtitle">Browse The Public Library</div>
+            <div class="subt-3">
+                Our photographers often have a collection of photos available to the public,
+                take a look around, maybe you will find something you like!
+            </div>
+            <a href="/Photographer/Search" class="button-styling browse-button">Browse The Library</a>
+            <a href="/Photographer/PublicCode" class="subt-4">Already have a photo code?</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="links-nav">
+            <div class="navigation">
+                <a href="/">Library</a>
+                <a href="/">About</a>
+                <a href="/Home/Pricing">Pricing</a>
+                <a href="/">FAQ</a>
+                <a href="/">Contact</a>
+            </div>
+            <div class="navigation">
+                <a href="~/Session/SignIn">Sign Up / Sign In</a>
+                <a href="/">Shipping</a>
+                <a href="/">Help</a>
+            </div>
+            <div class="navigation nav-sm">
+                <a href="https://twitter.com/Photos_Of_Us">Twitter</a>
+                <a href="https://www.facebook.com/photosofusapp/">Facebook</a>
+                <a href="https://www.instagram.com/photos_of_us/">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-right">
+            <div class="code-enter">
+                Have a photo code? Enter it here!
+                <div class="code-enter-sub"><input class="code-input" placeholder="ABC123" bind="SearchCode" /><a href="/Photographer/PhotoCode?code=@SearchCode" class="code-button">Go!</a></div>
+            </div>
+            <div class="bottom-logo"></div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public List<Photo> RandomPhotos;
+    public string SearchCode;
+
+    protected override void OnInit()
+    {
+        RandomPhotos = GetPhotos(30);
+    }
+
+    public string RandomCoordinate() => new Random().Next(0, 80) + "%";
+
+    public List<Photo> GetPhotos(int count)
+    {
+        var random = new Random();
+        var photos = Events.Query.SelectMany(x => x.Photos.Where(y => !y.IsDeleted));
+        var photoCount = photos.Count();
+        var photoList = new List<Photo>();
+
+        for (var i = 0; i < count; i++)
+        {
+            var toSkip = random.Next(0, photoCount);
+            var photo = photos.Skip(toSkip).Take(1).FirstOrDefault();
+            if (photo != null) 
+            {
+                photoList.Add(photo);
+            }
+        }
+
+        return photoList;
+    }
+}
