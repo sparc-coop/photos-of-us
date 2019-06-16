@@ -221,7 +221,7 @@ button:hover {
   outline: none;
 }
 
-.button--yellow {
+.button {
   background: #FFE261;
   border-radius: 8px;
   font-family: "Dosis";
@@ -238,18 +238,18 @@ button:hover {
   vertical-align: middle;
 }
 
-.button--yellow--payment {
+.button--payment {
   position: absolute;
   bottom: 65px;
   width: 240px;
 }
 
-.button--yellow--payment.disabled {
+.button--payment.disabled {
   background: #757575;
   cursor: not-allowed;
 }
 
-.button--yellow img {
+.button img {
   padding-right: 10px;
   vertical-align: middle;
 }
@@ -3221,7 +3221,7 @@ canvas {
   .photoPage__footer--right {
     width: 100%;
   }
-  .photoPage__footer--right .button--yellow {
+  .photoPage__footer--right .button {
     margin: 0 auto;
     margin-top: 35%;
   }
@@ -4110,7 +4110,7 @@ tags-input .tag-item {
   padding: 32px 0;
 }
 
-.card-design .add-cart .button--yellow {
+.card-design .add-cart .button {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;

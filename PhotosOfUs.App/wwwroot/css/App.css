@@ -1,6 +1,104 @@
 ﻿.landing-container .nav {
   background-color: #194952; }
 
+button, .button {
+  background: #FFE261;
+  border-radius: 8px;
+  font-family: "Dosis";
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FF6060;
+  padding: 7px 20px;
+  letter-spacing: 0;
+  text-align: center;
+  min-width: 173px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  vertical-align: middle;
+  text-decoration: none;
+  transition: transform 0.3s ease-in-out; }
+  button:hover, .button:hover {
+    transform: scale(1.08, 1.08); }
+
+.button--red {
+  background: #FF6060;
+  font-size: 16px;
+  color: #ffffff; }
+
+.button--payment {
+  position: absolute;
+  bottom: 65px;
+  width: 240px; }
+  .button--payment.disabled {
+    background: #757575;
+    cursor: not-allowed; }
+
+.button img {
+  padding-right: 10px;
+  vertical-align: middle; }
+
+.button--checkout--preview {
+  background-color: #194952;
+  padding: 12px 0;
+  position: absolute;
+  font-size: 22px;
+  bottom: 16px;
+  color: #FF6060; }
+
+.button--go {
+  display: inline;
+  border-radius: 0 8px 8px 0;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 11.5px;
+  font-family: "Open Sans";
+  font-size: 20px; }
+
+.button--back {
+  height: 19px;
+  width: 19px;
+  margin: 30px 20px 0 -40px;
+  cursor: pointer; }
+
+.button--lostcode {
+  cursor: pointer;
+  color: #FF6060;
+  padding-top: 10px;
+  height: 28px;
+  font-family: "Open Sans";
+  font-weight: 600;
+  font-size: 14px; }
+
+.button--learn {
+  border: 2px solid #43C6BA;
+  border-radius: 8px;
+  width: 209px;
+  height: 26px;
+  background-color: #194952;
+  color: #43C6BA;
+  font-size: 18px;
+  font-family: "Open Sans";
+  text-align: center;
+  padding: 10px 0; }
+
+.button--imageUpload {
+  background: #FFE261;
+  color: #43C6BA;
+  border-radius: 8px;
+  padding: 10px 30px;
+  display: inline;
+  font-family: "Dosis";
+  font-weight: 600;
+  cursor: pointer;
+  outline: none; }
+  .button--imageUpload .img-upload {
+    vertical-align: middle;
+    margin: -3px 10px 0 0;
+    border-radius: 0;
+    cursor: pointer; }
+
 .landing {
   overflow-x: hidden; }
   .landing .main-landing {

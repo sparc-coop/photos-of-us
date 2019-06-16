@@ -57,14 +57,14 @@
                 <div class="title">@*Starting At Just $5 Per Photo*@</div>
                 @if (User.Identity.IsAuthenticated)
                 {
-                 <a href="/Events/Purchase/@Model.Photo.EventId/@Model.Photo.Id" class="button--yellow button--yellow--large">
+                 <a href="/Events/Purchase/@Model.Photo.EventId/@Model.Photo.Id" class="button button--large">
                     <img src="~/images/icons/cart-red.png" />
                     Buy It Now
                  </a>
                 }
                 else
                 {
-                <a href="/Session/SignIn?redirectUrl=@Model.PurchasePageUrl" class="button--yellow button--yellow--large">
+                <a href="/Session/SignIn?redirectUrl=@Model.PurchasePageUrl" class="button button--large">
                     <img src="~/images/icons/cart-red.png" />
                     Login and Buy It Now
                 </a>

@@ -21,8 +21,8 @@
                     <input ng-model="folderName" type="text" placeholder="Folder Name" />
                 </div>
                 <div class="form-button">
-                    <button ng-if="!folderId" ng-disabled="!folderName || folderName.length <= 1" class="button--yellow" ng-click="addFolder(folderName)">Create</button>
-                    <button ng-if="folderId" ng-disabled="!folderName || folderName.length <= 1" class="button--yellow" ng-click="renameFolder(folderId,folderName)">Save</button>
+                    <button ng-if="!folderId" ng-disabled="!folderName || folderName.length <= 1" class="button" ng-click="addFolder(folderName)">Create</button>
+                    <button ng-if="folderId" ng-disabled="!folderName || folderName.length <= 1" class="button" ng-click="renameFolder(folderId,folderName)">Save</button>
                 </div>                
             </form>
         </div>

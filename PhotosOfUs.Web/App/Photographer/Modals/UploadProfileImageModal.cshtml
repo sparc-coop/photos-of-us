@@ -74,7 +74,7 @@
                     </div>
                     <md-progress-linear md-mode="indeterminate" ng-if="selectedItem.isUploading"></md-progress-linear>
                     <div ng-repeat="item in uploader.queue" ng-if="$index == 0">
-                        <div class="button--yellow button--upload" ng-click="uploadAll(uploader.queue)" ng-disabled="!uploader.getNotUploadedItems().length">Save &amp; Upload</div>
+                        <div class="button button--upload" ng-click="uploadAll(uploader.queue)" ng-disabled="!uploader.getNotUploadedItems().length">Save &amp; Upload</div>
                     </div>
                 </div>
             </div>
