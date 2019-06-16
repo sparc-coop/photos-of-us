@@ -1,0 +1,92 @@
+﻿@import '../../_Imports';
+
+.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+
+    .photo {
+        padding-right: 30px;
+    }
+
+    img {
+        border-radius: 8px;
+        margin: 24px 24px 0 0;
+        max-width: 600px;
+        height: auto;
+        width: 100%;
+    }
+
+    .align-left {
+        margin-right: auto;
+    }
+
+    .align-right {
+        margin-left: auto;
+
+        i {
+            cursor: pointer;
+        }
+    }
+
+    &.filters {
+        margin-bottom: 20px;
+
+        .searchbox.input--light-blue {
+            width: 230px;
+            height: 28px;
+            background-image: url('/images/icons/search.png');
+            background-repeat: no-repeat;
+            background-position: 20px 5px;
+            padding: 0 50px;
+            color: $primary;
+            outline: none;
+
+            &::-moz-placeholder {
+                color: $primary;
+            }
+
+            &:-ms-input-placeholder {
+                color: $primary;
+            }
+
+            &::-webkit-input-placeholder {
+                color: $primary;
+            }
+        }
+
+        select {
+            color: #DFDFDF;
+        }
+
+        .view-icons {
+            .material-icons {
+                color: #DFDFDF;
+            }
+
+            .material-icons.selected {
+                color: #43C6BA;
+            }
+        }
+
+        .filter-sort {
+            margin-right: 60px;
+            display: inline-block;
+
+            select {
+                outline: none;
+                color: $primary;
+                border: none;
+
+                option {
+                    color: $primary;
+                    border: none;
+                }
+            }
+
+            @media screen and (max-width: $mobile) {
+                padding: 15px 0;
+                margin-right: 40px;
+            }
+        }
+    }
+}

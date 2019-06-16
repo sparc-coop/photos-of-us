@@ -1,0 +1,54 @@
+﻿.material-icons {
+    &.social {
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        color: transparent;
+        font-size: 2px;
+    }
+
+    &.twitter {
+        @extend &.social;
+        background-image: url('../../images/icons/twitter-color.svg');
+    }
+
+    &.dribbble {
+        @extend &.social;
+        background-image: url('../../images/icons/Dribbble-color.svg');
+    }
+
+    &.facebook {
+        @extend &.social;
+        background-image: url('../../images/icons/Facebook-color.svg');
+    }
+
+    &.flickr {
+        @extend &.social;
+        background-image: url('../../images/icons/Flickr-color.svg');
+    }
+
+    &.instagram {
+        @extend &.social;
+        background-image: url('../../images/icons/Instagram-color.svg');
+    }
+
+    &.behance {
+        @extend &.social;
+        background-image: url('../../images/icons/Behance-color.svg');
+    }
+
+    &.googleplus {
+        @extend &.social;
+        background-image: url('../../images/icons/GooglePlus-color.svg');
+    }
+
+    &.linkedin {
+        @extend &.social;
+        background-image: url('../../images/icons/LinkedIn-color.svg');
+    }
+
+    &.tumblr {
+        @extend &.social;
+        background-image: url('../../images/icons/Tumblr-color.svg');
+    }
+}

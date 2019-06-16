@@ -1,4 +1,4 @@
-﻿@import "../variables";
+﻿@import "../../_Imports";
 
 form {
     label {
@@ -7,6 +7,7 @@ form {
         color: $text-gray;
         display: block;
         position: relative;
+
         .fixed-placeholder {
             position: absolute;
             top: 30px;
@@ -28,6 +29,17 @@ form {
         outline: none;
         font: 400 14px/19px "Open Sans";
         color: $dark;
+    }
+}
+
+input {
+    &--light-blue {
+        border: 1px solid #43C6BA;
+        border-radius: 3px;
+        font-family: OpenSans;
+        font-size: 14px;
+        color: #194952;
+        letter-spacing: 0;
     }
 }
 
