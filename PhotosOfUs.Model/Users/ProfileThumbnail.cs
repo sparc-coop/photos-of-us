@@ -19,37 +19,38 @@ namespace PhotosOfUs.Model.Models
             var output = new MemoryStream();
             int width;
             int height;
-            var originalImage = new Bitmap(image);
-
-            if (originalImage.Width > originalImage.Height)
+            using (var originalImage = new Bitmap(image))
             {
-                width = thumbnailSize;
-                height = thumbnailSize * originalImage.Height / originalImage.Width;
-            }
-            else
-            {
-                height = thumbnailSize;
-                width = thumbnailSize * originalImage.Width / originalImage.Height;
-            }
-
-            Image thumbnailImage = null;
-            try
-            {
-                if (height > originalImage.Height || width > originalImage.Width)
+                if (originalImage.Width > originalImage.Height)
                 {
-                    originalImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                    width = thumbnailSize;
+                    height = thumbnailSize * originalImage.Height / originalImage.Width;
                 }
                 else
                 {
-                    thumbnailImage = originalImage.GetThumbnailImage(width, height, () => true, IntPtr.Zero);
-                    thumbnailImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                    height = thumbnailSize;
+                    width = thumbnailSize * originalImage.Width / originalImage.Height;
+                }
+
+                Image thumbnailImage = null;
+                try
+                {
+                    if (height > originalImage.Height || width > originalImage.Width)
+                    {
+                        originalImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                    }
+                    else
+                    {
+                        thumbnailImage = originalImage.GetThumbnailImage(width, height, () => true, IntPtr.Zero);
+                        thumbnailImage.Save(output, Photo.GetImageFormatFromExtension(extension));
+                    }
+                }
+                finally
+                {
+                    thumbnailImage?.Dispose();
                 }
             }
-            finally
-            {
-                thumbnailImage?.Dispose();
-            }
-            
+
             return output;
         }
     }
