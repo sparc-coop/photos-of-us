@@ -1,0 +1,63 @@
+@page "/Admin/Photos"
+
+<div class="admin-photos" ng-controller="PhotosCtrl" ng-init="getUserTour()">
+    <div class="flex-box header">
+        <a href="/Photographer" class="button--back"><img src="~/images/icons/ic_arrow_back_24px.png" /></a>
+        <h1>@Model.Name</h1>
+        <span class="created-date">Created: @Model.CreatedDate.ToString("MMMM d, yyyy")</span>
+    </div>
+
+    <hr />
+
+    <div class="flex-box filters">
+        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library by Code" />
+        <div class="view-icons align-right">
+            <div class="filter-sort">
+                <select>
+                    <option>Date Created</option>
+                    <option>Name</option>
+                </select>
+            </div>
+
+            @*<i class="material-icons" ng-click="listView = !listView">view_list</i>
+                <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
+            <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak>
+                <img src="~/images/icons/add-photo.png" class="img-upload" />
+                Upload Images
+            </div>
+        </div>
+    </div>
+
+    <div class="photo-cards-container codeView">
+        @foreach (var card in Model.Cards)
+        {
+            <div class="codeView__row" ng-if="searchCode == null || searchCode == '' || '@card.Code'.includes(searchCode)">
+                <a class="codeView__card" ng-click="" ng-cloak>
+                    <div class="codeView__card--title">
+                        <div class="label">Photo Code</div>
+                        <div class="info">@card.Code</div>
+                    </div>
+                    <div class="codeView__card--date">
+                        <div class="label">Date Uploaded</div>
+                        <div class="info">@card.Photos.Max(x => x.UploadDate).ToString("dd MMMM yyyy")</div>
+                    </div>
+                    <div class="codeView__card--edit" ng-click="openPhotosEdit(@card.EventId, '@card.Code')">Bulk Edit</div>
+                </a>
+                @foreach (var photo in card.Photos)
+                {
+                    <a class="photo-card"
+                       style="background-image: url(@photo.ThumbnailUrl)"
+                       asp-page="/Events/Photo"
+                       asp-route-eventId="@Model.Id"
+                       asp-route-photoCode="@card.Code"
+                       asp-route-photoId="@photo.Id"></a>
+                }
+            </div>
+        }
+    </div>
+
+</div>
+
+@code {
+
+}
