@@ -12,7 +12,12 @@
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,800|Open+Sans:400,600,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
-    <link href="css/App.css" rel="stylesheet" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/App.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/App.min.css" />
+    </environment>
 </head>
 <body>
     <app>@(await Html.RenderComponentAsync<App>())</app>
