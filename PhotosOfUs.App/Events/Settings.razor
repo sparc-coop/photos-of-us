@@ -85,7 +85,7 @@
                             </p>
                             <label>
                                 Overlay Color
-                                <color-picker ng-model="settings.overlayColorCode" options="colorPickerOptions" />
+                                <ColorPicker @bind-Color="Model.OverlayColorCode" />
                             </label>
                             <label>
                                 Opacity
@@ -112,19 +112,19 @@
                 <div class="flex">
                     <label>
                         Background Color
-                        <color-picker ng-model="settings.backgroundColorCode" options="colorPickerOptions" />
+                        <ColorPicker @bind-Color="Model.BackgroundColorCode" />
                     </label>
                     <label>
                         Accent Color
-                        <color-picker ng-model="settings.accentColorCode" options="colorPickerOptions" />
+                        <ColorPicker @bind-Color="Model.AccentColorCode" />
                     </label>
                     <label>
                         Header Color
-                        <color-picker ng-model="settings.headerColorCode" options="colorPickerOptions" />
+                        <ColorPicker @bind-Color="Model.HeaderColorCode" />
                     </label>
                     <label>
                         Body Color
-                        <color-picker ng-model="settings.bodyColorCode" options="colorPickerOptions" />
+                        <ColorPicker @bind-Color="Model.BodyColorCode" />
                     </label>
                 </div>
             </section>

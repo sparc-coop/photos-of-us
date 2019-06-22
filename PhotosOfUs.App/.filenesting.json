@@ -6,6 +6,10 @@
           ".scss": [
             ".razor",
             ".cshtml"
+          ],
+          ".js": [
+            ".razor",
+            ".cshtml"
           ]
         }
       }
