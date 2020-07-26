@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,8 +6,6 @@
     <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
     <StartupObject></StartupObject>
     <NoWin32Manifest>true</NoWin32Manifest>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -16,34 +14,57 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
+    <Content Remove="wwwroot\JeffsDog.jpeg" />
+    <Content Remove="wwwroot\js\API.js.map" />
+    <Content Remove="wwwroot\js\PoU-bundle.es5.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Photographer\Upload.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\PoU-bundle.es5.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="node_modules\angular-socialshare\package.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
     <PackageReference Include="CoreCompat.System.Drawing.v2" Version="5.2.0-preview1-r131" />
-    <PackageReference Include="MailChimp.Net.V3" Version="3.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="MailChimp.Net.V3" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.2.3">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
-    <PackageReference Include="NSwag.AspNetCore" Version="12.0.11" />
-    <PackageReference Include="NSwag.MSBuild" Version="12.0.11">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Rotativa.AspNetCore" Version="1.1.1" />
-    <PackageReference Include="Sendgrid" Version="9.10.0" />
-    <PackageReference Include="Stripe.net" Version="22.4.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Sendgrid" Version="9.9.0" />
+    <PackageReference Include="Stripe.net" Version="18.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
+    <Folder Include="Models\" />
+    <Folder Include="node_modules\angular-socialshare\dist\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\angular-socialshare.js" />
+    <None Include="wwwroot\js\angular-socialshare.js.map" />
+    <None Include="wwwroot\js\angular-socialshare.min.js" />
+    <None Include="node_modules\angular-socialshare\index.js" />
+    <None Include="node_modules\angular-socialshare\Readme.md" />
+    <None Include="wwwroot\js\PoU-bundle.es5.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
+    <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
     <ProjectReference Include="..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
   </ItemGroup>
 
@@ -56,15 +77,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Photographer\Results.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
-  <Target Name="NSwag" AfterTargets="Build">
-    <Copy SourceFiles="@(ReferencePath)" DestinationFolder="$(OutDir)References" />
-    <Exec Command="$(NSwagExe_Core22) run nswag.json /variables:Configuration=$(Configuration)" />
-    <RemoveDir Directories="$(OutDir)References" />
-  </Target>
 </Project>

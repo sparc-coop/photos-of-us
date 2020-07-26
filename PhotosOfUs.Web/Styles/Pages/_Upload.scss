@@ -24,6 +24,15 @@ md-dialog {
         top: 16px;
         right: 18px;
     }
+
+    @media screen and (max-width: $mobile) {
+        height: 245px;
+
+        .drop-zone {
+            left: unset;
+            top: unset;
+        }
+    }
 }
 
 #photographer-upload--wrapper textarea {

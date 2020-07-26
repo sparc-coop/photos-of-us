@@ -1,19 +1,23 @@
-﻿<form method="POST" class="publicCode">
+﻿@{
+    Layout = "~/Home/Views/Shared/_LayoutLanding.cshtml";
+}
+
+<div class="publicCode">
     <div class="landing">
-        <div class="main-landing" ng-controller="RandomPhotoCtrl">
-            <a href="/"><img src="~/images/logo.png" class="logo" /></a>
-            <div class="main-landing--img-container" ng-init="getRandomPhotos($element, 15)">
+        <div class="main-landing" ng-controller="RandomPhotoCtrl" ng-init="getRandomPhoto()">
+            <a href="/"><img src="~/images/icons/logo_large.png" class="logo" /></a>
+            <div class="main-landing--img-container">
                 <img ng-repeat="photo in photoList" ng-src="{{photo.Url}}" class="random-photo" ng-cloak alt="{{photo.Name}}" />
             </div>
             <div class="welcome-section">
                 <div class="welcome-text">less chat, more snaps</div>
                 <div class="tagline">Find your photos</div>
-                <div>
-                    <input name="code" placeholder="Enter Your Code" class="codePage__container__search" />
-                    <button type="submit" class="button--go">Go!</button>
+                <div ng-controller="PhotoCtrl">
+                    <input ng-model="code" placeholder="Enter Your Code" class="codePage__container__search" />
+                    <button ng-click="goToCode(code)" class="button--go">Go!</button>
                     <a href="/Users/Photographer/Search" class="button--lostcode">Lost your code?</a>
                 </div>
             </div>
         </div>
     </div>
-</form>
+</div>

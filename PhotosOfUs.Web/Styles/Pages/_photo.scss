@@ -1,4 +1,4 @@
-﻿@import '../variables';
+﻿@import '../variables.scss';
 
 .photoPage {
     &__photographer-info {
@@ -156,7 +156,7 @@
             @media screen and (max-width: $mobile) {
                 width: 100%;
 
-                .button {
+                .button--yellow {
                     margin: 0 auto;
                     margin-top: 35%;
                 }
@@ -267,3 +267,113 @@
     }
 }
 
+.photos-dashboard--wrapper {
+    .header {
+        .created-date {
+            font-family: "Open Sans";
+            line-height: 28px;
+            color: $red;
+            margin-top: 55px;
+            margin-left: 15px;
+            font-size: 18px;
+        }
+
+        img {
+            width: unset;
+            margin-top: 53px;
+        }
+    }
+
+    .folder-upload {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 243px;
+        height: 236px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+
+        img {
+            margin: 0 auto;
+            padding: 57px 0 20px 4px;
+            width: 36px;
+            height: auto;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
+        }
+
+        .info {
+            padding-top: 10px;
+            font-family: "Open Sans";
+            font-size: 14px;
+            color: $dark;
+            letter-spacing: 0;
+            line-height: 20px;
+            max-width: 186px;
+            margin: 0 auto;
+        }
+    }
+
+    .button--imageUpload {
+        background: $yellow;
+        color: $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        display: inline;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+
+        .img-upload {
+            vertical-align: middle;
+            margin: -3px 10px 0 0;
+            border-radius: 0;
+            cursor: pointer;
+            width: unset;
+        }
+    }
+}
+
+
+.photographer-dashboard--wrapper {
+    .yellow-background.line--small {
+        margin-top: 35px;
+        margin-bottom: 30px;
+    }
+
+    .folder-new {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 243px;
+        height: 237px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+
+        @media screen and (max-width: $mobile) {
+            width: 43%;
+            margin-bottom: 20px;
+        }
+
+        img {
+            margin: 0 auto;
+            padding: 57px 0 20px 0;
+            width: unset !important;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
+        }
+    }
+}
