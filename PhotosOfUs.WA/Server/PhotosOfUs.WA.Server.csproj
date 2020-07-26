@@ -8,15 +8,17 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
 
-    <PackageReference Include="Kuvio.Kernel.Core" Version="1.3.1" />
-    <PackageReference Include="Kuvio.Kernel.Database.Cosmos" Version="1.2.2" />
-    <PackageReference Include="Kuvio.Kernel.Email.Sendgrid" Version="1.2.2" />
-    <PackageReference Include="Kuvio.Kernel.Storage.Azure" Version="1.2.2" />
+    
+    <PackageReference Include="Kuvio.Kernel.Database.SqlServer" Version="1.4.1" />
+    <PackageReference Include="Kuvio.Kernel.Email.Sendgrid" Version="1.4.0" />
+    <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.3" />
     <PackageReference Include="Kuvio.Kernel.AspNet.Blazor" Version="1.2.5" />
-    <PackageReference Include="Kuvio.Kernel.CMS.Prismic" Version="1.2.3" />
+    <PackageReference Include="Kuvio.Kernel.Storage.Azure" Version="1.2.2" />
+    
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
     <ProjectReference Include="..\Client\PhotosOfUs.WA.Client.csproj" />
   </ItemGroup>
   

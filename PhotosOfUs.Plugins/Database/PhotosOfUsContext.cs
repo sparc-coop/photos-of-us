@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PhotosOfUs.Core.Orders;
 
 namespace PhotosOfUs.Model.Models
 {
@@ -22,14 +23,20 @@ namespace PhotosOfUs.Model.Models
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Order");
-                entity.Property(e => e.OrderDate).HasColumnType("datetime");
+                entity.Property(e => e.OrderDateUtc).HasColumnType("datetime");
                 entity.Property(e => e.Total).HasColumnType("decimal(19, 4)");
 
-                entity.OwnsMany(e => e.OrderDetail, x =>
+                entity.OwnsMany(e => e.OrderDetails, x =>
                 {
                     x.HasKey(y => y.Id);
                     x.Property(y => y.UnitPrice).HasColumnType("decimal(19, 4)");
                 });
+
+                entity.Property(x => x.Status)
+                .IsRequired()
+                .HasConversion(
+                    g => g.Value,
+                    y => OrderStatus.Get(y));
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -37,7 +44,7 @@ namespace PhotosOfUs.Model.Models
                 entity.ToTable("User");
                 entity.Property(e => e.Id).HasColumnName("ID");
                 entity.Property(e => e.AzureId).HasColumnName("AzureID");
-                entity.Property(e => e.CreateDate).HasColumnType("datetime");
+                entity.Property(e => e.CreateDateUtc).HasColumnType("datetime");
 
                 entity.OwnsMany(e => e.UserIdentities, x =>
                 {
@@ -45,8 +52,8 @@ namespace PhotosOfUs.Model.Models
                     x.Property(y => y.AzureID)
                         .ValueGeneratedNever();
 
-                    x.Property(y => y.CreateDate).HasColumnType("datetime");
-                    x.Property(y => y.LastLoginDate).HasColumnType("datetime");
+                    x.Property(y => y.CreateDateUtc).HasColumnType("datetime");
+                    x.Property(y => y.LastLoginDateUtc).HasColumnType("datetime");
                 });
 
                 //entity.OwnsMany(e => e.SocialMedia, x =>
@@ -59,8 +66,14 @@ namespace PhotosOfUs.Model.Models
                 entity.OwnsMany(e => e.Folders, x =>
                 {
                     x.HasKey(y => y.Id);
-                    x.Property(y => y.CreatedDate).HasColumnType("datetime");
+                    x.Property(y => y.CreatedDateUtc).HasColumnType("datetime");
                 });
+
+                entity.Property(x => x.Role)
+                .IsRequired()
+                .HasConversion(
+                    g => g.Value,
+                    y => Role.Get(y));
             });
 
             modelBuilder.Entity<Event>(entity =>
@@ -71,7 +84,7 @@ namespace PhotosOfUs.Model.Models
                 entity.OwnsMany(e => e.Cards, card =>
                 {
                     card.HasKey(x => x.Id);
-                    card.Property(x => x.CreatedDate).HasColumnType("datetime");
+                    card.Property(x => x.CreatedDateUtc).HasColumnType("datetime");
                     
                 });
                 entity.OwnsMany(x => x.Photos, photo =>
@@ -79,7 +92,7 @@ namespace PhotosOfUs.Model.Models
                     photo.ToTable("Photo");
                     photo.HasKey(x => x.Id);
                     photo.Property(e => e.Price).HasColumnType("decimal(19, 4)");
-                    photo.Property(e => e.UploadDate).HasColumnType("datetime");
+                    photo.Property(e => e.UploadDateUtc).HasColumnType("datetime");
                     photo.Ignore(x => x.FolderName);
                     photo.Ignore(x => x.Stream);
                     photo.Ignore(x => x.FileSize);
@@ -90,7 +103,7 @@ namespace PhotosOfUs.Model.Models
                     photo.OwnsMany(e => e.PhotoTag, x =>
                     {
                         x.HasKey(y => new { y.PhotoId, y.TagId });
-                        x.Property(y => y.RegisterDate).HasColumnType("datetime");
+                        x.Property(y => y.RegisterDateUtc).HasColumnType("datetime");
                     });
                 });
             });

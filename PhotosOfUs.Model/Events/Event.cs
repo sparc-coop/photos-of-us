@@ -7,29 +7,55 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class Event
     {
-        public int EventId { get; set; }
-        public int UserId { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Description { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string HomepageTemplate { get; set; }
-        public string PersonalLogoUrl { get; set; }
-        public string FeaturedImageUrl { get; set; }
-        public string OverlayColorCode { get; set; }
-        public decimal? OverlayOpacity { get; set; }
-        public string AccentColorCode { get; set; }
-        public string BackgroundColorCode { get; set; }
-        public string HeaderColorCode { get; set; }
-        public string BodyColorCode { get; set; }
-        public string SeparatorStyle { get; set; }
-        public int SeparatorThickness { get; set; }
-        public int SeparatorWidth { get; set; }
-        public int BrandingStyle { get; set; }
+        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode, decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness, int separatorWidth, int brandingStyle, ICollection<Card> cards, ICollection<Photo> photos, User user)
+        {
+            EventId = eventId;
+            UserId = userId;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Url = url ?? throw new ArgumentNullException(nameof(url));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            CreatedDateUtc = DateTime.UtcNow;
+            HomepageTemplate = homepageTemplate ?? throw new ArgumentNullException(nameof(homepageTemplate));
+            PersonalLogoUrl = personalLogoUrl ?? throw new ArgumentNullException(nameof(personalLogoUrl));
+            FeaturedImageUrl = featuredImageUrl ?? throw new ArgumentNullException(nameof(featuredImageUrl));
+            OverlayColorCode = overlayColorCode ?? throw new ArgumentNullException(nameof(overlayColorCode));
+            OverlayOpacity = overlayOpacity;
+            AccentColorCode = accentColorCode ?? throw new ArgumentNullException(nameof(accentColorCode));
+            BackgroundColorCode = backgroundColorCode ?? throw new ArgumentNullException(nameof(backgroundColorCode));
+            HeaderColorCode = headerColorCode ?? throw new ArgumentNullException(nameof(headerColorCode));
+            BodyColorCode = bodyColorCode ?? throw new ArgumentNullException(nameof(bodyColorCode));
+            SeparatorStyle = separatorStyle ?? throw new ArgumentNullException(nameof(separatorStyle));
+            SeparatorThickness = separatorThickness;
+            SeparatorWidth = separatorWidth;
+            BrandingStyle = brandingStyle;
+            Cards = cards ?? throw new ArgumentNullException(nameof(cards));
+            Photos = photos ?? throw new ArgumentNullException(nameof(photos));
+            User = user ?? throw new ArgumentNullException(nameof(user));
+        }
 
-        public ICollection<Card> Cards { get; set; }
-        public ICollection<Photo> Photos { get; set; }
-        public User User { get; set; }
+        public int EventId { get; protected set; }
+        public int UserId { get; protected set; }
+        public string Name { get; protected set; }
+        public string Url { get; protected set; }
+        public string Description { get; protected set; }
+        public DateTime CreatedDateUtc { get; protected set; }
+        public string HomepageTemplate { get; protected set; }
+        public string PersonalLogoUrl { get; protected set; }
+        public string FeaturedImageUrl { get; protected set; }
+        public string OverlayColorCode { get; protected set; }
+        public decimal? OverlayOpacity { get; protected set; }
+        public string AccentColorCode { get; protected set; }
+        public string BackgroundColorCode { get; protected set; }
+        public string HeaderColorCode { get; protected set; }
+        public string BodyColorCode { get; protected set; }
+        public string SeparatorStyle { get; protected set; }
+        public int SeparatorThickness { get; protected set; }
+        public int SeparatorWidth { get; protected set; }
+        public int BrandingStyle { get; protected set; }
+
+        public ICollection<Card> Cards { get; protected set; }
+        public ICollection<Photo> Photos { get; protected set; }
+        public User User { get; protected set; }
 
         public void AddNewCards(int quantity)
         {

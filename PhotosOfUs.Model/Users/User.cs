@@ -14,19 +14,20 @@ namespace PhotosOfUs.Model.Models
             UserIdentities = new HashSet<UserIdentity>();
         }
         
-        public User(string displayName, string email, string externalUserId, bool isPhotographer)
+        public User(string firstName, string lastName, string email, Role role, string externalUserId)
         {
-            DisplayName = displayName;
-            FirstName = displayName?.Split(' ').First();
-            LastName = displayName?.Split(' ').Last();
-            IsPhotographer = isPhotographer;
+            FirstName = firstName;
+            LastName = lastName;
+            Role = role;
             Email = email;
-            CreateDate = DateTime.UtcNow;
-            AzureId = "e95fe8d9-82f4-4dfe-aa9b-0f364ccd0a90";
+            CreateDateUtc = DateTime.UtcNow;
+            AzureId = externalUserId;
 
-            this.UserIdentities = new List<UserIdentity> {
-                new UserIdentity(externalUserId, "Azure")
-            };
+            UserIdentities = new List<UserIdentity>();
+            if (!String.IsNullOrWhiteSpace(externalUserId))
+            {
+                GetOrCreateIdentity(externalUserId);
+            }
         }
 
         public int Id { get; private set; }
@@ -38,8 +39,10 @@ namespace PhotosOfUs.Model.Models
         public string JobPosition { get; private set; }
         public string Bio { get; private set; }
         public string ProfilePhotoUrl { get; private set; }
+        public Role Role { get; protected set; }
 
-        public DateTime CreateDate { get; private set; }
+
+        public DateTime CreateDateUtc { get; private set; }
         public bool? IsPhotographer { get; private set; }
         
         public bool? IsDeactivated { get; private set; }
@@ -52,7 +55,7 @@ namespace PhotosOfUs.Model.Models
         public bool? DashboardTour { get; set; }
         public bool? PhotoTour { get; set; }
 
-        public string FullName => $"{(FirstName ?? DisplayName)}{(LastName == null ? "" : (" " + LastName))}";
+        public string FullName => $"{FirstName} {LastName}";
 
         public ICollection<SocialMedia> SocialMedia { get; set; }
         public ICollection<Folder> Folders { get; set; }
@@ -61,6 +64,7 @@ namespace PhotosOfUs.Model.Models
         public ICollection<UserIdentity> UserIdentities { get; set; }
         public Address Address { get; set; }
 
+
         public List<Claim> GenerateClaims()
         {
             var claims = new List<Claim>
@@ -68,12 +72,15 @@ namespace PhotosOfUs.Model.Models
                 new Claim("ID", Id.ToString()),
                 new Claim(ClaimTypes.Email, Email),
                 new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
-                new Claim(ClaimTypes.Role, IsPhotographer == true ? "Photographer" : "Customer"),
-                //new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", AzureId)
+                new Claim(ClaimTypes.Role, Role.Value),
+                new Claim("http://schemas.microsoft.com/identity/claims/objectidentifier", UserIdentities.First().AzureID),
+                new Claim("Name", FullName)
             };
 
-            if (ProfilePhotoUrl != null)
-                claims.Add(new Claim("Avatar", ProfilePhotoUrl));
+            if (!String.IsNullOrWhiteSpace(ProfilePhotoUrl))
+            {
+                claims.Add(new Claim("ProfilePhotoUrl", ProfilePhotoUrl));
+            }
 
             return claims;
         }
@@ -84,7 +91,7 @@ namespace PhotosOfUs.Model.Models
 
             if (identity == null)
             {
-                identity = new UserIdentity(externalUserId, "Azure");
+                identity = new UserIdentity(this, externalUserId, "Azure");
                 UserIdentities.Add(identity);
             }
             return identity;
@@ -92,6 +99,9 @@ namespace PhotosOfUs.Model.Models
         
         public void Login(ClaimsPrincipal principal, string externalUserId)
         {
+            var identity = GetOrCreateIdentity(externalUserId);
+            identity.LastLoginDateUtc = DateTime.UtcNow;
+
             List<Claim> claims = GenerateClaims();
 
             // Logging in is simply adding claims to the existing principal
@@ -99,9 +109,6 @@ namespace PhotosOfUs.Model.Models
             {
                 (principal.Identity as ClaimsIdentity)?.AddClaim(claim);
             }
-                
-            var identity = GetOrCreateIdentity(externalUserId);
-            identity.LastLoginDate = DateTime.UtcNow;
         }
 
         public void UpdateProfile(string email, string firstName, string lastName, string displayName, string jobPosition, string profilePhotoUrl, string bio)
@@ -142,13 +149,12 @@ namespace PhotosOfUs.Model.Models
 
         public void SetAddress(Address address)
         {
-            address.UserId = Id;
             Address = address;
         }
 
         public Folder AddFolder(string name)
         {
-            var folder = new Folder(name, Id);
+            var folder = new Folder(this, name);
             Folders.Add(folder);
             return folder;
         }

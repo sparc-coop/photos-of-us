@@ -13,12 +13,12 @@ namespace PhotosOfUs.Model.Models
         {
             PhotoId = photoId;
             Tag = new Tag(tag);
-            RegisterDate = DateTime.UtcNow;
+            RegisterDateUtc = DateTime.UtcNow;
         }
 
         public int PhotoId { get; set; }
         public int TagId { get; set; }
-        public DateTime RegisterDate { get; set; }
+        public DateTime RegisterDateUtc { get; set; }
 
         public virtual Photo Photo { get; set; }
         public virtual Tag Tag { get; set; }

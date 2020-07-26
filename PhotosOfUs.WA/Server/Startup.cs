@@ -11,6 +11,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication;
 using Kuvio.Kernel.Core.Services.Email;
 using Kuvio.Kernel.Email.Sendgrid;
+using Kuvio.Kernel.Database.SqlServer;
+using Microsoft.EntityFrameworkCore;
+using Kuvio.Kernel.Core;
+using Kuvio.Kernel.Storage.Azure;
+using PhotosOfUs.Model.Models;
 
 namespace PhotosOfUs.WA.Server
 {
@@ -110,13 +115,6 @@ namespace PhotosOfUs.WA.Server
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
-
-
-            services.AddDbContext<StockMeContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]), ServiceLifetime.Transient);
-            //services.AddDbContext<StockMeContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
-            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
-            //services.AddDbContext<StockMeContext>(options => options.UseInMemoryDatabase("MemoryDb"));
-            //services.AddTransient(typeof(IRepository<>), typeof(InMemoryDbRepository<>));
 
             services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
             services.AddTransient<IMediaRepository, MediaRepository>();

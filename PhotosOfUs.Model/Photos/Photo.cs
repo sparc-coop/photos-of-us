@@ -1,4 +1,5 @@
 ﻿using Kuvio.Kernel.Core;
+using Kuvio.Kernel.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -29,7 +30,7 @@ namespace PhotosOfUs.Model.Models
             Filename = $"{userId}/{filename.Split('.')[0] + urlTimeStamp + extension}";
             Name = $"{filename.Split('.')[0]}";
             Stream = stream;
-            UploadDate = DateTime.UtcNow;
+            UploadDateUtc = DateTime.UtcNow;
             PhotographerId = userId;
         }
 
@@ -38,7 +39,7 @@ namespace PhotosOfUs.Model.Models
         public string Url { get; set; }
         public decimal? Price { get; set; }
         public string Name { get; set; }
-        public DateTime UploadDate { get; set; }
+        public DateTime UploadDateUtc { get; set; }
         public bool PublicProfile { get; set; }
         public bool IsDeleted { get; set; }
         public int? EventId { get; set; }

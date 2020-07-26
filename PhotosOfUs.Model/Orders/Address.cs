@@ -1,22 +1,34 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 
 namespace PhotosOfUs.Model.Models
 {
-    public class AddressValidator : AbstractValidator<Address>
-    {
-        public AddressValidator()
-        {
-            RuleFor(x => x.UserId).NotEmpty().WithMessage("User cannot be null");
-            RuleFor(x => x.Title).NotEmpty();
-            RuleFor(x => x.Line1).NotEmpty();
-            RuleFor(x => x.City).NotEmpty();
-        }
-    }
+    //public class AddressValidator : AbstractValidator<Address>
+    //{
+    //    public AddressValidator()
+    //    {
+    //        RuleFor(x => x.UserId).NotEmpty().WithMessage("User cannot be null");
+    //        RuleFor(x => x.Title)
+    //        RuleFor(x => x.Line1).NotEmpty();
+    //        RuleFor(x => x.City).NotEmpty();
+    //    }
+    //}
 
     public partial class Address
     {
+        private int userId;
+        private string title;
+        private string line1;
+        private string line2;
+        private string city;
+        private string state;
+        private string zipCode;
+        private string country;
+        private string phone;
+        private string email;
+
         public Address(int userId, string title, string line1, string line2, string city, string state, string zipCode, string country, string phone, string email)
         {
             UserId = userId;
@@ -31,90 +43,110 @@ namespace PhotosOfUs.Model.Models
             Email = email;
         }
 
-        public static IList<Error> Validate(int userId, string title, string line1, string line2, string city, string state, string zipCode, string country, string phone, string email)
-        {
-            var validator = new InlineValidator<Address>();
-            validator.RuleFor(x => x.UserId).NotEmpty();
-
-            RuleFor
-
-            
-
-            
-            validator.RuleFor(x => x.Address.Line1).NotEqual("foo");
-
-        }
-
-
-
         public int Id { get; protected set; }
-        public int UserId { get; protected set; }
-        public string Title { get; protected set; }
-        public string Line1 { get; protected set; }
-        public string Line2 { get; protected set; }
-        public string City { get; protected set; }
-        public string State { get; protected set; }
-        public string ZipCode { get; protected set; }
-        public string Country { get; protected set; }
-        public string Phone { get; protected set; }
-        public string Email { get; protected set; }
+        public int UserId
+        {
+            get => userId; protected set
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                userId = value;
+            }
+        }
+        public string Title
+        {
+            get => title; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                title = value;
+            }
+        }
+        public string Line1
+        {
+            get => line1; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                line1 = value;
+            }
+        }
+        public string Line2 { get => line2; protected set { line2 = value; } }
+        public string City
+        {
+            get => city; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                city = value;
+            }
+        }
+        public string State
+        {
+            get => state; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                state = value;
+            }
+        }
+        public string ZipCode
+        {
+            get => zipCode; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                zipCode = value;
+            }
+        }
+        public string Country
+        {
+            get => country; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                country = value;
+            }
+        }
+        public string Phone
+        {
+            get => phone; 
+            protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                phone = value;
+            }
+        }
+        public string Email
+        {
+            get => email; protected set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException();
+                }
+                email = value;
+            }
+        }
 
         //public ICollection<Order> OrderBillingAddress { get; protected set; }
         //public ICollection<Order> OrderShippingAddress { get; protected set; }
-    }
-
-    public class Result<T> : Result
-    {
-        public T Value { get; private set; }
-
-        protected internal Result(T value, bool success, IList<Error> errors)
-        : base(success, errors)
-        {
-            Value = value;
-        }
-    }
-
-    public class Result
-    {
-        public bool Success { get; private set; }
-        public IList<Error> Errors { get; private set; }
-
-        protected Result(bool success, IList<Error> errors)
-        {
-            Errors = errors;
-            Success = success;
-        }
-
-        public static Result<T> Fail<T>(IList<Error> errors)
-        {
-            return new Result<T>(default(T), false, errors);
-        }
-
-        public static Result<T> Ok<T>(T value)
-        {
-            return new Result<T>(value, true, null);
-        }
-
-        public static Result Fail(IList<Error> errors)
-        {
-            return new Result(false, errors);
-        }
-
-        public static Result Ok()
-        {
-            return new Result(true, new List<Error>());
-        }
-    }
-
-    public class Error
-    {
-        public string Field { get; set; }
-        public string Message { get; set; }
-
-        public Error(string field, string message)
-        {
-            Field = field;
-            Message = message;
-        }
     }
 }

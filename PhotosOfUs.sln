@@ -7,17 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Core", "PhotosOf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.Plugins", "PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj", "{40493D92-CC54-469B-AAE9-31F39B8404B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuvio.Kernel.Core", "Kuvio.Kernel.Core\Kuvio.Kernel.Core.csproj", "{7E2DD2EC-976A-4FEF-B731-37E99245DF81}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kuvio.Kernel.AspNet", "Kuvio.Kernel.AspNet\Kuvio.Kernel.AspNet.csproj", "{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kernel", "Kernel", "{4463EC25-A466-4D42-B9F5-142FB7292EE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.App", "PhotosOfUs.App\PhotosOfUs.App.csproj", "{573E7A5C-EE32-4667-BE28-5934AB0B8197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.WA.Server", "PhotosOfUs.WA\Server\PhotosOfUs.WA.Server.csproj", "{A3326D23-D767-485F-8AC8-4059380CE1AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.WA.Server", "PhotosOfUs.WA\Server\PhotosOfUs.WA.Server.csproj", "{A3326D23-D767-485F-8AC8-4059380CE1AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotosOfUs.WA.Client", "PhotosOfUs.WA\Client\PhotosOfUs.WA.Client.csproj", "{DC6DCD94-4F80-48D2-B361-C6104D444BB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotosOfUs.WA.Client", "PhotosOfUs.WA\Client\PhotosOfUs.WA.Client.csproj", "{DC6DCD94-4F80-48D2-B361-C6104D444BB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40493D92-CC54-469B-AAE9-31F39B8404B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E2DD2EC-976A-4FEF-B731-37E99245DF81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E2DD2EC-976A-4FEF-B731-37E99245DF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E2DD2EC-976A-4FEF-B731-37E99245DF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E2DD2EC-976A-4FEF-B731-37E99245DF81}.Release|Any CPU.Build.0 = Release|Any CPU
 		{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,7 +52,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{7E2DD2EC-976A-4FEF-B731-37E99245DF81} = {4463EC25-A466-4D42-B9F5-142FB7292EE4}
 		{83A41CCE-0BF5-44B0-B2B0-901F4618FBDC} = {4463EC25-A466-4D42-B9F5-142FB7292EE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

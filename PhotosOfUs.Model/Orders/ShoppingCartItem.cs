@@ -12,7 +12,7 @@ namespace PhotosOfUs.Model.Models
         public int UserId { get; set; }
         public int PhotoId { get; set; }
         public int Quantity { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreatedUtc { get; set; }
         public virtual Photo Photo { get; set; }
     }
 }

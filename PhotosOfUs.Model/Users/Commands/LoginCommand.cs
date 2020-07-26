@@ -7,28 +7,38 @@ namespace PhotosOfUs.Model
 {
     public class LoginCommand
     {
-        private readonly IRepository<User> _users;
+        private readonly IRepository<User> _usersRepository;
 
-        public LoginCommand(IRepository<User> users)
+        public LoginCommand(IRepository<User> usersRepository)
         {
-            _users = users;
+            _usersRepository = usersRepository;
         }
 
-        public User Execute(ClaimsPrincipal principal, string azureId, string email, string displayName, bool isPhotographer) 
+        public User Execute(ClaimsPrincipal principal, string azureId, string email, string firstName, string lastName, bool isPhotographer)
         {
-            var user = _users.Query.FirstOrDefault(x => x.UserIdentities.Any(y => y.AzureID == azureId));
+            var user = _usersRepository.Query.Where(x => x.UserIdentities.Any(y => y.AzureID == azureId)).FirstOrDefault();
 
             if (user == null)
             {
-                user = _users.Query.FirstOrDefault(x => x.Email == email); // User without identity
+                user = _usersRepository.Query.Where(x => x.Email.ToLower() == email.ToLower()).FirstOrDefault(); // User without identity
+
                 if (user == null)
                 {
-                    user = new User(displayName, email, azureId, isPhotographer);
-                    user = _users.Add(user);
+                    Role role = Role.Customer;
+                    if (isPhotographer)
+                    {
+                        role = Role.Photographer;
+                    }
+
+
+                    user = new User(firstName, lastName, email, role, azureId);
+                    user = _usersRepository.AddAsync(user).Result;
+                    
                 }
             }
 
-            _users.Execute(user.Id, u => u.Login(principal, azureId));
+            _usersRepository.ExecuteAsync(user, u => u.Login(principal, azureId));
+            _usersRepository.CommitAsync();
 
             return user;
         }

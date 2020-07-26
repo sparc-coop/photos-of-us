@@ -11,19 +11,20 @@ namespace PhotosOfUs.Model.Models
 
         }
 
-        public UserIdentity(string externalUserId, string identityProvider)
+        public UserIdentity(User user, string externalUserId, string identityProvider)
         {
             AzureID = externalUserId;
             IdentityProvider = identityProvider;
-            CreateDate = DateTime.UtcNow;
+            CreateDateUtc = DateTime.UtcNow;
+            UserID = user.Id;
         }
 
-        public string AzureID { get; set; }
-        public string IdentityProvider { get; set; }
-        public int UserID { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime? LastLoginDate { get; set; }
+        public string AzureID { get; protected set; }
+        public string IdentityProvider { get; protected set; }
+        public int UserID { get; protected set; }
+        public DateTime CreateDateUtc { get; protected set; }
+        public DateTime? LastLoginDateUtc { get; set; }
 
-        public User User { get; set; }
+        public User User { get; protected set; }
     }
 }

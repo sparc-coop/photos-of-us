@@ -8,9 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
+
+    <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.3" />
     <PackageReference Include="Kuvio.Kernel.AspNet.Blazor" Version="1.2.5" />
-    <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.1" />
-    <PackageReference Include="Kuvio.Kernel.Email.Sendgrid" Version="1.4.0" />
+    
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
@@ -23,3 +24,4 @@
   </ItemGroup>
 
 </Project>
+  

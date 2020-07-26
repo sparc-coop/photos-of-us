@@ -1,4 +1,5 @@
 using Kuvio.Kernel.Core;
+using Kuvio.Kernel.Core.Common;
 using System;
 using System.IO;
 

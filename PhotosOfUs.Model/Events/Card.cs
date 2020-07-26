@@ -6,17 +6,17 @@ namespace PhotosOfUs.Model.Models
 {
     public partial class Card
     {
-        public int Id { get; set; }
-        public int EventId { get; set; }        
-        public string Code { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public int Id { get; protected set; }
+        public int EventId { get; protected set; }        
+        public string Code { get; protected set; }
+        public DateTime CreatedDateUtc { get; protected set; }
 
         public Card() {}
 
         public Card(Event ev)
         {
             EventId = ev.EventId;
-            CreatedDate = DateTime.Now;
+            CreatedDateUtc = DateTime.UtcNow;
             do
             {
                 Code = NewCode(7);
