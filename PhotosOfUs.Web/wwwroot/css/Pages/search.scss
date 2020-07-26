@@ -1,0 +1,500 @@
+﻿@import '../variables.scss';
+
+.photographer-search--backdrop {
+    width: 100%;
+    height: 400px;
+    background-image: url(/images/photo/search_background.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.photographer-search--backdrop figure {
+    margin: 0;
+    text-align: right;
+    padding: 20px 40px 0 0;
+}
+
+.photographer-search--backdrop figure img {
+    height: 70px;
+    width: auto;
+}
+
+.photographer-search {
+    width: 100%;
+    position: relative;
+    font-family: "Dosis";
+    font-weight: 600;
+    font-size: 42px;
+    color: $yellow;
+    letter-spacing: 0;
+
+    &__title {
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 42px;
+        color: #194952;
+        letter-spacing: 0;
+    }
+
+    &__title_yellow {
+        position: absolute;
+        font-family: 'Dosis';
+        font-weight: 600;
+        font-size: 42px;
+        color: $yellow;
+        letter-spacing: 0;
+        margin-top: 100px;
+        text-align: center;
+    }
+
+    &__bigtitle {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 30%;
+        right: 30%;
+    }
+
+    &__container {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    &--photos {
+        margin-top: 200px;
+    }
+
+    @media screen and (max-width: $mobile) {
+        &__container {
+            margin: 0;
+            width: 86%;
+
+            .tags {
+                width: 100%;
+                height: 86%;
+            }
+
+            
+        }
+    }
+}
+
+.photographer-searchTerm {
+    width: 100%;
+    max-width: 500px;
+    border: none;
+    padding: 5px;
+    height: 60px;
+    border-radius: 5px;
+    outline: none;
+    color: #9DBFAF;
+    margin: 0 auto;
+    margin-top: -240px;
+}
+
+.photographer-searchTerm:focus {
+    color: #43C6BA;
+}
+
+.photographer-searchButton {
+    position: absolute;
+    top: -6px;
+    right: -40px;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #43C6BA;
+    background: #43C6BA;
+    text-align: center;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    box-shadow: 5px;
+    outline: none;
+
+    @media screen and (max-width: $mobile) {
+        width: 62px;
+        height: 62px;
+    }
+}
+
+.photographer-searchButton img {
+    padding-top: 2px;
+    width: 40px;
+    height: 40px;
+
+    @media screen and (max-width: $mobile) {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/*Resize the wrap to see the search bar change!*/
+/*.photographer-search-wrap {
+    width: 40%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}*/
+
+tags-input {
+
+    .tags {
+        padding: 10px !important;
+        border: none !important;
+        border-radius: 4px;
+        width: 500px;
+    }
+
+    .autocomplete {
+        margin-top: 0 !important;
+        background-color: $primary !important;
+        color: $white !important;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border: none !important;
+    }
+
+    .suggestion-item.selected {
+        background-color: $primary !important;
+        color: $white !important;
+    }
+
+    .tag-item {
+        border: 1px solid $primary !important;
+        background: none !important;
+        color: $dark !important;
+        font-size: 16px !important;
+    }
+}
+
+.codePage {
+
+    &__background {
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+    }
+
+    &__background2 {
+        position: relative;
+        height: 100vh;
+        margin-left: 70%;
+        max-width: 580px;
+        overflow: hidden;
+
+        img {
+            position: absolute;
+            right: 0;
+            z-index: 0;
+            height: 100%;
+
+            @media screen and (max-width: $mobile) {
+                display: none;
+            }
+        }
+    }
+
+    &__logo {
+        height: 41px;
+        width: 61px;
+        border-radius: 50px;
+        background: #D8D8D8;
+        position: absolute;
+        text-align: center;
+        padding-top: 20px;
+        top: 50px;
+        left: 100px;
+
+        @media screen and (max-width: $mobile) {
+            left: 40%;
+            right: 20%;
+        }
+    }
+
+    &__pouLogo {
+        position: absolute;
+        bottom: 29px;
+        left: 61px;
+
+        @media screen and (max-width: $mobile) {
+            left: 20%;
+            right: 20%;
+        }
+    }
+
+    &__container {
+        margin: 0 auto;
+        max-width: 453px;
+        width: 100%;
+        padding-top: 16%;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        color: $black;
+
+        &__title {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 42px;
+            //color: $black;
+            padding-bottom: 30px;
+        }
+
+        &__divider {
+            border: 1px solid $orange;
+            height: 0;
+            width: 140px;
+            margin: 0 auto;
+
+            &.divider2 {
+                margin: 0;
+            }
+        }
+
+        &__info {
+            padding: 20px 0 62px 0;
+            font-family: "Open Sans";
+            font-size: 18px;
+            //color: $black;
+            line-height: 28px;
+        }
+
+        &__search {
+            border: none;
+            padding: 11px 18px 13px 16px;
+            font-family: "Open Sans";
+            font-size: 20px;
+            color: $dark;
+            border-radius: 8px 0 0 8px;
+            background: $off-white;
+            outline: none;
+            vertical-align: middle;
+        }
+
+        &2 {
+            max-width: 70vw;
+            width: 100%;
+            position: absolute;
+            top: 293px;
+            padding: 0;
+
+            .centered {
+                max-width: 453px;
+                text-align: left;
+                margin: 0 auto;
+                color: $black;
+            }
+
+            @media screen and (max-width: $mobile) {
+                top: 0;
+                max-width: calc(100vw - 40px);
+                justify-content: center;
+                padding: 0 20px;
+            }
+        }
+
+        @media screen and (max-width: $mobile) {
+            padding-top: 40%;
+        }
+
+        .button--lostcode {
+            cursor: pointer;
+            color: $orange;
+            padding-top: 10px;
+            height: 28px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 14px;
+        }
+    }
+
+    &, body {
+        padding-bottom: 0;
+    }
+
+    .alt3 {
+        background-color: $dark;
+
+        .codePage__container .centered {
+            color: $white;
+
+            .divider2 {
+                border: 1px solid $yellow;
+            }
+
+            .button--go {
+                background: $yellow;
+                color: $dark;
+                padding: 15px;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .alt4 {
+        background-color: $dark;
+        height: 100vh;
+
+        @media screen and (max-width: $mobile) {
+            height: 830px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 33px;
+            left: 84px;
+        }
+
+        .divider2 {
+            border: 1px solid $yellow;
+
+            @media screen and (max-width: $mobile) {
+                width: 100%;
+            }
+        }
+
+        .codePage__container2 {
+            top: 293px;
+
+            @media screen and (max-width: $mobile) {
+                top: -30px;
+            }
+        }
+
+        .codePage__container .centered {
+            color: $white;
+            max-width: 620px;
+
+            @media screen and (max-width: $mobile) {
+                text-align: center;
+            }
+
+            .codePage__container__info {
+                padding: 20px 0 54px 0;
+            }
+
+            .button--go {
+                background: $yellow;
+                color: $dark;
+            }
+
+            .codePage__container__info--bottom {
+                padding-top: 140px;
+
+                @media screen and (max-width: $mobile) {
+                    padding-top: 30px;
+                }
+
+                .heading1 {
+                    font-family: "Dosis";
+                    font-weight: 600;
+                    font-size: 26px;
+                    color: $yellow;
+                    padding-bottom: 8px;
+                }
+
+                .heading2 {
+                    font-family: "Open Sans";
+                    font-size: 18px;
+                    color: $off-white;
+                    padding-bottom: 28px;
+                }
+
+                .codePage__container__search {
+                    height: 28px;
+                    width: 210px;
+                    padding: 4px 20px;
+                    font-size: 16px;
+                }
+
+                .button--go {
+                    font-size: 16px;
+                    padding: 7px 8px;
+                }
+            }
+        }
+    }
+
+    .button--go {
+        background-color: #f6ffff;
+        color: $dark;
+        height: 50px;
+        border: 0;
+        border-radius: 0 8px 8px 0;
+        outline: none;
+        padding: 12px;
+        font-weight: 600;
+        font-size: 17px;
+        border: none;
+    }
+
+    @media screen and (max-width: $mobile) {
+        overflow-x: hidden;
+    }
+}
+
+.publicCode {
+    .landing .main-landing {
+        height: 100vh;
+
+        .welcome-section {
+            padding: 195px 0 0 15%;
+        }
+    }
+
+    a {
+        text-decoration: none;
+        display: block;
+        padding-top: 10px;
+        color: $yellow;
+    }
+
+    .button--go {
+        background-color: #f6ffff;
+        color: $dark;
+        height: 50px;
+        border: 0;
+        border-radius: 0 8px 8px 0;
+        outline: none;
+        padding: 12px;
+        font-weight: 600;
+        font-size: 17px;
+        border: none;
+    }
+}
+
+.search--grid {
+    margin-top: 200px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .grid-item {
+        width: 31%;
+        padding: 10px;
+        outline: none;
+        cursor: pointer;
+    }
+
+    .grid-item {
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        @media screen and (max-width: $mobile) {
+            width: 44%;
+            padding: 8px;
+        }
+    }
+
+    @media screen and (max-width: $mobile) {
+        margin-top: 150px;
+    }
+}

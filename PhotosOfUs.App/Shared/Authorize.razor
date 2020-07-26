@@ -1,4 +1,4 @@
-﻿@inject ClaimsPrincipal CurrentUser
+﻿@*@inject ClaimsPrincipal CurrentUser
 
 @if (IsAuthorized())
 {
@@ -6,8 +6,8 @@
 }
 
 @code {
-    [Parameter] string Roles { get; set; }
-    [Parameter] RenderFragment ChildContent { get; set; }
+    [Parameter] public string Roles { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
     bool IsAuthorized()
     {
@@ -28,4 +28,4 @@
 
         return false;
     }
-}
+}*@

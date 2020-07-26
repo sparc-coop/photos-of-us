@@ -1,0 +1,183 @@
+﻿@import '../variables.scss';
+
+.photographer-sales-history {
+    padding-bottom: 50px;
+
+    select {
+        color: #43C6BA;
+        border: 0;
+        font-size: 14px;
+    }
+
+    .total {
+        margin-top: 25px;
+        float: right;
+        font-family: 'Dosis';
+        font-weight: 400;
+
+        h4 {
+            color: #43C6BA;
+            margin-bottom: 0px;
+        }
+
+        h3 {
+            color: #194952;
+            margin-top: 5px;
+        }
+
+        &-counter {
+            margin-left: 75px;
+        }
+    }
+
+    .search-form {
+        width: 100%;
+        padding: 16px;
+        border-radius: 16px;
+        border: 2px solid #43c6ba;
+
+        .search-title {
+            margin-bottom: 16px;
+
+            h4 {
+                margin: 0;
+            }
+        }
+
+        .search-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .column {
+            width: 48%;
+
+            .data {
+                &:not(:last-child) {
+                    margin-bottom: 16px;
+                }
+            }
+        }
+
+        .medium-input {
+            max-width: 100px;
+            padding: 4px;
+        }
+
+        .small-input {
+            max-width: 40px;
+            padding: 4px;
+        }
+
+
+
+        button {
+            background-color: white;
+
+            &:hover, &:focus {
+                background-color: #43c6ba;
+                color: white;
+            }
+        }
+    }
+
+    
+
+    
+}
+.order-history {
+    .header--row {
+        display: flex;
+        padding: 0 10px;
+
+        > div {
+            padding: 20px 10px;
+            width: 150px;
+        }
+    }
+
+    .order--row {
+        display: flex;
+        cursor: pointer;
+        outline: none;
+        position: relative;
+        padding: 0 10px;
+
+        > div {
+            padding: 18px 10px;
+            width: 150px;
+        }
+
+        .arrow {
+            transform: rotate(90deg);
+            transition: 0.5s;
+            position: absolute;
+            right: 20px;
+            top: 14px;
+            font-size: 26px;
+            outline: none;
+        }
+
+        .arrow-clicked {
+            transform: rotate(-90deg);
+            transition: 0.5s;
+        }
+    }
+
+    .order-details {
+        .detail-divider {
+            border-top: 1.5px solid $primary;
+            width: 90%;
+            padding: 15px 0 5px 0;
+            margin: auto;
+        }
+
+        .detail-header {
+            display: flex;
+            padding: 5px 10px;
+
+            > div {
+                width: 150px;
+                padding: 10px;
+            }
+        }
+    }
+
+    .item--row {
+        display: flex;
+        padding: 3px 10px;
+
+        > div {
+            padding: 10px;
+            width: 150px;
+        }
+    }
+
+    .search {
+        height: 32px;
+        border-radius: 15px;
+        border: 1px solid $primary;
+        width: 300px;
+        padding: 0 5%;
+        font-family: 'Dosis';
+        font-size: 16px;
+        outline: none;
+        margin-bottom: 20px;
+
+        &::-moz-placeholder {
+            color: $primary;
+        }
+
+        &:-ms-input-placeholder {
+            color: $primary;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $primary;
+        }
+    }
+
+    
+}

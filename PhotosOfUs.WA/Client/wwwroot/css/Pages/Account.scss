@@ -1,0 +1,301 @@
+﻿@import "../variables";
+
+.account-settings {
+    .container {
+        display: flex;
+
+        @media screen and (max-width: $mobile) {
+            flex-wrap: wrap;
+        }
+    }
+
+    .account-sidemenu {
+        background: $off-white;
+        border-radius: 4px;
+        padding: 26px 16px;
+        width: 208px;
+        height: 170px;
+        position: relative;
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        .sidemenu-item {
+            margin-bottom: 10px;
+            font-family: 'Dosis';
+            font-weight: 600;
+            outline: none;
+
+            .active {
+                color: #194952;
+
+                i {
+                    color: #ff6060;
+                }
+            }
+
+            a {
+                text-decoration: none;
+                color: #9b9999;
+            }
+
+            i {
+                position: relative;
+                /* Adjust these values accordingly */
+                top: 5px;
+                left: 5px;
+                margin-right: 20px;
+                color: #9b9999;
+            }
+        }
+
+        .deactivate {
+            color: #FF6060;
+            font-size: 11px;
+            text-decoration: none;
+            cursor: pointer;
+            outline: none;
+            margin-top: 25px;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        text-align: center;
+        display: block;
+    }
+
+    .btn-apply {
+        background-color: #FFE261;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        width: 208px;
+        padding: 5px 16px;
+        margin-bottom: 20px;
+        display: block;
+        font-family: 'Dosis';
+        font-weight: bold;
+        font-size: 18px;
+
+        .loader {
+            vertical-align: middle;
+            float: right;
+        }
+    }
+
+    .discard-link {
+        text-decoration: none;
+        font-size: 12px;
+        color: #757575;
+    }
+
+    .form-account {
+        margin-left: 40px;
+
+        @media screen and (max-width: $mobile) {
+            margin-left: 0;
+        }
+
+        .img-container {
+            position: relative;
+            width: 100%;
+            max-width: 107px;
+            border-radius: 50%;
+        }
+
+        .profile-image {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+            background-color: darkgray;
+            border-radius: 50%;
+            cursor: pointer;
+
+            .icon {
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                text-align: center;
+
+                .material-icons {
+                    font-size: 36px;
+                }
+            }
+        }
+
+        .img-container:hover .overlay {
+            opacity: 1;
+
+            .material-icons {
+                color: white;
+            }
+        }
+
+        &--social {
+
+            @media screen and (max-width: $mobile) {
+                margin-top: 20px;
+            }
+
+            input {
+                width: 300px;
+
+                @media screen and (max-width: $mobile) {
+                    width: 100%;
+                }
+            }
+
+            .form-input {
+                display: flex;
+
+                img {
+                    padding: 22px 16px 0 0;
+                }
+            }
+        }
+    }
+
+    .social-accounts {
+        .form-input {
+            position: relative;
+
+            input[type=text] {
+                padding-left: 40px;
+                font-size: 12px;
+            }
+
+
+            i.material-icons {
+                position: absolute;
+                left: 10px;
+                top: 27px;
+                padding: 9px 8px;
+            }
+        }
+    }
+}
+
+.account-settings--wrapper {
+    .yellow-background.line--small {
+        margin-top: 35px;
+        margin-bottom: 30px;
+    }
+
+    .deactivate-modal {
+        border: 2px dashed $primary;
+        border-radius: 8px;
+        width: 240px;
+        height: 237px;
+        margin: 0 10px;
+        text-align: center;
+        cursor: pointer;
+
+        img {
+            margin: 0 auto;
+            padding: 57px 0 20px 0;
+        }
+
+        .label {
+            font-family: "Dosis";
+            font-weight: 600;
+            font-size: 26px;
+            color: $dark;
+        }
+    }
+}
+
+
+.brand-settings {
+    padding-left: 20px;
+
+    img.selected {
+        border: 2px solid #43C6BA;
+        border-radius: 4px;
+    }
+
+    .homepage-template {
+        .item {
+            width: 30%;
+            padding-right: 20px;
+            display: inline-block;
+            vertical-align: top;
+
+            img {
+                max-width: 100%;
+            }
+
+            p {
+                /*font-family: OpenSans;*/
+                font-size: 12px;
+                color: #194952;
+                letter-spacing: 0;
+                line-height: 20px;
+            }
+        }
+    }
+
+    .featured-image {
+        .image {
+            width: 20%;
+        }
+
+        .overlay-settings {
+            h3 {
+                /*font-family: OpenSans;*/
+                font-size: 10px;
+                color: #757575;
+                letter-spacing: 0;
+            }
+        }
+    }
+
+    .homepage-settings {
+
+        > img {
+            max-width: 110%;
+        }
+
+        .section {
+            padding-top: 30px;
+
+            p {
+                /*font-family: OpenSans;*/
+                font-size: 12px;
+                color: #194952;
+                letter-spacing: 0;
+                line-height: 20px;
+            }
+
+            .colors {
+                display: flex;
+
+                span {
+                    /*font-family: OpenSans;*/
+                    font-size: 10px;
+                    color: #757575;
+                    letter-spacing: 0;
+                }
+
+                .color-picker {
+                    margin-right: 25px;
+                }
+            }
+        }
+    }
+}

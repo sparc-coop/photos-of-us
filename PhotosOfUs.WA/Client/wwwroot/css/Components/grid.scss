@@ -1,0 +1,256 @@
+﻿
+/**
+ * Flex Grid -
+ * Version: 0.3.4
+ *
+ * Simple grid built with flex box and sass.
+ *
+ * Matthew Simo - matthew.a.simo@gmail.com
+ */
+
+$fg-columns: 12 !default;
+$fg-gutter: 20px !default;
+
+$fg-class-row: 'g-row' !default;
+$fg-class-col: 'g-col' !default;
+$fg-class-off: 'g-off' !default;
+
+$fg-breakpoints: ( (xs), (sm, 768px), (md, 992px), (lg, 1200px) ) !default;
+
+
+@function get-col-percent($column-num) {
+
+    @return $column-num / $fg-columns * 100%;
+}
+
+@mixin spacing( $value, $type: margin, $orientation: vertical ) {
+    @if $orientation == vertical {
+        #{ $type }-top: $value;
+        #{ $type }-bottom: $value;
+    }
+    @else {
+        #{ $type }-left: $value;
+        #{ $type }-right: $value;
+    }
+}
+
+.#{ $fg-class-row } {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+
+%#{ $fg-class-col } {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    min-height: 1px;
+    @include spacing( ( $fg-gutter ), padding, horizontal );
+}
+
+%#{ $fg-class-col }-flex {
+    @extend %#{ $fg-class-col };
+    -webkit-box-flex: 1;
+    ;
+    -ms-flex-positive: 1;
+    ;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    max-width: 100%;
+}
+
+@mixin grid-base( $namespace ) {
+    .#{ $fg-class-col }-#{$namespace} {
+        @extend %#{ $fg-class-col }-flex;
+    }
+
+    @for $i from 1 through $fg-columns {
+        .#{ $fg-class-col }-#{$namespace}-#{$i} {
+            @extend %#{ $fg-class-col };
+        }
+    }
+}
+
+@mixin grid-sizes( $namespace ) {
+    @for $i from 1 through $fg-columns {
+        .#{ $fg-class-col }-#{$namespace}-#{$i} {
+            -ms-flex-preferred-size: get-col-percent($i);
+            flex-basis: get-col-percent($i);
+            max-width: get-col-percent($i);
+        }
+    }
+
+    @for $i from 1 through $fg-columns {
+        @if ( $i != $fg-columns ) {
+            .#{ $fg-class-off }-#{$namespace}-#{$i} {
+                margin-left: get-col-percent($i);
+            }
+        }
+    }
+}
+
+@each $val in $fg-breakpoints {
+
+    $namespace: nth($val, 1);
+    @include grid-base( $namespace );
+}
+
+@each $val in $fg-breakpoints {
+    @if length($val) == 1 {
+
+        $namespace: nth($val, 1);
+        @include grid-sizes( $namespace );
+    }
+    @else {
+
+        $namespace: nth($val, 1);
+        $size: nth($val, 2);
+
+        @media only screen and (min-width: #{$size}) {
+            @include grid-sizes( $namespace );
+        }
+    }
+}
+
+
+.grid-vertical {
+    .row {
+        .title {
+            font-family: Dosis-Regular;
+            font-size: 18px;
+            color: #757575;
+            letter-spacing: 0;
+        }
+
+        .value {
+            font-family: OpenSans-Semibold;
+            font-size: 20px;
+            color: #194952;
+            letter-spacing: 0;
+        }
+    }
+}
+
+.purchase-grid {
+    margin: 0 0 3em 0;
+    padding: 0;
+
+    .row {
+        height: 50px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .row-yellow {
+        background: rgba(255, 226, 97, 0.3);
+        height: 50px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .cell {
+        box-sizing: border-box;
+        flex-grow: 1;
+        width: 100%; // Default to full width
+        padding: 0.8em 1.2em;
+        overflow: hidden; // Or flex might break
+        list-style: none;
+        border: solid 3px white;
+        background: fade(slategrey,20%);
+    }
+
+    &.responsive-grid--2cols > div > .cell {
+        width: 50%;
+    }
+
+    &.responsive-grid--3cols > div > .cell {
+        width: 33.33%;
+    }
+
+    &.responsive-grid--4cols > div > .cell {
+        width: 25%;
+    }
+
+    &.responsive-grid--5cols > div > .cell {
+        width: 20%;
+    }
+
+    &.responsive-grid--6cols > div > .cell {
+        width: 16.6%;
+    }
+
+    &.responsive-grid--7cols > div > .cell {
+        width: 14.2%;
+    }
+
+    &.responsive-grid--8cols > div > .cell {
+        width: 12.5%;
+    }
+}
+
+.photo-options-grid {
+    .red {
+        color: #FF6060;
+    }
+
+    .light-blue {
+        color: #43C6BA;
+    }
+
+    .blue {
+        color: #194952;
+    }
+
+    .large {
+        font-size: 20px;
+    }
+
+    .medium {
+        font-size: 18px;
+    }
+
+    .small {
+        font-size: 14px;
+    }
+
+    span{
+        letter-spacing: 0;
+    }
+}
+
+$breakpoint: 500px;
+
+@media all and (max-width: $breakpoint) {
+    .responsive-grid--collapse {
+        display: block;
+
+        > div > .cell {
+            width: 100% !important;
+        }
+
+        > .cell--foot {
+            margin-bottom: 1em;
+        }
+    }
+}

@@ -1,0 +1,216 @@
+﻿.event-settings {
+    .left {
+        padding-right: 45%;
+    }
+
+    .right {
+        position: fixed;
+        top: 230px;
+        right: 60px;
+
+        header {
+            background-color: #dfdfdf;
+            margin-top: 10px;
+            margin-bottom: 0;
+            padding: 10px;
+
+            span {
+                background-color: white;
+                border: 1px solid #aaa;
+                padding: 8px 20px;
+                border-radius: 20px;
+                font-size: 11px;
+                display: block;
+                color: #000;
+            }
+        }
+    }
+
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .branding-selector {
+        display: flex;
+        flex-wrap: wrap;
+
+        figure {
+            margin: 0 40px 20px 0;
+            position: relative;
+            outline: none;
+
+            .check {
+                top: 50%;
+                margin-top: -15px;
+            }
+
+            &.selected {
+                .check {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    section {
+        margin-bottom: 120px;
+    }
+
+    p {
+        /*font-family: OpenSans;*/
+        font-size: 12px;
+        font-weight: 400;
+        color: #194952;
+        letter-spacing: 0;
+        line-height: 20px;
+    }
+
+    input.url {
+        padding-left: 140px;
+    }
+
+    .check {
+        display: none;
+        position: absolute;
+        top: -8px;
+        right: -11px;
+        border-radius: 20px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        color: white;
+        background-color: #43c6ba;
+        line-height: 20px;
+        font-size: 16px;
+    }
+
+    .homepage-template {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        figure {
+            max-width: 40%;
+            margin: 0 40px 20px 0;
+            display: inline-block;
+            vertical-align: top;
+            position: relative;
+            outline: none;
+
+            img {
+                max-width: 100%;
+                border: 2px solid transparent;
+                border-radius: 4px;
+            }
+
+            h3 {
+                font: 600 14px/19px "Open Sans";
+                margin-bottom: 6px;
+            }
+
+            &.selected {
+                img {
+                    border-color: #43C6BA;
+                }
+
+                .check {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .featured-image {
+        display: flex;
+
+        > * {
+            flex: 1;
+        }
+
+        figure {
+            height: 286px;
+            width: 100%;
+            background-color: #eee;
+            margin: 0 30px 0 0;
+            position: relative;
+
+            &:hover {
+                background-color: #ddd;
+                cursor: pointer;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+            }
+
+            .close {
+                position: absolute;
+                top: -8px;
+                right: -11px;
+                border-radius: 20px;
+                height: 20px;
+                width: 20px;
+                text-align: center;
+                color: white;
+                background-color: $red;
+                line-height: 22px;
+                font-size: 14px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+        }
+
+        figcaption {
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            bottom: 0;
+            margin: auto;
+            color: #ccc;
+            text-align: center;
+            height: 80px;
+        }
+
+        button {
+            margin-bottom: 20px;
+        }
+    }
+
+    .homepage-settings {
+
+        > img {
+            max-width: 110%;
+        }
+
+        .section {
+            padding-top: 30px;
+
+            p {
+                /*font-family: OpenSans;*/
+                font-size: 12px;
+                color: #194952;
+                letter-spacing: 0;
+                line-height: 20px;
+            }
+
+            .colors {
+                display: flex;
+
+                span {
+                    /*font-family: OpenSans;*/
+                    font-size: 10px;
+                    color: #757575;
+                    letter-spacing: 0;
+                }
+
+                .color-picker {
+                    margin-right: 25px;
+                }
+            }
+        }
+    }
+}

@@ -54,6 +54,43 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\Components\anchor.scss" />
+    <None Include="wwwroot\css\Components\bulletNumber.scss" />
+    <None Include="wwwroot\css\Components\button.scss" />
+    <None Include="wwwroot\css\Components\card.scss" />
+    <None Include="wwwroot\css\Components\colorPicker.scss" />
+    <None Include="wwwroot\css\Components\container.scss" />
+    <None Include="wwwroot\css\Components\footer.scss" />
+    <None Include="wwwroot\css\Components\form.scss" />
+    <None Include="wwwroot\css\Components\global.scss" />
+    <None Include="wwwroot\css\Components\grid.scss" />
+    <None Include="wwwroot\css\Components\header.scss" />
+    <None Include="wwwroot\css\Components\icons.scss" />
+    <None Include="wwwroot\css\Components\input.scss" />
+    <None Include="wwwroot\css\Components\label.scss" />
+    <None Include="wwwroot\css\Components\line.scss" />
+    <None Include="wwwroot\css\Components\Modals\bulkEdit.scss" />
+    <None Include="wwwroot\css\Components\Modals\DeactivateModal.scss" />
+    <None Include="wwwroot\css\Components\Modals\Edit.scss" />
+    <None Include="wwwroot\css\Components\Modals\NewFolderModal.scss" />
+    <None Include="wwwroot\css\Components\navbar.scss" />
+    <None Include="wwwroot\css\Components\paragraph.scss" />
+    <None Include="wwwroot\css\Components\table.scss" />
+    <None Include="wwwroot\css\Pages\Account.scss" />
+    <None Include="wwwroot\css\Pages\Cards.scss" />
+    <None Include="wwwroot\css\Pages\cart.scss" />
+    <None Include="wwwroot\css\Pages\confirmation.scss" />
+    <None Include="wwwroot\css\Pages\Landing.scss" />
+    <None Include="wwwroot\css\Pages\photo.scss" />
+    <None Include="wwwroot\css\Pages\PhotoDetails.scss" />
+    <None Include="wwwroot\css\Pages\pricing.scss" />
+    <None Include="wwwroot\css\Pages\Profile.scss" />
+    <None Include="wwwroot\css\Pages\purchase.scss" />
+    <None Include="wwwroot\css\Pages\SalesHistory.scss" />
+    <None Include="wwwroot\css\Pages\search.scss" />
+    <None Include="wwwroot\css\Pages\tempLanding.scss" />
+    <None Include="wwwroot\css\Pages\tutorial.scss" />
+    <None Include="wwwroot\css\Pages\Upload.scss" />
     <None Include="wwwroot\js\angular-socialshare.js" />
     <None Include="wwwroot\js\angular-socialshare.js.map" />
     <None Include="wwwroot\js\angular-socialshare.min.js" />

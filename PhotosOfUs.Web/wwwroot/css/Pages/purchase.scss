@@ -1,0 +1,210 @@
+﻿@import "../variables";
+
+.purchase {
+    &__photo-text {
+        color: $primary;
+        font-family: "Open Sans";
+        font-size: 18px;
+        line-height: 28px;
+        max-width: 690px;
+        padding-bottom: 24px;
+    }
+
+    &__photo-info {
+        color: $primary;
+        font-family: "Open Sans";
+        font-size: 18px;
+        line-height: 28px;
+        max-width: 350px;
+
+        .info {
+            .row {
+                padding: 10px 0;
+                width: 350px;
+                display: flex;
+            }
+
+            .title {
+                font-family: "Dosis";
+                color: $text-gray;
+                width: 175px;
+            }
+
+            .value {
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 20px;
+                color: $dark;
+            }
+        }
+    }
+
+    &__options {
+        &--container {
+            padding-bottom: 50px;
+        }
+
+        &--row {
+            display: flex;
+            height: 50px;
+            padding: 4px 20px;
+
+            .select {
+                padding-right: 50px;
+                padding-top: 15px;
+
+                md-checkbox {
+                    .md-icon {
+                        border-color: $primary;
+                    }
+
+                    &.md-checked .md-icon {
+                        background: $yellow;
+
+                        &:after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .icon {
+                width: 50px;
+                padding-right: 50px;
+                padding-top: 5px;
+            }
+
+            .choose {
+                margin-top: 10px;
+            }
+
+            .type {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 20px;
+                color: $red;
+                width: 160px;
+                padding-right: 30px;
+            }
+
+            .height {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 20px;
+                color: $primary;
+                width: 120px;
+                padding-right: 20px;
+            }
+
+            .length {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 20px;
+                color: $primary;
+                width: 120px;
+                padding-right: 35px;
+            }
+
+            .quantity {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-size: 18px;
+                color: $dark;
+                width: 70px;
+                padding-right: 20px;
+
+                input  {
+                    width: 25px;
+                    text-align: center;
+                }
+            }
+
+            .price {
+                line-height: 57px;
+                font-family: "Open Sans";
+                font-weight: 600;
+                font-size: 22px;
+                color: $dark;
+                width: 70px;
+                padding-right: 15px;
+            }
+        }
+
+        &--row:nth-child(even) {
+            background: rgba(255, 226, 97, 0.16)
+        }
+    }
+
+    .price__info {
+        color: $primary;
+        text-decoration: underline;
+        outline: none;
+        float: right;
+        cursor: pointer;
+    }
+}
+
+.photographer-order{
+    height: 300px;
+    width: 400px;
+    padding: 20px;
+}
+.priceModal {
+    background: $dark;
+    border-radius: 3px;
+    padding: 20px;
+    color: $white;
+    position: relative;
+    text-align: center;
+
+    h3 {
+        color: $yellow;
+        font-size: 24px;
+    }
+
+    .close {
+        outline: none;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: $red;
+    }
+
+    .add {
+        color: $yellow;
+        font-size: 24px;
+        margin-top: 12%;
+    }
+
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+
+        > div {
+            background: $white;
+            border-radius: 3px;
+            height: 239px;
+            width: 229px;
+            margin: 0 auto;
+            margin-top: 35px;
+            margin-bottom: 35px;
+            padding: 20px;
+
+            img {
+                margin: 25px 0;
+                max-height: 50px;
+            }
+        }
+
+        p {
+            color: $black;
+        }
+    }
+
+    .title {
+        color: $primary;
+        font-size: 20px;
+    }
+}

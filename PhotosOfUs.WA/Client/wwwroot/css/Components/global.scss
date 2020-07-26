@@ -1,0 +1,137 @@
+﻿@import '../variables.scss';
+
+body {
+    //padding-bottom: 60px;
+    margin: 0;
+    background-color: $white;
+    height: unset !important;
+
+    > div.container.body-content {
+        margin: 0 auto;
+        max-width: 1050px;
+        padding: 60px 30px;
+
+        hr {
+            display: none;
+        }
+
+        @media screen and (max-width: $mobile) {
+            padding: 40px 20px;
+        }
+    }
+
+    @media screen and (max-width: $mobile) {
+        padding-bottom: 10px;
+    }
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.yellow-background {
+    background-color: $yellow;
+}
+
+
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+.filters {
+    margin-bottom: 20px;
+
+    .searchbox.input--light-blue {
+        width: 230px;
+        height: 28px;
+        background-image: url('/images/icons/search.png');
+        background-repeat: no-repeat;
+        background-position: 20px 5px;
+        padding: 0 50px;
+        color: $primary;
+        outline: none;
+
+        &::-moz-placeholder {
+            color: $primary;
+        }
+
+        &:-ms-input-placeholder {
+            color: $primary;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $primary;
+        }
+    }
+
+    select {
+        color: #DFDFDF;
+    }
+
+    .view-icons {
+        .material-icons {
+            color: #DFDFDF;
+        }
+
+        .material-icons.selected {
+            color: #43C6BA;
+        }
+    }
+
+    .filter-sort {
+        margin-right: 60px;
+        display: inline-block;
+        border: 1px solid $primary;
+        border-radius: 8px;
+
+        select {
+            outline: none;
+            color: $primary;
+            border: none;
+
+            option {
+                color: $primary;
+                border: none;
+            }
+        }
+
+        @media screen and (max-width: $mobile) {
+            margin-top: 15px;
+            margin-right: 10px;
+        }
+
+        .sort-box {
+            padding: 5px;
+            background: $white;
+            border-radius: 8px;
+        }
+    }
+}
+
+@media screen and (max-width: $mobile) {
+    html {
+        width: 100vw;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+}

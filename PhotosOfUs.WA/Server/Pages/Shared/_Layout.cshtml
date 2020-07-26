@@ -5,6 +5,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Dosis:400,600,800|Open+Sans:400,600,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@simonwep/pickr/dist/themes/nano.min.css" />*@
     <link href="~/css/bootstrap/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/app.css" rel="stylesheet" />
 </head>
@@ -15,6 +19,20 @@
             @RenderBody()
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@@simonwep/pickr/dist/pickr.min.js"></script>
+    <script>
+        window.initColorPicker = function (el, scope) {
+            const pickr = Pickr.create({
+                el: el,
+                theme: 'nano'
+            });
+            pickr.on('save', function (color) {
+                scope.invokeMethodAsync('SetColor', color.toHEXA().toString());
+            });
+            return pickr;
+        };
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,241 @@
+﻿@import "../variables";
+
+.button {
+    &--red {
+        background: $red;
+        border-radius: 8px;
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 16px;
+        color: #ffffff;
+        padding: 7px;
+        letter-spacing: 0;
+        text-align: center;
+        width: 250px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+
+    &--yellow {
+        background: $yellow;
+        border-radius: 8px;
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 16px;
+        color: #FF6060;
+        padding: 7px;
+        letter-spacing: 0;
+        text-align: center;
+        width: 173px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        vertical-align: middle;
+
+        &--payment {
+            position: absolute;
+            bottom: 65px;
+            width: 240px;
+
+            &.disabled {
+                background: $text-gray;
+                cursor: not-allowed;
+            }
+        }
+
+        img {
+            padding-right: 10px;
+            vertical-align: middle;
+        }
+    }
+
+    &--checkout--preview {
+        cursor: pointer;
+        outline: none;
+        background-color: $dark;
+        text-align: center;
+        width: 239px;
+        padding: 12px 0;
+        border-radius: 6px;
+        position: absolute;
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 22px;
+        bottom: 16px;
+        color: $red;
+
+        &--payment {
+            float: right;
+            margin-top: -100px;
+            width: 240px;
+        }
+    }
+
+    &--checkout--preview {
+        cursor: pointer;
+        background-color: $dark;
+        text-align: center;
+        width: 239px;
+        padding: 12px 0;
+        border-radius: 6px;
+        position: absolute;
+        font-family: "Dosis";
+        font-weight: 600;
+        font-size: 22px;
+        bottom: 16px;
+        color: $red;
+
+        &--save-changes {
+            font-family: 'Dosis', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            color: $yellow;
+            letter-spacing: 0;
+            background-color: transparent;
+            border: 2px solid $yellow;
+            border-radius: 8px;
+            padding: 2px 40px 3px;
+            margin: 35px 5px 2px 0;
+            position: absolute;
+            bottom: 22px;
+            right: 22px;
+            cursor: pointer;
+        }
+
+        &--discard-changes {
+            font-family: 'Dosis', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: $red;
+            letter-spacing: 0;
+            background-color: transparent;
+            border: 0;
+            padding: 5px 20px;
+            margin: 35px 0 2px 0;
+            position: absolute;
+            bottom: 22px;
+            right: 218px;
+            cursor: pointer;
+        }
+
+        &--save-changes {
+            font-family: 'Dosis', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            color: $yellow;
+            letter-spacing: 0;
+            background-color: transparent;
+            border: 2px solid $yellow;
+            border-radius: 8px;
+            padding: 2px 40px 3px;
+            margin: 35px 5px 2px 0;
+            position: absolute;
+            bottom: 22px;
+            right: 22px;
+        }
+
+        &--go {
+            display: inline;
+            border-radius: 0 8px 8px 0;
+            background: $black;
+            color: $white;
+            padding: 11.5px;
+            cursor: pointer;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 20px;
+            vertical-align: middle;
+            text-decoration: none;
+            border: none;
+        }
+
+        &--back {
+            height: 19px;
+            width: 19px;
+            margin: 30px 20px 0 -40px;
+            cursor: pointer;
+        }
+
+        &--go {
+            display: inline;
+            border-radius: 0 8px 8px 0;
+            background: $black;
+            color: $white;
+            padding: 11.5px;
+            cursor: pointer;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 20px;
+            vertical-align: middle;
+            text-decoration: none;
+            border: none;
+        }
+
+        &--lostcode {
+            cursor: pointer;
+            color: $orange;
+            padding-top: 10px;
+            height: 28px;
+            font-family: "Open Sans";
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        &--learn {
+            border: 2px solid $primary;
+            border-radius: 8px;
+            width: 209px;
+            height: 26px;
+            background-color: $dark;
+            color: $primary;
+            font-size: 18px;
+            font-family: "Open Sans";
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        &--imageUpload {
+            background: $yellow;
+            color: $primary;
+            border-radius: 8px;
+            padding: 10px 30px;
+            display: inline;
+            font-family: "Dosis";
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+
+            .img-upload {
+                vertical-align: middle;
+                margin: -3px 10px 0 0;
+                border-radius: 0;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &--download {
+        border: 2px solid $primary;
+        border-radius: 8px;
+        padding: 10px 30px;
+        position: absolute;
+        right: 200px;
+        font-family: "Dosis";
+        font-weight: 600;
+        cursor: pointer;
+        outline: none;
+    }
+
+    &--green {
+        padding: 10px 20px;
+        background-color: $primary;
+        color: $yellow;
+        font-family: "Dosis";
+        font-size: 20px;
+        border-radius: 8px;
+        border: 0;
+        font-weight: 500;
+        text-decoration: none;
+    }
+}

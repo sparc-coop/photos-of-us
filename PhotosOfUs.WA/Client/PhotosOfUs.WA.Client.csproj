@@ -7,6 +7,55 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
+    <None Include="wwwroot\css\Components\anchor.scss" />
+    <None Include="wwwroot\css\Components\bulletNumber.scss" />
+    <None Include="wwwroot\css\Components\Button.scss" />
+    <None Include="wwwroot\css\Components\card.scss" />
+    <None Include="wwwroot\css\Components\ColorPicker.js" />
+    <None Include="wwwroot\css\Components\ColorPicker.razor" />
+    <None Include="wwwroot\css\Components\ColorPicker.scss" />
+    <None Include="wwwroot\css\Components\container.scss" />
+    <None Include="wwwroot\css\Components\FlexBox.scss" />
+    <None Include="wwwroot\css\Components\footer.scss" />
+    <None Include="wwwroot\css\Components\Form.scss" />
+    <None Include="wwwroot\css\Components\global.scss" />
+    <None Include="wwwroot\css\Components\grid.scss" />
+    <None Include="wwwroot\css\Components\header.scss" />
+    <None Include="wwwroot\css\Components\icons.scss" />
+    <None Include="wwwroot\css\Components\input.scss" />
+    <None Include="wwwroot\css\Components\label.scss" />
+    <None Include="wwwroot\css\Components\line.scss" />
+    <None Include="wwwroot\css\Components\MaterialIcons.scss" />
+    <None Include="wwwroot\css\Components\Modals\bulkEdit.scss" />
+    <None Include="wwwroot\css\Components\Modals\DeactivateModal.scss" />
+    <None Include="wwwroot\css\Components\Modals\Edit.scss" />
+    <None Include="wwwroot\css\Components\Modals\NewFolderModal.scss" />
+    <None Include="wwwroot\css\Components\navbar.scss" />
+    <None Include="wwwroot\css\Components\paragraph.scss" />
+    <None Include="wwwroot\css\Components\Table.scss" />
+    <None Include="wwwroot\css\Pages\Account.scss" />
+    <None Include="wwwroot\css\Pages\Cards.scss" />
+    <None Include="wwwroot\css\Pages\cart.scss" />
+    <None Include="wwwroot\css\Pages\confirmation.scss" />
+    <None Include="wwwroot\css\Pages\Landing.scss" />
+    <None Include="wwwroot\css\Pages\photo.scss" />
+    <None Include="wwwroot\css\Pages\PhotoDetails.scss" />
+    <None Include="wwwroot\css\Pages\pricing.scss" />
+    <None Include="wwwroot\css\Pages\Profile.scss" />
+    <None Include="wwwroot\css\Pages\purchase.scss" />
+    <None Include="wwwroot\css\Pages\SalesHistory.scss" />
+    <None Include="wwwroot\css\Pages\search.scss" />
+    <None Include="wwwroot\css\Pages\tempLanding.scss" />
+    <None Include="wwwroot\css\Pages\tutorial.scss" />
+    <None Include="wwwroot\css\Pages\Upload.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
 
     <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.3" />
@@ -17,6 +66,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Authentication.WebAssembly.Msal" Version="3.2.1" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\PhotosOfUs.Model\PhotosOfUs.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

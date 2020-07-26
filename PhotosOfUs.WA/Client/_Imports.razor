@@ -1,9 +1,31 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
 @using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.WebAssembly.Http
 @using Microsoft.JSInterop
+@using BlazorInputFile
+@using Newtonsoft.Json
+
+@using Kuvio.Kernel.Core;
+@using Kuvio.Kernel.Core.Utils
+
+@using Kuvio.Kernel.AspNet.Blazor.Utils
+@using Kuvio.Kernel.AspNet.Blazor.Modal
+@using Kuvio.Kernel.AspNet.Blazor.Toast
+@using Kuvio.Kernel.AspNet.Blazor.Toast.Services
+
 @using PhotosOfUs.WA.Client
 @using PhotosOfUs.WA.Client.Shared
+
+@using System.Security.Claims
+@using PhotosOfUs.Model.Models
+
+@*@using PhotosOfUs.WA.Client.Shared.Components*@
+
+@inject IJSRuntime JsRuntime
+@inject IModalService ModalService
+@inject IToastService ToastService
+@inject NavigationManager NavigationManager

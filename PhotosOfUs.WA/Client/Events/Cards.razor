@@ -1,0 +1,49 @@
+@page "/Events/{eventId}/Cards"
+
+<div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardsCtrl" ng-init="getCards(@Model.EventId)">
+    <h1>Your Codes</h1>
+    <hr />
+
+    <div class="flex-box filters">
+        <input class="input--light-blue searchbox" placeholder="Search Code" ng-model="searchText" />
+
+        @*<div class="view-icons align-right">
+                <select>
+                    <option>Date</option>
+                    <option>Code</option>
+                </select>
+            </div>*@
+
+        <a href="" ng-click="exportMultipleCards(1)" class="btn-pou-default">Export new card</a>
+        <a href="" ng-click="exportMultipleCardsModal()" class="btn-pou-default">Export multiple cards</a>
+        @*<a href="/Photographer/Account" class="btn-pou-default">Order Printed Cards</a>*@
+    </div>
+
+    <div class="flex-box">
+        <table>
+            <thead>
+                <tr>
+                    <td>Code</td>
+                    <td>Date</td>
+                    <td>Actions</td>
+                </tr>
+            </thead>
+            <tbody ng-cloak>
+                <tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 10:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">
+                    <td class="highlight">{{card.Code}}</td>
+                    <td>{{card.CreatedDate | date: 'MM/dd/yyyy'}}</td>
+                    <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="photoPage__image-container">
+        <ul uib-pagination total-items="cards.length" ng-model="currentPage" items-per-page="pageSize" ng-show="(codePhotos.length/photosPerPage) > 1"></ul>
+    </div>
+    <form id="card-downloader" method="post">
+        <input type="hidden" ng-repeat="card in cardsToExport" name="cardIds[{{$index}}]" ng-value="card.Id" />
+    </form>
+</div>
+
+
+
