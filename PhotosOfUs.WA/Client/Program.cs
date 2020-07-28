@@ -11,6 +11,10 @@ using Kuvio.Kernel.AspNet.Blazor;
 
 using Kuvio.Kernel.Core;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Components.Authorization;
+using PhotosOfUs.WA.Client.Utils;
+using Newtonsoft.Json;
 
 namespace PhotosOfUs.WA.Client
 {
@@ -33,10 +37,10 @@ namespace PhotosOfUs.WA.Client
                 options.Position = Kuvio.Kernel.AspNet.Blazor.Toast.Configuration.ToastPosition.TopRight; // default: ToastPosition.TopRight
             });
 
-            //JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            //{
-            //    TypeNameHandling = TypeNameHandling.Objects
-            //};
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
 
             await builder.Build().RunAsync();
         }
@@ -53,6 +57,8 @@ namespace PhotosOfUs.WA.Client
 
         private static void AddAuthorization(WebAssemblyHostBuilder builder)
         {
+            //builder.Services.AddOptions();
+
             builder.Services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
@@ -62,6 +68,7 @@ namespace PhotosOfUs.WA.Client
                 });
             });
 
+            //builder.Services.AddTransient<ClaimsPrincipal>(async context => (await context.GetService<AuthenticationStateProvider>().GetAuthenticationStateAsync()).User ?? Task);
             //builder.Services.AddHttpContextAccessor();
             //builder.Services.AddScoped(context => context.GetRequiredService<IHttpContextAccessor>()?.HttpContext?.User);
         }
@@ -72,9 +79,11 @@ namespace PhotosOfUs.WA.Client
             builder.Services.AddMsalAuthentication(options =>
             {
                 builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
-                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://kuviocreative.onmicrosoft.com/b02e66a0-de4d-46a2-807c-70a11c56df1d/API.Replication");
+                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://photosofus1.onmicrosoft.com/317b781b-53ca-4902-ab70-5d22db6e8f5d/API.Replication");
                 options.UserOptions.NameClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
             });
+
+            builder.Services.AddTransient<UserProvider>();
 
             //builder.Services.AddMsalAuthentication(options =>
             //{

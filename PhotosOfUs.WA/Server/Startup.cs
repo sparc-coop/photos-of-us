@@ -42,8 +42,18 @@ namespace PhotosOfUs.WA.Server
             AddAuthentication(services);
             AddAuthorization(services);
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Client", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials());
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+            //services.AddServerSideBlazor();
 
             AddRepositories(services);
             AddServices(services);
@@ -84,12 +94,6 @@ namespace PhotosOfUs.WA.Server
 
                 //endpoints.MapDefaultControllerRoute();
             });
-
-            //app.UseCors(policy =>
-            //    policy.WithOrigins("https://localhost:44302", "https://localhost:5001")
-            //    .AllowAnyMethod()
-            //    .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization, "x-custom-header")
-            //    .AllowCredentials());
         }
 
         private void AddCommands(IServiceCollection services)
@@ -132,14 +136,24 @@ namespace PhotosOfUs.WA.Server
         private void AddAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-                .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
-                .OnLogin(principal =>
+                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+
+            // To populate User.Identity.Name
+            services.Configure<JwtBearerOptions>(
+                AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
                 {
-                    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
-                        .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
+                    options.TokenValidationParameters.NameClaimType = "name";
                 });
 
-            services.AddClaimsPrincipalInjector();
+            //services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
+            //    .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
+            //    .OnLogin(principal =>
+            //    {
+            //        services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+            //            .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
+            //    });
+
+            //services.AddClaimsPrincipalInjector();
 
             services.AddControllersWithViews(options =>
             {

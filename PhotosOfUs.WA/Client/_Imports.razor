@@ -38,6 +38,8 @@
 
 @using System.Security.Claims
 
+@using PhotosOfUs.WA.Client.Utils 
+
 @*@using PhotosOfUs.WA.Client.Shared.Components*@
 
 @inject IJSRuntime JsRuntime
@@ -45,3 +47,4 @@
 @inject IToastService ToastService
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
+@inject UserProvider UserProvider
