@@ -3,7 +3,7 @@ using Kuvio.Kernel.Core.Common;
 using System;
 using System.IO;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Users
 {
     public class ProfilePhoto : IFile
     {

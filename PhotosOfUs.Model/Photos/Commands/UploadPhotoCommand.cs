@@ -1,5 +1,6 @@
 ﻿using Kuvio.Kernel.Core;
-using PhotosOfUs.Model.Models;
+using PhotosOfUs.Core.Events;
+using PhotosOfUs.Core.Photos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -59,7 +60,8 @@ namespace PhotosOfUs.Model.Photos.Commands
             var bytes = TransformImageIntoBytes(stream);
             var suggestedTags = await _cognitive.GetSuggestedTags(bytes);
             
-            _photos.Add(photo);
+            await _photos.AddAsync(photo);
+            await _photos.CommitAsync();
 
             return new UploadPhotoCommandResult
             {

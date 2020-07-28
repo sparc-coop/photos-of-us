@@ -9,7 +9,7 @@
     @if (CurrentUser.Identity.IsAuthenticated == false)
     {
         <div class="nav--right">
-            <button @onclick=@SignIn style="padding-right: 20px;">Log In</button>
+            <button @onclick="SignIn" style="padding-right: 20px;">Log In</button>
             <!--If user is customer-->
             <cart-mini></cart-mini>
         </div>
@@ -23,7 +23,7 @@
             </div>
             <div class="nav--right">
                 <a href="/Photographer/SalesHistory"><img src="~/images/icons/alert.png" alt="notifications" /></a>
-                <img src="@(CurrentUser.Avatar() ?? "~/images/avatar_512.png")" @onclick=@ToggleDropdown class="profileImg" />
+                <img src="@(CurrentUser.ProfilePictureUrl() ?? "~/images/avatar_512.png")" @onclick=ToggleDropdown class="profileImg" />
             </div>
             @if (ViewDropdown == true)
             {
@@ -41,7 +41,7 @@
         <Authorize Roles="Customer">
             <div class="nav--right">
                 <cart-mini></cart-mini>
-                <img src="@(CurrentUser.Avatar() ?? "~/images/avatar_512.png")" @onclick="@ToggleDropdown" class="profileImg" />
+                <img src="@(CurrentUser.ProfilePictureUrl() ?? "~/images/avatar_512.png")" @onclick="ToggleDropdown" class="profileImg" />
             </div>
             <div class="nav--center">
                 <a href="/Photographer/Search" class="menu-item">Search</a>

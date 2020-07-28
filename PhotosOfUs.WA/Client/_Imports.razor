@@ -1,5 +1,9 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
+
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -12,6 +16,17 @@
 @using Kuvio.Kernel.Core;
 @using Kuvio.Kernel.Core.Utils
 
+
+@using PhotosOfUs.Core.Events
+@using PhotosOfUs.Core.Orders
+@using PhotosOfUs.Core.Photos
+@using PhotosOfUs.Core.Users
+
+@using PhotosOfUs.Core.Events.Commands
+@using PhotosOfUs.Core.Orders.Commands
+@using PhotosOfUs.Core.Photos.Commands
+@using PhotosOfUs.Core.Users.Commands
+
 @using Kuvio.Kernel.AspNet.Blazor.Utils
 @using Kuvio.Kernel.AspNet.Blazor.Modal
 @using Kuvio.Kernel.AspNet.Blazor.Toast
@@ -20,8 +35,8 @@
 @using PhotosOfUs.WA.Client
 @using PhotosOfUs.WA.Client.Shared
 
+
 @using System.Security.Claims
-@using PhotosOfUs.Model.Models
 
 @*@using PhotosOfUs.WA.Client.Shared.Components*@
 

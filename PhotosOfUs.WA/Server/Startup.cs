@@ -16,6 +16,13 @@ using Microsoft.EntityFrameworkCore;
 using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Storage.Azure;
 using PhotosOfUs.Model.Models;
+using PhotosOfUs.Model;
+using PhotosOfUs.WA.Server.Utils;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using PhotosOfUs.Connectors.Cognitive;
+using PhotosOfUs.Core.Photos;
+using PhotosOfUs.Core.Users.Commands;
 
 namespace PhotosOfUs.WA.Server
 {
@@ -42,7 +49,7 @@ namespace PhotosOfUs.WA.Server
             AddServices(services);
             AddCommands(services);
             AddQueries(services);
-            //services.AddClaimsPrincipalInjector();
+            services.AddClaimsPrincipalInjector();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +122,8 @@ namespace PhotosOfUs.WA.Server
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
             services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
+            //services.AddTransient(typeof(IDbRepository<>), typeof(DbRepository<>));
+            //services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
 
             services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
             services.AddTransient<IMediaRepository, MediaRepository>();
@@ -123,7 +132,24 @@ namespace PhotosOfUs.WA.Server
         private void AddAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-                            .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
+                .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
+                .OnLogin(principal =>
+                {
+                    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+                        .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
+                });
+
+            services.AddClaimsPrincipalInjector();
+
+            services.AddControllersWithViews(options =>
+            {
+                // This enforces that users must be authenticated. 
+                // If he isn't, he'll be redirected to the sign in page -- he won't even see the "Not Authorized" page
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
 
             services.Configure<JwtBearerOptions>(AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
             {

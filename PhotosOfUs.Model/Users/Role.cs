@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Users
 {
     public partial class Role : ValueObject<Role>
     {

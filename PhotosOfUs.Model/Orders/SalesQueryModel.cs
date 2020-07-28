@@ -1,11 +1,10 @@
-﻿using PhotosOfUs.Model.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Orders
 {
     public class SalesQueryModel
     {

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PhotosOfUs.Core.Photos;
+using PhotosOfUs.Core.Users;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Orders
 {
     public partial class PrintPrice
     {

@@ -1,17 +1,16 @@
-﻿using PhotosOfUs.Model.Models;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Kuvio.Kernel.Core;
 
-namespace PhotosOfUs.Model.Repositories
+namespace PhotosOfUs.Core.Users.Commands
 {
     public class UploadProfileImageCommand
     {
-        private readonly IRepository<User> _users;
+        private readonly IDbRepository<User> _users;
         private readonly IMediaRepository<ProfilePhoto> _profilePhotos;
         private readonly IMediaRepository<ProfileThumbnail> _profileThumbnails;
 
-        public UploadProfileImageCommand(IRepository<User> users, IMediaRepository<ProfilePhoto> profilePhotos, IMediaRepository<ProfileThumbnail> profileThumbnails)
+        public UploadProfileImageCommand(IDbRepository<User> users, IMediaRepository<ProfilePhoto> profilePhotos, IMediaRepository<ProfileThumbnail> profileThumbnails)
         {
             _users = users;
             _profilePhotos = profilePhotos;
@@ -26,7 +25,8 @@ namespace PhotosOfUs.Model.Repositories
             var thumbnail = new ProfileThumbnail(userId, photoName, extension, stream);
             await _profileThumbnails.UploadAsync(thumbnail);
 
-            _users.Execute(userId, u => u.SetProfilePhoto(uri.AbsoluteUri));
+            await _users.ExecuteAsync(userId, u => u.SetProfilePhoto(uri.AbsoluteUri));
+            await _users.CommitAsync();
 
             return uri.AbsoluteUri;
         }

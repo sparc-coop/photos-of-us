@@ -1,6 +1,7 @@
 @page "/Events/{eventId}/Cards"
+@attribute [Authorize(Policy = "Photographer")]
 
-<div class="photographer-dashboard--wrapper photographer-cards" ng-controller="CardsCtrl" ng-init="getCards(@Model.EventId)">
+<div class="photographer-dashboard--wrapper photographer-cards">
     <h1>Your Codes</h1>
     <hr />
 
@@ -29,12 +30,18 @@
                 </tr>
             </thead>
             <tbody ng-cloak>
-                <tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 10:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">
-                    <td class="highlight">{{card.Code}}</td>
-                    <td>{{card.CreatedDate | date: 'MM/dd/yyyy'}}</td>
-                    <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
-                </tr>
-            </tbody>
+                @foreach (var item in cards)
+                {
+                    @*<tr ng-repeat="card in cards | orderBy: '-id' | limitTo: 10:(currentPage - 1) * pageSize" ng-show="card.Code.includes(searchText) || searchText == '' || searchText == null">*@
+                    <tr>
+                        <td class="highlight">@item.Code</td>
+                        <td>@item.CreatedDateUtc.ToString("MM/dd/yyyy") </td>
+                        <td><a class="btn btn-pou-default" ng-click="downloadCards([card])">Export</a></td>
+                    </tr>
+                    }
+
+
+                </tbody>
         </table>
     </div>
     <div class="photoPage__image-container">
@@ -45,5 +52,16 @@
     </form>
 </div>
 
+@code
+{
+    [Parameter]
+    public int eventId { get; set; }
 
+    List<Card> cards = new List<Card>();
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
+}
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Events
 {
     public partial class Card
     {

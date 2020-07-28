@@ -1,9 +1,8 @@
 using System.Linq;
 using System.Security.Claims;
 using Kuvio.Kernel.Core;
-using PhotosOfUs.Model.Models;
 
-namespace PhotosOfUs.Model
+namespace PhotosOfUs.Core.Users.Commands
 {
     public class LoginCommand
     {

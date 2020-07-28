@@ -1,9 +1,9 @@
-﻿using PhotosOfUs.Model.Models;
+﻿using PhotosOfUs.Core.Photos;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Orders
 {
     public class ShoppingCartItem
     {

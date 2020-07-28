@@ -1,5 +1,6 @@
 ﻿using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Core.Common;
+using PhotosOfUs.Core.Users;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Photos
 {
     public partial class Photo : IFile
     {

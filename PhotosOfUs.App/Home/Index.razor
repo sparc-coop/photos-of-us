@@ -1,4 +1,4 @@
-﻿@page "/"
+﻿@*@page "/"
 @layout MainLayout
 @inject IRepository<Event> Events
 
@@ -122,7 +122,7 @@
     public List<Photo> RandomPhotos;
     public string SearchCode;
 
-    protected override void OnInit()
+    protected async override Task OnInitializedAsync()
     {
         RandomPhotos = GetPhotos(30);
     }
@@ -140,7 +140,7 @@
         {
             var toSkip = random.Next(0, photoCount);
             var photo = photos.Skip(toSkip).Take(1).FirstOrDefault();
-            if (photo != null) 
+            if (photo != null)
             {
                 photoList.Add(photo);
             }
@@ -148,4 +148,4 @@
 
         return photoList;
     }
-}
+}*@

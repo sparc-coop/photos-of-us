@@ -1,9 +1,11 @@
-﻿using System;
+﻿using PhotosOfUs.Core.Orders;
+using PhotosOfUs.Core.Photos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Users
 {
     public partial class User
     {
@@ -79,7 +81,7 @@ namespace PhotosOfUs.Model.Models
 
             if (!String.IsNullOrWhiteSpace(ProfilePhotoUrl))
             {
-                claims.Add(new Claim("ProfilePhotoUrl", ProfilePhotoUrl));
+                claims.Add(new Claim("ProfilePictureUrl", ProfilePhotoUrl));
             }
 
             return claims;

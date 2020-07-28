@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Users
 {
     public partial class UserIdentity
     {

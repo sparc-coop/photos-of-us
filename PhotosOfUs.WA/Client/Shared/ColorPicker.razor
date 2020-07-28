@@ -6,11 +6,11 @@
     [Parameter]
     public string Color { get; set; }
 
-    private ElementRef Element;
+    private ElementReference Element;
 
-    protected override async Task OnInitAsync()
+    protected async override Task OnInitializedAsync()
     {
-        await JsRuntime.InvokeAsync<object>("initColorPicker", Element, DotNetObjectRef.Create(this));
+        await JsRuntime.InvokeAsync<object>("initColorPicker", Element, DotNetObjectReference.Create(this));
     }
 
     [JSInvokable]

@@ -16,9 +16,6 @@
     <None Include="wwwroot\css\Components\bulletNumber.scss" />
     <None Include="wwwroot\css\Components\Button.scss" />
     <None Include="wwwroot\css\Components\card.scss" />
-    <None Include="wwwroot\css\Components\ColorPicker.js" />
-    <None Include="wwwroot\css\Components\ColorPicker.razor" />
-    <None Include="wwwroot\css\Components\ColorPicker.scss" />
     <None Include="wwwroot\css\Components\container.scss" />
     <None Include="wwwroot\css\Components\FlexBox.scss" />
     <None Include="wwwroot\css\Components\footer.scss" />
@@ -57,9 +54,8 @@
 
   <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
-
-    <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.3" />
     <PackageReference Include="Kuvio.Kernel.AspNet.Blazor" Version="1.2.5" />
+    <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.5" />
     
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Build" Version="3.2.1" PrivateAssets="all" />

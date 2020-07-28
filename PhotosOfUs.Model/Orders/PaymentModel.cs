@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Orders
 {
     public class PaymentModel
     {

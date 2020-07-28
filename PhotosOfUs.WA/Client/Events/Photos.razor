@@ -4,7 +4,7 @@
     <div class="flex-box header">
         <a href="/Photographer" class="button--back"><img src="~/images/icons/ic_arrow_back_24px.png" /></a>
         <h1>@Model.Name</h1>
-        <span class="created-date">Created: @Model.CreatedDate.ToString("MMMM d, yyyy")</span>
+        <span class="created-date">Created: @Model.CreatedDateUtc.ToString("MMMM d, yyyy")</span>
     </div>
 
     <hr />
@@ -20,15 +20,18 @@
             </div>
 
             @*<i class="material-icons" ng-click="listView = !listView">view_list</i>
-                <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
-            <div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak>
+        <i class="material-icons selected" ng-click="listView = !listView">apps</i>*@
+
+        <InputFile OnChange="(async x => await HandleFileSelected(x))" UnmatchedParameters="@accept" />
+
+            @*<div class="button--imageUpload" ng-click="openUpload(@Model.Id)" ng-cloak>
                 <img src="~/images/icons/add-photo.png" class="img-upload" />
                 Upload Images
-            </div>
+            </div>*@
         </div>
     </div>
 
-    <div class="photo-cards-container codeView">
+    @*<div class="photo-cards-container codeView">
         @foreach (var card in Model.Cards)
         {
             <div class="codeView__row" ng-if="searchCode == null || searchCode == '' || '@card.Code'.includes(searchCode)">
@@ -54,10 +57,30 @@
                 }
             </div>
         }
-    </div>
+    </div>*@
 
 </div>
 
 @code {
+    CreateEventModel Model = new CreateEventModel();
 
+    Dictionary<string, object> accept = new Dictionary<string, object>()
+{
+            {"accept", "image/*"},
+            {"capture", "camera"}
+        };
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+
+        if (file == null)
+        {
+            return;
+        }
+
+        //string base64image = System.Convert.ToBase64String(await StreamUtils.StreamToByte(file.Data));
+        // upload file
+
+    }
 }

@@ -1,7 +1,8 @@
 @page "/Events"
+@*@attribute [Authorize]*@
 
 <div class="dashboard" ng-controller="DashboardCtrl">
-    <h1>Hello, @Model.Name</h1>
+    <h1>Hello</h1>
     <hr />
 
     <button class="button--red tutorial--skip" ng-class="{'tutorial--skip--show': skipTour == true}" ng-click="finishTour()">Skip Tutorial</button>

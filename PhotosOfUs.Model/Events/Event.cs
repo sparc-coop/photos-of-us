@@ -1,13 +1,17 @@
-﻿using System;
+﻿using PhotosOfUs.Core.Photos;
+using PhotosOfUs.Core.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace PhotosOfUs.Model.Models
+namespace PhotosOfUs.Core.Events
 {
     public partial class Event
     {
-        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode, decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness, int separatorWidth, int brandingStyle, ICollection<Card> cards, ICollection<Photo> photos, User user)
+        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode, 
+            decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness, 
+            int separatorWidth, int brandingStyle, ICollection<Card> cards, ICollection<Photo> photos, User user)
         {
             EventId = eventId;
             UserId = userId;

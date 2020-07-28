@@ -181,7 +181,7 @@
                     *@
                 </div>
             </section>
-            <button @onclick="Save()" disabled="@IsDisabled">Save &amp; Create Event</button>
+            <button @onclick="Save" disabled="@IsDisabled">Save &amp; Create Event</button>
         </div>
 
         <div class="right">
@@ -196,9 +196,14 @@
 </div>
 
 @code {
-    public Event Model { get; set; } = new Event();
+    public CreateEventModel Model = new CreateEventModel();
     public IEnumerable<int> Opacities = Enumerable.Range(0, 101).Where(x => x % 5 == 0);
 
     public void SetHomepageTemplate(int templateId) => Model.HomepageTemplate = templateId.ToString();
     public string IsDisabled => string.IsNullOrWhiteSpace(Model.Name) || string.IsNullOrWhiteSpace(Model.Url) || string.IsNullOrWhiteSpace(Model.Description) ? "disabled" : "";
+
+    public void Save()
+    {
+
+    }
 }

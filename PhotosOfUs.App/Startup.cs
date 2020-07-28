@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhotosOfUs.Connectors.Cognitive;
-using PhotosOfUs.Connectors.Database;
-using PhotosOfUs.Connectors.Storage;
 using PhotosOfUs.Model.Models;
 using PhotosOfUs.Model;
 using Microsoft.AspNetCore.Authentication;
@@ -32,27 +30,27 @@ namespace PhotosOfUs.App
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
-            // Authentication
-            services.AddAuthentication(o => o.DefaultAuthenticateScheme = AzureADB2CDefaults.CookieScheme)
-                .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
-                .OnLogin(principal =>
-                {
-                    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
-                        .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
-                });
+            //// Authentication
+            //services.AddAuthentication(o => o.DefaultAuthenticateScheme = AzureADB2CDefaults.CookieScheme)
+            //    .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
+            //    .OnLogin(principal =>
+            //    {
+            //        services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+            //            .Execute(principal, principal.AzureID(), principal.Email(), principal.DisplayName(), principal.HasClaim("tfp", "B2C_1_SiUpOrIn_Photographer"));
+            //    });
 
-            // Database
-            services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
-            services.AddScoped<DbContext, PhotosOfUsContext>();
-            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
+            //// Database
+            //services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
+            //services.AddScoped<DbContext, PhotosOfUsContext>();
+            //services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
 
-            // Storage
-            services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
-            services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
+            //// Storage
+            //services.AddScoped(options => new StorageContext(Configuration["ConnectionStrings:Storage"]));
+            //services.AddTransient(typeof(IMediaRepository<>), typeof(MediaRepository<>));
 
-            // Other services
-            services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
-            services.AddScoped<LoginCommand>();
+            //// Other services
+            //services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
+            //services.AddScoped<LoginCommand>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
