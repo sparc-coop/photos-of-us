@@ -1,6 +1,5 @@
 ﻿@page "/"
 @layout MainLayout
-@inject IRepository<Event> Events
 
 <div class="landing">
     <div class="main-landing">
@@ -124,28 +123,15 @@
 
     protected async override Task OnInitializedAsync()
     {
-        RandomPhotos = GetPhotos(30);
+        RandomPhotos = await GetPhotos(30);
     }
 
     public string RandomCoordinate() => new Random().Next(0, 80) + "%";
 
-    public List<Photo> GetPhotos(int count)
+    public async Task<List<Photo>> GetPhotos(int count)
     {
-        var random = new Random();
-        var photos = Events.Query.SelectMany(x => x.Photos.Where(y => !y.IsDeleted));
-        var photoCount = photos.Count();
-        var photoList = new List<Photo>();
+        var ret2 = await Http.GetFromJsonAsync<string>("Photo");
 
-        for (var i = 0; i < count; i++)
-        {
-            var toSkip = random.Next(0, photoCount);
-            var photo = photos.Skip(toSkip).Take(1).FirstOrDefault();
-            if (photo != null)
-            {
-                photoList.Add(photo);
-            }
-        }
-
-        return photoList;
+        return new List<Photo>();
     }
 }

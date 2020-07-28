@@ -151,6 +151,17 @@ namespace PhotosOfUs.WA.Server
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
 
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("Client", builder => builder
+            //        .AllowAnyOrigin()
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod()
+            //        .AllowCredentials());
+            //});
+
+            //services.AddMvc(x => x.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+
             services.Configure<JwtBearerOptions>(AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
             {
                 options.TokenValidationParameters.NameClaimType = "name";

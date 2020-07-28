@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Kuvio.Kernel.AspNet.Blazor;
 
 using Kuvio.Kernel.Core;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace PhotosOfUs.WA.Client
 {
@@ -23,6 +24,7 @@ namespace PhotosOfUs.WA.Client
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             AddAuthentication(builder);
             AddAuthorization(builder);
+            AddHttpClient(builder);
 
             builder.Services.AddBlazorModal();
             builder.Services.AddBlazorToast(options =>
@@ -31,7 +33,22 @@ namespace PhotosOfUs.WA.Client
                 options.Position = Kuvio.Kernel.AspNet.Blazor.Toast.Configuration.ToastPosition.TopRight; // default: ToastPosition.TopRight
             });
 
+            //JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            //{
+            //    TypeNameHandling = TypeNameHandling.Objects
+            //};
+
             await builder.Build().RunAsync();
+        }
+
+        private static void AddHttpClient(WebAssemblyHostBuilder builder)
+        {
+            builder.Services.AddHttpClient("ServerAPI", client =>
+                            client.BaseAddress = new Uri(builder.Configuration["ServerAPI:Url"]))
+                            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
+                .CreateClient("ServerAPI"));
         }
 
         private static void AddAuthorization(WebAssemblyHostBuilder builder)
@@ -44,6 +61,9 @@ namespace PhotosOfUs.WA.Client
                     policy.RequireRole("Admin", "User");
                 });
             });
+
+            //builder.Services.AddHttpContextAccessor();
+            //builder.Services.AddScoped(context => context.GetRequiredService<IHttpContextAccessor>()?.HttpContext?.User);
         }
 
 
@@ -52,7 +72,14 @@ namespace PhotosOfUs.WA.Client
             builder.Services.AddMsalAuthentication(options =>
             {
                 builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://kuviocreative.onmicrosoft.com/b02e66a0-de4d-46a2-807c-70a11c56df1d/API.Replication");
+                options.UserOptions.NameClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
             });
+
+            //builder.Services.AddMsalAuthentication(options =>
+            //{
+            //    builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+            //});
         }
     }
 }

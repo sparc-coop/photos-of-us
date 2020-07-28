@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using PhotosOfUs.Model.Models;
 using System.Text.RegularExpressions;
+using PhotosOfUs.Core.Photos;
 
 namespace PhotosOfUs.Connectors.Cognitive
 {

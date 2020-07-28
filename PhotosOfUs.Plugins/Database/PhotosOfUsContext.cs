@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PhotosOfUs.Core.Events;
 using PhotosOfUs.Core.Orders;
+using PhotosOfUs.Core.Photos;
+using PhotosOfUs.Core.Users;
 
 namespace PhotosOfUs.Model.Models
 {
