@@ -136,7 +136,12 @@ namespace PhotosOfUs.WA.Server
         private void AddAuthentication(IServiceCollection services)
         {
             services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options))
+                .OnLogin(principal =>
+                {
+                    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+                        .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
+                });
 
             // To populate User.Identity.Name
             services.Configure<JwtBearerOptions>(

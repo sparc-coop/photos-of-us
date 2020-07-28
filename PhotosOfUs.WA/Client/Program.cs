@@ -57,7 +57,7 @@ namespace PhotosOfUs.WA.Client
 
         private static void AddAuthorization(WebAssemblyHostBuilder builder)
         {
-            //builder.Services.AddOptions();
+            builder.Services.AddOptions();
 
             builder.Services.AddAuthorizationCore(options =>
             {
@@ -76,19 +76,19 @@ namespace PhotosOfUs.WA.Client
 
         private static void AddAuthentication(WebAssemblyHostBuilder builder)
         {
-            builder.Services.AddMsalAuthentication(options =>
-            {
-                builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
-                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://photosofus1.onmicrosoft.com/317b781b-53ca-4902-ab70-5d22db6e8f5d/API.Replication");
-                options.UserOptions.NameClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-            });
-
-            builder.Services.AddTransient<UserProvider>();
-
             //builder.Services.AddMsalAuthentication(options =>
             //{
             //    builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+            //    options.ProviderOptions.DefaultAccessTokenScopes.Add("https://photosofus1.onmicrosoft.com/317b781b-53ca-4902-ab70-5d22db6e8f5d/API.Replication");
+            //    options.UserOptions.NameClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
             //});
+
+            builder.Services.AddMsalAuthentication(options =>
+            {
+                builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+            });
+
+            builder.Services.AddTransient<UserProvider>();
         }
     }
 }
