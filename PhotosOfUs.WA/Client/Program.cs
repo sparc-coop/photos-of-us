@@ -25,7 +25,6 @@ namespace PhotosOfUs.WA.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             AddAuthentication(builder);
             AddAuthorization(builder);
             AddHttpClient(builder);
@@ -37,58 +36,44 @@ namespace PhotosOfUs.WA.Client
                 options.Position = Kuvio.Kernel.AspNet.Blazor.Toast.Configuration.ToastPosition.TopRight; // default: ToastPosition.TopRight
             });
 
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Objects
-            };
+            //JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
+            //{
+            //    TypeNameHandling = TypeNameHandling.Objects
+            //};
 
             await builder.Build().RunAsync();
         }
 
         private static void AddHttpClient(WebAssemblyHostBuilder builder)
         {
-            builder.Services.AddHttpClient("ServerAPI", client =>
-                            client.BaseAddress = new Uri(builder.Configuration["ServerAPI:Url"]))
+            builder.Services.AddHttpClient("PhotosOfUs.ServerAPI", client => 
+                            client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                             .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
+            // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-                .CreateClient("ServerAPI"));
+                            .CreateClient("PhotosOfUs.ServerAPI"));
         }
 
         private static void AddAuthorization(WebAssemblyHostBuilder builder)
         {
-            builder.Services.AddOptions();
-
             builder.Services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("User", policy =>
+                options.AddPolicy("Customer", policy =>
                 {
                     policy.RequireRole("Admin", "User");
                 });
             });
-
-            //builder.Services.AddTransient<ClaimsPrincipal>(async context => (await context.GetService<AuthenticationStateProvider>().GetAuthenticationStateAsync()).User ?? Task);
-            //builder.Services.AddHttpContextAccessor();
-            //builder.Services.AddScoped(context => context.GetRequiredService<IHttpContextAccessor>()?.HttpContext?.User);
         }
-
 
         private static void AddAuthentication(WebAssemblyHostBuilder builder)
         {
-            //builder.Services.AddMsalAuthentication(options =>
-            //{
-            //    builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
-            //    options.ProviderOptions.DefaultAccessTokenScopes.Add("https://photosofus1.onmicrosoft.com/317b781b-53ca-4902-ab70-5d22db6e8f5d/API.Replication");
-            //    options.UserOptions.NameClaim = "http://schemas.microsoft.com/identity/claims/objectidentifier";
-            //});
-
             builder.Services.AddMsalAuthentication(options =>
             {
                 builder.Configuration.Bind("AzureAdB2C", options.ProviderOptions.Authentication);
+                options.ProviderOptions.DefaultAccessTokenScopes.Add("https://photosofus1.onmicrosoft.com/e7d6ccf6-6f0d-4a63-ad73-d87bc15f7b68/API.Access");
             });
-
-            builder.Services.AddTransient<UserProvider>();
         }
     }
 }

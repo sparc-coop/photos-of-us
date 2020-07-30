@@ -42,14 +42,14 @@ namespace PhotosOfUs.WA.Server
             AddAuthentication(services);
             AddAuthorization(services);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Client", builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials());
-            });
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("Client", builder => builder
+            //        .AllowAnyOrigin()
+            //        .AllowAnyHeader()
+            //        .AllowAnyMethod()
+            //        .AllowCredentials());
+            //});
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -135,56 +135,22 @@ namespace PhotosOfUs.WA.Server
 
         private void AddAuthentication(IServiceCollection services)
         {
-            services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options))
-                .OnLogin(principal =>
-                {
-                    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
-                        .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
-                });
-
-            // To populate User.Identity.Name
-            services.Configure<JwtBearerOptions>(
-                AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
-                {
-                    options.TokenValidationParameters.NameClaimType = "name";
-                });
-
             //services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-            //    .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options))
+            //    .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options))
             //    .OnLogin(principal =>
             //    {
             //        services.BuildServiceProvider().GetRequiredService<LoginCommand>()
             //            .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
             //    });
 
-            //services.AddClaimsPrincipalInjector();
+            services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
+                .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
 
-            services.AddControllersWithViews(options =>
-            {
-                // This enforces that users must be authenticated. 
-                // If he isn't, he'll be redirected to the sign in page -- he won't even see the "Not Authorized" page
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            });
-
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("Client", builder => builder
-            //        .AllowAnyOrigin()
-            //        .AllowAnyHeader()
-            //        .AllowAnyMethod()
-            //        .AllowCredentials());
-            //});
-
-            //services.AddMvc(x => x.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
-
-            services.Configure<JwtBearerOptions>(AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
-            {
-                options.TokenValidationParameters.NameClaimType = "name";
-            });
+            services.Configure<JwtBearerOptions>(
+                AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>
+                {
+                    options.TokenValidationParameters.NameClaimType = "name";
+                });
         }
 
         private static void AddAuthorization(IServiceCollection services)
@@ -192,7 +158,7 @@ namespace PhotosOfUs.WA.Server
             services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
-                options.AddPolicy("User", policy =>
+                options.AddPolicy("Customer", policy =>
                 {
                     policy.RequireRole("Admin", "User");
                 });

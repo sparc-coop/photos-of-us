@@ -8,17 +8,16 @@
     
 
     @*TODO: Switch back to @if (CurrentUser.IsAuthorized.. )*@
-    <AuthorizeView>
+    @*<AuthorizeView>
         <NotAuthorized>
             <div class="nav--right">
                 <button @onclick=@SignIn style="padding-right: 20px;">Log In</button>
-                <!--If user is customer-->
                 <cart-mini></cart-mini>
             </div>
         </NotAuthorized>
-    </AuthorizeView>
+    </AuthorizeView>*@
 
-    <AuthorizeView Policy="GlobalAdmin">
+    <AuthorizeView Policy="Admin">
         <div class="nav--center">
             <a href="/Photographer" class="menu-item">Dashboard</a>
             <a href="/Photographer/Cards" class="menu-item">Cards</a>
