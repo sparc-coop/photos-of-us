@@ -6,7 +6,7 @@ namespace PhotosOfUs.Core.Users
 {
     public partial class UserIdentity
     {
-        public UserIdentity()
+        private UserIdentity()
         {
 
         }

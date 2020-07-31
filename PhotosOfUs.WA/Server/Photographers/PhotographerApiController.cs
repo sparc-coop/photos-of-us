@@ -20,14 +20,14 @@ namespace PhotosOfUs.Web.Controllers.API
     public class PhotographerApiController : ControllerBase
     {
         private PhotosOfUsContext _context;
-        private IRepository<Photo> _photo;
+        private IDbRepository<Photo> _photo;
         private IDbRepository<PhotoTag> _photoTag;
-        //private IRepository<BrandAccount> _brandAccount;
-        private IRepository<User> _user;
-        private IRepository<Tag> _tag;
+        //private IDbRepository<BrandAccount> _brandAccount;
+        private IDbRepository<User> _user;
+        private IDbRepository<Tag> _tag;
         private readonly IDbRepository<Card> _card;
 
-        public PhotographerApiController(PhotosOfUsContext context, IRepository<Photo> photoRepository, IRepository<User> userRepository, IRepository<Tag> tagRepository
+        public PhotographerApiController(PhotosOfUsContext context, IDbRepository<Photo> photoRepository, IDbRepository<User> userRepository, IDbRepository<Tag> tagRepository
             , IDbRepository<Card> cardRepository, IDbRepository<PhotoTag> photoTagRepository)
         {
             _context = context;

@@ -9,55 +9,41 @@ namespace PhotosOfUs.Core.Orders
 {
     public partial class Order
     {
-        private int userId;
-        private DateTime orderDate;
-
-        public Order()
+        private Order()
         {
             _orderDetails = new HashSet<OrderDetail>();
         }
 
-        public Order(int userId, int? shippingAddressId, int? billingAddressId, decimal? total, Address billingAddress, Address shippingAddress)
+        public Order(int userId, Address billingAddress, Address shippingAddress)
         {
             UserId = userId;
             Status = OrderStatus.Open;
             OrderDateUtc = DateTime.UtcNow;
 
-            ShippingAddressId = shippingAddressId;
-            BillingAddressId = billingAddressId;
-            Total = total;
+            ShippingAddressId = shippingAddress.Id;
+            BillingAddressId = billingAddress.Id;
             BillingAddress = billingAddress ?? throw new ArgumentNullException(nameof(billingAddress));
             ShippingAddress = shippingAddress ?? throw new ArgumentNullException(nameof(shippingAddress));
             _orderDetails = new HashSet<OrderDetail>();
         }
 
         public int Id { get; protected set; }
-        public int UserId
-        {
-            get => userId;
-            protected set
-            {
-                if (value <= 0)
-                {
-                    throw new ArgumentException();
-                }
-                userId = value;
-            }
-        }
-        public int? ShippingAddressId { get; protected set; }
-        public int? BillingAddressId { get; protected set; }
-        public decimal? Total { get; protected set; }
+        public int UserId { get; set; }
+        public int ShippingAddressId { get; protected set; }
+        public int BillingAddressId { get; protected set; }
+        //public decimal? Total { get; protected set; }
         public OrderStatus Status { get; protected set; }
+        private DateTime orderDateUtc;
         public DateTime OrderDateUtc
         {
-            get => orderDate;
+            get => orderDateUtc;
             protected set
             {
                 if (value == DateTime.MinValue)
                 {
                     throw new ArgumentException();
                 }
-                orderDate = value;
+                orderDateUtc = value;
             }
         }
 
@@ -67,10 +53,20 @@ namespace PhotosOfUs.Core.Orders
         private readonly HashSet<OrderDetail> _orderDetails;
         public IReadOnlyCollection<OrderDetail> OrderDetails => _orderDetails;
 
+        private decimal total;
+        public decimal Total
+        {
+            get { return _orderDetails.Sum(x => x.UnitPrice * x.Quantity); }
+            protected set // TODO: Test if this is working properly
+            {
+                total = _orderDetails.Sum(x => x.UnitPrice * x.Quantity);
+            }
+        }
+
+
         // Not Mapped
-        public int Amount => _orderDetails.First().Quantity;
-        public decimal TotalPaid => _orderDetails.First().UnitPrice * Amount;
-        public decimal Earning => TotalPaid * (decimal)0.955;
+        public int Amount => _orderDetails.Sum(x => x.Quantity);
+        public decimal Earning => Total * (decimal)0.955;
 
 
         public void AddLine(Photo photo, PrintType printType, int quantity)
@@ -78,7 +74,7 @@ namespace PhotosOfUs.Core.Orders
             _orderDetails.Add(new OrderDetail(this, photo, printType, quantity));
         }
 
-        public decimal? CalculatedTotal => _orderDetails?.Sum(x => x.UnitPrice * x.Quantity);
+
 
 
     }

@@ -1,5 +1,6 @@
 ﻿using Kuvio.Kernel.Core;
 using Kuvio.Kernel.Core.Common;
+using PhotosOfUs.Core.Events;
 using PhotosOfUs.Core.Users;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace PhotosOfUs.Core.Photos
 {
     public partial class Photo : IFile
     {
-        public Photo()
+        private Photo()
         {
-            PhotoTag = new HashSet<PhotoTag>();
+            _photoTag = new HashSet<PhotoTag>();
         }
 
         public Photo(int userId, string filename, int eventId, int? cardId) : this(userId, filename, null)
@@ -33,22 +34,27 @@ namespace PhotosOfUs.Core.Photos
             Stream = stream;
             UploadDateUtc = DateTime.UtcNow;
             PhotographerId = userId;
+            _photoTag = new HashSet<PhotoTag>();
         }
 
         public int Id { get; set; }
         public int PhotographerId { get; set; }
         public string Url { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
         public string Name { get; set; }
         public DateTime UploadDateUtc { get; set; }
         public bool PublicProfile { get; set; }
         public bool IsDeleted { get; set; }
         public int? EventId { get; set; }
+        public Event Event { get; set; }
         public int? CardId { get; set; }
 
         public User Photographer { get; set; }
 
-        public ICollection<PhotoTag> PhotoTag { get; set; }
+
+        private readonly HashSet<PhotoTag> _photoTag;
+        public IReadOnlyCollection<PhotoTag> PhotoTag => _photoTag;
+
 
         public string Filename { get; }
 
@@ -72,11 +78,15 @@ namespace PhotosOfUs.Core.Photos
 
         public void ReplaceTags(List<string> tags)
         {
-            foreach (var tag in PhotoTag.Where(x => !tags.Contains(x.Tag.Name)).ToList())
-                PhotoTag.Remove(tag);
-
-            foreach (var tag in tags.Where(x => !PhotoTag.Any(y => y.Tag.Name == x)))
-                PhotoTag.Add(new PhotoTag(Id, tag));
+            foreach (var tag in _photoTag.Where(x => !tags.Contains(x.Tag.Name)).ToList())
+            {
+                _photoTag.Remove(tag);
+            }
+                
+            foreach (var tag in tags.Where(x => !_photoTag.Any(y => y.Tag.Name == x)))
+            {
+                _photoTag.Add(new PhotoTag(Id, tag));
+            }
         }
 
         public void Delete()

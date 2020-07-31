@@ -9,9 +9,13 @@ namespace PhotosOfUs.Core.Events
 {
     public partial class Event
     {
-        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode, 
-            decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness, 
-            int separatorWidth, int brandingStyle, ICollection<Card> cards, ICollection<Photo> photos, User user)
+        private Event()
+        {
+
+        }
+        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode,
+            decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness,
+            int separatorWidth, int brandingStyle)
         {
             EventId = eventId;
             UserId = userId;
@@ -32,9 +36,10 @@ namespace PhotosOfUs.Core.Events
             SeparatorThickness = separatorThickness;
             SeparatorWidth = separatorWidth;
             BrandingStyle = brandingStyle;
-            Cards = cards ?? throw new ArgumentNullException(nameof(cards));
-            Photos = photos ?? throw new ArgumentNullException(nameof(photos));
-            User = user ?? throw new ArgumentNullException(nameof(user));
+
+            //Cards = cards ?? throw new ArgumentNullException(nameof(cards));
+            //Photos = photos ?? throw new ArgumentNullException(nameof(photos));
+            //User = user ?? throw new ArgumentNullException(nameof(user));
         }
 
         public int EventId { get; protected set; }
@@ -57,19 +62,21 @@ namespace PhotosOfUs.Core.Events
         public int SeparatorWidth { get; protected set; }
         public int BrandingStyle { get; protected set; }
 
-        public ICollection<Card> Cards { get; protected set; }
-        public ICollection<Photo> Photos { get; protected set; }
+        private readonly HashSet<Card> _cards;
+        public IReadOnlyCollection<Card> Cards => _cards;
+        private readonly HashSet<Photo> _photos;
+        public IReadOnlyCollection<Photo> Photos => _photos;
         public User User { get; protected set; }
 
         public void AddNewCards(int quantity)
         {
             for (var i = 0; i < quantity; i++)
-                Cards.Add(new Card(this));
+                _cards.Add(new Card(this));
         }
 
         public void AddPhoto(Photo photo)
         {
-            Photos.Add(photo);
+            _photos.Add(photo);
         }
 
         public enum HomepageTemplates
@@ -96,21 +103,24 @@ namespace PhotosOfUs.Core.Events
         {
             var photos = Photos.Where(x => photoIds.Contains(x.Id)).ToList();
             foreach (var photo in photos)
-                Photos.Remove(photo);
+                _photos.Remove(photo);
         }
 
         public void BulkEdit(List<int> photoIds, List<string> tags, decimal? newPrice)
         {
             var photos = Photos.Where(x => photoIds.Contains(x.Id)).ToList();
 
-            // Price
             if (newPrice != null)
+            {
                 photos.ForEach(x => x.UpdatePrice(newPrice.Value));
+            }
 
-            // Tags
-            if (tags == null || !tags.Any()) return;
+            if (tags?.Any() ?? false)
+            {
+                photos.ForEach(x => x.ReplaceTags(tags));
+            }
 
-            photos.ForEach(x => x.ReplaceTags(tags));
+            
         }
     }
 }

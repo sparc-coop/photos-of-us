@@ -125,7 +125,7 @@ namespace PhotosOfUs.WA.Server
         {
             services.AddDbContext<PhotosOfUsContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Database"]));
             services.AddScoped<DbContext, PhotosOfUsContext>();
-            services.AddTransient(typeof(IRepository<>), typeof(DbRepository<>));
+            services.AddTransient(typeof(IDbRepository<>), typeof(DbRepository<>));
             //services.AddTransient(typeof(IDbRepository<>), typeof(DbRepository<>));
             //services.AddScoped<ICognitiveContext, AzureCognitiveContext>();
 
@@ -135,16 +135,13 @@ namespace PhotosOfUs.WA.Server
 
         private void AddAuthentication(IServiceCollection services)
         {
-            //services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
-            //    .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options))
-            //    .OnLogin(principal =>
-            //    {
-            //        services.BuildServiceProvider().GetRequiredService<LoginCommand>()
-            //            .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
-            //    });
-
             services.AddAuthentication(AzureADB2CDefaults.BearerAuthenticationScheme)
                 .AddAzureADB2CBearer(options => Configuration.Bind("AzureAdB2C", options));
+                //.OnLogin(principal =>
+                //{
+                //    services.BuildServiceProvider().GetRequiredService<LoginCommand>()
+                //        .Execute(principal, principal.AzureID(), principal.Email(), principal.FirstName(), principal.LastName(), false);
+                //});
 
             services.Configure<JwtBearerOptions>(
                 AzureADB2CDefaults.JwtBearerAuthenticationScheme, options =>

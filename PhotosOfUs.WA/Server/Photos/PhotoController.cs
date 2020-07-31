@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Kuvio.Kernel.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotosOfUs.Core.Photos;
@@ -23,24 +24,14 @@ namespace PhotosOfUs.WA.Server.Photos
             return Summaries;
         }
 
-        //public List<Photo> GetPhotos(int count)
-        //{
-        //    var random = new Random();
-        //    var photos = EventRepository.Query.SelectMany(x => x.Photos.Where(y => !y.IsDeleted));
-        //    var photoCount = photos.Count();
-        //    var photoList = new List<Photo>();
+        [Route("Dashboard/{count:int}")]
+        public async Task<List<Photo>> GetPhotos([FromServices] IDbRepository<Photo> _photoRepository,  int count)
+        {
+            Random rand = new Random();
+            int toSkip = rand.Next(0, (await _photoRepository.CountAsync(x => x.Id > 0)) - count);
 
-        //    for (var i = 0; i < count; i++)
-        //    {
-        //        var toSkip = random.Next(0, photoCount);
-        //        var photo = photos.Skip(toSkip).Take(1).FirstOrDefault();
-        //        if (photo != null)
-        //        {
-        //            photoList.Add(photo);
-        //        }
-        //    }
-
-        //    return photoList;
-        //}
+            var photos = _photoRepository.Query.Skip(toSkip).Take(count).ToList();
+            return photos;
+        }
     }
 }

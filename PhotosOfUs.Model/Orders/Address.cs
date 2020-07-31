@@ -29,7 +29,12 @@ namespace PhotosOfUs.Core.Orders
         private string phone;
         private string email;
 
-        public Address(int userId, string title, string line1, string line2, string city, string state, string zipCode, string country, string phone, string email)
+        private Address()
+        {
+
+        }
+
+        public Address(int userId, string title, string line1, string line2, string city, string state, string zipCode, string country, string phone, string email, bool isShippingAddress, bool isBillingAddress)
         {
             UserId = userId;
             Title = title;
@@ -41,6 +46,8 @@ namespace PhotosOfUs.Core.Orders
             Country = country;
             Phone = phone;
             Email = email;
+            IsShippingAddress = isShippingAddress;
+            IsBillingAddress = isBillingAddress;
         }
 
         public int Id { get; protected set; }
@@ -146,7 +153,7 @@ namespace PhotosOfUs.Core.Orders
             }
         }
 
-        //public ICollection<Order> OrderBillingAddress { get; protected set; }
-        //public ICollection<Order> OrderShippingAddress { get; protected set; }
+        public bool IsShippingAddress { get; protected set; }
+        public bool IsBillingAddress { get; protected set; }
     }
 }

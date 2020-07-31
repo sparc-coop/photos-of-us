@@ -13,11 +13,11 @@ namespace PhotosOfUs.Model.Photos.Commands
     public class UploadPhotoCommand
     {
         private readonly IMediaRepository<Photo> _photoFiles;
-        private readonly IRepository<Event> _events;
-        private readonly IRepository<Photo> _photos;
+        private readonly IDbRepository<Event> _events;
+        private readonly IDbRepository<Photo> _photos;
         private readonly ICognitiveContext _cognitive;
 
-        public UploadPhotoCommand(IRepository<Event> events, IRepository<Photo> photos, IMediaRepository<Photo> photoFiles, ICognitiveContext cognitiveContext)
+        public UploadPhotoCommand(IDbRepository<Event> events, IDbRepository<Photo> photos, IMediaRepository<Photo> photoFiles, ICognitiveContext cognitiveContext)
         {
             _photoFiles = photoFiles;
             _events = events;

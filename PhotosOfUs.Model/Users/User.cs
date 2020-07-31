@@ -9,11 +9,10 @@ namespace PhotosOfUs.Core.Users
 {
     public partial class User
     {
-        public User()
+        private User()
         {
-            Folders = new HashSet<Folder>();
-            Order = new HashSet<Order>();
-            UserIdentities = new HashSet<UserIdentity>();
+            //Folders = new HashSet<Folder>();
+            _userIdentities = new HashSet<UserIdentity>();
         }
         
         public User(string firstName, string lastName, string email, Role role, string externalUserId)
@@ -25,7 +24,7 @@ namespace PhotosOfUs.Core.Users
             CreateDateUtc = DateTime.UtcNow;
             AzureId = externalUserId;
 
-            UserIdentities = new List<UserIdentity>();
+            _userIdentities = new HashSet<UserIdentity>();
             if (!String.IsNullOrWhiteSpace(externalUserId))
             {
                 GetOrCreateIdentity(externalUserId);
@@ -45,6 +44,7 @@ namespace PhotosOfUs.Core.Users
 
 
         public DateTime CreateDateUtc { get; private set; }
+        public DateTime? LastLoginDateUtc { get; set; }
         public bool? IsPhotographer { get; private set; }
         
         public bool? IsDeactivated { get; private set; }
@@ -59,15 +59,15 @@ namespace PhotosOfUs.Core.Users
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public ICollection<SocialMedia> SocialMedia { get; set; }
-        public ICollection<Folder> Folders { get; set; }
-        public ICollection<Order> Order { get; set; }
-        public ICollection<PrintPrice> PrintPrice { get; set; }
-        public ICollection<UserIdentity> UserIdentities { get; set; }
+        //public ICollection<Folder> Folders { get; set; }
+        //public ICollection<Order> Order { get; set; }
+        //public ICollection<PrintPrice> PrintPrice { get; set; }
+        private readonly HashSet<UserIdentity> _userIdentities;
+        public IReadOnlyCollection<UserIdentity> UserIdentities => _userIdentities;
         public Address Address { get; set; }
 
 
-        public List<Claim> GenerateClaims()
+        private List<Claim> GenerateClaims()
         {
             var claims = new List<Claim>
             {
@@ -87,14 +87,14 @@ namespace PhotosOfUs.Core.Users
             return claims;
         }
 
-        public UserIdentity GetOrCreateIdentity(string externalUserId)
+        private UserIdentity GetOrCreateIdentity(string externalUserId)
         {
             var identity = UserIdentities.SingleOrDefault(x => x.AzureID == externalUserId);
 
             if (identity == null)
             {
                 identity = new UserIdentity(this, externalUserId, "Azure");
-                UserIdentities.Add(identity);
+                _userIdentities.Add(identity);
             }
             return identity;
         }
@@ -154,19 +154,19 @@ namespace PhotosOfUs.Core.Users
             Address = address;
         }
 
-        public Folder AddFolder(string name)
-        {
-            var folder = new Folder(this, name);
-            Folders.Add(folder);
-            return folder;
-        }
+        //public Folder AddFolder(string name)
+        //{
+        //    var folder = new Folder(this, name);
+        //    Folders.Add(folder);
+        //    return folder;
+        //}
 
-        public void RemoveFolder(int folderId)
-        {
-            var folder = Folders.FirstOrDefault(x => x.Id == folderId);
-            if (folder != null) folder.IsDeleted = true;
-        }
+        //public void RemoveFolder(int folderId)
+        //{
+        //    var folder = Folders.FirstOrDefault(x => x.Id == folderId);
+        //    if (folder != null) folder.IsDeleted = true;
+        //}
 
-        public Folder PublicFolder => Folders.FirstOrDefault(x => x.Name.ToLower() == "public");
+        //public Folder PublicFolder => Folders.FirstOrDefault(x => x.Name.ToLower() == "public");
     }
 }

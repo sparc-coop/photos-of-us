@@ -6,9 +6,9 @@ namespace PhotosOfUs.Core.Users.Commands
 {
     public class LoginCommand
     {
-        private readonly IRepository<User> _usersRepository;
+        private readonly IDbRepository<User> _usersRepository;
 
-        public LoginCommand(IRepository<User> usersRepository)
+        public LoginCommand(IDbRepository<User> usersRepository)
         {
             _usersRepository = usersRepository;
         }

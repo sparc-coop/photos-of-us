@@ -1,5 +1,7 @@
-﻿@page "/abcd"
+﻿@page "/"
 @layout MainLayout
+
+@attribute [Authorize]
 
 <div class="landing">
     <div class="main-landing">
@@ -118,8 +120,8 @@
 </div>
 
 @code {
-    public List<Photo> RandomPhotos;
-    public string SearchCode;
+    public List<Photo> RandomPhotos = new List<Photo>();
+    public string SearchCode = string.Empty;
 
     protected async override Task OnInitializedAsync()
     {
@@ -130,8 +132,6 @@
 
     public async Task<List<Photo>> GetPhotos(int count)
     {
-        var ret2 = await Http.GetFromJsonAsync<string>("Photo");
-
-        return new List<Photo>();
+        return await Http.GetFromJsonAsync<List<Photo>>($"Photo/Dashboard/{count}");
     }
 }

@@ -7,7 +7,7 @@
 
 //namespace PhotosOfUs.Connectors.Database
 //{
-//    public class DbRepository<T> : IRepository<T> where T : class
+//    public class DbRepository<T> : IDbRepository<T> where T : class
 //    {
 //        private readonly DbContext context;
 //        private readonly DbSet<T> Command;

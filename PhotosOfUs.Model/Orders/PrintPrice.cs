@@ -10,6 +10,11 @@ namespace PhotosOfUs.Core.Orders
     {
         private decimal price;
 
+        private PrintPrice()
+        {
+
+        }
+
         public PrintPrice(decimal price, Photo photo, User photographer)
         {
             PhotoId = photo.Id;

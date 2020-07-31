@@ -6,6 +6,8 @@ namespace PhotosOfUs.Core.Photos
 {
     public partial class Folder
     {
+        private Folder() { }
+
         public Folder(User photographer, string name)
         {
             Photographer = photographer ?? throw new ArgumentNullException(nameof(photographer));
