@@ -2171,6 +2171,9 @@ $yellow: #FFD40C;*/
   to {
     opacity: 1; } }
 
+body {
+  font-family: 'Dosis', sans-serif; }
+
 .home-layout {
   width: 100vw; }
   .home-layout .content {
