@@ -1,4 +1,4 @@
-﻿@import 'variables.scss';
+﻿@import '../wwwroot/css/Components/variables.scss';
 
 body {
     font-family: 'Dosis', sans-serif;
@@ -32,6 +32,5 @@ body {
 
 @media only screen and (min-width: 768px) {
     .home-layout {
-
     }
 }
