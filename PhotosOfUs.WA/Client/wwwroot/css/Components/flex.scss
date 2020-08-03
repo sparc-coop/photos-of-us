@@ -1,0 +1,56 @@
+﻿.flex {
+    display: flex;
+}
+
+.align-right {
+    margin-left: auto;
+}
+
+.align-left {
+    margin-right: auto;
+}
+
+
+
+.align-right {
+    margin-left: auto;
+}
+
+.align-left {
+    margin-right: auto;
+}
+
+
+
+@media (min-width: 768px) {
+
+    .flex {
+        display: flex;
+    }
+
+    .align-right-desktop {
+        margin-left: auto;
+    }
+
+    .align-left-desktop {
+        margin-right: auto;
+    }
+
+    .row {
+    }
+}
+
+@media (min-width: 768px) {
+
+    .flex {
+        display: flex;
+    }
+
+    .align-right-mobile {
+        margin-left: auto;
+    }
+
+    .align-left-mobile {
+        margin-right: auto;
+    }
+}

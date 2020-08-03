@@ -5,13 +5,19 @@
 
 <AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name!
-        <button class="nav-link btn btn-link" @onclick="BeginLogout">
-            Log out
-        </button>
+        @*Hello, @context.User.Identity.Name!*@
+        <li class="nav-item">
+            <NavLink class="btn btn-light" @onclick="BeginLogout">
+                Log out
+            </NavLink>
+        </li>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/login">Log in</a>
+        <li class="nav-item">
+            <NavLink class="btn btn-light" href="AzureADB2C/Account/SignIn" onclick="return gtag_report_conversion('/AzureADB2C/Account/SignIn?From=Navbar')">
+                Login
+            </NavLink>
+        </li>
     </NotAuthorized>
 </AuthorizeView>
 

@@ -1,0 +1,28 @@
+﻿@import '../wwwroot/css/Components/variables.scss';
+
+.footer {
+    background-color: $dark;
+
+    .navigation {
+        > a {
+            color: $yellow;
+            line-height: 26px;
+            font-weight: 600;
+            display: block;
+        }
+    }
+
+    .navigation-green {
+        > a {
+            color: $primary;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .footer {
+        .container-xl:nth-child(1) {
+            padding: 4rem 0rem;
+        }
+    }
+}

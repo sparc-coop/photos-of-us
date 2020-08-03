@@ -1,0 +1,86 @@
+﻿@import 'variables.scss';
+
+/* Acordeon styles */
+.accordion {
+    position: relative;
+    margin-bottom: 1px;
+    width: 100%;
+    overflow: hidden;
+    border: solid 1px #dee3e9;
+    background-color: white;
+    border-radius: 4px;
+    margin-bottom: 25px;
+
+    &:nth-last-child(1){
+        margin-bottom: 0;
+    }
+}
+
+.accordion .accordion-input-header {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.accordion .accordion-label {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    color: $black;
+    border-bottom: 1px solid #dee3e9;
+    margin-bottom: 0px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 20px 30px;
+}
+
+.accordion-content {
+    color: $black;
+
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 1s;
+    -o-transition: max-height 1s;
+    transition: padding max-height 1s;
+}
+
+.accordion-content p {
+    color: $dark-grey;
+}
+/* :checked */
+.accordion .accordion-input-header:checked ~ .accordion-content {
+    max-height: initial;
+    padding: 30px;
+}
+/* Icon */
+.accordion .accordion-label::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 3em;
+    height: 3em;
+    line-height: 3;
+    text-align: center;
+    -webkit-transition: all .35s;
+    -o-transition: all .35s;
+    transition: all .35s;
+    margin: 8px 0px;
+}
+
+.accordion .accordion-input-header[type=checkbox] + .accordion-label::after {
+    content: "+";
+}
+
+.accordion .accordion-input-header[type=radio] + .accordion-label::after {
+    content: "\25BC";
+}
+
+.accordion .accordion-input-header[type=checkbox]:checked + .accordion-label::after {
+    transform: rotate(315deg);
+}
+
+.accordion .accordion-input-header[type=radio]:checked + .accordion-label::after {
+    transform: rotateX(180deg);
+}

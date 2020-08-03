@@ -1,203 +1,405 @@
-﻿@import '../variables.scss';
+﻿@import 'variables.scss';
 
-.folder-card--wrapper {
-    flex-flow: row wrap;
-    margin-left: -10px;
-    margin-right: -10px;
+.data-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -20px;
 
-    .photo-card, .photo-card--grid, .folder-card {
-        position: relative;
-        border-radius: 8px;
-        box-sizing: border-box;
-        height: 240px;
-        width: 23%;
-        margin: 0 1% 20px;
+    .card-data {
+        flex: 0 0 calc(25% - 20px);
+        margin: 0 0 20px 20px;
+        overflow-y: auto;
+    }
+}
 
-        @media screen and (max-width: $mobile) {
-            width: 48%;
+@media (max-width: 1650px) {
+    .data-items {
+
+        .card-data {
+            flex: 0 0 calc(33% - 20px);
+        }
+    }
+}
+
+@media (max-width: 1300px) {
+    .data-items {
+
+        .card-data {
+            flex: 0 0 calc(50% - 20px);
+        }
+    }
+}
+
+@media (max-width: 1000px) {
+    .data-items {
+
+        .card-data {
+            flex: 0 0 calc(100% - 20px);
+        }
+    }
+}
+
+.card-data {
+    width: 367px;
+    height: 356px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 25px 0 rgba(0,0,0,0.06);
+    border-radius: 6px;
+    padding: 35px 20px;
+    position: relative;
+    border: none;
+
+    .header-buttons {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+
+        .material-icons {
+            cursor: pointer;
         }
     }
 
-    .photo-card--grid {
-        background-repeat: no-repeat;
-        background-size: cover;
-        cursor: pointer;
-        outline: none;
+    .header {
+        font-size: 22px;
+        color: #2D2E2E;
+        letter-spacing: 0;
+        font-weight: 600;
     }
 
-    .photo-card {
-        background-repeat: no-repeat;
-        background-size: cover;
-        cursor: pointer;
-        outline: none;
-        position: relative;
-        z-index: 11;
+    p.description {
+        font-size: 14px;
+        color: #545454;
+        letter-spacing: 0;
     }
 
-    .photo-card:nth-child(3) {
-        margin: 13px 0 0 -150px;
-        z-index: 10;
-        height: 218px;
+    .data {
+        width: 100%;
+        font-size: 18px;
+        color: #545454;
+        letter-spacing: 0;
+
+        > tr > td {
+            padding: 8px 0px;
+        }
     }
 
-    .photo-card:nth-child(n+4) {
-        margin: 32px 0 0 -170px;
-        z-index: 9;
-        height: 180px;
-    }
+    .field {
+        label {
+            display: inline-block;
+            margin-bottom: 0;
+            color: $grey;
+            font-size: 13px;
+        }
 
-    .photo-card:nth-child(5) {
-        z-index: 8;
-    }
-
-    .photo-card:nth-child(6) {
-        z-index: 7;
-    }
-
-    .photo-card:nth-child(7) {
-        z-index: 6;
-    }
-
-    .photo-card:nth-child(8) {
-        z-index: 5;
-    }
-
-
-    .folder-card {
-        border: 2px solid #194952;
-
-        .header {
-            margin: 4px 8px;
+        img {
             width: 100%;
-            align-items: center;
-            height: 30px;
-            margin-bottom: 0px;
+        }
+    }
 
-            .grey-ball {
-                width: 15px;
-                height: 15px;
-                background: #DFDFDF;
-                border-radius: 50%;
-            }
+    .card-user-list {
+        margin-left: 15px;
+        .user-initials,.user-avatar{
+            margin-left: -15px;
+        }
+    }
 
-            .teste {
-                border-radius: 18px;
-            }
+    &.card-data-dark {
+        background: $black;
 
-            .md-icon-button {
-                padding-right: 0px;
-                margin-right: 0px;
-            }
+        header {
+            color: $white;
+        }
 
-            .material-icons {
-                color: #43C6BA;
-                right: 8px;
-                z-index: 4;
-                cursor: pointer;
+        .content {
+            p.description {
+                color: $white;
             }
         }
 
-        .photos {
-            margin-top: -5px;
-            margin: auto;
-            padding-right: 30px;
-
-            .tiny-photo {
-                width: 48px;
-                height: 48px;
-                border-radius: 6px;
-                margin-right: -30px;
-            }
+        table {
+            color: $white;
         }
+    }
+}
 
-        .folder-info {
+
+
+
+.card-add-new {
+    background: #DBF1FD;
+    border: solid 1px #55C1FF;
+    cursor: pointer;
+
+    > div {
+        margin: auto;
+        color: #55C1FF;
+
+        i.material-icons {
+            font-size: 45px;
             width: 100%;
             text-align: center;
+        }
 
-            .title {
-                font-family: 'Dosis';
-                font-size: 26px;
-                color: #194952;
-                letter-spacing: 0;
-                font-weight: 600;
-                margin-top: 15px;
-            }
+        p {
+            font-size: 22px;
+        }
+    }
+}
 
-            .created-date {
-                font-size: 16px;
-                color: $dark;
-                margin-top: -22px;
-            }
+.card-presentation {
+    padding: unset;
+    height: 444px;
 
-            .folder-code {
-                color: $primary;
-                font-size: 16px;
-                font-weight: 600;
-                padding-top: 5px;
-            }
+    .image-header {
+        img {
+            width: 100%;
+            box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
+            border-radius: 6px 6px 0px 0px;
+            object-fit: cover;
+            height: 220px;
         }
     }
 
-    &.codeView {
-        margin-left: 0;
+    .header {
+        padding: 20px 20px 10px;
     }
 
-    .codeView {
-        display: block;
+    .content {
+        padding: 0px 20px;
 
+        .description {
+            max-height: 82px;
+            overflow: hidden;
+        }
+    }
 
-        &__row {
-            display: flex;
+    .footer {
+        padding: 0px 20px 20px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        i.material-icons-outlined, i.material-icons {
+            margin-right: 5px;
         }
 
-        &__card {
-            padding: 24px;
-            height: 192px;
-            width: 198px;
-            background: $dark;
-            border-radius: 8px;
+        span {
+            font-size: 14px;
+            line-height: 24px;
+        }
+    }
+}
+
+.user-card {
+    .user-info {
+        display: flex;
+
+        > p {
+            margin-bottom: 0;
+        }
+
+        .user-initials, .user-avatar {
             margin-right: 12px;
-            cursor: pointer;
-            outline: none;
-            text-decoration: none;
-            z-index: 20;
+            margin-top: -5px;
+        }
+    }
+}
 
-            @media screen and (max-width: $mobile) {
-                width: 28%;
+.user-floating-menu {
+    position: absolute;
+    z-index: 50;
+}
+
+.floating-buttons {
+    position: relative;
+
+    > .material-icons {
+        position: absolute;
+        /*right: 15px;
+            top: 15px;*/
+        cursor: pointer;
+        z-index: 2;
+        right: 0;
+
+        &:hover + .hoverable {
+            display: block !important;
+        }
+    }
+
+    .floating-menu {
+        position: absolute;
+        box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+        z-index: 50;
+        border-radius: 4px;
+        /*-webkit-transition: all .4s cubic-bezier(.25,.8,.25,1);
+            transition: all .4s cubic-bezier(.25,.8,.25,1);
+            -webkit-transition-duration: 200ms;
+            transition-duration: 200ms;*/
+        background: white;
+        top: 25px;
+        right: 0px;
+
+        .button {
+            width: 100%;
+        }
+    }
+
+    .hoverable {
+        display: none;
+
+        &:hover {
+            display: block !important;
+        }
+    }
+}
+
+.card-testimonial {
+    $photo-size: 100px;
+    height: 328px;
+    width: 100%;
+    padding: 35px 20px;
+
+    .card-body {
+        padding-top: 40px;
+
+        .card-title, .card-subtitle {
+            text-align: center;
+        }
+
+        .card-title {
+            color: $black;
+        }
+
+        .card-subtitle {
+            color: $grey;
+        }
+
+        .card-text {
+            margin-top: 40px;
+            color: $grey;
+            letter-spacing: 0;
+            line-height: 26px;
+        }
+    }
+
+
+
+    .photo-placeholder {
+        height: $photo-size;
+        width: $photo-size;
+        position: absolute;
+        border-radius: 100%;
+        top: -50px;
+        left: calc(50% - 50px);
+        background: $white;
+
+        img {
+            height: $photo-size - 14px;
+            width: $photo-size - 14px;
+            border-radius: 100%;
+            margin-left: 7px;
+            margin-top: 7px;
+        }
+    }
+}
+
+.arrow-down {
+    &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        width: 25px;
+        height: 25px;
+        left: 50%;
+        background: inherit;
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+}
+
+.card-pricing {
+    box-shadow: 0 10px 50px 0 rgba(0,0,0,0.10);
+    border-radius: 4px;
+    background: $white;
+    text-align: center;
+    padding: 4rem 1rem;
+
+    .card-body {
+        p {
+            color: $grey;
+            margin-bottom: 0px;
+        }
+
+        button {
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 2rem;
+            font-weight: 500;
+        }
+
+        .card-pricing-prices {
+            margin-bottom: 2rem;
+
+            h5 {
+                vertical-align: top;
+                margin-top: 4px;
             }
 
-            &--title {
-                padding-bottom: 22px;
+            h2 {
+                font-weight: 500;
+                line-height: 1;
             }
 
-            &--date {
-                padding-bottom: 64px;
-
-                @media screen and (max-width: $mobile) {
-                    padding-bottom: 30px;
-                }
+            * {
+                display: inline-block;
             }
+        }
+    }
 
-            .label {
-                font-family: "Open Sans";
-                font-weight: 600;
-                font-size: 14px;
-                color: $yellow;
-            }
 
-            .info {
-                font-family: "Dosis";
-                font-size: 20px;
-                font-weight: 600;
-                color: $primary;
-            }
 
-            &--edit {
-                font-family: "Open Sans";
-                font-weight: 600;
-                font-size: 14px;
-                color: $red;
-            }
+    .card-header {
+        background: none;
+        border: none;
+
+        img {
+            height: 52px;
+            margin-bottom: 2rem;
+        }
+    }
+}
+
+.card-marketplace {
+    box-shadow: 0 10px 50px 0 rgba(0,0,0,0.10);
+    border-radius: 6px;
+    font-weight: 600;
+
+    .card-header {
+        padding: 0px;
+
+        img {
+            width: 100%;
+            box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
+            border-radius: 6px 6px 0px 0px;
+            object-fit: cover;
+            height: 210px;
+        }
+    }
+
+    .card-body {
+        padding: 2rem;
+
+        h5 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-marketplace-created-by, .card-marketplace-created-date {
+            font-size: 14px;
+            letter-spacing: 3px;
+            line-height: 23px;
+            text-transform: uppercase;
         }
     }
 }

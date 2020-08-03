@@ -1,66 +1,49 @@
-﻿@import "../variables";
-.form {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 880px;
-    margin-bottom: 40px;
+﻿.data-form {
+    /*min-width: 60vw;*/
 
-    &-input {
-        margin: 0 30px 18px 0px;
+    .response {
+        margin-bottom: 10px;
 
         label {
-            font-family: "Open Sans";
-            font-size: 10px;
-            color: $text-gray;
-            display: block;
-            padding-bottom: 8px;
+            font-size: 14px;
+            color: rgba(46,46,46,.4)
         }
 
-        input {
-            width: 240px;
-            padding: 7px 10px;
-            border: 1px solid $primary;
-            border-radius: 3px;
+        input, textarea {
+            background-color: transparent;
+            border: none;
+            padding-left: 12px;
+            padding-right: 6px;
+            padding-top: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #000;
             outline: none;
         }
-
-        textarea {
-            @extend input;
-            display: flex;
-            width: 779px;
-            height: 86px;
-
-            @media screen and (max-width: $mobile) {
-                width: unset;
-            }
-        }
-
-        &--email {
-            input {
-                width: 510px;
-
-                @media screen and (max-width: $mobile) {
-                    width: unset;
-                }
-            }
-        }
     }
 }
 
-#payment-form {
-    #card-element {
-        padding: 7px 10px;
-        border: 1px solid $primary;
-        border-radius: 3px;
-        outline: none;
-        max-width: 488px;
-        margin-top: 5px;
+.form-input {
+    padding-bottom: 20px;
+    display: block;
+
+    label {
+        color: #313943;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        font-size: 16px;
+        display: block;
+        padding: 6px 15px;
     }
 }
 
-.input--light-blue {
-    border: 1px solid #43C6BA;
-    border-radius: 8px;
-    color: #43C6BA;
-    padding: 0px 20px;
+.shadow-input {
+    background: #FFFFFF;
+    box-shadow: 0 2px 25px 0 rgba(0,0,0,0.12);
+    border-radius: 6px;
+    border-radius: 6px;
+    border:none;
 }

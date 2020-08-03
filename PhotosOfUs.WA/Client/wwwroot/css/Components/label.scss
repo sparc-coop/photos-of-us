@@ -1,2 +1,23 @@
-﻿body {
+﻿@import 'variables.scss';
+
+.label {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0px;
+    color: $dark-grey;
+
+    &.required::after {
+        content: '*';
+        margin-right: 4px;
+        color: red;
+    }
+
+    &.large {
+        font-size: 18px;
+    }
+}
+
+.p-label {
+    color: rgb(76,88,113);
+    font-size: 18px;
 }

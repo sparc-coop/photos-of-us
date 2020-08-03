@@ -1,10 +1,103 @@
-﻿@import "../variables";
+﻿@import 'variables.scss';
 
 .input {
-    border: 1px solid #43C6BA;
-    border-radius: 3px;
-    font-family: OpenSans;
-    font-size: 14px;
-    color: #194952;
-    letter-spacing: 0;
+    background: #FFFFFF;
+    box-shadow: 0 2px 25px 0 rgba(0,0,0,0.06);
+    border-radius: 6px;
+    color: #313943;
+    padding: 13px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    /*font-weight: 600;*/
+
+    &::placeholder {
+        color: #AEAEAE;
+        font-weight: 400;
+    }
+
+    &-ms-input-placeholder {
+        color: #AEAEAE;
+        font-weight: 400;
+    }
+
+    &:-webkit-input-placeholder {
+        color: #AEAEAE;
+        font-weight: 400;
+    }
+}
+
+.grey-input {
+    background-color: #f2f2f2;
+    border: 1px solid #eaeaea;
+    border-radius: 4px
+}
+
+
+
+input[type="radio"].yes-no-checkbox {
+    display: none;
+}
+
+label.yes-no-checkbox {
+    padding: 10px 80px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: rgb(238,240,243);
+    color: rgb(76,88,113);
+}
+
+input[type="radio"]:checked.yes-no-checkbox + label {
+    cursor: default;
+    background-color: rgb(0,153,204);
+    color: #fff !important;
+}
+
+.search-bar {
+    position: relative;
+
+    i.material-icons {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #545454;
+        font-size: 26px;
+    }
+
+    .input {
+        padding: 13px 55px;
+        font-size: 18px;
+        font-weight: 100;
+        width: 100%;
+        border: none;
+    }
+}
+
+.custom-control.custom-checkbox {
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color: #55C1FF;
+        background-color: #55C1FF;
+    }
+}
+
+
+.input-group {
+    input{
+        border: none;
+    }
+
+    .input-group-prepend, .input-group-append {
+        .input-group-text {
+            background: $yellow;
+            color: $dark;
+            border: none;
+        }
+
+        ~ .form-control {
+            margin-left: 0;
+        }
+    }
 }

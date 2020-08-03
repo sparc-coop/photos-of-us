@@ -1,0 +1,92 @@
+﻿//Colors
+$yellow: #FFE261;
+$white: #FFFFFF;
+$primary: #43C6BA;
+$secondary: $yellow;
+$dark: #194952;
+$red: #FF6060;
+$orange: #FF6060;   
+$grey: #757575;
+$off-white: #F6FFFF;
+$black: #000000;
+$grey: #757575;
+$light-grey: #B2B2B2;
+
+$dark-grey: #545454;
+
+$light-green: rgba(67,198,186,0.15);
+
+
+
+/*$black: #1B1B1B;*/
+/*$black: #1B1B1B;
+//$off-black: #1C1C1C;
+
+$grey: #AEAEAE;
+$grey2: #E7E7E7;
+$grey3: #F8F8F8;
+
+
+$dark-grey2: #808080;
+
+$off-dark-grey: #FAFAFB;
+
+$light-grey: #F2F2F2;
+$expand-grey: #BFC1C3;
+$white: #FFFFFF;
+$light: #f8f9fa;
+$off-white: #F0F0F0;
+$pink: #FF5B89;
+$purple: #9594D4;
+$background: #f4f6f9;
+
+$red: #FF5C5C;
+$warning: #CC3300;
+
+$green: #00CC99;
+
+$purple: #2C1B3D;
+
+$blue: #0099CC;
+$primary: #55C1FF;
+$primary-2: #3CD3EC;
+$off-blue: #e8f3f8;
+
+$light-green: #B6E389;
+$yellow: #FFD40C;*/
+//Font weights
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semi-bold: 600;
+$font-bold: 700;
+
+//Break points
+$wide-desktop: 1440px;
+$small-desktop: 1284px;
+$large-devices: 1034px;
+$xs-large-devices: 900px;
+$medium-devices: 736px;
+$mobile: 480px;
+
+
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

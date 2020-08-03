@@ -27,6 +27,11 @@
 @using PhotosOfUs.Core.Photos.Commands
 @using PhotosOfUs.Core.Users.Commands
 
+@*@using PhotosOfUs.Core.Events.Queries
+@using PhotosOfUs.Core.Orders.Queries*@
+@using PhotosOfUs.Core.Photos.Queries
+@*@using PhotosOfUs.Core.Users.Queries*@
+
 @using Kuvio.Kernel.AspNet.Blazor.Utils
 @using Kuvio.Kernel.AspNet.Blazor.Modal
 @using Kuvio.Kernel.AspNet.Blazor.Toast
@@ -47,6 +52,5 @@
 @inject IToastService ToastService
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-
 @*@inject UserProvider UserProvider*@
 @*@inject AuthenticationStateProvider AuthenticationStateProvider*@

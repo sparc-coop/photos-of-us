@@ -24,6 +24,11 @@ using PhotosOfUs.Connectors.Cognitive;
 using PhotosOfUs.Core.Photos;
 using PhotosOfUs.Core.Users.Commands;
 
+using Newtonsoft.Json;
+using AutoMapper;
+using PhotosOfUs.Plugins.Mapping;
+using PhotosOfUs.Core.Photos.Queries;
+
 namespace PhotosOfUs.WA.Server
 {
     public class Startup
@@ -51,10 +56,14 @@ namespace PhotosOfUs.WA.Server
             //        .AllowCredentials());
             //});
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            );
             services.AddRazorPages();
             //services.AddServerSideBlazor();
 
+            services.AddAutoMapper(typeof(AutoMapperConfig));
             AddRepositories(services);
             AddServices(services);
             AddCommands(services);
@@ -116,7 +125,7 @@ namespace PhotosOfUs.WA.Server
         private void AddQueries(IServiceCollection services)
         {
             // Photos
-            //services.AddTransient<...Query>();
+            services.AddTransient<GetRandomPhotosQuery>();
 
 
         }

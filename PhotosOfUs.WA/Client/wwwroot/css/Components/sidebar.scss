@@ -1,0 +1,96 @@
+﻿.sidebar {
+    background-color: #1B1B1B;
+    color: white;
+
+    .top-row {
+        padding: 48px 0px;
+        display: flex;
+        align-items: center;
+    }
+
+
+    .navbar-brand {
+        width: 55%;
+        margin: auto;
+        font-size: 1.1rem;
+
+        > img {
+            width: 100%;
+        }
+    }
+
+    .oi {
+        width: 2rem;
+        font-size: 1.1rem;
+        vertical-align: text-top;
+        top: -2px;
+    }
+
+    .nav-item {
+        font-size: 0.9rem;
+        padding-bottom: 0.5rem;
+
+        &:first-of-type {
+            padding-top: 1rem;
+        }
+
+        &:last-of-type {
+            padding-bottom: 1rem;
+        }
+
+        a {
+            /*color: #d7d7d7;*/
+            color: white;
+            border-radius: 4px;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            line-height: 3rem;
+
+            i.material-icons {
+                margin-right: 15px;
+            }
+        }
+
+        a.active {
+            background-color: #55C1FF;
+            color: white;
+        }
+
+        a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        a.active:hover {
+            background-color: rgba(85, 193, 255, 0.8);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+
+
+    .sidebar {
+        width: 240px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+
+        .collapse {
+            /* Never collapse the sidebar for wide screens */
+            display: block;
+        }
+
+        .navbar-toggler {
+            display: none;
+        }
+
+        .top-row {
+            position: sticky;
+            top: 0;
+        }
+    }
+
+    
+}

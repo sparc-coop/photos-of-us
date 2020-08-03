@@ -39,7 +39,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Sendgrid" Version="9.9.0" />
     <PackageReference Include="Stripe.net" Version="18.0.0" />
   </ItemGroup>
@@ -101,7 +101,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PhotosOfUs.Model\PhotosOfUs.Model.csproj" />
-    <ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />
+    <!--<ProjectReference Include="..\Rotativa.NetCore\Rotativa.NetCore.csproj" />-->
     <ProjectReference Include="..\PhotosOfUs.Plugins\PhotosOfUs.Plugins.csproj" />
   </ItemGroup>
 

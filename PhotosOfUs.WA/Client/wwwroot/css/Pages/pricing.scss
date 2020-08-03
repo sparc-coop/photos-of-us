@@ -72,7 +72,7 @@
                     &.alt {
                         padding-left: 30px;
                         text-decoration: line-through;
-                        color: $text-gray;
+                        color: $grey;
                     }
                 }
             }
@@ -102,8 +102,8 @@
             text-decoration: none;
 
             &--beta {
-                color: $text-gray;
-                border: 2px solid $text-gray;
+                color: $grey;
+                border: 2px solid $grey;
                 cursor: unset;
             }
         }

@@ -1,0 +1,38 @@
+﻿@import '../components/variables.scss';
+
+// variable overrides
+// table
+$table-border-color: $grey;
+$table-color: $dark-grey;
+
+// colors
+$primary: $primary;
+$secondary: $purple;
+$dark: $dark-grey;
+
+// button
+$btn-border-width: 2px;
+
+// spacing
+$spacer: 1rem;
+$spacers: ();
+$spacers: map-merge(
+  (
+    0: 0,
+    1: ($spacer * .25),
+    2: ($spacer * .5),
+    3: $spacer,
+    4: ($spacer * 1.5),
+    5: ($spacer * 3),
+    6: ($spacer * 4),
+    7: ($spacer * 6)
+  ),
+  $spacers
+);
+
+// card
+$card-border-width: 0;
+$card-border-radius: 6px;
+
+// bootstrap import
+@import "scss/bootstrap";  

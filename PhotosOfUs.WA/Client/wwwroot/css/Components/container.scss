@@ -1,34 +1,9 @@
-﻿@import '../variables.scss';
+﻿
 
-.flex-box {
-    display: flex;
-    flex-wrap: wrap;
+@media only screen and (max-width: 767px) {
+    
+}
 
-    .photo {
-        padding-right: 30px;
-    }
-
-    img {
-        border-radius: 8px;
-        margin: 24px 24px 0 0;
-        max-width: 600px;
-        height: auto;
-        width: 100%;
-    }
-
-    .align-left {
-        margin-right: auto;
-    }
-
-    .align-right {
-        margin-left: auto;
-
-        @media screen and (max-width: $mobile) {
-            margin-left: unset;
-        }
-
-        i {
-            cursor: pointer;
-        }
-    }
+@media only screen and (min-width: 768px) {
+    
 }

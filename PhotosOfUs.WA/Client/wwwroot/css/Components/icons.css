@@ -1,0 +1,28 @@
+﻿/* Rules for sizing the icon. */
+.material-icons.md-18 {
+  font-size: 18px; }
+
+.material-icons.md-24 {
+  font-size: 24px; }
+
+.material-icons.md-36 {
+  font-size: 36px; }
+
+.material-icons.md-48 {
+  font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54); }
+
+.material-icons.md-dark.md-inactive {
+  color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light {
+  color: white; }
+
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.3); }
+
+/*# sourceMappingURL=data:application/json;base64,ewoJInZlcnNpb24iOiAzLAoJImZpbGUiOiAid3d3cm9vdC9jc3MvY29tcG9uZW50cy9pY29ucy5jc3MiLAoJInNvdXJjZXMiOiBbCgkJInd3d3Jvb3QvY3NzL2NvbXBvbmVudHMvaWNvbnMuc2NzcyIKCV0sCgkibmFtZXMiOiBbXSwKCSJtYXBwaW5ncyI6ICJBQUFBLGdDQUFnQztBQUNoQyxBQUFBLGVBQWUsQUFBQSxNQUFNLENBQUM7RUFDbEIsU0FBUyxFQUFFLElBQUksR0FDbEI7O0FBRUQsQUFBQSxlQUFlLEFBQUEsTUFBTSxDQUFDO0VBQ2xCLFNBQVMsRUFBRSxJQUFJLEdBQ2xCOztBQUVELEFBQUEsZUFBZSxBQUFBLE1BQU0sQ0FBQztFQUNsQixTQUFTLEVBQUUsSUFBSSxHQUNsQjs7QUFFRCxBQUFBLGVBQWUsQUFBQSxNQUFNLENBQUM7RUFDbEIsU0FBUyxFQUFFLElBQUksR0FDbEI7O0FBRUQsMkRBQTJEO0FBQzNELEFBQUEsZUFBZSxBQUFBLFFBQVEsQ0FBQztFQUNwQixLQUFLLEVBQUUsbUJBQW1CLEdBQzdCOztBQUVELEFBQUEsZUFBZSxBQUFBLFFBQVEsQUFBQSxZQUFZLENBQUM7RUFDaEMsS0FBSyxFQUFFLG1CQUFtQixHQUM3Qjs7QUFFRCwwREFBMEQ7QUFDMUQsQUFBQSxlQUFlLEFBQUEsU0FBUyxDQUFDO0VBQ3JCLEtBQUssRUFBRSxLQUFzQixHQUNoQzs7QUFFRCxBQUFBLGVBQWUsQUFBQSxTQUFTLEFBQUEsWUFBWSxDQUFDO0VBQ2pDLEtBQUssRUFBRSx3QkFBd0IsR0FDbEMiCn0= */

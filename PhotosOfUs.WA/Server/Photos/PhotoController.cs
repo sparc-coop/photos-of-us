@@ -6,6 +6,7 @@ using Kuvio.Kernel.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotosOfUs.Core.Photos;
+using PhotosOfUs.Core.Photos.Queries;
 
 namespace PhotosOfUs.WA.Server.Photos
 {
@@ -25,13 +26,9 @@ namespace PhotosOfUs.WA.Server.Photos
         }
 
         [Route("Dashboard/{count:int}")]
-        public async Task<List<Photo>> GetPhotos([FromServices] IDbRepository<Photo> _photoRepository,  int count)
+        public async Task<List<RandomPhotoModel>> GetPhotos([FromServices] GetRandomPhotosQuery getRandomPhotosQuery,  int count)
         {
-            Random rand = new Random();
-            int toSkip = rand.Next(0, (await _photoRepository.CountAsync(x => x.Id > 0)) - count);
-
-            var photos = _photoRepository.Query.Skip(toSkip).Take(count).ToList();
-            return photos;
+            return await getRandomPhotosQuery.Execute(30);
         }
     }
 }
