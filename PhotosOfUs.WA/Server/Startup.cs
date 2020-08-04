@@ -28,6 +28,7 @@ using Newtonsoft.Json;
 using AutoMapper;
 using PhotosOfUs.Plugins.Mapping;
 using PhotosOfUs.Core.Photos.Queries;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace PhotosOfUs.WA.Server
 {
@@ -78,6 +79,7 @@ namespace PhotosOfUs.WA.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
+                ServeScssFiles(app, env);
             }
             else
             {
@@ -168,6 +170,23 @@ namespace PhotosOfUs.WA.Server
                     policy.RequireRole("Admin", "User");
                 });
             });
+        }
+
+        // Hack: Instead of relying on this solution to look for the correct scss mapped files
+        // which is incorrectly being mapped to /css/wwwroot, we should stop using Web Compiler
+        // and start using NPM to compile SCSS files
+        private static void ServeScssFiles(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            var sassContentTypeProvider = new FileExtensionContentTypeProvider();
+            sassContentTypeProvider.Mappings[".scss"] = "text/css";
+            app.UseStaticFiles(
+                new StaticFileOptions
+                {
+                    ContentTypeProvider = sassContentTypeProvider,
+                    RequestPath = "/css",
+                    FileProvider = new ScssFileProvider(env.ContentRootFileProvider),
+                }
+            );
         }
     }
 }

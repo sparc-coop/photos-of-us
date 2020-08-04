@@ -57,6 +57,8 @@ namespace PhotosOfUs.WA.Client
 
         private static void AddAuthorization(WebAssemblyHostBuilder builder)
         {
+            
+
             builder.Services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));

@@ -1,0 +1,8 @@
+﻿@import 'variables.scss';
+
+.badge {
+    &.badge-primary {
+        border: 1px solid $primary !important;
+        background-color: transparentize($primary, .8);
+    }
+}

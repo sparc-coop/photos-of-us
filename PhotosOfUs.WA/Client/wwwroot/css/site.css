@@ -287,15 +287,73 @@ $yellow: #FFD40C;*/
   to {
     opacity: 1; } }
 
+.badge.badge-primary {
+  border: 1px solid #43C6BA !important;
+  background-color: rgba(67, 198, 186, 0.2); }
+
+/*$black: #1B1B1B;*/
+/*$black: #1B1B1B;
+//$off-black: #1C1C1C;
+
+$grey: #AEAEAE;
+$grey2: #E7E7E7;
+$grey3: #F8F8F8;
+
+
+$dark-grey2: #808080;
+
+$off-dark-grey: #FAFAFB;
+
+$light-grey: #F2F2F2;
+$expand-grey: #BFC1C3;
+$white: #FFFFFF;
+$light: #f8f9fa;
+$off-white: #F0F0F0;
+$pink: #FF5B89;
+$purple: #9594D4;
+$background: #f4f6f9;
+
+$red: #FF5C5C;
+$warning: #CC3300;
+
+$green: #00CC99;
+
+$purple: #2C1B3D;
+
+$blue: #0099CC;
+$primary: #55C1FF;
+$primary-2: #3CD3EC;
+$off-blue: #e8f3f8;
+
+$light-green: #B6E389;
+$yellow: #FFD40C;*/
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
 .btn {
   padding: 10px 40px;
   box-shadow: 0 2px 25px 0 rgba(0, 0, 0, 0.06);
-  border-radius: 6px; }
+  border-radius: 6px;
+  font-family: "Open Sans";
+  font-weight: 600; }
   .btn i.material-icons {
     vertical-align: middle;
     margin-top: -2px; }
   .btn.btn-primary {
     color: #FFFFFF; }
+  .btn.btn-secondary .material-icons {
+    color: #FF6060;
+    vertical-align: bottom;
+    margin-right: 2px; }
   .btn.btn-outline-primary:hover {
     color: #FFFFFF; }
   .btn.btn-outline-light:hover {

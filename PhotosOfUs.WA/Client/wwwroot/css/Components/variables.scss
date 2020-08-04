@@ -10,12 +10,27 @@ $orange: #FF6060;
 $grey: #757575;
 $off-white: #F6FFFF;
 $black: #000000;
-$grey: #757575;
 $light-grey: #B2B2B2;
 
 $dark-grey: #545454;
 
 $light-green: rgba(67,198,186,0.15);
+
+
+//Font weights
+$font-light: 300;
+$font-regular: 400;
+$font-medium: 500;
+$font-semi-bold: 600;
+$font-bold: 700;
+
+//Break points
+$wide-desktop: 1440px;
+$small-desktop: 1284px;
+$large-devices: 1034px;
+$xs-large-devices: 900px;
+$medium-devices: 736px;
+$mobile: 480px;
 
 
 
@@ -55,20 +70,6 @@ $off-blue: #e8f3f8;
 
 $light-green: #B6E389;
 $yellow: #FFD40C;*/
-//Font weights
-$font-light: 300;
-$font-regular: 400;
-$font-medium: 500;
-$font-semi-bold: 600;
-$font-bold: 700;
-
-//Break points
-$wide-desktop: 1440px;
-$small-desktop: 1284px;
-$large-devices: 1034px;
-$xs-large-devices: 900px;
-$medium-devices: 736px;
-$mobile: 480px;
 
 
 
