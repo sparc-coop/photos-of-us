@@ -13,6 +13,8 @@ namespace PhotosOfUs.Plugins.Mapping
     {
         public DomainToViewModelMappingProfile()
         {
+            // NOTE: If it is too hard  to Create the mapping, use plain C# instead of AutoMapper
+
             CreateMap<Photo, RandomPhotoModel>();
 
             //CreateMap<Photo, PhotoModel>();
