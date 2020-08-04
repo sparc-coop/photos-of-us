@@ -126,8 +126,7 @@ namespace PhotosOfUs.WA.Server
         {
             // Photos
             services.AddTransient<GetRandomPhotosQuery>();
-
-
+            services.AddTransient<GetPhotoQuery>();
         }
 
         private void AddRepositories(IServiceCollection services)

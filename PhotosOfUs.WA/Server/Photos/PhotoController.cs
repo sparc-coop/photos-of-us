@@ -14,21 +14,24 @@ namespace PhotosOfUs.WA.Server.Photos
     [Route("[controller]")]
     public class PhotoController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("{id:int}")]
+        public async Task<PhotoModel> Get([FromServices] GetPhotoQuery getPhotoQuery, int id)
         {
-            return Summaries;
+            return await getPhotoQuery.Execute(id);
         }
 
+        //[HttpGet]
+        //[Route("{id:int}")]
+        //public Photo Get([FromServices] IDbRepository<Photo> photoRepository, int id)
+        //{
+        //    return photoRepository.Include("Photographer", "PhotoTag.Tag").Where(x => x.Id == id).FirstOrDefault();
+        //}
+
         [Route("Dashboard/{count:int}")]
-        public async Task<List<RandomPhotoModel>> GetPhotos([FromServices] GetRandomPhotosQuery getRandomPhotosQuery,  int count)
+        public async Task<List<RandomPhotoModel>> GetPhotos([FromServices] GetRandomPhotosQuery getRandomPhotosQuery, int count)
         {
-            return await getRandomPhotosQuery.Execute(30);
+            return await getRandomPhotosQuery.Execute(count);
         }
     }
 }

@@ -2341,11 +2341,11 @@ $yellow: #FFD40C;*/
     .landing .main-landing .welcome-text {
       color: #FFE261;
       font-size: 80px;
+      line-height: 90px;
       font-family: 'Dosis';
       text-transform: uppercase;
       font-weight: 600;
       width: 436px;
-      height: 202px;
       padding-bottom: 38px; }
     .landing .main-landing .tagline {
       color: #F6FFFF;

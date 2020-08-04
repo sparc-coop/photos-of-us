@@ -18,12 +18,10 @@ namespace PhotosOfUs.Core.Photos.Queries
     public class GetRandomPhotosQuery
     {
         readonly IDbRepository<Photo> _photoRepository;
-        readonly IMapper _mapper;
 
-        public GetRandomPhotosQuery(IDbRepository<Photo> photoRepository, IMapper mapper)
+        public GetRandomPhotosQuery(IDbRepository<Photo> photoRepository)
         {
             _photoRepository = photoRepository;
-            _mapper = mapper;
         }
 
         public async Task<List<RandomPhotoModel>> Execute(int count)
@@ -36,8 +34,6 @@ namespace PhotosOfUs.Core.Photos.Queries
                 .Take(count)
                 .Select(y => new RandomPhotoModel() { Url = y.Url, Name = y.Name, ThumbnailUrl = y.ThumbnailUrl })
                 .ToList();
-
-            //return _mapper.Map<List<RandomPhotoModel>>(photos);
         }
     }
 }

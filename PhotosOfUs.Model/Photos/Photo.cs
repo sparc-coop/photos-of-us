@@ -13,7 +13,7 @@ namespace PhotosOfUs.Core.Photos
 {
     public partial class Photo : IFile
     {
-        private Photo()
+        public Photo()
         {
             _photoTag = new HashSet<PhotoTag>();
         }
