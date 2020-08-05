@@ -38,7 +38,7 @@ namespace PhotosOfUs.Model.Photos.Commands
                 var possibleCodes = ev.Cards.Select(x => x.Code).ToList();
                 code = await _cognitive.GetPhotoCode(bytes, possibleCodes) ?? photoCode;
 
-                var photo = new Photo(userId, filename, eventId, ev.Cards.First(x => x.Code == code)?.Id);
+                var photo = new Photo(userId, filename, eventId, ev.Cards.First(x => x.Code == code)?.Id, stream);
                 photo.Url = (await _photoFiles.UploadAsync(photo)).AbsoluteUri;
                 ev.AddPhoto(photo);
             });
@@ -52,9 +52,9 @@ namespace PhotosOfUs.Model.Photos.Commands
         }
 
         // For public photos
-        public async Task<UploadPhotoCommandResult> ExecuteAsync(int userId, string filename, Stream stream)
+        public async Task<UploadPhotoCommandResult> ExecuteAsync(int userId, int eventId, string filename, Stream stream)
         {
-            var photo = new Photo(userId, filename, stream);
+            var photo = new Photo(userId, filename, eventId, null, stream);
             photo.Url = (await _photoFiles.UploadAsync(photo)).AbsoluteUri;
 
             var bytes = TransformImageIntoBytes(stream);

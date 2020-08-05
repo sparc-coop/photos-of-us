@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kuvio.Kernel.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PhotosOfUs.Core.Photos;
@@ -29,9 +30,18 @@ namespace PhotosOfUs.WA.Server.Photos
         //}
 
         [Route("Dashboard/{count:int}")]
+        [AllowAnonymous]
         public async Task<List<RandomPhotoModel>> GetPhotos([FromServices] GetRandomPhotosQuery getRandomPhotosQuery, int count)
         {
             return await getRandomPhotosQuery.Execute(count);
+        }
+
+        [Route("MyCode/{code}")]
+        [AllowAnonymous]
+        public async Task<List<Photo>> MyCode([FromServices] IDbRepository<Photo> photoRepository, string code)
+        {
+            // TODO: Write the actual method. This one is returning 5 random photos.
+            return await photoRepository.Query.Take(5).ToListAsync();
         }
     }
 }

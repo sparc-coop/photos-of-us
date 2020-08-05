@@ -1,4 +1,7 @@
-﻿.line {
-    height: 1px;
-    background-color: rgb(222,227,233);
+﻿@import 'variables.scss';
+
+.line {
+    background: $yellow;
+    width: 140px;
+    height: 2px;
 }

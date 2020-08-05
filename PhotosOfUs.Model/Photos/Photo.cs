@@ -18,14 +18,7 @@ namespace PhotosOfUs.Core.Photos
             _photoTag = new HashSet<PhotoTag>();
         }
 
-        public Photo(int userId, string filename, int eventId, int? cardId) : this(userId, filename, null)
-        {
-            EventId = eventId;
-            CardId = cardId;
-            Filename = Filename.Replace($"{userId}/", $"{userId}/{eventId}/");
-        }
-
-        public Photo(int userId, string filename, Stream stream)
+        public Photo(int userId, string filename, int eventId, int? cardId, Stream stream)
         {
             var urlTimeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
             var extension = filename.Contains('.') ? filename.Split('.').Last() : ".jpg";
@@ -35,6 +28,10 @@ namespace PhotosOfUs.Core.Photos
             UploadDateUtc = DateTime.UtcNow;
             PhotographerId = userId;
             _photoTag = new HashSet<PhotoTag>();
+
+            EventId = eventId;
+            CardId = cardId;
+            Filename = Filename.Replace($"{userId}/", $"{userId}/{eventId}/");
         }
 
         public int Id { get; set; }

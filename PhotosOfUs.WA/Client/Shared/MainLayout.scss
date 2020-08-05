@@ -1,7 +1,11 @@
 ﻿@import '../wwwroot/css/Components/variables.scss';
 
-body {
+html,body {
     font-family: 'Dosis', sans-serif;
+}
+
+p{
+    font-family: 'Open Sans';
 }
 
 .home-layout {

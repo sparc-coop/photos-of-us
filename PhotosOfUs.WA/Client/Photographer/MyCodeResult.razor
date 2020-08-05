@@ -1,0 +1,67 @@
+@page "/MyCode/{photoCode}"
+
+@layout MainLayout
+
+<div class="container-xl">
+    <div class="mt-5 mt-sm-7">
+        <h2 class="text-dark">
+            Photos With Code <span class="text-primary">@photoCode</span>
+        </h2>
+        <div class="line my-4">
+
+        </div>
+    </div>
+
+    <div class="row mx-sm-n3">
+        @foreach (var item in photos)
+        {
+            <div class="col-sm-6 px-sm-3 my-4" style="height: 350px;">
+                <div style="border-radius: 8px; background-size: cover; position: relative; height: 100%;
+                    background: linear-gradient(-180deg, rgba(0, 0, 0, 0) 44%, rgb(0, 0, 0) 100%), url('@item.Url'),no-repeat center center fixed; background-repeat: no-repeat;">
+                    <a class="full-height-width" href="/Photo/@item.Id/@item.Name">
+                    </a>
+
+                    <span style="color: #fff; opacity: .8; font-weight: 600; font-size: 20px; position: absolute; bottom: 12px; right: 15px;">
+                        @item.Name
+
+                        <span class="material-icons" style="transform: rotateY(180deg);">
+                            reply
+                        </span>
+                    </span>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="mt-5">
+        <h5 class="text-yellow">
+            Like What You See?
+        </h5>
+        <h4 class="text-primary mb-5">
+            They Would Look Better On Your Wall!
+        </h4>
+        <p class="text-dark mb-6" style="font-size: 18px;">
+            Why not purchase a print and get it shipped right to your door?
+            We offer many different sizes and stock. Or alternatively, you can purchase a digital version.
+        </p>
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public string photoCode { get; set; }
+
+    public List<Photo> photos = new List<Photo>();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        photos = await GetPhotos(photoCode);
+    }
+
+    public async Task<List<Photo>> GetPhotos(string photoCode)
+    {
+        return await Http.GetFromJsonAsync<List<Photo>>($"Photo/MyCode/{photoCode}");
+    }
+}

@@ -1,5 +1,9 @@
 ﻿@import 'variables.scss';
 
+input {
+    font-family: "Open Sans";
+}
+
 .input {
     background: #FFFFFF;
     box-shadow: 0 2px 25px 0 rgba(0,0,0,0.06);
@@ -10,7 +14,6 @@
     border: none;
     border-radius: 6px;
     /*font-weight: 600;*/
-
     &::placeholder {
         color: #AEAEAE;
         font-weight: 400;
@@ -85,7 +88,7 @@ input[type="radio"]:checked.yes-no-checkbox + label {
 
 
 .input-group {
-    input{
+    input {
         border: none;
     }
 
@@ -98,6 +101,24 @@ input[type="radio"]:checked.yes-no-checkbox + label {
 
         ~ .form-control {
             margin-left: 0;
+        }
+    }
+
+    &.input-group-lg {
+        input {
+            padding: 12px 18px;
+            font-size: 20px;
+            color: #194952;
+            border-radius: 8px 0 0 8px;
+            background: #f6ffff;
+            outline: none;
+        }
+
+        .input-group-text {
+            font-size: 20px;
+            font-weight: 600;
+            font-family: 'Open Sans';
+            border-radius: 0 8px 8px 0;
         }
     }
 }

@@ -1,16 +1,9 @@
 ﻿@import 'variables.scss';
 
-.table {
-    thead {
-        th {
-            border-bottom: 1px solid $grey;
-            color: $grey;
-            font-weight: 400;
-        }
-    }
-    tbody{
-        td{
-            font-weight: 500;
+.table-clear.table-striped {
+    tbody {
+        tr:nth-of-type(odd) {
+            background: rgba(255,226,97,.16);
         }
     }
 }

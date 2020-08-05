@@ -14,7 +14,7 @@
     </Authorized>
     <NotAuthorized>
         <li class="nav-item">
-            <NavLink class="btn btn-light" href="AzureADB2C/Account/SignIn" onclick="return gtag_report_conversion('/AzureADB2C/Account/SignIn?From=Navbar')">
+            <NavLink class="btn btn-light" @onclick="Login">
                 Login
             </NavLink>
         </li>
@@ -26,5 +26,10 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void Login()
+    {
+        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
     }
 }

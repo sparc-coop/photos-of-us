@@ -1,0 +1,52 @@
+@page "/MyCode"
+
+@layout MainLayout
+
+<div class="landing">
+    <div class="main-landing">
+        <div class="main-landing--img-container">
+            @foreach (var photo in RandomPhotos)
+            {
+                <img src="@photo.Url" style="top: @RandomCoordinate(); left: @RandomCoordinate()" class="random-photo" alt="@photo.Name" />
+            }
+        </div>
+        <div class="welcome-section">
+            <div class="welcome-text">less chat, more snaps</div>
+            <div class="tagline">Find your photos</div>
+            <div class="input-group input-group-lg" style="max-width: 275px;">
+                <input type="text" class="form-control" placeholder="ABC123" aria-label="Photo Code" @bind="myCode">
+                <div class="input-group-append" style="cursor: pointer;" @onclick="NavigateToMyCode">
+                    <span class="input-group-text">Go!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<RandomPhotoModel> RandomPhotos = new List<RandomPhotoModel>();
+    public string myCode = string.Empty;
+
+    protected async override Task OnInitializedAsync()
+    {
+        RandomPhotos = await GetPhotos(10);
+    }
+
+    public string RandomCoordinate() => new Random().Next(0, 80) + "%";
+
+    public async Task<List<RandomPhotoModel>> GetPhotos(int count)
+    {
+        return await Http.GetFromJsonAsync<List<RandomPhotoModel>>($"Photo/Dashboard/{count}");
+    }
+
+    void NavigateToMyCode()
+    {
+        if (string.IsNullOrWhiteSpace(myCode))
+        {
+            ToastService.ShowInfo("Please type the photo code");
+            return;
+        }
+
+        NavigationManager.NavigateTo($"/MyCode/{myCode}");
+    }
+}
