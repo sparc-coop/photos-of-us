@@ -13,15 +13,14 @@ namespace PhotosOfUs.Core.Events
         {
 
         }
-        public Event(int eventId, int userId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode,
+        public Event(int photographerId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode,
             decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness,
             int separatorWidth, int brandingStyle)
         {
-            EventId = eventId;
-            UserId = userId;
+            PhotographerId = photographerId;
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Url = url ?? throw new ArgumentNullException(nameof(url));
-            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Description = description;
             CreatedDateUtc = DateTime.UtcNow;
             HomepageTemplate = homepageTemplate ?? throw new ArgumentNullException(nameof(homepageTemplate));
             PersonalLogoUrl = personalLogoUrl ?? throw new ArgumentNullException(nameof(personalLogoUrl));
@@ -42,8 +41,9 @@ namespace PhotosOfUs.Core.Events
             //User = user ?? throw new ArgumentNullException(nameof(user));
         }
 
-        public int EventId { get; protected set; }
-        public int UserId { get; protected set; }
+        public int Id { get; protected set; }
+        public int PhotographerId { get; protected set; }
+
         public string Name { get; protected set; }
         public string Url { get; protected set; }
         public string Description { get; protected set; }
@@ -66,7 +66,7 @@ namespace PhotosOfUs.Core.Events
         public IReadOnlyCollection<Card> Cards => _cards;
         private readonly HashSet<Photo> _photos;
         public IReadOnlyCollection<Photo> Photos => _photos;
-        public User User { get; protected set; }
+        public User Photographer { get; protected set; }
 
         public void AddNewCards(int quantity)
         {

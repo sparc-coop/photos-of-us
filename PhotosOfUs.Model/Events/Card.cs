@@ -9,7 +9,7 @@ namespace PhotosOfUs.Core.Events
         private Card() { }
         public Card(Event ev)
         {
-            EventId = ev.EventId;
+            EventId = ev.Id;
             CreatedDateUtc = DateTime.UtcNow;
             Code = NewCode(7);
             //do

@@ -130,8 +130,12 @@ namespace PhotosOfUs.Model.Models
         private void ConfigureEvent(EntityTypeBuilder<Event> entity)
         {
             entity.ToTable("Event");
-            entity.Property(e => e.EventId).HasColumnName("EventID");
-            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.HasKey(e => e.Id);
+            entity.HasOne(x => x.Photographer)
+                .WithMany()
+                .HasForeignKey(x => x.PhotographerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             entity.OwnsMany(e => e.Cards, card =>
             {
                 card.HasKey(x => x.Id);

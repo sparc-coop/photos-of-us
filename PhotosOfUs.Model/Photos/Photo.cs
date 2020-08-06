@@ -34,6 +34,17 @@ namespace PhotosOfUs.Core.Photos
             Filename = Filename.Replace($"{userId}/", $"{userId}/{eventId}/");
         }
 
+        public void AssociateToCard(Card card)
+        {
+            if (EventId != card.EventId)
+            {
+                throw new ArgumentException();
+            }
+
+            CardId = card.Id;
+        }
+
+
         public int Id { get; set; }
         public int PhotographerId { get; set; }
         public string Url { get; set; }
