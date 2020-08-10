@@ -1,4 +1,40 @@
-<h3>Search</h3>
+@page "/search"
+
+@layout MainLayout
+
+    
+
+        @* Search Bar Section *@
+        <div class="background" style="background-color: green; opacity: 0.2;">
+            <div class="container-xl">
+                <div class="d-flex flex-column align-items-center justify-content-center" style="height: 480px;">
+                    <h2 class="mb-6 text-white">LESS FAFF, MORE SNAPS.</h2>
+                    @*<div class="search-bar mb-6">*Search bar here*</div>*@
+                    <input type="text" class="form-control mb-6" placeholder="Search Gallery..." aria-label="Photo Code" @bind="myCode">
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="container-xl">
+            @* Image Section *@
+            <div class="d-flex justify-content-between" style="margin-top: 60px;">
+                <div class="col-sm">
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 10.png" alt="Alternate Text" />
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
+                </div>
+
+                <div class="col-sm ml-4 mr-4">
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
+                </div>
+
+                <div class="col-sm">
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 10.png" alt="Alternate Text" />
+                </div>
+            </div>
+        </div>
 
 @code {
 
