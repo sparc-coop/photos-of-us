@@ -109,6 +109,9 @@ namespace PhotosOfUs.WA.Server
 
         private void AddCommands(IServiceCollection services)
         {
+            // TODO: Add scrutor
+            // https://andrewlock.net/using-scrutor-to-automatically-register-your-services-with-the-asp-net-core-di-container/ 
+
             // Photos
             //services.AddTransient<...Command>();
 
@@ -165,6 +168,7 @@ namespace PhotosOfUs.WA.Server
             services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Photographer", policy => policy.RequireRole("Admin", "Photographer"));
                 options.AddPolicy("Customer", policy =>
                 {
                     policy.RequireRole("Admin", "User");

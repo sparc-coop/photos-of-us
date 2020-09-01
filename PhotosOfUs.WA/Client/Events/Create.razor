@@ -1,0 +1,223 @@
+@page "/Event/Create"
+@*@attribute [Authorize(Policy = "Photographer")]*@
+
+@*@attribute [Authorize]*@
+
+<form class="container-xl my-5">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" @bind="@Model.Name">
+    </div>
+    <div class="form-group">
+        <label>Event Url</label>
+        <input type="text" class="form-control" aria-describedby="urlHelp" @bind="@Model.Url" pattern="^[a-z0-9-]*$">
+        <small id="urlHelp" class="form-text text-muted">www.photosof.us/@Model.Url</small>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" @bind="@Model.Description" rows="3"></textarea>
+    </div>
+
+    <section>
+        <h3>Event Site &amp; Card Settings</h3>
+        <h4>Website &amp; Card Layout</h4>
+
+        <div class="homepage-template">
+            <figure @onclick="@(() => SetHomepageTemplate(2))" class="@(Model.HomepageTemplate == "2" ? "selected" : "")">
+                <div class="check">&#10003;</div>
+                <img src="/images/full_image.png" />
+                <h3>Full Image Background</h3>
+                <p>
+                    A large, full screen image background, with all information centered within the page.
+                </p>
+            </figure>
+            <figure @onclick="@(() => SetHomepageTemplate(0))" class="@(Model.HomepageTemplate == "0" ? "selected" : "")">
+                <div class="check">&#10003;</div>
+                <img src="/images/image_right.png" />
+                <h3>1/2 Split - Image Right</h3>
+                <p>
+                    A side by side layout, with a full-height image on the right, information and branding
+                    on
+                    the left.
+                </p>
+            </figure>
+            <figure @onclick="@(() => SetHomepageTemplate(1))" class="@(Model.HomepageTemplate == "1" ? "selected" : "")">
+                <div class="check">&#10003;</div>
+                <img src="/images/image_left.jpg" />
+                <h3>1/2 Split - Image Left</h3>
+                <p>
+                    A side by side layout, with a full height image on the left, information and branding
+                    on
+                    the right.
+                </p>
+            </figure>
+        </div>
+    </section>
+
+    <section>
+        <h4>Event Cover Image</h4>
+        <p>
+            Upload the file you wish to use as your main image. This template requires a minimum
+            resolution of 550 x 1040 as a Jpeg or PNG.
+        </p>
+
+        <div class="featured-image">
+            <figure ngf-drop ngf-select ng-model="settings.featuredImage" ngf-pattern="image/*" accept="image/*">
+                <img ngf-thumbnail="settings.featuredImage" alt="Cover Image" />
+                <figcaption ng-show="!settings.featuredImage">
+                    Drag image here or click the button on the right to choose from your computer.
+                </figcaption>
+
+                <InputFile OnChange="(async x => await HandleFileSelected(x))" UnmatchedParameters="@accept" />
+
+                <div class="close" ng-if="settings.featuredImage" ng-click="removeFeaturedImage($event)">X</div>
+            </figure>
+            <div>
+                <button ngf-select ng-model="settings.featuredImage" accept="image/*">Select Image...</button>
+                <div ng-show="settings.featuredImage">
+                    <label>Overlay</label>
+                    <p>
+                        Using an overlay can help brighten or darken your image. This can be helpful if
+                        your template
+                        has overlapping text, or your image has high contrast to the rest of your website.
+                    </p>
+                    <label>
+                        Overlay Color
+                        <ColorPicker Color="Model.OverlayColorCode" />
+                    </label>
+                    <label>
+                        Opacity
+                        <select @bind="@Model.OverlayOpacity">
+                            @foreach (var opacity in Opacities)
+                            {
+                                <option value="@opacity">
+                                    @(opacity)%
+                                </option>
+                            }
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h4>Event Colors</h4>
+        <p>
+            Pick your brand colors that will be displayed on the event page. Don't worry, you can always
+            come back and change them later!
+        </p>
+        <div class="flex">
+            <label>
+                Background Color
+                <ColorPicker Color="Model.BackgroundColorCode" />
+            </label>
+            <label>
+                Accent Color
+                <ColorPicker Color="Model.AccentColorCode" />
+            </label>
+            <label>
+                Header Color
+                <ColorPicker Color="Model.HeaderColorCode" />
+            </label>
+            <label>
+                Body Color
+                <ColorPicker Color="Model.BodyColorCode" />
+            </label>
+        </div>
+    </section>
+
+    <section>
+        <h4>Photos of Us Branding</h4>
+        <p>
+            Using the Photos of Us Branding allows you to print cards completely free! You can add your own
+            branding to give your cards that extra pop!
+        </p>
+
+        <div class="branding-selector">
+            <figure @onclick="@(() => Model.BrandingStyle = 1)" class="@(Model.BrandingStyle == 1 ? "selected" : "")">
+                <img src="/images/account/dark branding@1x.png" alt="Dark Branding" />
+                <div class="check">&#10003;</div>
+            </figure>
+            <figure @onclick="@(() => Model.BrandingStyle = 2)" class="@(Model.BrandingStyle == 2 ? "selected" : "")">
+                <img src="/images/account/light branding@1x.png" alt="Light Branding" />
+                <div class="check">&#10003;</div>
+            </figure>
+            @*
+                <figure ng-class="{ selected: settings.brandingStyle == 0 }" ng-click="settings.brandingStyle = 0">
+                    <img src="/images/account/Remove Branding@1x.png" alt="No Branding" />
+                    <div class="check">&#10003;</div>
+                </figure>
+            *@
+        </div>
+    </section>
+
+
+    <div class="form-group">
+        <label>Homepage Template</label>
+        <input type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>FeaturedImageUrl</label>
+        <input type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>OverlayColorCode</label>
+        <input type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>OverlayOpacity</label>
+        <input type="number" class="form-control">
+    </div>
+    <div class="form-group form-check">
+        <label>SeparatorStyle</label>
+
+        <input type="checkbox" class="form-check-input" id="separator1">
+        <label class="form-check-label" for="separator1">Separator Style 1</label>
+    </div>
+    <button type="button" disabled="@IsDisabled" class="btn btn-primary" @onclick="Save">Create Event</button>
+
+    <div>
+        <label>Page Preview</label>
+
+        <header>
+            <span>https://photosof.us/@Model.Url</span>
+        </header>
+        @*<Preview event="settings"></Preview>*@
+    </div>
+
+</form>
+
+@code {
+    Dictionary<string, object> accept = new Dictionary<string, object>()
+    {
+        {"accept", "image/*"},
+        {"capture", "camera"}
+    };
+    public CreateEventModel Model = new CreateEventModel();
+    public IEnumerable<int> Opacities = Enumerable.Range(0, 101).Where(x => x % 5 == 0);
+
+    public void SetHomepageTemplate(int templateId) => Model.HomepageTemplate = templateId.ToString();
+    public string IsDisabled => string.IsNullOrWhiteSpace(Model.Name) || string.IsNullOrWhiteSpace(Model.Url) || string.IsNullOrWhiteSpace(Model.Description) ? "disabled" : "";
+
+    public void Save()
+    {
+
+    }
+
+
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        var file = files.FirstOrDefault();
+
+        if (file == null)
+        {
+            return;
+        }
+
+        //string base64image = System.Convert.ToBase64String(await StreamUtils.StreamToByte(file.Data));
+        // upload file
+
+    }
+}

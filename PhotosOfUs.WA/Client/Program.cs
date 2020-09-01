@@ -62,6 +62,7 @@ namespace PhotosOfUs.WA.Client
             builder.Services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Photographer", policy => policy.RequireRole("Photographer"));
                 options.AddPolicy("Customer", policy =>
                 {
                     policy.RequireRole("Admin", "User");

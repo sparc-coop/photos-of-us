@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 
 namespace PhotosOfUs.WA.Server.Utils
 {
+
+
     public static class AzureB2CExtensions
     {
         public static void OnLogin(this AuthenticationBuilder builder, Action<ClaimsPrincipal> onLogin)

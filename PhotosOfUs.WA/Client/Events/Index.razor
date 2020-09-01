@@ -1,13 +1,60 @@
 @page "/Events"
-@*@attribute [Authorize]*@
+@*@attribute [Authorize(Policy = "Photographer")]*@
 
-<div class="dashboard" ng-controller="DashboardCtrl">
-    <h1>Hello</h1>
-    <hr />
+@attribute [Authorize]
 
-    <button class="button--red tutorial--skip" ng-class="{'tutorial--skip--show': skipTour == true}" ng-click="finishTour()">Skip Tutorial</button>
+<div class="container-xl">
+    <div class="mt-5 mt-sm-7">
+        <h2 class="text-dark">
+            My Events
+        </h2>
+        <div class="line my-4">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col ml-sm-auto">
+            <a class="btn btn-secondary" href="/Events/Create">
+                <span class="material-icons">
+                    add
+                </span> Create Event
+            </a>
+        </div>
+    </div>
+
+    <div class="row mx-sm-n3">
+        @foreach (var item in events)
+        {
+            <div class="col-md-4 px-sm-3 my-4">
+                <a href="/Event/@item.Id">
+                    <img src="@(item.Style.FeaturedImageUrl ??  "/images/photo/background.jpeg")" />
+                </a>
+
+                <a class="text-black" href="/Event/@item.Id">
+                    <h5 class="mt-3">
+                        @item.Name
+                    </h5>
+                </a>
+
+                <p class="text-dark-grey2 blogpost-author mt-2">
+                    @item.Photos.Count - @item.CreatedDateUtc.ToLocalTime().ToString("dd MMM yyyy")
+                </p>
+            </div>
+        }
+    </div>
 </div>
 
 @code {
+    List<Event> events = new List<Event>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        events = await GetEvents();
+    }
+
+    public async Task<List<Event>> GetEvents()
+    {
+        return await Http.GetFromJsonAsync<List<Event>>($"Event/MyEvents/");
+    }
 
 }

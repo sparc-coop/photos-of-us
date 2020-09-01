@@ -142,6 +142,17 @@ namespace PhotosOfUs.Model.Models
                 card.Property(x => x.CreatedDateUtc).HasColumnType("datetime");
 
             });
+
+            entity.HasIndex(x => x.Url)
+                .IsUnique();
+
+            entity.OwnsOne(x => x.Style, style =>
+            {
+                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
+                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
+                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
+            });
+
             //entity.HasMany(x => x.Photos, photo =>
             //{
             //    photo.HasKey(x => x.Id);

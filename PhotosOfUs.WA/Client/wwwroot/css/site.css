@@ -437,56 +437,12 @@ $yellow: #FFD40C;*/
   .data-items .card-data {
     flex: 0 0 calc(100% - 20px); } }
 
-.card-data {
-  width: 367px;
-  height: 356px;
-  background: #FFFFFF;
-  box-shadow: 0 2px 25px 0 rgba(0, 0, 0, 0.06);
-  border-radius: 6px;
-  padding: 35px 20px;
+.card-photo {
+  height: 350px;
+  border-radius: 8px;
+  background-size: cover;
   position: relative;
-  border: none; }
-  .card-data .header-buttons {
-    position: absolute;
-    right: 15px;
-    top: 15px; }
-    .card-data .header-buttons .material-icons {
-      cursor: pointer; }
-  .card-data .header {
-    font-size: 22px;
-    color: #2D2E2E;
-    letter-spacing: 0;
-    font-weight: 600; }
-  .card-data p.description {
-    font-size: 14px;
-    color: #545454;
-    letter-spacing: 0; }
-  .card-data .data {
-    width: 100%;
-    font-size: 18px;
-    color: #545454;
-    letter-spacing: 0; }
-    .card-data .data > tr > td {
-      padding: 8px 0px; }
-  .card-data .field label {
-    display: inline-block;
-    margin-bottom: 0;
-    color: #757575;
-    font-size: 13px; }
-  .card-data .field img {
-    width: 100%; }
-  .card-data .card-user-list {
-    margin-left: 15px; }
-    .card-data .card-user-list .user-initials, .card-data .card-user-list .user-avatar {
-      margin-left: -15px; }
-  .card-data.card-data-dark {
-    background: #000000; }
-    .card-data.card-data-dark header {
-      color: #FFFFFF; }
-    .card-data.card-data-dark .content p.description {
-      color: #FFFFFF; }
-    .card-data.card-data-dark table {
-      color: #FFFFFF; }
+  height: 100%; }
 
 .card-add-new {
   background: #DBF1FD;
@@ -501,42 +457,6 @@ $yellow: #FFD40C;*/
       text-align: center; }
     .card-add-new > div p {
       font-size: 22px; }
-
-.card-presentation {
-  padding: unset;
-  height: 444px; }
-  .card-presentation .image-header img {
-    width: 100%;
-    box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 6px 6px 0px 0px;
-    object-fit: cover;
-    height: 220px; }
-  .card-presentation .header {
-    padding: 20px 20px 10px; }
-  .card-presentation .content {
-    padding: 0px 20px; }
-    .card-presentation .content .description {
-      max-height: 82px;
-      overflow: hidden; }
-  .card-presentation .footer {
-    padding: 0px 20px 20px;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0; }
-    .card-presentation .footer i.material-icons-outlined, .card-presentation .footer i.material-icons {
-      margin-right: 5px; }
-    .card-presentation .footer span {
-      font-size: 14px;
-      line-height: 24px; }
-
-.user-card .user-info {
-  display: flex; }
-  .user-card .user-info > p {
-    margin-bottom: 0; }
-  .user-card .user-info .user-initials, .user-card .user-info .user-avatar {
-    margin-right: 12px;
-    margin-top: -5px; }
 
 .user-floating-menu {
   position: absolute;
@@ -572,38 +492,6 @@ $yellow: #FFD40C;*/
     .floating-buttons .hoverable:hover {
       display: block !important; }
 
-.card-testimonial {
-  height: 328px;
-  width: 100%;
-  padding: 35px 20px; }
-  .card-testimonial .card-body {
-    padding-top: 40px; }
-    .card-testimonial .card-body .card-title, .card-testimonial .card-body .card-subtitle {
-      text-align: center; }
-    .card-testimonial .card-body .card-title {
-      color: #000000; }
-    .card-testimonial .card-body .card-subtitle {
-      color: #757575; }
-    .card-testimonial .card-body .card-text {
-      margin-top: 40px;
-      color: #757575;
-      letter-spacing: 0;
-      line-height: 26px; }
-  .card-testimonial .photo-placeholder {
-    height: 100px;
-    width: 100px;
-    position: absolute;
-    border-radius: 100%;
-    top: -50px;
-    left: calc(50% - 50px);
-    background: #FFFFFF; }
-    .card-testimonial .photo-placeholder img {
-      height: 86px;
-      width: 86px;
-      border-radius: 100%;
-      margin-left: 7px;
-      margin-top: 7px; }
-
 .arrow-down::after {
   content: '';
   position: absolute;
@@ -613,61 +501,6 @@ $yellow: #FFD40C;*/
   left: 50%;
   background: inherit;
   transform: translate(-50%, -50%) rotate(45deg); }
-
-.card-pricing {
-  box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  background: #FFFFFF;
-  text-align: center;
-  padding: 4rem 1rem; }
-  .card-pricing .card-body p {
-    color: #757575;
-    margin-bottom: 0px; }
-  .card-pricing .card-body button {
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-top: 2rem;
-    font-weight: 500; }
-  .card-pricing .card-body .card-pricing-prices {
-    margin-bottom: 2rem; }
-    .card-pricing .card-body .card-pricing-prices h5 {
-      vertical-align: top;
-      margin-top: 4px; }
-    .card-pricing .card-body .card-pricing-prices h2 {
-      font-weight: 500;
-      line-height: 1; }
-    .card-pricing .card-body .card-pricing-prices * {
-      display: inline-block; }
-  .card-pricing .card-header {
-    background: none;
-    border: none; }
-    .card-pricing .card-header img {
-      height: 52px;
-      margin-bottom: 2rem; }
-
-.card-marketplace {
-  box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  font-weight: 600; }
-  .card-marketplace .card-header {
-    padding: 0px; }
-    .card-marketplace .card-header img {
-      width: 100%;
-      box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.1);
-      border-radius: 6px 6px 0px 0px;
-      object-fit: cover;
-      height: 210px; }
-  .card-marketplace .card-body {
-    padding: 2rem; }
-    .card-marketplace .card-body h5 {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis; }
-    .card-marketplace .card-body .card-marketplace-created-by, .card-marketplace .card-body .card-marketplace-created-date {
-      font-size: 14px;
-      letter-spacing: 3px;
-      line-height: 23px;
-      text-transform: uppercase; }
 
 /*$black: #1B1B1B;*/
 /*$black: #1B1B1B;
@@ -1124,6 +957,12 @@ $yellow: #FFD40C;*/
 .p-label {
   color: #4c5871;
   font-size: 18px; }
+
+label {
+  font-family: 'Open Sans';
+  font-size: 12px;
+  color: #000000;
+  font-weight: 600; }
 
 /*$black: #1B1B1B;*/
 /*$black: #1B1B1B;
