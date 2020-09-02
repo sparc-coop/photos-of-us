@@ -13,32 +13,15 @@ namespace PhotosOfUs.Core.Events
         {
 
         }
-        public Event(int photographerId, string name, string url, string description, string homepageTemplate, string personalLogoUrl, string featuredImageUrl, string overlayColorCode,
-            decimal? overlayOpacity, string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, string separatorStyle, int separatorThickness,
-            int separatorWidth, int brandingStyle)
+
+        public Event(int photographerId, string name, string url, string description, EventStyle eventStyle)
         {
             PhotographerId = photographerId;
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Url = url ?? throw new ArgumentNullException(nameof(url));
             Description = description;
+            Style = eventStyle ?? throw new ArgumentNullException(nameof(eventStyle));
             CreatedDateUtc = DateTime.UtcNow;
-            HomepageTemplate = homepageTemplate ?? throw new ArgumentNullException(nameof(homepageTemplate));
-            PersonalLogoUrl = personalLogoUrl ?? throw new ArgumentNullException(nameof(personalLogoUrl));
-            FeaturedImageUrl = featuredImageUrl ?? throw new ArgumentNullException(nameof(featuredImageUrl));
-            OverlayColorCode = overlayColorCode ?? throw new ArgumentNullException(nameof(overlayColorCode));
-            OverlayOpacity = overlayOpacity;
-            AccentColorCode = accentColorCode ?? throw new ArgumentNullException(nameof(accentColorCode));
-            BackgroundColorCode = backgroundColorCode ?? throw new ArgumentNullException(nameof(backgroundColorCode));
-            HeaderColorCode = headerColorCode ?? throw new ArgumentNullException(nameof(headerColorCode));
-            BodyColorCode = bodyColorCode ?? throw new ArgumentNullException(nameof(bodyColorCode));
-            SeparatorStyle = separatorStyle ?? throw new ArgumentNullException(nameof(separatorStyle));
-            SeparatorThickness = separatorThickness;
-            SeparatorWidth = separatorWidth;
-            BrandingStyle = brandingStyle;
-
-            //Cards = cards ?? throw new ArgumentNullException(nameof(cards));
-            //Photos = photos ?? throw new ArgumentNullException(nameof(photos));
-            //User = user ?? throw new ArgumentNullException(nameof(user));
         }
 
         public int Id { get; protected set; }
@@ -48,23 +31,14 @@ namespace PhotosOfUs.Core.Events
         public string Url { get; protected set; }
         public string Description { get; protected set; }
         public DateTime CreatedDateUtc { get; protected set; }
-        public string HomepageTemplate { get; protected set; }
-        public string PersonalLogoUrl { get; protected set; }
-        public string FeaturedImageUrl { get; protected set; }
-        public string OverlayColorCode { get; protected set; }
-        public decimal? OverlayOpacity { get; protected set; }
-        public string AccentColorCode { get; protected set; }
-        public string BackgroundColorCode { get; protected set; }
-        public string HeaderColorCode { get; protected set; }
-        public string BodyColorCode { get; protected set; }
-        public string SeparatorStyle { get; protected set; }
-        public int SeparatorThickness { get; protected set; }
-        public int SeparatorWidth { get; protected set; }
-        public int BrandingStyle { get; protected set; }
+        public EventStyle Style { get; protected set; }
+
 
         private readonly HashSet<Card> _cards;
         public IReadOnlyCollection<Card> Cards => _cards;
         private readonly HashSet<Photo> _photos;
+
+
         public IReadOnlyCollection<Photo> Photos => _photos;
         public User Photographer { get; protected set; }
 
@@ -77,26 +51,6 @@ namespace PhotosOfUs.Core.Events
         public void AddPhoto(Photo photo)
         {
             _photos.Add(photo);
-        }
-
-        public enum HomepageTemplates
-        {
-            TwoOneSplit,
-            OneTwoSplit,
-            FullBackground
-        }
-
-        public enum SeparatorStyles
-        {
-            StraightLine,
-            DottedLine
-        }
-
-        public enum FeatureTypes
-        {
-            Dark,
-            Light,
-            None
         }
 
         public void DeletePhotos(List<int> photoIds)
@@ -120,7 +74,7 @@ namespace PhotosOfUs.Core.Events
                 photos.ForEach(x => x.ReplaceTags(tags));
             }
 
-            
+
         }
     }
 }

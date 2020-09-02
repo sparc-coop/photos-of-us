@@ -16,8 +16,7 @@
         @foreach (var item in photos)
         {
             <div class="col-sm-6 px-sm-3 my-4" style="height: 350px;">
-                <div style="border-radius: 8px; background-size: cover; position: relative; height: 100%;
-                    background: linear-gradient(-180deg, rgba(0, 0, 0, 0) 44%, rgb(0, 0, 0) 100%), url('@item.Url'),no-repeat center center fixed; background-repeat: no-repeat;">
+                <div class="card-photo" style="background: linear-gradient(-180deg, rgba(0, 0, 0, 0) 44%, rgb(0, 0, 0) 100%), url('@item.Url'),no-repeat center center fixed; background-repeat: no-repeat;">
                     <a class="full-height-width" href="/Photo/@item.Id/@item.Name">
                     </a>
 

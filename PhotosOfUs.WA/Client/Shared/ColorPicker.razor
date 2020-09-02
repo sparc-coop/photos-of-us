@@ -8,8 +8,13 @@
 
     private ElementReference Element;
 
-    protected async override Task OnInitializedAsync()
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
+        if (!firstRender)
+        {
+            return;
+        }
+
         await JsRuntime.InvokeAsync<object>("initColorPicker", Element, DotNetObjectReference.Create(this));
     }
 

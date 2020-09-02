@@ -25,6 +25,22 @@
     </div>
     <script src="_content/Microsoft.Authentication.WebAssembly.Msal/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
+    <!--color picker-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script>
+        window.initColorPicker = function (el, scope) {
+            const pickr = Pickr.create({
+                el: el,
+                theme: 'nano'
+            });
+            pickr.on('save', function (color) {
+                scope.invokeMethodAsync('SetColor', color.toHEXA().toString());
+            });
+            return pickr;
+        };
+    </script>
+    <!--color picker-->
     <script>navigator.serviceWorker.register('service-worker.js');</script>
 </body>
 
