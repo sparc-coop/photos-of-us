@@ -146,8 +146,28 @@ namespace PhotosOfUs.Model.Models
             entity.HasIndex(x => x.Url)
                 .IsUnique();
 
+
+
             entity.OwnsOne(x => x.Style, style =>
             {
+                style.Property(x => x.SeparatorStyle)
+            .IsRequired()
+            .HasConversion(
+                g => g.Value,
+                y => SeparatorStyle.Get(y));
+
+                style.Property(x => x.ThemeColor)
+                .IsRequired()
+                .HasConversion(
+                    g => g.Value,
+                    y => ThemeColor.Get(y));
+
+                style.Property(x => x.HomepageTemplate)
+                .IsRequired()
+                .HasConversion(
+                    g => g.Value,
+                    y => HomepageTemplate.Get(y));
+
                 //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
                 //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
                 //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
@@ -196,7 +216,7 @@ namespace PhotosOfUs.Model.Models
                 y => Role.Get(y));
         }
 
-        
+
 
     }
 }

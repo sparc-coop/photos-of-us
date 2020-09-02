@@ -97,7 +97,7 @@ namespace PhotosOfUs.WA.Server
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseEndpoints(endpoints => 
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
