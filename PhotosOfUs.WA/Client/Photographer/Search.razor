@@ -10,7 +10,22 @@
                 <div class="d-flex flex-column align-items-center justify-content-center" style="height: 480px;">
                     <h2 class="mb-6 text-white">LESS FAFF, MORE SNAPS.</h2>
                     @*<div class="search-bar mb-6">*Search bar here*</div>*@
-                    <input type="text" class="form-control mb-6" placeholder="Search Gallery..." aria-label="Photo Code">
+                    @*<input type="text" class="form-control mb-6" placeholder="Search Gallery..." aria-label="Photo Code">*@
+
+                    <BlazoredTypeahead SearchMethod="SearchTags"
+                                       @bind-Value="SelectedTag">
+                        <SelectedTemplate Context="tag">
+                            @tag.Name
+                        </SelectedTemplate>
+                        <ResultTemplate Context="tag">
+                            @tag.Name
+                        </ResultTemplate>
+                    </BlazoredTypeahead>
+
+                    @if (SelectedTag != null)
+                    {
+                        <p>Selected Tag is: @SelectedTag.Name</p>
+                    }
                 </div>
             </div>
         </div>
@@ -41,10 +56,6 @@
                         <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
                         <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
                     }
-
-
-                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
-                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
                 </div>
 
                 <div class="col-sm">
@@ -75,4 +86,23 @@
     {
         return await Http.GetFromJsonAsync<List<RandomPhotoModel>>($"Photo/Dashboard/{count}");
     }
+
+    private List<Tag> Tags;
+
+    private Tag SelectedTag;
+
+    protected override void OnInitialized()
+    {
+        Tags = new List<Tag> {
+            new Tag("The Matrix"),
+            new Tag("Hackers"),
+            new Tag("War Games") };
+    }
+
+    private async Task<IEnumerable<Tag>> SearchTags(string searchText)
+    {
+        return await Task.FromResult(Tags.Where(x => x.Name.ToLower().Contains(searchText.ToLower())).ToList());
+    }
+
+
 }

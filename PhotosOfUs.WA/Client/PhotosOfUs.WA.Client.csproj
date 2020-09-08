@@ -153,6 +153,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.Typeahead" Version="4.3.0" />
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="Kuvio.Kernel.AspNet.Blazor" Version="1.2.5" />
     <PackageReference Include="Kuvio.Kernel.Core" Version="1.5.5" />
