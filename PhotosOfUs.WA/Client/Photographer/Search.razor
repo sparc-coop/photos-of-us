@@ -11,7 +11,10 @@
                     <h2 class="mb-6 text-white">LESS FAFF, MORE SNAPS.</h2>
                     @*<div class="search-bar mb-6">*Search bar here*</div>*@
                     @*<input type="text" class="form-control mb-6" placeholder="Search Gallery..." aria-label="Photo Code">*@
+                    @*@if (Tags)
+                    {
 
+                    }*@
                     <BlazoredTypeahead SearchMethod="SearchTags"
                                        @bind-Value="SelectedTag">
                         <SelectedTemplate Context="tag">
@@ -74,9 +77,11 @@
 @code {
     public List<RandomPhotoModel> RandomPhotos = new List<RandomPhotoModel>();
     public string SearchCode = string.Empty;
+    private List<Tag> Tags = new List<Tag>();
 
     protected async override Task OnInitializedAsync()
     {
+        Tags = await GetTags();
         RandomPhotos = await GetPhotos(30);
     }
 
@@ -87,17 +92,12 @@
         return await Http.GetFromJsonAsync<List<RandomPhotoModel>>($"Photo/Dashboard/{count}");
     }
 
-    private List<Tag> Tags;
+    public async Task<List<Tag>> GetTags()
+    {
+        return await Http.GetFromJsonAsync<List<Tag>>($"tag");
+    }
 
     private Tag SelectedTag;
-
-    protected override void OnInitialized()
-    {
-        Tags = new List<Tag> {
-            new Tag("The Matrix"),
-            new Tag("Hackers"),
-            new Tag("War Games") };
-    }
 
     private async Task<IEnumerable<Tag>> SearchTags(string searchText)
     {
