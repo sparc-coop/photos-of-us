@@ -24,7 +24,7 @@
             @* Image Section *@
             <div class="d-flex justify-content-between" style="margin-top: 60px;">
                 <div class="col-sm">
-                    @foreach (var photo in RandomPhotos.Skip(6).Take(6))
+                    @foreach (var photo in RandomPhotos)
                     {
                         <img src="@photo.ThumbnailUrl" class="random-photo mb-4" style="width:100%;" ng-cloak alt="@photo.Name" />
                     }
@@ -35,18 +35,20 @@
                 </div>
 
                 <div class="col-sm ml-4 mr-4">
-                    @foreach (var photo in RandomPhotos.Skip(6).Take(6))
+                    @foreach (var photo in RandomPhotos)
                     {
                         <img src="@photo.ThumbnailUrl" class="random-photo mb-4" style="width:100%;" ng-cloak alt="@photo.Name" />
+                        <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
+                        <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
                     }
 
 
-                    @*<img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
-                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />*@
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 11.png" alt="Alternate Text" />
+                    <img class="mb-4" style="width: 100%;" src="../images/Rectangle Copy 13.png" alt="Alternate Text" />
                 </div>
 
                 <div class="col-sm">
-                    @foreach (var photo in RandomPhotos.Skip(6).Take(6))
+                    @foreach (var photo in RandomPhotos)
                     {
                         <img src="@photo.ThumbnailUrl" class="random-photo mb-4" style="width:100%;" ng-cloak alt="@photo.Name" />
                     }

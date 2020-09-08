@@ -57,10 +57,9 @@ namespace PhotosOfUs.WA.Server
             //        .AllowCredentials());
             //});
 
-            services.AddControllersWithViews()
-                .AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            );
+            services.AddControllersWithViews();
+                
+            
             services.AddRazorPages();
             //services.AddServerSideBlazor();
 
