@@ -16,6 +16,6 @@ namespace PhotosOfUs.Core.Photos
         }
 
         public int Id { get; set; }
-        public string Name { get; protected set; }
+        public string Name { get; set; }
     }
 }

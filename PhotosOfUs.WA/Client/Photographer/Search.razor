@@ -15,8 +15,7 @@
                     {
 
                     }*@
-                    <BlazoredTypeahead SearchMethod="SearchTags"
-                                       @bind-Value="SelectedTag">
+                    <BlazoredTypeahead TItem="Tag" TValue="Tag" ValueChanged="@((e) => SelectedTagChanged(e))" SearchMethod="SearchTags">
                         <SelectedTemplate Context="tag">
                             @tag.Name
                         </SelectedTemplate>
@@ -102,6 +101,13 @@
     private async Task<IEnumerable<Tag>> SearchTags(string searchText)
     {
         return await Task.FromResult(Tags.Where(x => x.Name.ToLower().Contains(searchText.ToLower())).ToList());
+    }
+
+    void SelectedTagChanged(Tag tag)
+    {
+        tag = tag;
+        // Search for photos that contains this tag
+        //RandomPhotos = ... 
     }
 
 
