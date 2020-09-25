@@ -9,7 +9,7 @@ namespace PhotosOfUs.Core.Events
 {
     public partial class Event
     {
-        private Event()
+        public Event()
         {
 
         }
@@ -34,7 +34,7 @@ namespace PhotosOfUs.Core.Events
         public EventStyle Style { get; protected set; }
 
 
-        private readonly HashSet<Card> _cards;
+        private readonly HashSet<Card> _cards = new HashSet<Card>();
         public IReadOnlyCollection<Card> Cards => _cards;
         private readonly HashSet<Photo> _photos;
 

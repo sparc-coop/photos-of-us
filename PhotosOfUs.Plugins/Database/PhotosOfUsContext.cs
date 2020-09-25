@@ -156,11 +156,11 @@ namespace PhotosOfUs.Model.Models
                 g => g.Value,
                 y => SeparatorStyle.Get(y));
 
-                style.Property(x => x.ThemeColor)
-                .IsRequired()
-                .HasConversion(
-                    g => g.Value,
-                    y => ThemeColor.Get(y));
+                //style.Property(x => x.ThemeColor)
+                //.IsRequired()
+                //.HasConversion(
+                //    g => g.Value,
+                //    y => ThemeColor.Get(y));
 
                 style.Property(x => x.HomepageTemplate)
                 .IsRequired()
@@ -168,10 +168,22 @@ namespace PhotosOfUs.Model.Models
                     g => g.Value,
                     y => HomepageTemplate.Get(y));
 
-                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
-                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
-                //style.Property(y => y.AccentColorCode).HasColumnName("AccentColorCode");
+                style.Property(x => x.SeparatorStyle).HasColumnName("SeparatorStyle");
+                style.Property(x => x.AccentColorCode).HasColumnName("AccentColorCode");
+                style.Property(x => x.BodyColorCode).HasColumnName("BodyColorCode");
+                style.Property(x => x.FeaturedImageUrl).HasColumnName("FeaturedImageUrl");
+                style.Property(x => x.HeaderColorCode).HasColumnName("HeaderColorCode");
+                style.Property(x => x.AccentColorCode).HasColumnName("AccentColorCode");
+                style.Property(x => x.HomepageTemplate).HasColumnName("HomepageTemplate");
+                style.Property(x => x.OverlayColorCode).HasColumnName("OverlayColorCode");
+                style.Property(x => x.OverlayOpacity).HasColumnName("OverlayOpacity");
+                style.Property(x => x.PersonalLogoUrl).HasColumnName("PersonalLogoUrl");
+                style.Property(x => x.SeparatorThickness).HasColumnName("SeparatorThickness");
+                style.Property(x => x.SeparatorWidth).HasColumnName("SeparatorWidth");
+                style.Property(x => x.BackgroundColorCode).HasColumnName("BackgroundColorCode");
+                //style.Property(x => x.ThemeColor).HasColumnName("ThemeColor");
             });
+
 
             //entity.HasMany(x => x.Photos, photo =>
             //{

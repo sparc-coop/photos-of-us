@@ -1,16 +1,16 @@
-@page "/Events/Photos"
+@page "/Events/{EventName}"
 
-<div class="admin-photos" ng-controller="PhotosCtrl" ng-init="getUserTour()">
+<div class="admin-photos">
     <div class="flex-box header">
-        <a href="/Photographer" class="button--back"><img src="~/images/icons/ic_arrow_back_24px.png" /></a>
-        <h1>@Model.Name</h1>
+        <a href="/Photographer" class="button--back"><img src="/images/icons/ic_arrow_back_24px.png" /></a>
+        <h1>@EventName</h1>
         <span class="created-date">Created: @Model.CreatedDateUtc.ToString("MMMM d, yyyy")</span>
     </div>
 
     <hr />
 
     <div class="flex-box filters">
-        <input class="input--light-blue searchbox" ng-model="searchCode" placeholder="Search Library by Code" />
+        <input class="input--light-blue searchbox" @bind="SearchCode" placeholder="Search Library by Code" />
         <div class="view-icons align-right">
             <div class="filter-sort">
                 <select>
@@ -62,7 +62,11 @@
 </div>
 
 @code {
+    [CascadingParameter] private string EventName { get; set; }
+
     CreateEventModel Model = new CreateEventModel();
+
+    private string SearchCode { get; set; }
 
     Dictionary<string, object> accept = new Dictionary<string, object>()
 {

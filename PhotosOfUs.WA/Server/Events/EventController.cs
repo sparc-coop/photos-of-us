@@ -9,13 +9,14 @@ using Microsoft.Extensions.Logging;
 using PhotosOfUs.Core.Events;
 using PhotosOfUs.Core.Photos;
 using PhotosOfUs.Core.Photos.Queries;
+using PhotosOfUs.Core.Users;
 using PhotosOfUs.WA.Server.Utils;
 
 namespace PhotosOfUs.WA.Server.Events
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
+    //[Authorize]
     public class EventController : ControllerBase
     {
         //[HttpGet]
@@ -32,10 +33,11 @@ namespace PhotosOfUs.WA.Server.Events
         //    return photoRepository.Include("Photographer", "PhotoTag.Tag").Where(x => x.Id == id).FirstOrDefault();
         //}
 
+        [HttpGet]
         [Route("MyEvents")]
         public async Task<List<Event>> MyEvents([FromServices] IDbRepository<Event> eventRepository)
         {
-            return await eventRepository.Query.Where(x => x.PhotographerId == Convert.ToInt32(User.Id())).ToListAsync();
+            return await eventRepository.Query.Where(x => x.PhotographerId == 2).ToListAsync();
         }
 
         [Route("MyCode/{code}")]

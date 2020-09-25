@@ -14,7 +14,7 @@
     </div>
     <div class="row">
         <div class="col ml-sm-auto">
-            <a class="btn btn-secondary" href="/Events/Create">
+            <a class="btn btn-secondary" href="/Event/Create">
                 <span class="material-icons">
                     add
                 </span> Create Event
@@ -23,38 +23,36 @@
     </div>
 
     <div class="row mx-sm-n3">
-        @foreach (var item in events)
+
+        @if (events != null)
         {
-            <div class="col-md-4 px-sm-3 my-4">
-                <a href="/Event/@item.Id">
-                    <img src="@(item.Style.FeaturedImageUrl ??  "/images/photo/background.jpeg")" />
-                </a>
+            @foreach (var item in events)
+            {
+                <div class="col-md-4 px-sm-3 my-4">
+                    @*<a href="/Event/@item.Id">
+                        <img src="@(item.Style.FeaturedImageUrl ??  "/images/photo/background.jpeg")" />
+                    </a>*@
 
-                <a class="text-black" href="/Event/@item.Id">
-                    <h5 class="mt-3">
-                        @item.Name
-                    </h5>
-                </a>
+                    <a class="text-black" href="/Event/@item.Id">
+                        <h5 class="mt-3">
+                            @item.Name
+                        </h5>
+                    </a>
 
-                <p class="text-dark-grey2 blogpost-author mt-2">
-                    @item.Photos.Count - @item.CreatedDateUtc.ToLocalTime().ToString("dd MMM yyyy")
-                </p>
-            </div>
+                    <p class="text-dark-grey2 blogpost-author mt-2">
+                        @item.Photos.Count - @item.CreatedDateUtc.ToLocalTime().ToString("dd MMM yyyy")
+                    </p>
+                </div>
+            }
         }
     </div>
 </div>
 
 @code {
-    List<Event> events = new List<Event>();
+    List<Event> events;// = new List<Event>();
 
     protected async override Task OnInitializedAsync()
     {
-        events = await GetEvents();
+        events = await Http.GetFromJsonAsync<List<Event>>($"Event/MyEvents");
     }
-
-    public async Task<List<Event>> GetEvents()
-    {
-        return await Http.GetFromJsonAsync<List<Event>>($"Event/MyEvents/");
-    }
-
 }

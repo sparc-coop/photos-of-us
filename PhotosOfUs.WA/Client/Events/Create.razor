@@ -1,7 +1,7 @@
 @page "/Event/Create"
 @*@attribute [Authorize(Policy = "Photographer")]*@
 
-@*@attribute [Authorize]*@
+@attribute [Authorize]
 
 <form class="container-xl my-5">
     <div class="form-group">
@@ -23,7 +23,7 @@
         <h4>Website &amp; Card Layout</h4>
 
         <div class="homepage-template">
-            <figure @onclick="@(() => SetHomepageTemplate(2))" class="@(Model.HomepageTemplate == "2" ? "selected" : "")">
+            @*<figure @onclick="@(() => SetHomepageTemplate(2))" class="@(Model.HomepageTemplate == "2" ? "selected" : "")">
                 <div class="check">&#10003;</div>
                 <img src="/images/full_image.png" />
                 <h3>Full Image Background</h3>
@@ -50,7 +50,7 @@
                     on
                     the right.
                 </p>
-            </figure>
+            </figure>*@
         </div>
     </section>
 
@@ -197,15 +197,13 @@
     public CreateEventModel Model = new CreateEventModel();
     public IEnumerable<int> Opacities = Enumerable.Range(0, 101).Where(x => x % 5 == 0);
 
-    public void SetHomepageTemplate(int templateId) => Model.HomepageTemplate = templateId.ToString();
+    //public void SetHomepageTemplate(int templateId) => Model.HomepageTemplate = templateId.ToString();
     public string IsDisabled => string.IsNullOrWhiteSpace(Model.Name) || string.IsNullOrWhiteSpace(Model.Url) || string.IsNullOrWhiteSpace(Model.Description) ? "disabled" : "";
 
     public void Save()
     {
 
     }
-
-
 
     async Task HandleFileSelected(IFileListEntry[] files)
     {

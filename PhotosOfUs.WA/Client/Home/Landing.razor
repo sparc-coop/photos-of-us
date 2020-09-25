@@ -3,11 +3,8 @@
 
 <div class="landing">
     <div class="main-landing">
-        <div class="main-landing--img-container">
-            @foreach (var photo in RandomPhotos)
-            {
-                <img src="@photo.Url" style="top: @RandomCoordinate(); left: @RandomCoordinate()" class="random-photo" alt="@photo.Name" />
-            }
+        <img class="main-landing--img" src="/images/Hero@2x.png" />
+        <div>
         </div>
         <div class="welcome-section">
             <div class="welcome-text">less chat, more snaps</div>
@@ -63,18 +60,8 @@
     </div>
 
     <div class="browse">
-        <div class="browse--img-container right">
-            @foreach (var photo in RandomPhotos.Take(6))
-            {
-                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
-            }
-        </div>
-        <div class="browse--img-container left">
-            @foreach (var photo in RandomPhotos.Skip(6).Take(6))
-            {
-                <img src="@photo.ThumbnailUrl" class="random-photo" ng-cloak alt="@photo.Name" />
-            }
-        </div>
+        <img src="/images/CTa-Left@2x.png" class="browse--img right" ng-cloak alt="" />
+        <img src="/images/CTa-Right@2x.png" class="browse--img left" ng-cloak alt="" />
         <div class="browse--content">
             <div class="subt-2">Not a photographer?</div>
             <div class="landing-subtitle">Browse The Public Library</div>
@@ -88,7 +75,7 @@
     </div>
 </div>
 
-@code {
+@*@code {
     public List<RandomPhotoModel> RandomPhotos = new List<RandomPhotoModel>();
     public string SearchCode = string.Empty;
 
@@ -103,4 +90,4 @@
     {
         return await Http.GetFromJsonAsync<List<RandomPhotoModel>>($"Photo/Dashboard/{count}");
     }
-}
+}*@

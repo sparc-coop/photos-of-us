@@ -17,7 +17,7 @@ namespace PhotosOfUs.Core.Events
 
         public EventStyle(string personalLogoUrl, string featuredImageUrl, string overlayColorCode, decimal overlayOpacity, 
             string accentColorCode, string backgroundColorCode, string headerColorCode, string bodyColorCode, SeparatorStyle separatorStyle, 
-            int separatorThickness, int separatorWidth, ThemeColor themeColor, HomepageTemplate homepageTemplate)
+            int separatorThickness, int separatorWidth, HomepageTemplate homepageTemplate)// ThemeColor themeColor , HomepageTemplate homepageTemplate
         {
             PersonalLogoUrl = personalLogoUrl ?? throw new ArgumentNullException(nameof(personalLogoUrl));
             FeaturedImageUrl = featuredImageUrl ?? throw new ArgumentNullException(nameof(featuredImageUrl));
@@ -30,7 +30,7 @@ namespace PhotosOfUs.Core.Events
             SeparatorStyle = separatorStyle ?? throw new ArgumentNullException(nameof(separatorStyle));
             SeparatorThickness = separatorThickness;
             SeparatorWidth = separatorWidth;
-            ThemeColor = themeColor ?? throw new ArgumentNullException(nameof(themeColor));
+            //ThemeColor = themeColor ?? throw new ArgumentNullException(nameof(themeColor));
             HomepageTemplate = homepageTemplate ?? throw new ArgumentNullException(nameof(homepageTemplate));
         }
 
@@ -55,8 +55,8 @@ namespace PhotosOfUs.Core.Events
         public SeparatorStyle SeparatorStyle { get; protected set; }
         public int SeparatorThickness { get; protected set; }
         public int SeparatorWidth { get; protected set; }
-        public ThemeColor ThemeColor { get; protected set; }
-        public HomepageTemplate HomepageTemplate { get; protected set; }
+        //public ThemeColor ThemeColor { get; protected set; }
+        public HomepageTemplate HomepageTemplate { get; set; }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
@@ -67,14 +67,14 @@ namespace PhotosOfUs.Core.Events
             yield return SeparatorStyle;
             yield return SeparatorThickness;
             yield return SeparatorWidth;
-            yield return ThemeColor;
+            //yield return ThemeColor;
         }
 
     }
 
     public class HomepageTemplate : ValueObject<HomepageTemplate>
     {
-        private HomepageTemplate(string value, string text) { Value = value; Text = text; }
+        public HomepageTemplate(string value, string text) { Value = value; Text = text; }
 
         public string Value { get; private set; }
         public string Text { get; private set; }
