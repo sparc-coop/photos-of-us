@@ -1,0 +1,45 @@
+﻿@import "wwwroot/css/components/variables.scss";
+
+// components
+//@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import "wwwroot/css/components/misc.scss";
+@import "wwwroot/css/components/accordion.scss";
+@import "wwwroot/css/components/badge.scss";
+@import "wwwroot/css/components/button.scss";
+@import "wwwroot/css/components/card.scss";
+@import "wwwroot/css/components/colors.scss";
+@import "wwwroot/css/components/container.scss";
+@import "wwwroot/css/components/flex.scss";
+@import "wwwroot/css/components/form.scss";
+@import "wwwroot/css/components/heading.scss";
+@import "wwwroot/css/components/icons.scss";
+@import "wwwroot/css/components/input.scss";
+@import "wwwroot/css/components/label.scss";
+@import "wwwroot/css/components/loading.scss";
+@import "wwwroot/css/components/line.scss";
+@import "wwwroot/css/components/navmenu.scss";
+@import "wwwroot/css/components/file-upload.scss";
+@import "wwwroot/css/components/scrollbar.scss";
+@import "wwwroot/css/components/select.scss";
+@import "wwwroot/css/components/sidebar.scss";
+@import "wwwroot/css/components/avatar.scss";
+@import "wwwroot/css/components/table.scss";
+@import "wwwroot/css/components/toggle.scss";
+
+// Shared
+@import "Shared/MainLayout.scss";
+@import "Shared/Footer.scss";
+
+// Home
+@import "Home/Landing";
+@import "Home/Pricing";
+
+a {
+    color: $primary;
+}
+
+@media only screen and (max-width: 767px) {
+}
+
+@media only screen and (min-width: 768px) {
+}

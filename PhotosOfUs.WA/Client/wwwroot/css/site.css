@@ -1,4 +1,51 @@
-﻿@import url("open-iconic/font/css/open-iconic-bootstrap.min.css");
+﻿/*$black: #1B1B1B;*/
+/*$black: #1B1B1B;
+//$off-black: #1C1C1C;
+
+$grey: #AEAEAE;
+$grey2: #E7E7E7;
+$grey3: #F8F8F8;
+
+
+$dark-grey2: #808080;
+
+$off-dark-grey: #FAFAFB;
+
+$light-grey: #F2F2F2;
+$expand-grey: #BFC1C3;
+$white: #FFFFFF;
+$light: #f8f9fa;
+$off-white: #F0F0F0;
+$pink: #FF5B89;
+$purple: #9594D4;
+$background: #f4f6f9;
+
+$red: #FF5C5C;
+$warning: #CC3300;
+
+$green: #00CC99;
+
+$purple: #2C1B3D;
+
+$blue: #0099CC;
+$primary: #55C1FF;
+$primary-2: #3CD3EC;
+$off-blue: #e8f3f8;
+
+$light-green: #B6E389;
+$yellow: #FFD40C;*/
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
 /*$black: #1B1B1B;*/
 /*$black: #1B1B1B;
 //$off-black: #1C1C1C;
@@ -2569,6 +2616,228 @@ $yellow: #FFD40C;*/
       height: unset; }
       .landing .footer .navigation {
         padding: 50px 25px 8px 42px; } }
+
+/*$black: #1B1B1B;*/
+/*$black: #1B1B1B;
+//$off-black: #1C1C1C;
+
+$grey: #AEAEAE;
+$grey2: #E7E7E7;
+$grey3: #F8F8F8;
+
+
+$dark-grey2: #808080;
+
+$off-dark-grey: #FAFAFB;
+
+$light-grey: #F2F2F2;
+$expand-grey: #BFC1C3;
+$white: #FFFFFF;
+$light: #f8f9fa;
+$off-white: #F0F0F0;
+$pink: #FF5B89;
+$purple: #9594D4;
+$background: #f4f6f9;
+
+$red: #FF5C5C;
+$warning: #CC3300;
+
+$green: #00CC99;
+
+$purple: #2C1B3D;
+
+$blue: #0099CC;
+$primary: #55C1FF;
+$primary-2: #3CD3EC;
+$off-blue: #e8f3f8;
+
+$light-green: #B6E389;
+$yellow: #FFD40C;*/
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.pricing {
+  overflow-x: hidden; }
+  .pricing .section1 {
+    background: url("../../../../images/pricing_bg.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: unset;
+    padding-bottom: 90px; }
+    .pricing .section1 a {
+      text-decoration: none; }
+    .pricing .section1 .slogan {
+      font-size: 50px; }
+  .pricing--options {
+    padding: 0 0 60px 0;
+    width: 100%;
+    cursor: pointer;
+    outline: none; }
+    .pricing--options__container {
+      margin: 0 auto;
+      max-width: 1050px;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 30px; }
+      .pricing--options__container > div {
+        width: 300px;
+        height: 570px;
+        background: #FCFCFC;
+        box-shadow: 0 0 100px 0 rgba(25, 73, 82, 0.3);
+        border-radius: 4px;
+        text-align: center;
+        padding: 30px;
+        margin-bottom: 30px;
+        margin-right: -10px;
+        margin-left: -10px; }
+        .pricing--options__container > div img {
+          width: 258px;
+          height: 137px;
+          padding-bottom: 30px; }
+        .pricing--options__container > div ul {
+          list-style: none; }
+        .pricing--options__container > div li {
+          text-align: left;
+          font-size: 16px;
+          font-weight: 600;
+          padding: 10px 0;
+          color: #194952;
+          letter-spacing: 0.17px; }
+          .pricing--options__container > div li i {
+            color: #FFE261;
+            padding-right: 10px;
+            vertical-align: middle;
+            font-size: 20px; }
+          .pricing--options__container > div li.alt {
+            padding-left: 30px;
+            text-decoration: line-through;
+            color: #757575; }
+    .pricing--options .selected {
+      width: 330px;
+      height: 600px;
+      margin-top: -15px;
+      z-index: 1;
+      outline: none; }
+    .pricing--options .signUp {
+      border: 2px solid #FFE261;
+      border-radius: 8px;
+      display: block;
+      padding: 8px;
+      height: 28px;
+      width: 270px;
+      font-weight: 600;
+      font-size: 22px;
+      color: #194952;
+      letter-spacing: -0.12px;
+      margin: 0 auto;
+      cursor: pointer;
+      text-decoration: none; }
+      .pricing--options .signUp--beta {
+        color: #757575;
+        border: 2px solid #757575;
+        cursor: unset; }
+    .pricing--options .pricing--subtitle {
+      height: 60px; }
+  .pricing .price {
+    font-weight: 800;
+    font-size: 32px;
+    color: #43C6BA;
+    letter-spacing: 0.33px; }
+  .pricing--title {
+    font-weight: 800;
+    font-size: 30px;
+    color: #194952;
+    letter-spacing: 0.31px; }
+  .pricing--title2 {
+    font-family: 'Open Sans';
+    font-weight: 600;
+    font-size: 24px;
+    color: #43C6BA;
+    letter-spacing: 0.25px; }
+  .pricing--subtitle {
+    font-family: 'Open Sans';
+    font-size: 13px;
+    color: #b2b2b2;
+    letter-spacing: 0.14px;
+    padding: 10px 0; }
+  .pricing--team {
+    margin: 0 auto;
+    background: #FFFFFF;
+    border: 2px solid #43C6BA;
+    border-radius: 4px;
+    height: 249px;
+    width: 870px;
+    display: flex; }
+    @media screen and (max-width: 480px) {
+      .pricing--team {
+        flex-wrap: wrap;
+        text-align: center;
+        justify-content: center;
+        height: unset;
+        width: unset;
+        margin: 0 30px; } }
+    .pricing--team img {
+      width: 330px;
+      height: auto; }
+      @media screen and (max-width: 480px) {
+        .pricing--team img {
+          align-self: center; } }
+    .pricing--team__content {
+      padding: 32px 30px 28px 30px; }
+      @media screen and (max-width: 480px) {
+        .pricing--team__content .pricing--title2, .pricing--team__content .pricing--subtitle {
+          padding: 12px 0px; } }
+    .pricing--team .teamQuote {
+      width: 479px;
+      height: 42px;
+      background: #FFE261;
+      border-radius: 8px;
+      color: #194952;
+      font-weight: 600;
+      font-size: 22px;
+      text-align: center;
+      cursor: pointer; }
+      .pricing--team .teamQuote input {
+        border: none;
+        border-radius: 8px;
+        padding: 0 10px;
+        outline: none;
+        height: 32px;
+        margin-top: -8px;
+        vertical-align: middle; }
+      .pricing--team .teamQuote button {
+        margin: 0 -11px 0 23px;
+        border: 2px solid #43C6BA;
+        border-radius: 8px;
+        background: #FFE261;
+        color: #194952;
+        font-family: 'Dosis';
+        font-weight: 600;
+        outline: none;
+        padding: 5px 18px; }
+  .pricing .button--quote {
+    width: 479px;
+    height: 32px;
+    background: #FFE261;
+    border-radius: 8px;
+    color: #194952;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer; }
+    @media screen and (max-width: 480px) {
+      .pricing .button--quote {
+        width: unset; } }
 
 a {
   color: #43C6BA; }

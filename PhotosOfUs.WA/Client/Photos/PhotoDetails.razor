@@ -1,4 +1,4 @@
-@page "/photo/{id:int}/{name}"
+@page "/photodetails/{id:int}"
 
 @if (photo != null)
 {
@@ -141,9 +141,6 @@
 @code {
     [Parameter]
     public int id { get; set; }
-
-    [Parameter]
-    public string name { get; set; }
 
     PhotoModel photo = new PhotoModel();
 

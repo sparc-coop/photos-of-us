@@ -60,7 +60,9 @@ namespace PhotosOfUs.WA.Server
             services.AddControllersWithViews();
                 
             
-            services.AddRazorPages();
+            services.AddRazorPages(options => {
+                options.Conventions.AllowAnonymousToPage("/Photos/Search");
+            });
             //services.AddServerSideBlazor();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));

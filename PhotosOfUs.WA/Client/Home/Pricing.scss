@@ -1,0 +1,234 @@
+﻿@import "../wwwroot/css/Components/variables.scss";
+
+.pricing {
+    overflow-x: hidden;
+
+    .section1 {
+        background: url('../../images/pricing_bg.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: unset;
+        padding-bottom: 90px;
+
+        a {
+            text-decoration: none;
+        }
+
+        .slogan {
+            font-size: 50px;
+        }
+    }
+
+    &--options {
+        padding: 0 0 60px 0;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
+
+        &__container {
+            margin: 0 auto;
+            max-width: 1050px;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 30px;
+
+            > div {
+                width: 300px;
+                height: 570px;
+                background: #FCFCFC;
+                box-shadow: 0 0 100px 0 rgba(25,73,82,0.30);
+                border-radius: 4px;
+                text-align: center;
+                padding: 30px;
+                margin-bottom: 30px;
+                margin-right: -10px;
+                margin-left: -10px;
+
+                img {
+                    width: 258px;
+                    height: 137px;
+                    padding-bottom: 30px;
+                }
+
+                ul {
+                    list-style: none;
+                }
+
+                li {
+                    text-align: left;
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding: 10px 0;
+                    color: $dark;
+                    letter-spacing: 0.17px;
+
+                    i {
+                        color: $yellow;
+                        padding-right: 10px;
+                        vertical-align: middle;
+                        font-size: 20px;
+                    }
+
+                    &.alt {
+                        padding-left: 30px;
+                        text-decoration: line-through;
+                        color: $text-gray;
+                    }
+                }
+            }
+        }
+
+        .selected {
+            width: 330px;
+            height: 600px;
+            margin-top: -15px;
+            z-index: 1;
+            outline: none;
+        }
+
+        .signUp {
+            border: 2px solid $yellow;
+            border-radius: 8px;
+            display: block;
+            padding: 8px;
+            height: 28px;
+            width: 270px;
+            font-weight: 600;
+            font-size: 22px;
+            color: #194952;
+            letter-spacing: -0.12px;
+            margin: 0 auto;
+            cursor: pointer;
+            text-decoration: none;
+
+            &--beta {
+                color: $text-gray;
+                border: 2px solid $text-gray;
+                cursor: unset;
+            }
+        }
+
+        .pricing--subtitle {
+            height: 60px;
+        }
+    }
+
+    .price {
+        font-weight: 800;
+        font-size: 32px;
+        color: $primary;
+        letter-spacing: 0.33px;
+    }
+
+    &--title {
+        font-weight: 800;
+        font-size: 30px;
+        color: $dark;
+        letter-spacing: 0.31px;
+    }
+
+    &--title2 {
+        font-family: 'Open Sans';
+        font-weight: 600;
+        font-size: 24px;
+        color: $primary;
+        letter-spacing: 0.25px;
+    }
+
+    &--subtitle {
+        font-family: 'Open Sans';
+        font-size: 13px;
+        color: #b2b2b2;
+        letter-spacing: 0.14px;
+        padding: 10px 0;
+    }
+
+    &--team {
+        margin: 0 auto;
+        background: $white;
+        border: 2px solid #43C6BA;
+        border-radius: 4px;
+        height: 249px;
+        width: 870px;
+        display: flex;
+
+        @media screen and (max-width: $mobile) {
+            flex-wrap: wrap;
+            text-align: center;
+            justify-content: center;
+            height: unset;
+            width: unset;
+            margin: 0 30px;
+        }
+
+        img {
+            width: 330px;
+            height: auto;
+
+            @media screen and (max-width: $mobile) {
+                align-self: center;
+            }
+        }
+
+        &__content {
+            padding: 32px 30px 28px 30px;
+
+            @media screen and (max-width: $mobile) {
+                .pricing--title2, .pricing--subtitle {
+                    padding: 12px 0px;
+                }
+            }
+        }
+
+        .teamQuote {
+            width: 479px;
+            height: 42px;
+            background: $yellow;
+            border-radius: 8px;
+            color: $dark;
+            font-weight: 600;
+            font-size: 22px;
+            text-align: center;
+            cursor: pointer;
+
+            input {
+                border: none;
+                border-radius: 8px;
+                padding: 0 10px;
+                outline: none;
+                height: 32px;
+                margin-top: -8px;
+                vertical-align: middle;
+            }
+
+            button {
+                margin: 0 -11px 0 23px;
+                border: 2px solid $primary;
+                border-radius: 8px;
+                background: $yellow;
+                color: $dark;
+                font-family: 'Dosis';
+                font-weight: 600;
+                outline: none;
+                padding: 5px 18px;
+            }
+        }
+    }
+
+    .button--quote {
+        width: 479px;
+        height: 32px;
+        background: $yellow;
+        border-radius: 8px;
+        color: $dark;
+        font-weight: 600;
+        font-size: 22px;
+        text-align: center;
+        padding: 5px;
+        cursor: pointer;
+
+        @media screen and (max-width: $mobile) {
+            width: unset;
+        }
+    }
+}
