@@ -1,9 +1,11 @@
 @page "/Pricing"
 
-<div class="preLaunch--landing pricing">
+@layout EmptyLayout
+
+<div class="pricing">
     <div class="section1">
         <div class="header">
-            <a class="header__logo" href="/Session/SignInPhotographer">
+            <a class="header__logo" href="/">
                 <img src="/images/logo.png" />
                 <div class="header__logo__text">Photos of Us</div>
             </a>
@@ -16,13 +18,13 @@
         <div class="content">
             <div class="slogan">Paying Is A Snap</div>
             <div class="content__subinfo">
-                Whether you’re an occasional snapper, a frequent snapper, or a super snapper, we’ve got a plan that will suit your budget.
+                Whether you're an occasional snapper, a frequent snapper, or a super snapper, we've got a plan that will suit your budget.
             </div>
         </div>
         <div class="pricing--options">
             <div class="pricing--options__container">
-                <div class="free" ng-click="pricingOption = 'option1'" ng-class="{'selected': pricingOption == 'option1'}">
-                    <img src="/images/Camera 1@2x.png" />
+                <div class="free @(Selected == 1 ? "selected" : "")" @onclick="@(() => SelectOption(1))">
+                    <img src="/images/Camera 1@2x.png"/>
                     <div class="pricing--title">Occasional Snapper</div>
                     <div class="pricing--subtitle">
                         Perfect for newbies! This plan is ideal if you snap pics here and there as you get into the swing of things.
@@ -34,9 +36,9 @@
                         <li><i class="material-icons">check_circle_outline</i>8% Take of all sales</li>
                         <li class="alt">Option for professional prints</li>
                     </ul>
-                    <a href="/Session/SignInPhotographer" class="signUp">Sign Up Now</a>
+                    <button class="signup" @onclick="Login">Sign Up Now</button>
                 </div>
-                <div class="option2" ng-click="pricingOption = 'option2'" ng-class="{'selected': pricingOption == 'option2'}">
+                <div class="option2 @(Selected == 2 ? "selected" : "")" @onclick="@(() => SelectOption(2))">
                     <img src="/images/Camera 2@2x.png" />
                     <div class="pricing--title">Frequent Snapper</div>
                     <div class="pricing--subtitle">
@@ -49,10 +51,9 @@
                         <li><i class="material-icons">check_circle_outline</i>Custom logo</li>
                         <li><i class="material-icons">check_circle_outline</i>Option for professional prints</li>
                     </ul>
-                    <a class="signUp signUp--beta">Free While In Beta</a>
+                    <button @onclick="Login" class="signup signup--beta">Free While In Beta</button>
                 </div>
-                <div class="option3" ng-click="pricingOption = 'option3'" ng-class="{'selected': pricingOption == 'option3'}">
-                    <img src="/images/Camera 3@2x.png" />
+                <div class="option3 @(Selected == 3 ? "selected" : "")" @onclick="@(() => SelectOption(3))">
                     <img src="/images/Camera 3@2x.png" />
                     <div class="pricing--title">Super Snapper</div>
                     <div class="pricing--subtitle">
@@ -65,7 +66,7 @@
                         <li><i class="material-icons">check_circle_outline</i>Custom logo</li>
                         <li><i class="material-icons">check_circle_outline</i>Option for professional prints</li>
                     </ul>
-                    <a class="signUp signUp--beta">Free While In Beta</a>
+                    <button @onclick="Login" class="signup signup--beta">Free While In Beta</button>
                 </div>
             </div>
         </div>
@@ -75,18 +76,41 @@
                 <div class="pricing--title">Team Snappers</div>
                 <div class="pricing--title2">Got a team? Chat with us to get a quote!</div>
                 <div class="pricing--subtitle">
-                    We know not everyone goes solo. For those of you who need a plan that suits your team of snappers, we’ve got you! Request a quote to get your own personalized plan.
+                    We know not everyone goes solo. For those of you who need a plan that suits your team of snappers, we've got you! Request a quote to get your own personalized plan.
                 </div>
-                <div ng-click="showForm = true" class="button--quote" ng-show="showForm != true">Request A Quote!</div>
-                <form class="teamQuote" method="post" ng-show="showForm == true">
-                    <input placeholder="Your email address" name="fromEmail" />
-                    <button type="submit">Submit Email</button>
-                </form>
+                @if (ShowForm == false)
+                {
+                    <div class="button--quote" @onclick="@(e => ShowForm = true)">Request A Quote!</div>
+                }
+                @if (ShowForm == true)
+                {
+                    <form class="teamQuote">
+                        <input placeholder="Your email address" />
+                        <button @onclick="SubmitEmail">Submit Email</button>
+                    </form>
+                }
             </div>
         </div>
     </div>
 </div>
 
 @code {
+    int Selected = 2;
+    bool ShowForm = false;
+    string FormEmail { get; set; }
 
+    void SelectOption(int selected)
+    {
+        Selected = selected;
+    }
+
+    private void SubmitEmail()
+    {
+
+    }
+
+    private void Login()
+    {
+        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+    }
 }

@@ -13,9 +13,52 @@
         a {
             text-decoration: none;
         }
+    }
 
-        .slogan {
-            font-size: 50px;
+    .slogan {
+        font-size: 50px;
+        font-weight: 600;
+        text-align: center;
+        color: $white;
+    }
+
+    .content__subinfo {
+        font-size: 24px;
+        font-weight: 500;
+        text-align: center;
+        color: $white;
+        max-width: 500px;
+        margin: 30px auto;
+    }
+
+    .header {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        &__logo {
+            margin: 30px 0;
+
+            img {
+                vertical-align: middle;
+            }
+        }
+
+        &__social {
+            display: inline;
+            position: absolute;
+            top: 42px;
+            right: 96px;
+
+            img {
+                padding: 0 8px;
+            }
+
+            a {
+                cursor: pointer;
+                outline: none;
+            }
         }
     }
 
@@ -27,27 +70,28 @@
 
         &__container {
             margin: 0 auto;
-            max-width: 1050px;
+            max-width: 1080px;
             display: flex;
             flex-wrap: wrap;
-            padding: 0 30px;
+            padding: 30px;
 
             > div {
-                width: 300px;
-                height: 570px;
+                width: 340px;
+                height: auto;
                 background: #FCFCFC;
                 box-shadow: 0 0 100px 0 rgba(25,73,82,0.30);
                 border-radius: 4px;
                 text-align: center;
                 padding: 30px;
-                margin-bottom: 30px;
-                margin-right: -10px;
-                margin-left: -10px;
-
+                margin: 10px auto;
+                box-sizing: border-box;
+                /*                &:nth-child(2) {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                }*/
                 img {
-                    width: 258px;
-                    height: 137px;
-                    padding-bottom: 30px;
+                    max-height: 160px;
+                    margin-bottom: 20px;
                 }
 
                 ul {
@@ -76,23 +120,30 @@
                     }
                 }
             }
+
+            .free {
+                margin-right: -10px;
+            }
+
+            .option3 {
+                margin-left: -10px;
+            }
         }
 
         .selected {
-            width: 330px;
-            height: 600px;
-            margin-top: -15px;
+            height: 700px;
+            margin-top: -10px;
+            margin-bottom: -5px;
             z-index: 1;
             outline: none;
         }
 
-        .signUp {
+        .signup {
             border: 2px solid $yellow;
             border-radius: 8px;
             display: block;
-            padding: 8px;
-            height: 28px;
-            width: 270px;
+            padding: 6px;
+            width: 100%;
             font-weight: 600;
             font-size: 22px;
             color: #194952;
@@ -100,6 +151,7 @@
             margin: 0 auto;
             cursor: pointer;
             text-decoration: none;
+            background: $white;
 
             &--beta {
                 color: $text-gray;
@@ -171,7 +223,11 @@
         }
 
         &__content {
-            padding: 32px 30px 28px 30px;
+            padding: 18px 30px 28px 30px;
+
+            .pricing--subtitle {
+                font-size: 14px;
+            }
 
             @media screen and (max-width: $mobile) {
                 .pricing--title2, .pricing--subtitle {
@@ -182,7 +238,6 @@
 
         .teamQuote {
             width: 479px;
-            height: 42px;
             background: $yellow;
             border-radius: 8px;
             color: $dark;
@@ -210,22 +265,22 @@
                 font-family: 'Dosis';
                 font-weight: 600;
                 outline: none;
-                padding: 5px 18px;
+                padding: 4px 18px;
             }
         }
     }
 
     .button--quote {
         width: 479px;
-        height: 32px;
         background: $yellow;
         border-radius: 8px;
         color: $dark;
         font-weight: 600;
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
         padding: 5px;
         cursor: pointer;
+        margin-top: 6px;
 
         @media screen and (max-width: $mobile) {
             width: unset;

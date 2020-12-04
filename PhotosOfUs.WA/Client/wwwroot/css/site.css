@@ -129,9 +129,10 @@ app {
 @media (min-width: 768px) {
   app {
     flex-direction: row; }
-  .main > div {
-    padding-left: 2rem !important;
-    padding-right: 1.5rem !important; } }
+  /*    .main > div {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }*/ }
 
 .row {
   margin-left: 0px;
@@ -2675,8 +2676,37 @@ $yellow: #FFD40C;*/
     padding-bottom: 90px; }
     .pricing .section1 a {
       text-decoration: none; }
-    .pricing .section1 .slogan {
-      font-size: 50px; }
+  .pricing .slogan {
+    font-size: 50px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF; }
+  .pricing .content__subinfo {
+    font-size: 24px;
+    font-weight: 500;
+    text-align: center;
+    color: #FFFFFF;
+    max-width: 500px;
+    margin: 30px auto; }
+  .pricing .header {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap; }
+    .pricing .header__logo {
+      margin: 30px 0; }
+      .pricing .header__logo img {
+        vertical-align: middle; }
+    .pricing .header__social {
+      display: inline;
+      position: absolute;
+      top: 42px;
+      right: 96px; }
+      .pricing .header__social img {
+        padding: 0 8px; }
+      .pricing .header__social a {
+        cursor: pointer;
+        outline: none; }
   .pricing--options {
     padding: 0 0 60px 0;
     width: 100%;
@@ -2684,25 +2714,27 @@ $yellow: #FFD40C;*/
     outline: none; }
     .pricing--options__container {
       margin: 0 auto;
-      max-width: 1050px;
+      max-width: 1080px;
       display: flex;
       flex-wrap: wrap;
-      padding: 0 30px; }
+      padding: 30px; }
       .pricing--options__container > div {
-        width: 300px;
-        height: 570px;
+        width: 340px;
+        height: auto;
         background: #FCFCFC;
         box-shadow: 0 0 100px 0 rgba(25, 73, 82, 0.3);
         border-radius: 4px;
         text-align: center;
         padding: 30px;
-        margin-bottom: 30px;
-        margin-right: -10px;
-        margin-left: -10px; }
+        margin: 10px auto;
+        box-sizing: border-box;
+        /*                &:nth-child(2) {
+                    margin-left: -10px;
+                    margin-right: -10px;
+                }*/ }
         .pricing--options__container > div img {
-          width: 258px;
-          height: 137px;
-          padding-bottom: 30px; }
+          max-height: 160px;
+          margin-bottom: 20px; }
         .pricing--options__container > div ul {
           list-style: none; }
         .pricing--options__container > div li {
@@ -2721,27 +2753,31 @@ $yellow: #FFD40C;*/
             padding-left: 30px;
             text-decoration: line-through;
             color: #757575; }
+      .pricing--options__container .free {
+        margin-right: -10px; }
+      .pricing--options__container .option3 {
+        margin-left: -10px; }
     .pricing--options .selected {
-      width: 330px;
-      height: 600px;
-      margin-top: -15px;
+      height: 700px;
+      margin-top: -10px;
+      margin-bottom: -5px;
       z-index: 1;
       outline: none; }
-    .pricing--options .signUp {
+    .pricing--options .signup {
       border: 2px solid #FFE261;
       border-radius: 8px;
       display: block;
-      padding: 8px;
-      height: 28px;
-      width: 270px;
+      padding: 6px;
+      width: 100%;
       font-weight: 600;
       font-size: 22px;
       color: #194952;
       letter-spacing: -0.12px;
       margin: 0 auto;
       cursor: pointer;
-      text-decoration: none; }
-      .pricing--options .signUp--beta {
+      text-decoration: none;
+      background: #FFFFFF; }
+      .pricing--options .signup--beta {
         color: #757575;
         border: 2px solid #757575;
         cursor: unset; }
@@ -2792,13 +2828,14 @@ $yellow: #FFD40C;*/
         .pricing--team img {
           align-self: center; } }
     .pricing--team__content {
-      padding: 32px 30px 28px 30px; }
+      padding: 18px 30px 28px 30px; }
+      .pricing--team__content .pricing--subtitle {
+        font-size: 14px; }
       @media screen and (max-width: 480px) {
         .pricing--team__content .pricing--title2, .pricing--team__content .pricing--subtitle {
           padding: 12px 0px; } }
     .pricing--team .teamQuote {
       width: 479px;
-      height: 42px;
       background: #FFE261;
       border-radius: 8px;
       color: #194952;
@@ -2823,18 +2860,18 @@ $yellow: #FFD40C;*/
         font-family: 'Dosis';
         font-weight: 600;
         outline: none;
-        padding: 5px 18px; }
+        padding: 4px 18px; }
   .pricing .button--quote {
     width: 479px;
-    height: 32px;
     background: #FFE261;
     border-radius: 8px;
     color: #194952;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 20px;
     text-align: center;
     padding: 5px;
-    cursor: pointer; }
+    cursor: pointer;
+    margin-top: 6px; }
     @media screen and (max-width: 480px) {
       .pricing .button--quote {
         width: unset; } }
