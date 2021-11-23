@@ -19,7 +19,7 @@
     };
 
     $scope.initStripe = () => {
-        var stripe = Stripe('');
+        var stripe = Stripe('pk_test_Ck01BxsB9SEbgfDDjGFt8Nhd');
         var elements = stripe.elements();
 
         // Custom styling can be passed to options when creating an Element.

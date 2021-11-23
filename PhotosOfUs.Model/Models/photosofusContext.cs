@@ -35,7 +35,7 @@ namespace PhotosOfUs.Model.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Trusted_Connection=False;Encrypt=True;");
+                optionsBuilder.UseSqlServer(@"");
                 base.OnConfiguring(optionsBuilder);
             }
         }
